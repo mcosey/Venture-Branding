@@ -6,6 +6,7 @@
   --ink-soft:#3A3F47;
   --ink-muted:#6E7680;
   --brand:#E25160;
+  --brand-text:#C13847;
   --surface:#FFFFFF;
   --surface-muted:#F7F6F3;
   --divider:#E5E3DE;
@@ -34,7 +35,7 @@ img{max-width:100%;display:block}
   font-weight:600;
   letter-spacing:.14em;
   text-transform:uppercase;
-  color:var(--brand);
+  color:var(--brand-text);
 }
 .rule{width:64px;height:2px;background:var(--brand);border:0;margin:28px 0}
 
@@ -63,7 +64,7 @@ img{max-width:100%;display:block}
   font-family:var(--sans);
   font-size:15px;
   font-weight:500;
-  color:var(--brand);
+  color:var(--brand-text);
   border-bottom:1px solid currentColor;
   padding-bottom:2px;
 }
@@ -137,7 +138,7 @@ img{max-width:100%;display:block}
 }
 .foot-links a{color:var(--ink-soft)}
 .foot-links a:hover{color:var(--brand)}
-.foot-copy{font-family:var(--sans);font-size:13px;color:var(--ink-muted)}
+.foot-copy{font-family:var(--sans);font-size:13px;color:var(--ink-soft)}
 
 @media(max-width:860px){
   .about-grid{grid-template-columns:1fr;gap:40px}
