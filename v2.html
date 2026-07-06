@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Venture Branding — Protect Your Brand Before Someone Else Does</title>
+<meta name="description" content="Register your logo and trademark with legal experts. Fast, secure, and fully managed.">
+<link rel="icon" type="image/png" href="images/09.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600&family=Archivo+Narrow:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0D151F;
+    --paper:#F3F0E9;
+    --paper-2:#EAE6DC;
+    --coral:#C94D5B;
+    --coral-deep:#A83A48;
+    --coral-bright:#D44D5C;
+    --line:rgba(13,21,31,.16);
+    --line-strong:rgba(13,21,31,.32);
+    --line-dark:rgba(243,240,233,.16);
+    --ink-60:rgba(13,21,31,.60);
+    --pad:clamp(16px,4.4vw,64px);
+    --disp:"Space Grotesk",sans-serif;
+    --body:"Archivo",sans-serif;
+    --mono:"Archivo Narrow",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);
+    color:var(--navy);
+    font-family:var(--body);
+    font-size:clamp(15px,1.15vw,17px);
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit}
+  ::selection{background:var(--coral);color:var(--paper)}
+
+  /* utility label */
+  .spec{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:clamp(10px,.78vw,12px);
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-variant-numeric:tabular-nums;
+  }
+
+  a.focusable:focus-visible,
+  button:focus-visible,
+  .btn:focus-visible{
+    outline:2px solid var(--coral);
+    outline-offset:3px;
+  }
+
+  /* ---- shared frame: hairline grid wrapper ---- */
+  .frame{
+    max-width:1500px;
+    margin:0 auto;
+    border-left:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  .rule{height:1px;background:var(--line);border:0}
+  .rule--strong{background:var(--line-strong)}
+  .rule--coral{height:3px;background:linear-gradient(90deg,var(--coral-deep),var(--coral-bright))}
+
+  /* ================= HEADER ================ */
+  header{
+    position:sticky;top:0;z-index:60;
+    background:rgba(243,240,233,.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    max-width:1500px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 var(--pad);
+    height:clamp(58px,7vw,72px);
+    border-left:1px solid var(--line);border-right:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .brand img{height:clamp(26px,3.4vw,34px);width:auto}
+  .nav-links{display:flex;align-items:center;gap:clamp(18px,3vw,40px)}
+  .nav-links a{
+    text-decoration:none;
+    font-family:var(--mono);
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-size:clamp(11px,.9vw,13px);
+    position:relative;padding:6px 0;
+  }
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:0;height:2px;width:0;
+    background:var(--coral);transition:width .25s ease;
+  }
+  .nav-links a:hover::after,.nav-links a:focus-visible::after{width:100%}
+  .nav-idx{color:var(--ink-60)}
+
+  /* ================= HERO ================ */
+  .hero{position:relative;border-bottom:1px solid var(--line)}
+  .hero-inner{padding:clamp(28px,5vw,64px) var(--pad) clamp(20px,3.5vw,40px)}
+  /* plumb line = the logo's central symmetry axis */
+  .plumb{
+    position:absolute;left:50%;top:0;bottom:0;width:1px;
+    background:var(--line);pointer-events:none;
+  }
+  .plumb::before{
+    content:"";position:absolute;left:-2.5px;top:0;width:5px;height:5px;
+    background:linear-gradient(180deg,var(--coral-deep),var(--coral-bright));
+  }
+  .hero-meta{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 20px;
+    color:var(--ink-60);margin-bottom:clamp(22px,4vw,48px);
+  }
+  h1{
+    font-family:var(--disp);
+    font-weight:600;
+    line-height:.92;
+    letter-spacing:-.025em;
+    font-size:clamp(52px,12.6vw,204px);
+    text-transform:uppercase;
+    margin:0;
+  }
+  h1 .em{
+    color:var(--coral-deep);
+    font-style:normal;
+    position:relative;
+  }
+  .hero-lower{
+    margin-top:clamp(26px,4vw,52px);
+    display:grid;grid-template-columns:1fr;gap:clamp(20px,3vw,36px);
+    align-items:end;
+  }
+  @media(min-width:820px){
+    .hero-lower{grid-template-columns:1.2fr .8fr}
+  }
+  .hero-sub{
+    font-size:clamp(17px,1.7vw,23px);
+    line-height:1.4;
+    max-width:34ch;
+    color:var(--navy);
+  }
+  .hero-cta-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+  @media(min-width:820px){.hero-cta-wrap{align-items:flex-end;text-align:right}}
+  .btn{
+    display:inline-flex;align-items:center;gap:14px;
+    background:var(--navy);color:var(--paper);
+    text-decoration:none;
+    font-family:var(--mono);font-weight:600;
+    letter-spacing:.12em;text-transform:uppercase;
+    font-size:clamp(12px,1vw,14px);
+    padding:16px 22px;border:0;cursor:pointer;
+    transition:background .2s ease,transform .2s ease;
+  }
+  .btn .arw{transition:transform .2s ease}
+  .btn:hover{background:var(--coral-deep)}
+  .btn:hover .arw{transform:translateX(5px)}
+
+  /* ================= ABOUT ================ */
+  .about{border-bottom:1px solid var(--line)}
+  .eyebrow{
+    display:flex;align-items:center;gap:12px;
+    color:var(--coral-deep);margin-bottom:clamp(14px,2vw,20px);
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--coral)}
+  .sec-head{
+    font-family:var(--disp);font-weight:500;
+    line-height:1.02;letter-spacing:-.02em;
+    font-size:clamp(30px,4.6vw,58px);
+    max-width:16ch;
+  }
+  .about-top{
+    padding:clamp(30px,5vw,72px) var(--pad) clamp(24px,3.5vw,44px);
+  }
+  .about-photo-band{
+    position:relative;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--navy);
+    overflow:hidden;
+  }
+  .about-photo-band img{
+    width:100%;height:auto;
+    display:block;
+    object-fit:cover;
+    filter:grayscale(1) contrast(1.02);
+    mix-blend-mode:luminosity;
+    opacity:.96;
+  }
+  .photo-tag{
+    position:absolute;bottom:14px;left:var(--pad);
+    color:var(--paper);
+    background:rgba(13,21,31,.5);
+    padding:6px 10px;
+    border-left:2px solid var(--coral);
+    backdrop-filter:blur(2px);
+  }
+  /* bio grid */
+  .bio{
+    padding:0 var(--pad) clamp(30px,5vw,72px);
+  }
+  .bio-grid{
+    display:grid;grid-template-columns:1fr;
+  }
+  @media(min-width:760px){
+    .bio-grid{grid-template-columns:1fr 1fr;column-gap:clamp(30px,4vw,64px)}
+  }
+  .bio-item{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:clamp(14px,2vw,26px);
+    padding:clamp(22px,3vw,34px) 0;
+    border-top:1px solid var(--line);
+    align-items:start;
+  }
+  .bio-item:first-child,.bio-item:nth-child(2){border-top:0}
+  @media(max-width:759px){
+    .bio-item:nth-child(2){border-top:1px solid var(--line)}
+  }
+  .bio-no{
+    font-family:var(--disp);font-weight:700;
+    color:var(--coral-deep);
+    font-size:clamp(15px,1.3vw,18px);
+    line-height:1;
+    padding-top:.35em;
+    font-variant-numeric:tabular-nums;
+  }
+  .bio-item p{font-size:clamp(14.5px,1.05vw,16px);line-height:1.62}
+  .bio-item p em{font-style:italic}
+
+  /* ================= BLOG ================ */
+  .blog{
+    background:var(--navy);color:var(--paper);
+    border-bottom:1px solid var(--line-dark);
+    position:relative;overflow:hidden;
+  }
+  .blog .frame-inner{
+    padding:clamp(40px,7vw,110px) var(--pad);
+    position:relative;z-index:2;
+    display:grid;grid-template-columns:1fr;gap:clamp(22px,4vw,48px);
+    align-items:end;
+  }
+  @media(min-width:860px){
+    .blog .frame-inner{grid-template-columns:1.35fr .65fr}
+  }
+  .blog .eyebrow{color:var(--coral-bright)}
+  .blog .eyebrow::before{background:var(--coral-bright)}
+  .blog-head{
+    font-family:var(--disp);font-weight:500;
+    line-height:1.02;letter-spacing:-.02em;
+    font-size:clamp(30px,4.8vw,62px);
+    max-width:16ch;
+  }
+  .blog-body p{
+    color:rgba(243,240,233,.82);
+    font-size:clamp(15px,1.2vw,18px);
+    line-height:1.55;margin-bottom:24px;max-width:40ch;
+  }
+  .blog-link{
+    display:inline-flex;align-items:center;gap:12px;
+    text-decoration:none;color:var(--paper);
+    font-family:var(--mono);font-weight:600;
+    letter-spacing:.12em;text-transform:uppercase;
+    font-size:clamp(13px,1.1vw,15px);
+    padding-bottom:6px;border-bottom:2px solid var(--coral);
+    transition:gap .2s ease;
+  }
+  .blog-link:hover{gap:20px}
+  /* oversized ghost monogram */
+  .blog-ghost{
+    position:absolute;right:-4%;bottom:-14%;z-index:1;
+    width:clamp(280px,42vw,620px);
+    opacity:.06;pointer-events:none;
+    filter:brightness(0) invert(1);
+  }
+
+  /* ================= FOOTER ================ */
+  footer{background:var(--navy);color:var(--paper)}
+  .foot-inner{
+    padding:clamp(30px,4vw,52px) var(--pad);
+    display:grid;gap:clamp(24px,4vw,40px);
+    grid-template-columns:1fr;
+    align-items:center;
+  }
+  @media(min-width:720px){
+    .foot-inner{grid-template-columns:auto 1fr auto}
+  }
+  .foot-inner img{height:clamp(30px,4vw,40px);width:auto}
+  .foot-nav{
+    display:flex;gap:clamp(18px,3vw,36px);
+    justify-self:start;
+  }
+  @media(min-width:720px){.foot-nav{justify-self:center}}
+  .foot-nav a{
+    text-decoration:none;
+    font-family:var(--mono);font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    font-size:clamp(11px,.9vw,13px);
+    position:relative;padding-bottom:4px;
+  }
+  .foot-nav a::after{
+    content:"";position:absolute;left:0;bottom:0;height:2px;width:0;
+    background:var(--coral-bright);transition:width .25s ease;
+  }
+  .foot-nav a:hover::after,.foot-nav a:focus-visible::after{width:100%}
+  .copyright{
+    color:rgba(243,240,233,.6);
+    justify-self:start;
+  }
+  @media(min-width:720px){.copyright{justify-self:end;text-align:right}}
+  .foot-top-rule{background:var(--line-dark)}
+
+  /* reveal animation */
+  .rise{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .rise.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important}
+    .rise{opacity:1;transform:none;transition:none}
+    .btn,.btn .arw,.blog-link,.nav-links a::after{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a class="brand focusable" href="#top" aria-label="Venture Branding home">
+      <img src="images/03.png" alt="Venture Branding">
+    </a>
+    <div class="nav-links">
+      <a class="focusable" href="blog.html"><span class="nav-idx spec">01 · </span>Blog</a>
+      <a class="focusable" href="#about"><span class="nav-idx spec">02 · </span>About</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="frame">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="plumb" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-meta spec">
+          <span>Venture Branding — Trademark &amp; Brand Protection</span>
+          <span>Reg. № 01 / Intent-to-Use</span>
+        </div>
+        <h1>
+          Protect your brand<br>
+          before <span class="em">someone</span><br>
+          else does.
+        </h1>
+        <div class="hero-lower">
+          <p class="hero-sub rise">
+            Register your logo and trademark with legal experts.
+            Fast, secure, and fully managed.
+          </p>
+          <div class="hero-cta-wrap rise">
+            <span class="spec" style="color:var(--ink-60)">Start where founders start</span>
+            <a class="btn focusable" href="blog.html">
+              Read the blog <span class="arw" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+      <div class="about-top">
+        <div class="eyebrow spec">About</div>
+        <h2 class="sec-head rise">Helping founders bring their ideas to life.</h2>
+      </div>
+
+      <div class="about-photo-band">
+        <img src="images/Cosey_Marion__1994x1058-2.jpg" alt="Founder, Venture Branding" loading="lazy">
+        <span class="photo-tag spec">Founder · Venture Branding</span>
+      </div>
+
+      <div class="bio">
+        <div class="bio-grid">
+          <div class="bio-item rise">
+            <div class="bio-no">§01</div>
+            <p>My interest in startups began long before law school. During my sophomore year of college, after watching <em>The Social Network</em>, I became fascinated by the idea that a simple idea could grow into a transformative business. I spent countless hours brainstorming startup concepts with friends and roommates, pitching everything from social platforms to technology-enabled services. Most of those ideas never went anywhere, but the process sparked a lasting interest in entrepreneurship, innovation, and the people willing to take the risk of building something from nothing.</p>
+          </div>
+          <div class="bio-item rise">
+            <div class="bio-no">§02</div>
+            <p>That interest followed me through law school, where I eventually launched a startup of my own and successfully secured federal trademark protection for its brand through an intent-to-use trademark application. Going through that process firsthand gave me an appreciation for the excitement, uncertainty, and optimism that accompany the earliest stages of a new venture.</p>
+          </div>
+          <div class="bio-item rise">
+            <div class="bio-no">§03</div>
+            <p>Although I built my legal career in corporate law, I found myself most energized by the founders behind the businesses. I enjoyed learning about their ideas, understanding what they were trying to build, and helping them navigate the legal issues that stand between concept and execution. Over time, I realized that my greatest professional interest was not simply practicing law; it was helping founders bring their ideas to life.</p>
+          </div>
+          <div class="bio-item rise">
+            <div class="bio-no">§04</div>
+            <p>At Venture Branding, that philosophy begins with trademarks. For many founders, selecting and protecting a brand is one of the first major legal milestones in the life of a company. It is also one of the most exciting. A trademark transforms an idea into something tangible: a name, a brand, and an identity that customers can recognize and trust. My goal is to help founders protect that identity while preserving the momentum and excitement that inspired them to start building in the first place.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FROM THE BLOG -->
+    <section class="blog">
+      <img class="blog-ghost" src="images/09.png" alt="" aria-hidden="true">
+      <div class="frame-inner">
+        <div class="rise">
+          <div class="eyebrow spec">From the Blog</div>
+          <h2 class="blog-head">Learn how the trademark process actually works.</h2>
+        </div>
+        <div class="blog-body rise">
+          <p>Essays on trademarks, brand protection, and the goals of the firm — written to help founders understand each step before they take it.</p>
+          <a class="blog-link focusable" href="blog.html">Visit the blog <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="frame">
+    <hr class="rule foot-top-rule">
+    <div class="foot-inner">
+      <a class="brand focusable" href="#top" aria-label="Venture Branding home">
+        <img src="images/02.png" alt="Venture Branding">
+      </a>
+      <nav class="foot-nav" aria-label="Footer">
+        <a class="focusable" href="blog.html">Blog</a>
+        <a class="focusable" href="#about">About</a>
+      </nav>
+      <p class="copyright spec">© 2026 Venture Branding, Inc. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var els = document.querySelectorAll(".rise");
+    if(reduce || !("IntersectionObserver" in window)){
+      els.forEach(function(e){e.classList.add("in")});
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}
+      });
+    },{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+    els.forEach(function(e){io.observe(e)});
+  })();
+</script>
+</body>
+</html>
