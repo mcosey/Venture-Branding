@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Venture Branding — Protect Your Brand Before Someone Else Does</title>
+<meta name="description" content="Register your logo and trademark with legal experts. Fast, secure, and fully managed.">
+<link rel="icon" type="image/png" href="images/09.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0D151F;
+    --navy-soft:#16212f;
+    --coral-deep:#B54553;
+    --coral:#C94D5B;
+    --coral-bright:#D44D5C;
+    --coral-text:#A83A48;
+    --oxblood:#6E2630;
+    --paper:#FBF7F2;
+    --paper-warm:#F6EEE4;
+    --cream:#FFFDFA;
+    --ink-70:#3a4654;
+    --ink-50:#5c6874;
+    --coral-grad:linear-gradient(120deg,#B54553 0%,#C94D5B 48%,#D44D5C 100%);
+    --shadow-soft:0 18px 50px -20px rgba(13,21,31,.28);
+    --shadow-lift:0 26px 60px -24px rgba(181,69,83,.45);
+    --r-lg:30px;
+    --r-md:22px;
+    --r-pill:999px;
+    --ease-bounce:cubic-bezier(.34,1.56,.64,1);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Nunito",system-ui,sans-serif;
+    color:var(--navy);
+    background:var(--paper);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif;line-height:1.06;margin:0;letter-spacing:-.01em}
+  p{margin:0}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+
+  .wrap{width:min(1120px,92vw);margin-inline:auto}
+
+  a:focus-visible,button:focus-visible{
+    outline:3px solid var(--coral);
+    outline-offset:4px;
+    border-radius:8px;
+  }
+
+  /* ---------- decorative floating shapes ---------- */
+  .blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.5;z-index:0;pointer-events:none}
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position:sticky;top:0;z-index:40;
+    background:rgba(251,247,242,.82);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(13,21,31,.07);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 0}
+  .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+  .brand img{height:38px;width:auto}
+  .brand .wink{
+    display:inline-grid;place-items:center;
+    width:30px;height:30px;border-radius:50%;
+    background:var(--coral-grad);color:#fff;
+    font-family:"Fraunces",serif;font-weight:700;font-size:.95rem;
+    box-shadow:0 6px 16px -6px rgba(181,69,83,.7);
+  }
+  .navlinks{display:flex;align-items:center;gap:.4rem}
+  .navlinks a{
+    text-decoration:none;font-weight:700;font-size:.98rem;
+    padding:.5rem .9rem;border-radius:var(--r-pill);
+    color:var(--navy);transition:background .25s,color .25s,transform .25s var(--ease-bounce);
+  }
+  .navlinks a:hover{background:var(--paper-warm);transform:translateY(-2px)}
+  .navlinks a.cta{
+    background:var(--navy);color:#fff;
+    box-shadow:0 10px 24px -12px rgba(13,21,31,.9);
+  }
+  .navlinks a.cta:hover{background:var(--coral);color:#fff}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:clamp(3rem,7vw,6rem) 0 clamp(3rem,6vw,5rem);overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(2rem,4vw,3.5rem);align-items:center;position:relative;z-index:2}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:.5rem;
+    font-family:"Nunito";font-weight:800;text-transform:uppercase;
+    letter-spacing:.14em;font-size:.74rem;color:var(--coral-text);
+    background:#fff;border:1px solid rgba(181,69,83,.22);
+    padding:.4rem .85rem;border-radius:var(--r-pill);
+    box-shadow:0 8px 20px -14px rgba(181,69,83,.6);
+  }
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--coral-grad)}
+  h1.hero-h{
+    font-size:clamp(2.6rem,6vw,4.6rem);
+    font-weight:600;margin:1.1rem 0 0;
+    max-width:15ch;
+  }
+  h1.hero-h .pop{
+    position:relative;color:var(--coral-text);font-style:italic;font-weight:600;
+    white-space:nowrap;
+  }
+  /* the playful hand-drawn underline sweep */
+  h1.hero-h .pop svg{
+    position:absolute;left:-2%;bottom:-.18em;width:104%;height:.5em;overflow:visible;
+  }
+  h1.hero-h .pop path{
+    stroke:var(--coral);stroke-width:7;fill:none;stroke-linecap:round;
+    stroke-dasharray:340;stroke-dashoffset:340;
+    animation:draw 1.1s .9s var(--ease-bounce) forwards;
+  }
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  .hero-sub{margin-top:1.5rem;font-size:clamp(1.05rem,1.7vw,1.28rem);color:var(--ink-70);max-width:42ch;font-weight:500}
+
+  .hero-actions{margin-top:2rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;
+    font-family:"Nunito";font-weight:800;font-size:1.02rem;text-decoration:none;
+    padding:.95rem 1.6rem;border-radius:var(--r-pill);
+    background:var(--coral-grad);color:#fff;
+    box-shadow:var(--shadow-lift);
+    transition:transform .3s var(--ease-bounce),box-shadow .3s;
+  }
+  .btn .arrow{transition:transform .35s var(--ease-bounce);display:inline-block}
+  .btn:hover{transform:translateY(-3px) rotate(-.6deg)}
+  .btn:hover .arrow{transform:translateX(5px)}
+  .assurance{display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;font-weight:700;font-size:.9rem;color:var(--ink-50)}
+  .assurance span{display:inline-flex;align-items:center;gap:.4rem}
+  .assurance .tick{color:var(--coral-text);font-size:1rem}
+
+  /* hero art card w/ animated balancing scales */
+  .hero-art{position:relative;z-index:2}
+  .art-card{
+    position:relative;background:var(--cream);
+    border-radius:var(--r-lg);padding:2.2rem;
+    box-shadow:var(--shadow-soft);
+    border:1px solid rgba(13,21,31,.06);
+    overflow:hidden;
+  }
+  .art-card::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(120% 90% at 100% 0%,rgba(201,77,91,.10),transparent 55%);
+    pointer-events:none;
+  }
+  .scales-wrap{display:grid;place-items:center;padding:.5rem 0 1rem}
+  .scales{width:min(230px,60%);height:auto;transform-origin:50% 12%;animation:balance 6s ease-in-out infinite}
+  @keyframes balance{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+  .scales .beam{transform-box:fill-box}
+  .art-tag{
+    display:inline-flex;align-items:center;gap:.5rem;background:var(--paper-warm);
+    color:var(--navy);font-weight:800;font-size:.86rem;
+    padding:.5rem .95rem;border-radius:var(--r-pill);margin-top:.4rem;
+  }
+  .art-tag .r{
+    display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;
+    background:var(--coral-grad);color:#fff;font-size:.72rem;font-weight:800;
+  }
+  .art-caption{margin-top:1.1rem;text-align:center;color:var(--ink-50);font-weight:600;font-size:.95rem}
+
+  /* ---------- floating trust chips band ---------- */
+  .chips{position:relative;z-index:2;margin-top:clamp(2rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+  .chip{
+    display:inline-flex;align-items:center;gap:.55rem;
+    background:#fff;border:1px solid rgba(13,21,31,.08);
+    padding:.6rem 1.05rem;border-radius:var(--r-pill);
+    font-weight:700;font-size:.92rem;color:var(--navy);
+    box-shadow:0 12px 26px -20px rgba(13,21,31,.5);
+    transition:transform .3s var(--ease-bounce),box-shadow .3s;
+  }
+  .chip:hover{transform:translateY(-4px) rotate(1deg);box-shadow:0 18px 30px -18px rgba(181,69,83,.5)}
+  .chip .ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--paper-warm);color:var(--coral-text)}
+
+  /* ---------- ABOUT ---------- */
+  .about{position:relative;padding:clamp(3.5rem,7vw,6rem) 0}
+  .about::before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(60% 50% at 12% 8%,rgba(201,77,91,.06),transparent 60%),
+      radial-gradient(50% 40% at 92% 95%,rgba(13,21,31,.05),transparent 60%);
+  }
+  .about-inner{position:relative;z-index:2;display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(2rem,4vw,3.5rem);align-items:start}
+  .about-head h2{font-size:clamp(2rem,3.6vw,2.9rem);font-weight:600;margin-top:.9rem;max-width:16ch}
+  .photo-card{
+    position:relative;border-radius:var(--r-lg);overflow:hidden;
+    box-shadow:var(--shadow-soft);border:6px solid #fff;
+    transform:rotate(-1.6deg);transition:transform .4s var(--ease-bounce);
+  }
+  .photo-card:hover{transform:rotate(0deg) scale(1.01)}
+  .photo-card img{width:100%;height:100%;object-fit:cover}
+  .photo-badge{
+    position:absolute;bottom:14px;left:14px;
+    background:rgba(13,21,31,.86);color:#fff;
+    font-weight:700;font-size:.82rem;padding:.5rem .9rem;border-radius:var(--r-pill);
+    backdrop-filter:blur(4px);
+  }
+  .photo-badge b{color:#fff}
+  .sticker{
+    position:absolute;top:-18px;right:-14px;z-index:3;
+    width:78px;height:78px;border-radius:50%;
+    background:var(--coral-grad);color:#fff;
+    display:grid;place-items:center;text-align:center;
+    font-family:"Fraunces",serif;font-weight:700;font-size:.7rem;line-height:1.15;
+    box-shadow:0 14px 30px -12px rgba(181,69,83,.7);
+    transform:rotate(9deg);
+    animation:wobble 5s ease-in-out infinite;
+  }
+  @keyframes wobble{0%,100%{transform:rotate(9deg)}50%{transform:rotate(-6deg)}}
+
+  .bio{display:flex;flex-direction:column;gap:1.15rem}
+  .bio p{color:var(--ink-70);font-size:1.05rem;font-weight:500}
+  .bio p em{color:var(--coral-text);font-style:italic;font-weight:600}
+  .bio p:first-child::first-letter{
+    font-family:"Fraunces",serif;font-weight:700;
+    float:left;font-size:3.4rem;line-height:.82;
+    padding:.25rem .55rem .1rem 0;color:var(--coral-text);
+  }
+  .bio-sign{
+    display:inline-flex;align-items:center;gap:.6rem;margin-top:.3rem;
+    font-weight:800;color:var(--navy);
+  }
+  .bio-sign .mono{height:34px;width:auto}
+
+  /* ---------- BLOG ---------- */
+  .blog{position:relative;padding:clamp(1rem,3vw,2rem) 0 clamp(4rem,7vw,6rem)}
+  .blog-card{
+    position:relative;overflow:hidden;
+    background:var(--navy);color:#fff;border-radius:var(--r-lg);
+    padding:clamp(2.2rem,5vw,4rem);
+    box-shadow:var(--shadow-soft);
+  }
+  .blog-card::after{
+    content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;border-radius:50%;
+    background:var(--coral-grad);opacity:.85;filter:blur(4px);
+  }
+  .blog-card::before{
+    content:"®";position:absolute;left:6%;bottom:-2.2rem;
+    font-family:"Fraunces",serif;font-size:14rem;line-height:1;
+    color:rgba(255,255,255,.05);pointer-events:none;user-select:none;
+  }
+  .blog-content{position:relative;z-index:2;max-width:44ch}
+  .blog .eyebrow{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff}
+  .blog h2{font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:600;margin-top:1rem;color:#fff}
+  .blog p{margin-top:1rem;color:rgba(255,255,255,.82);font-weight:500;font-size:1.06rem}
+  .blog .link{
+    display:inline-flex;align-items:center;gap:.55rem;margin-top:1.7rem;
+    text-decoration:none;font-weight:800;color:var(--navy);
+    background:#fff;padding:.85rem 1.5rem;border-radius:var(--r-pill);
+    transition:transform .3s var(--ease-bounce),background .3s,color .3s;
+  }
+  .blog .link:hover{transform:translateY(-3px);background:var(--coral);color:#fff}
+  .blog .link .arrow{transition:transform .35s var(--ease-bounce)}
+  .blog .link:hover .arrow{transform:translateX(5px)}
+
+  /* ---------- FOOTER ---------- */
+  footer.site{background:var(--navy);color:#fff;padding:clamp(2.5rem,5vw,3.5rem) 0}
+  .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}
+  .foot img{height:40px;width:auto}
+  .foot-links{display:flex;gap:.4rem}
+  .foot-links a{
+    text-decoration:none;font-weight:700;color:rgba(255,255,255,.85);
+    padding:.45rem .9rem;border-radius:var(--r-pill);
+    transition:background .25s,color .25s,transform .25s var(--ease-bounce);
+  }
+  .foot-links a:hover{background:rgba(255,255,255,.1);color:#fff;transform:translateY(-2px)}
+  .copyright{width:100%;margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);font-size:.9rem;font-weight:600}
+
+  /* ---------- entrance animation ---------- */
+  .rise{opacity:0;transform:translateY(22px);animation:rise .8s var(--ease-bounce) forwards}
+  .d1{animation-delay:.05s}.d2{animation-delay:.18s}.d3{animation-delay:.31s}.d4{animation-delay:.44s}.d5{animation-delay:.57s}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr}
+    .hero-art{max-width:440px;margin-inline:auto;width:100%}
+    .about-inner{grid-template-columns:1fr}
+    .photo-card{max-width:460px}
+  }
+  @media (max-width:520px){
+    .navlinks a:not(.cta){display:none}
+    h1.hero-h{margin-top:.8rem}
+    .bio p:first-child::first-letter{font-size:2.8rem}
+    .sticker{width:66px;height:66px;font-size:.62rem}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .rise{opacity:1;transform:none}
+    h1.hero-h .pop path{stroke-dashoffset:0}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Venture Branding home">
+      <img src="images/03.png" alt="Venture Branding">
+    </a>
+    <nav class="navlinks" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="blog.html">Blog</a>
+      <a class="cta" href="blog.html">Read the blog</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="blob" style="width:280px;height:280px;background:var(--coral-grad);top:-60px;left:-70px;opacity:.14"></span>
+    <span class="blob" style="width:200px;height:200px;background:var(--navy);bottom:-40px;right:-40px;opacity:.05"></span>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow rise d1"><span class="dot"></span>Trademark &amp; brand protection</span>
+        <h1 class="hero-h rise d2">Protect your brand before <span class="pop">someone else<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 13 C 70 4, 150 4, 210 10 S 285 16, 296 7"/></svg></span> does.</h1>
+        <p class="hero-sub rise d3">Register your logo and trademark with legal experts. Fast, secure, and fully managed.</p>
+        <div class="hero-actions rise d4">
+          <a class="btn" href="blog.html">Read the blog <span class="arrow" aria-hidden="true">→</span></a>
+          <div class="assurance">
+            <span><span class="tick" aria-hidden="true">✓</span> Fast</span>
+            <span><span class="tick" aria-hidden="true">✓</span> Secure</span>
+            <span><span class="tick" aria-hidden="true">✓</span> Fully managed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-art rise d5">
+        <div class="art-card">
+          <div class="scales-wrap">
+            <svg class="scales" viewBox="0 0 220 200" role="img" aria-label="Balancing scales of justice">
+              <g fill="none" stroke="#0D151F" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                <!-- base -->
+                <line x1="110" y1="176" x2="110" y2="52"/>
+                <path d="M84 182 q26 -16 52 0" stroke-width="7"/>
+                <line x1="72" y1="52" x2="148" y2="52" class="beam"/>
+                <circle cx="110" cy="46" r="7" fill="#0D151F" stroke="none"/>
+                <!-- left strings + pan -->
+                <line x1="72" y1="52" x2="56" y2="96"/>
+                <line x1="72" y1="52" x2="88" y2="96"/>
+                <path d="M50 96 a22 12 0 0 0 44 0" stroke="url(#cg)" stroke-width="7"/>
+                <!-- right strings + pan -->
+                <line x1="148" y1="52" x2="132" y2="96"/>
+                <line x1="148" y1="52" x2="164" y2="96"/>
+                <path d="M126 96 a22 12 0 0 0 44 0" stroke="url(#cg)" stroke-width="7"/>
+              </g>
+              <text x="72" y="90" text-anchor="middle" font-family="Fraunces,serif" font-weight="700" font-size="20" fill="#C94D5B">®</text>
+              <text x="148" y="90" text-anchor="middle" font-family="Fraunces,serif" font-weight="700" font-size="20" fill="#C94D5B">™</text>
+              <defs>
+                <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#B54553"/>
+                  <stop offset="1" stop-color="#D44D5C"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div style="text-align:center">
+            <span class="art-tag"><span class="r">®</span> Your idea, made official</span>
+          </div>
+          <p class="art-caption">We keep the scales tipped in your favor.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="chips">
+        <span class="chip"><span class="ic" aria-hidden="true">⚖️</span> Legal experts</span>
+        <span class="chip"><span class="ic" aria-hidden="true">✦</span> Logo &amp; trademark</span>
+        <span class="chip"><span class="ic" aria-hidden="true">✓</span> Fully managed</span>
+        <span class="chip"><span class="ic" aria-hidden="true">♥</span> Founder-friendly</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap about-inner">
+      <div class="about-head">
+        <span class="eyebrow"><span class="dot"></span>About</span>
+        <h2>Helping founders bring their ideas to life.</h2>
+        <div class="photo-card" style="margin-top:1.6rem">
+          <span class="sticker" aria-hidden="true">Idea → ®</span>
+          <img src="images/Cosey_Marion__1994x1058-2.jpg" alt="Founder, Venture Branding" loading="lazy">
+          <span class="photo-badge"><b>Founder</b>, Venture Branding</span>
+        </div>
+      </div>
+
+      <div class="bio">
+        <p>My interest in startups began long before law school. During my sophomore year of college, after watching <em>The Social Network</em>, I became fascinated by the idea that a simple idea could grow into a transformative business. I spent countless hours brainstorming startup concepts with friends and roommates, pitching everything from social platforms to technology-enabled services. Most of those ideas never went anywhere, but the process sparked a lasting interest in entrepreneurship, innovation, and the people willing to take the risk of building something from nothing.</p>
+        <p>That interest followed me through law school, where I eventually launched a startup of my own and successfully secured federal trademark protection for its brand through an intent-to-use trademark application. Going through that process firsthand gave me an appreciation for the excitement, uncertainty, and optimism that accompany the earliest stages of a new venture.</p>
+        <p>Although I built my legal career in corporate law, I found myself most energized by the founders behind the businesses. I enjoyed learning about their ideas, understanding what they were trying to build, and helping them navigate the legal issues that stand between concept and execution. Over time, I realized that my greatest professional interest was not simply practicing law; it was helping founders bring their ideas to life.</p>
+        <p>At Venture Branding, that philosophy begins with trademarks. For many founders, selecting and protecting a brand is one of the first major legal milestones in the life of a company. It is also one of the most exciting. A trademark transforms an idea into something tangible: a name, a brand, and an identity that customers can recognize and trust. My goal is to help founders protect that identity while preserving the momentum and excitement that inspired them to start building in the first place.</p>
+        <div class="bio-sign">
+          <img class="mono" src="images/09.png" alt="">
+          <span>Founder, Venture Branding</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FROM THE BLOG -->
+  <section class="blog">
+    <div class="wrap">
+      <div class="blog-card">
+        <div class="blog-content">
+          <span class="eyebrow"><span class="dot"></span>From the Blog</span>
+          <h2>Learn how the trademark process actually works.</h2>
+          <p>Essays on trademarks, brand protection, and the goals of the firm — written to help founders understand each step before they take it.</p>
+          <a class="link" href="blog.html">Visit the blog <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap foot">
+    <img src="images/02.png" alt="Venture Branding">
+    <nav class="foot-links" aria-label="Footer">
+      <a href="blog.html">Blog</a>
+      <a href="#about">About</a>
+    </nav>
+    <p class="copyright">© 2026 Venture Branding, Inc. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
