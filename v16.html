@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Venture Branding — Registered, Protected, and Unmistakably Yours</title>
+<meta name="description" content="Register your logo and trademark with legal experts. Fast, secure, and fully managed.">
+<link rel="icon" type="image/png" href="images/09.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0D151F;
+    --panel:#101B27;
+    --panel-2:#0A121B;
+    --line:#1E2E3E;
+    --line-bright:#2A3F52;
+    --ink:#C6D3DF;
+    --ink-dim:#7E93A6;
+    --ink-faint:#4E6072;
+    --coral:#D44D5C;
+    --coral-core:#C94D5B;
+    --coral-deep:#B54553;
+    --green:#4FB477;
+    --amber:#E0A64B;
+    --cyan:#5FC8D6;
+    --mono:'JetBrains Mono','IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--navy);
+    color:var(--ink);
+    font-family:var(--mono);
+    font-size:14px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* CRT scanline overlay */
+  .crt{
+    position:fixed;inset:0;pointer-events:none;z-index:9999;
+    background:repeating-linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0) 2px,rgba(0,0,0,.18) 3px,rgba(0,0,0,0) 4px);
+    mix-blend-mode:multiply;opacity:.5;
+  }
+  .crt::after{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(120% 120% at 50% 40%,rgba(0,0,0,0) 55%,rgba(0,0,0,.4) 100%);
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--coral);color:#0A0F15;}
+
+  .wrap{max-width:1240px;margin:0 auto;padding:0 12px 40px;}
+
+  /* ===== TOP STATUS BAR ===== */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:linear-gradient(180deg,#0B131C,#0A1119);
+    border-bottom:1px solid var(--line-bright);
+  }
+  .topbar-inner{
+    max-width:1240px;margin:0 auto;padding:0 12px;
+    display:flex;align-items:center;gap:14px;min-height:46px;flex-wrap:wrap;
+  }
+  .sys{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
+  .sys img{height:22px;width:auto;display:block;}
+  .sys .name{
+    font-weight:700;letter-spacing:.5px;font-size:13px;color:#EAF1F7;white-space:nowrap;
+  }
+  .sys .name b{color:var(--coral);}
+  .status-strip{
+    display:flex;align-items:center;gap:16px;margin-left:auto;
+    font-size:11px;color:var(--ink-dim);letter-spacing:.4px;flex-wrap:wrap;
+  }
+  .stat{display:flex;align-items:center;gap:6px;white-space:nowrap;}
+  .dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
+  .dot.g{background:var(--green);box-shadow:0 0 6px var(--green);}
+  .dot.a{background:var(--amber);box-shadow:0 0 6px var(--amber);}
+  .dot.c{background:var(--coral);box-shadow:0 0 6px var(--coral);}
+  .stat .v{color:var(--ink);}
+  #clock{color:var(--cyan);font-variant-numeric:tabular-nums;}
+
+  /* nav within topbar */
+  .topnav{display:flex;gap:2px;}
+  .topnav a{
+    font-size:11px;letter-spacing:.6px;color:var(--ink-dim);
+    padding:5px 9px;border:1px solid var(--line);border-radius:2px;
+    background:var(--panel-2);transition:.15s;
+  }
+  .topnav a:hover{color:#EAF1F7;border-color:var(--coral);background:#141F2B;}
+  .topnav a .fk{color:var(--coral);}
+
+  /* ===== COMMAND / SECOND LINE ===== */
+  .cmdline{
+    max-width:1240px;margin:0 auto;padding:6px 12px;
+    display:flex;align-items:center;gap:8px;
+    font-size:11.5px;color:var(--ink-faint);letter-spacing:.5px;border-bottom:1px solid var(--line);
+  }
+  .cmdline .prompt{color:var(--green);}
+  .cmdline .cmd{color:var(--ink);}
+  .cur{display:inline-block;width:8px;height:14px;background:var(--coral);margin-left:2px;vertical-align:-2px;
+    animation:blink 1.05s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ===== PANEL SYSTEM ===== */
+  .grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px;}
+  @media(min-width:900px){
+    .grid{grid-template-columns:1fr 1fr;}
+    .span-2{grid-column:1 / -1;}
+    .subject{grid-column:1 / -1;}
+  }
+  @media(min-width:1120px){
+    .grid{grid-template-columns:2fr 1fr;}
+    .banner{grid-column:1 / -1;}
+    .subject{grid-column:1 / 2;grid-row:span 2;}
+    .side-col{grid-column:2 / 3;}
+  }
+  .panel{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line-bright);
+    border-radius:3px;
+    position:relative;
+    display:flex;flex-direction:column;
+  }
+  .phead{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:7px 11px;border-bottom:1px solid var(--line-bright);
+    background:#0C1620;
+    font-size:11px;letter-spacing:1px;color:var(--ink-dim);text-transform:uppercase;
+  }
+  .phead .tag{color:var(--cyan);}
+  .phead .rt{display:flex;align-items:center;gap:7px;color:var(--ink-faint);font-size:10px;}
+  .phead .rt .ok{color:var(--green);}
+  .pbody{padding:16px;}
+
+  /* ===== BANNER / HERO PANEL ===== */
+  .banner .pbody{padding:26px 22px 30px;}
+  .banner-meta{
+    font-size:11px;color:var(--ink-faint);letter-spacing:1px;margin-bottom:16px;
+    display:flex;gap:14px;flex-wrap:wrap;
+  }
+  .banner-meta span b{color:var(--amber);font-weight:500;}
+  h1{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:clamp(28px,5.4vw,54px);
+    line-height:1.08;
+    letter-spacing:-.5px;
+    margin:0 0 18px;
+    color:#EDF3F8;
+  }
+  h1 .hl{color:var(--coral);position:relative;}
+  h1 .caret{
+    display:inline-block;width:.55ch;height:1em;background:var(--coral);
+    margin-left:.08ch;vertical-align:-.12em;animation:blink 1.05s steps(1) infinite;
+  }
+  /* typewriter: hide the "target" text visually until JS reveals; keep accessible */
+  .typed .live{visibility:hidden;}
+  .subhead{color:var(--ink-dim);font-size:15px;max-width:60ch;margin:0 0 22px;line-height:1.6;}
+  .cta{
+    display:inline-flex;align-items:center;gap:10px;
+    background:linear-gradient(180deg,var(--coral),var(--coral-deep));
+    color:#0A0F15;font-weight:700;font-size:13px;letter-spacing:.6px;
+    padding:12px 20px;border-radius:3px;border:1px solid var(--coral-deep);
+    transition:.15s;
+  }
+  .cta .fk{background:rgba(0,0,0,.22);padding:1px 6px;border-radius:2px;font-size:11px;}
+  .cta:hover{filter:brightness(1.08);transform:translateY(-1px);}
+  .cta:hover .arr{transform:translateX(3px);}
+  .arr{transition:.15s;}
+
+  .banner-foot{
+    margin-top:24px;padding-top:16px;border-top:1px dashed var(--line-bright);
+    display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--ink-faint);letter-spacing:.5px;
+  }
+  .chip{border:1px solid var(--line-bright);padding:4px 9px;border-radius:2px;display:flex;align-items:center;gap:7px;background:#0B141D;}
+  .chip .ok{color:var(--green);}
+  .chip .am{color:var(--amber);}
+
+  /* ===== SUBJECT PROFILE ===== */
+  .subject .pbody{padding:0;}
+  .subj-top{display:flex;gap:16px;padding:16px;border-bottom:1px solid var(--line);align-items:flex-start;}
+  .subj-photo{
+    width:112px;flex:0 0 112px;border:1px solid var(--line-bright);border-radius:2px;
+    overflow:hidden;background:#0A1119;position:relative;
+  }
+  .subj-photo img{width:100%;height:auto;display:block;filter:grayscale(.15) contrast(1.03);}
+  .subj-photo .frame{position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(212,77,92,.25);pointer-events:none;}
+  .subj-id{flex:1 1 auto;min-width:0;}
+  .eyebrow{
+    font-size:10.5px;letter-spacing:2px;color:var(--coral);text-transform:uppercase;margin-bottom:8px;
+  }
+  .subj-id h2{
+    font-size:clamp(17px,2.4vw,21px);line-height:1.25;margin:0 0 12px;color:#E7EEF4;font-weight:600;letter-spacing:-.2px;
+  }
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:11px;}
+  .kv dt{color:var(--ink-faint);letter-spacing:.5px;}
+  .kv dd{margin:0;color:var(--ink);}
+  .kv dd.ok{color:var(--green);}
+  .subj-bio{padding:16px;}
+  .subj-bio .rowhead{
+    font-size:10.5px;letter-spacing:1.5px;color:var(--ink-dim);text-transform:uppercase;
+    padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--line);
+    display:flex;justify-content:space-between;
+  }
+  .subj-bio p{
+    color:var(--ink);font-size:13.5px;line-height:1.72;margin:0 0 15px;max-width:74ch;
+    font-family:'IBM Plex Mono',var(--mono);
+  }
+  .subj-bio p:last-child{margin-bottom:0;}
+  .subj-bio p::before{
+    content:"› ";color:var(--coral);font-weight:700;
+  }
+  .subj-bio em{color:var(--cyan);font-style:normal;border-bottom:1px dotted var(--ink-faint);}
+
+  /* ===== WIRE / FEED ===== */
+  .wire .pbody{padding:0;}
+  .wire-item{padding:15px 16px;border-bottom:1px solid var(--line);}
+  .wire-item:last-child{border-bottom:0;}
+  .wire-eye{font-size:10.5px;letter-spacing:2px;color:var(--coral);text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:8px;}
+  .wire-eye .tick{color:var(--amber);}
+  .wire h3{font-size:16px;line-height:1.3;margin:0 0 10px;color:#E7EEF4;font-weight:600;letter-spacing:-.2px;}
+  .wire p{color:var(--ink-dim);font-size:12.5px;line-height:1.65;margin:0 0 14px;}
+  .wire-link{
+    display:inline-flex;align-items:center;gap:8px;color:var(--coral);font-size:12px;font-weight:600;letter-spacing:.5px;
+    border:1px solid var(--line-bright);padding:7px 12px;border-radius:2px;transition:.15s;
+  }
+  .wire-link:hover{border-color:var(--coral);background:#141F2B;}
+  .wire-link:hover .arr{transform:translateX(3px);}
+
+  /* mini status readout panel */
+  .readout .pbody{padding:0;}
+  .ro-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.4px;}
+  .ro-row:last-child{border-bottom:0;}
+  .ro-row .k{color:var(--ink-faint);}
+  .ro-row .val{display:flex;align-items:center;gap:7px;color:var(--ink);}
+  .ro-row .val.g{color:var(--green);}
+  .ro-row .val.a{color:var(--amber);}
+  .ro-row .val.c{color:var(--coral);}
+
+  /* ===== FOOTER ===== */
+  footer{
+    margin-top:14px;border:1px solid var(--line-bright);border-radius:3px;
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  }
+  .foot-inner{padding:16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between;}
+  .foot-left{display:flex;align-items:center;gap:14px;}
+  .foot-left img{height:24px;width:auto;}
+  .foot-nav{display:flex;gap:6px;}
+  .foot-nav a{font-size:11px;letter-spacing:.6px;color:var(--ink-dim);padding:5px 10px;border:1px solid var(--line);border-radius:2px;transition:.15s;}
+  .foot-nav a:hover{color:#EAF1F7;border-color:var(--coral);}
+  .copy{font-size:10.5px;color:var(--ink-faint);letter-spacing:.4px;}
+
+  /* focus */
+  a:focus-visible,.cta:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:2px;}
+
+  @media(max-width:560px){
+    .subj-top{flex-direction:column;}
+    .subj-photo{width:100%;flex:0 0 auto;max-width:180px;}
+    .status-strip{gap:10px;}
+    .banner .pbody{padding:20px 16px 24px;}
+  }
+
+  /* ===== REDUCED MOTION ===== */
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important;}
+    .cur,h1 .caret,.crt{display:none !important;}
+    .typed .live{visibility:visible !important;}
+    .cta:hover,.cta:hover .arr,.wire-link:hover .arr{transform:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="crt" aria-hidden="true"></div>
+
+<!-- ===== TOP STATUS BAR ===== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="sys">
+      <img src="images/02.png" alt="Venture Branding">
+      <span class="name">VB<b>//</b>TERMINAL</span>
+    </div>
+    <div class="status-strip">
+      <span class="stat"><span class="dot g" aria-hidden="true"></span>LINK <span class="v">SECURE</span></span>
+      <span class="stat"><span class="dot g" aria-hidden="true"></span>SESSION <span class="v">LIVE</span></span>
+      <span class="stat">UTC <span id="clock" aria-live="off">--:--:--</span></span>
+      <nav class="topnav" aria-label="Primary">
+        <a href="blog.html"><span class="fk">F1</span> BLOG</a>
+        <a href="#about"><span class="fk">F2</span> ABOUT</a>
+      </nav>
+    </div>
+  </div>
+  <div class="cmdline">
+    <span class="prompt">vb@terminal:~$</span>
+    <span class="cmd">run brand-protection --subject profile --feed wire</span>
+    <span class="cur" aria-hidden="true"></span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+
+    <!-- ===== HERO BANNER PANEL ===== -->
+    <section class="panel banner span-2" aria-labelledby="mainhead">
+      <div class="phead">
+        <span>[ <span class="tag">BRAND PROTECTION</span> // BANNER ]</span>
+        <span class="rt"><span class="ok">●</span> FILING STATUS: PROTECTED</span>
+      </div>
+      <div class="pbody">
+        <div class="banner-meta">
+          <span>MODULE <b>VB-01</b></span>
+          <span>SCOPE <b>TRADEMARK</b></span>
+          <span>MODE <b>FULLY MANAGED</b></span>
+        </div>
+        <h1 id="mainhead">
+          <span class="live" data-type>Registered, protected, and unmistakably <span class="hl">yours.</span></span><span class="caret" aria-hidden="true"></span>
+        </h1>
+        <p class="subhead">Register your logo and trademark with legal experts. Fast, secure, and fully managed.</p>
+        <a class="cta" href="blog.html"><span class="fk">↵</span> Read the blog <span class="arr" aria-hidden="true">→</span></a>
+        <div class="banner-foot">
+          <span class="chip"><span class="ok">✓</span> REGISTERED</span>
+          <span class="chip"><span class="ok">✓</span> PROTECTED</span>
+          <span class="chip"><span class="am">◆</span> UNMISTAKABLY YOURS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SUBJECT PROFILE PANEL ===== -->
+    <section class="panel subject" id="about" aria-labelledby="subjhead">
+      <div class="phead">
+        <span>[ <span class="tag">SUBJECT</span> // PROFILE ]</span>
+        <span class="rt">REC <span class="ok">●</span> VERIFIED</span>
+      </div>
+      <div class="pbody">
+        <div class="subj-top">
+          <div class="subj-photo">
+            <img src="images/Cosey_Marion__1994x1058-2.jpg" alt="Founder, Venture Branding" loading="lazy">
+            <span class="frame" aria-hidden="true"></span>
+          </div>
+          <div class="subj-id">
+            <p class="eyebrow">About</p>
+            <h2 id="subjhead">Helping founders bring their ideas to life.</h2>
+            <dl class="kv">
+              <dt>ROLE</dt><dd>Founder, Venture Branding</dd>
+              <dt>FOCUS</dt><dd>Trademarks &amp; brand protection</dd>
+              <dt>STATUS</dt><dd class="ok">● ACTIVE</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="subj-bio">
+          <div class="rowhead"><span>&gt; cat subject_profile.log</span><span>04 RECORDS</span></div>
+          <p>My interest in startups began long before law school. During my sophomore year of college, after watching <em>The Social Network</em>, I became fascinated by the idea that a simple idea could grow into a transformative business. I spent countless hours brainstorming startup concepts with friends and roommates, pitching everything from social platforms to technology-enabled services. Most of those ideas never went anywhere, but the process sparked a lasting interest in entrepreneurship, innovation, and the people willing to take the risk of building something from nothing.</p>
+          <p>That interest followed me through law school, where I eventually launched a startup of my own and successfully secured federal trademark protection for its brand through an intent-to-use trademark application. Going through that process firsthand gave me an appreciation for the excitement, uncertainty, and optimism that accompany the earliest stages of a new venture.</p>
+          <p>Although I built my legal career in corporate law, I found myself most energized by the founders behind the businesses. I enjoyed learning about their ideas, understanding what they were trying to build, and helping them navigate the legal issues that stand between concept and execution. Over time, I realized that my greatest professional interest was not simply practicing law; it was helping founders bring their ideas to life.</p>
+          <p>At Venture Branding, that philosophy begins with trademarks. For many founders, selecting and protecting a brand is one of the first major legal milestones in the life of a company. It is also one of the most exciting. A trademark transforms an idea into something tangible: a name, a brand, and an identity that customers can recognize and trust. My goal is to help founders protect that identity while preserving the momentum and excitement that inspired them to start building in the first place.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SIDE COLUMN: WIRE + READOUT ===== -->
+    <div class="side-col" style="display:flex;flex-direction:column;gap:12px;">
+      <section class="panel wire" aria-labelledby="wirehead">
+        <div class="phead">
+          <span>[ <span class="tag">WIRE</span> // FEED ]</span>
+          <span class="rt"><span class="ok">●</span> STREAMING</span>
+        </div>
+        <div class="pbody">
+          <div class="wire-item">
+            <div class="wire-eye"><span class="tick">▸</span> From the Blog</div>
+            <h3 id="wirehead">Learn how the trademark process actually works.</h3>
+            <p>Essays on trademarks, brand protection, and the goals of the firm — written to help founders understand each step before they take it.</p>
+            <a class="wire-link" href="blog.html">Visit the blog <span class="arr" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel readout" aria-label="Firm readout">
+        <div class="phead">
+          <span>[ <span class="tag">READOUT</span> ]</span>
+          <span class="rt">SYS OK</span>
+        </div>
+        <div class="pbody">
+          <div class="ro-row"><span class="k">SERVICE</span><span class="val">TRADEMARK REGISTRATION</span></div>
+          <div class="ro-row"><span class="k">HANDLING</span><span class="val g">● FULLY MANAGED</span></div>
+          <div class="ro-row"><span class="k">CHANNEL</span><span class="val a">◆ LEGAL EXPERTS</span></div>
+          <div class="ro-row"><span class="k">POSTURE</span><span class="val g">● FAST · SECURE</span></div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-left">
+        <img src="images/02.png" alt="Venture Branding">
+        <nav class="foot-nav" aria-label="Footer">
+          <a href="blog.html">Blog</a>
+          <a href="#about">About</a>
+        </nav>
+      </div>
+      <p class="copy">© 2026 Venture Branding, Inc. All rights reserved.</p>
+    </div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- live UTC clock (real, client-side) --- */
+  var clock = document.getElementById('clock');
+  function pad(n){return n<10?'0'+n:''+n;}
+  function tick(){
+    if(!clock) return;
+    var d = new Date();
+    clock.textContent = pad(d.getUTCHours())+':'+pad(d.getUTCMinutes())+':'+pad(d.getUTCSeconds());
+  }
+  tick();
+  if(!reduce){ setInterval(tick, 1000); }
+
+  /* --- typewriter boot for headline --- */
+  var target = document.querySelector('[data-type]');
+  if(target && !reduce){
+    var h1 = document.getElementById('mainhead');
+    // capture the final HTML then rebuild character-by-character preserving the .hl span
+    var finalNodes = Array.prototype.slice.call(target.childNodes);
+    // Build a token list: {char, inHl}
+    var tokens = [];
+    finalNodes.forEach(function(node){
+      if(node.nodeType === 3){ // text
+        node.nodeValue.split('').forEach(function(ch){ tokens.push({c:ch,hl:false}); });
+      } else if(node.nodeType === 1){ // element (the .hl span)
+        var t = node.textContent;
+        t.split('').forEach(function(ch){ tokens.push({c:ch,hl:true}); });
+      }
+    });
+    // clear and reveal
+    target.textContent = '';
+    target.style.visibility = 'visible';
+    var i = 0, cur = null, curHl = null;
+    function ensurePlain(){
+      if(!cur){ cur = document.createTextNode(''); target.appendChild(cur); curHl=null; }
+    }
+    function type(){
+      if(i >= tokens.length) return;
+      var tk = tokens[i++];
+      if(tk.hl){
+        if(!curHl){ curHl = document.createElement('span'); curHl.className='hl'; target.appendChild(curHl); cur=null; }
+        curHl.appendChild(document.createTextNode(tk.c));
+      } else {
+        ensurePlain();
+        cur.nodeValue += tk.c;
+      }
+      var delay = (tk.c === ' ') ? 26 : (18 + Math.random()*34);
+      setTimeout(type, delay);
+    }
+    setTimeout(type, 260);
+  } else if(target){
+    target.style.visibility = 'visible';
+  }
+})();
+</script>
+</body>
+</html>
