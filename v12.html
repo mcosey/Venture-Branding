@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture Branding — Protect Your Brand Before Someone Else Does</title>
+<meta name="description" content="Register your logo and trademark with legal experts. Fast, secure, and fully managed.">
+<link rel="icon" type="image/png" href="images/09.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ink:#0D151F;
+    --ink-soft:#333B47;
+    --ink-muted:#6A7280;
+    --paper:#F4EFE4;
+    --paper-doc:#FBF7EE;
+    --paper-warm:#EFE8D8;
+    --line:#CBB79A;
+    --line-soft:#DDD1BB;
+    --hair:#B8A47F;
+    --coral:#C94D5B;
+    --coral-deep:#A83A48;
+    --coral-ink:#8E2A37;
+    --seal:#B23A46;
+    --oxblood:#6E2630;
+    --gold:#9A7A3B;
+    --sans:"Work Sans",system-ui,sans-serif;
+    --serif:"Libre Caslon Text",Georgia,serif;
+    --display:"Libre Caslon Display","Libre Caslon Text",Georgia,serif;
+    --garamond:"EB Garamond",Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--serif);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.75;
+    font-size:18px;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  :focus-visible{outline:2px solid var(--coral-deep);outline-offset:3px}
+
+  /* The whole page reads as one engrossed sheet of vellum */
+  .instrument{
+    max-width:960px;
+    margin:0 auto;
+    background:var(--paper-doc);
+    /* faint aged-paper warmth + fibers */
+    background-image:
+      radial-gradient(ellipse at 18% 8%,rgba(154,122,59,.06),transparent 55%),
+      radial-gradient(ellipse at 88% 96%,rgba(110,38,48,.05),transparent 50%),
+      radial-gradient(ellipse at 50% 50%,rgba(203,183,154,.05),transparent 70%);
+    box-shadow:0 0 0 1px var(--line),0 2px 0 var(--hair),0 40px 90px -50px rgba(13,21,31,.5);
+    position:relative;
+  }
+  /* the engrossed double-rule frame */
+  .frame{
+    position:absolute;inset:14px;
+    border:1px solid var(--hair);
+    outline:3px double var(--line);
+    outline-offset:5px;
+    pointer-events:none;
+    z-index:0;
+  }
+  /* ruled left margin — the perforation of a legal form */
+  .rule-margin{
+    position:absolute;left:64px;top:0;bottom:0;width:0;
+    border-left:1px solid rgba(178,58,70,.32);
+    pointer-events:none;z-index:0;
+  }
+  .inner{position:relative;z-index:1;padding:0 clamp(40px,7vw,96px)}
+
+  /* letterspaced small-caps utility */
+  .sc{
+    font-family:var(--sans);
+    text-transform:uppercase;
+    letter-spacing:.26em;
+    font-weight:600;
+  }
+  .ornament{
+    text-align:center;color:var(--coral-deep);
+    font-size:20px;line-height:1;letter-spacing:.5em;
+    padding-left:.5em;
+  }
+  .ornament::before{content:"❦"}
+  .rule-double{
+    border:0;height:0;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+    box-shadow:0 3px 0 -1.5px var(--ink);
+    height:4px;
+    margin:0;
+  }
+  .rule-hair{border:0;border-top:1px solid var(--line);height:0}
+
+  /* ============ MASTHEAD (top of the sheet) ============ */
+  .masthead{padding:44px 0 30px;text-align:center}
+  .masthead .lockup{height:34px;width:auto;margin:0 auto 22px;opacity:.95}
+  .masthead .nav{
+    display:flex;justify-content:center;gap:38px;
+    font-family:var(--sans);font-size:12px;font-weight:600;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--ink-muted);
+  }
+  .masthead .nav a{padding-bottom:3px;border-bottom:1px solid transparent;transition:.15s}
+  .masthead .nav a:hover{color:var(--coral-ink);border-bottom-color:var(--coral-deep)}
+
+  /* ============ INSTRUMENT HEAD (the hero, as a title block) ============ */
+  .head{padding:8px 0 60px;text-align:center}
+  .head .super{
+    font-family:var(--sans);font-size:11px;font-weight:600;
+    letter-spacing:.34em;text-transform:uppercase;color:var(--ink-muted);
+    margin:26px 0 4px;
+  }
+  .head .matter{
+    font-family:var(--sans);font-size:clamp(12px,1.5vw,14px);font-weight:600;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--oxblood);
+    margin:0 auto 40px;max-width:26em;line-height:1.9;
+  }
+  .head .matter .amp{font-family:var(--garamond);font-style:italic;text-transform:none;letter-spacing:0}
+  .head .title{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(40px,6.6vw,80px);line-height:1.06;
+    letter-spacing:-.01em;margin:0 auto;max-width:12em;
+  }
+  .head .title em{font-style:italic;color:var(--coral-ink)}
+  .head .recital{
+    font-family:var(--garamond);font-style:italic;
+    font-size:clamp(19px,2.4vw,25px);color:var(--ink-soft);
+    max-width:26em;margin:30px auto 0;line-height:1.55;
+  }
+  .head .recital::before,.head .recital::after{color:var(--coral-deep);font-style:normal}
+  .head .recital::before{content:"“"}
+  .head .recital::after{content:"”"}
+  .head .cta-wrap{margin-top:46px;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .head .cta-lead{
+    font-family:var(--sans);font-size:10.5px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-muted);font-weight:600;
+  }
+  .seal-btn{
+    display:inline-block;font-family:var(--sans);font-size:13px;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+    padding:16px 40px;
+    border:1px solid var(--ink);
+    box-shadow:3px 3px 0 var(--coral-deep);
+    background:var(--paper-doc);
+    transition:.16s;
+  }
+  .seal-btn:hover{background:var(--ink);color:var(--paper-doc);box-shadow:3px 3px 0 var(--coral)}
+
+  /* ============ RECITALS (whereas) ============ */
+  .part-label{
+    text-align:center;margin:0 auto 8px;
+    font-family:var(--sans);font-size:12px;font-weight:600;
+    letter-spacing:.3em;text-transform:uppercase;color:var(--coral-ink);
+  }
+  .part-label .no{color:var(--ink-muted)}
+  .recitals{padding:56px 0 20px;max-width:44em;margin:0 auto}
+  .whereas{
+    display:grid;grid-template-columns:auto 1fr;gap:0 16px;
+    margin-bottom:20px;align-items:baseline;
+  }
+  .whereas .w{
+    font-family:var(--garamond);font-style:italic;
+    color:var(--coral-ink);font-size:19px;white-space:nowrap;
+  }
+  .whereas p{font-family:var(--garamond);font-size:19px;line-height:1.6;color:var(--ink-soft)}
+
+  /* ============ ARTICLE THE FIRST — the applicant / bio ============ */
+  .article{padding:52px 0 40px}
+  .art-head{text-align:center;margin-bottom:6px}
+  .art-head .art-no{
+    font-family:var(--display);font-size:clamp(22px,3vw,30px);
+    letter-spacing:.04em;margin-bottom:4px;
+  }
+  .art-head .art-of{
+    font-family:var(--sans);font-size:12px;font-weight:600;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--ink-muted);
+  }
+  .art-title{
+    font-family:var(--display);font-weight:400;text-align:center;
+    font-size:clamp(28px,4vw,44px);line-height:1.14;
+    margin:22px auto 0;max-width:14em;
+  }
+
+  /* portrait plate */
+  .plate{
+    max-width:290px;margin:34px auto 6px;text-align:center;
+  }
+  .plate figure{
+    padding:9px;background:var(--paper-doc);
+    border:1px solid var(--hair);outline:1px solid var(--line-soft);outline-offset:3px;
+    box-shadow:0 18px 34px -22px rgba(13,21,31,.45);
+  }
+  .plate img{width:100%;filter:grayscale(.28) sepia(.12) contrast(1.02)}
+  .plate figcaption{
+    font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-muted);margin-top:16px;
+  }
+
+  /* the recital body — engrossed prose with lettered sub-clauses */
+  .body{max-width:46em;margin:40px auto 0}
+  .clause{
+    display:grid;grid-template-columns:56px 1fr;gap:0 24px;
+    padding:22px 0;border-top:1px solid var(--line-soft);
+  }
+  .clause:first-child{border-top:0;padding-top:6px}
+  .clause .mk{
+    font-family:var(--garamond);font-style:italic;font-size:22px;
+    color:var(--coral-ink);text-align:right;line-height:1.5;padding-top:2px;
+    user-select:none;
+  }
+  .clause .mk .lbl{
+    display:block;font-family:var(--sans);font-style:normal;font-size:8.5px;
+    font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-muted);margin-top:8px;line-height:1.4;
+  }
+  .clause p{font-size:18px;color:var(--ink-soft);line-height:1.78;text-align:justify;hyphens:auto}
+  .clause p em{font-style:italic;color:var(--coral-ink)}
+  .clause:first-child p::first-letter{
+    font-family:var(--display);font-size:3.5em;line-height:.78;
+    float:left;padding:8px 12px 0 0;color:var(--seal);
+  }
+
+  /* ============ SCHEDULE — from the blog ============ */
+  .schedule{padding:56px 0 44px;text-align:center;max-width:40em;margin:0 auto}
+  .schedule h2{
+    font-family:var(--display);font-weight:400;
+    font-size:clamp(26px,3.6vw,40px);line-height:1.16;margin:22px auto 0;max-width:15em;
+  }
+  .schedule p{
+    font-family:var(--garamond);font-size:20px;color:var(--ink-soft);
+    max-width:30em;margin:22px auto 0;line-height:1.6;
+  }
+  .schedule .refer{margin-top:36px}
+  .refer-link{
+    display:inline-block;font-family:var(--sans);font-size:12px;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--coral-ink);
+    border-bottom:1px solid var(--coral-deep);padding-bottom:4px;transition:.15s;
+  }
+  .refer-link .arrow{display:inline-block;margin-left:8px;transition:transform .18s}
+  .refer-link:hover{color:var(--ink)}
+  .refer-link:hover .arrow{transform:translateX(5px)}
+
+  /* ============ EXECUTION — the footer / in witness whereof ============ */
+  .execution{padding:60px 0 40px}
+  .witness{
+    font-family:var(--garamond);font-style:italic;font-size:20px;
+    color:var(--ink-soft);text-align:center;max-width:34em;margin:0 auto 44px;line-height:1.6;
+  }
+  .witness b{
+    font-family:var(--sans);font-style:normal;font-weight:600;font-size:13px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--ink);
+  }
+  .exec-row{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:40px;flex-wrap:wrap;max-width:44em;margin:0 auto;
+  }
+  .sig{flex:1;min-width:240px}
+  .sig .line{
+    font-family:var(--garamond);font-style:italic;font-size:30px;color:var(--ink);
+    border-bottom:1px solid var(--ink);padding-bottom:8px;display:block;
+  }
+  .sig .cap{
+    font-family:var(--sans);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-muted);margin-top:10px;line-height:1.7;
+  }
+  .sig .ls{color:var(--coral-ink);font-weight:600}
+
+  /* the wax/registration seal */
+  .seal{
+    position:relative;width:158px;height:158px;flex:none;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    color:var(--seal);
+    transform:rotate(-9deg) scale(1.45);opacity:0;
+    transition:transform .5s cubic-bezier(.2,.9,.3,1.2),opacity .35s ease;
+  }
+  .seal.stamped{transform:rotate(-9deg) scale(1);opacity:.95;animation:ink .55s ease .1s both}
+  @keyframes ink{0%{filter:contrast(1.5)}100%{filter:contrast(1)}}
+  .seal svg{position:absolute;inset:0;width:100%;height:100%}
+  .seal .core{position:relative;z-index:1}
+  .seal .core .r{font-family:var(--display);font-size:44px;line-height:1;display:block}
+  .seal .core .t{font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;margin-top:5px}
+  .seal .ring-text{font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;fill:var(--seal)}
+  .seal::after{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle at 60% 32%,transparent 58%,rgba(178,58,70,.12) 100%);
+    mix-blend-mode:multiply;
+  }
+
+  /* colophon / copyright at the very foot */
+  .colophon{
+    padding:44px 0 56px;text-align:center;
+  }
+  .colophon .marks{
+    display:flex;justify-content:center;gap:30px;flex-wrap:wrap;
+    font-family:var(--sans);font-size:11px;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);
+    margin:26px 0 18px;
+  }
+  .colophon .marks a{padding-bottom:2px;border-bottom:1px solid transparent;transition:.15s}
+  .colophon .marks a:hover{color:var(--coral-ink);border-bottom-color:var(--coral-deep)}
+  .colophon .copy{
+    font-family:var(--garamond);font-style:italic;font-size:15px;color:var(--ink-muted);
+  }
+  .colophon .lockup{height:26px;width:auto;margin:0 auto 4px;opacity:.85}
+
+  /* outer page gutter */
+  .page{padding:clamp(20px,4vw,54px) clamp(12px,3vw,40px)}
+
+  /* ============ responsive ============ */
+  @media(max-width:640px){
+    body{font-size:17px}
+    .rule-margin{left:34px}
+    .frame{inset:8px;outline-offset:4px}
+    .clause{grid-template-columns:1fr;gap:0}
+    .clause .mk{text-align:left;padding-top:0;margin-bottom:2px}
+    .clause .mk .lbl{display:inline;margin:0 0 0 10px}
+    .clause p{text-align:left;hyphens:none}
+    .whereas{grid-template-columns:1fr;gap:2px}
+    .exec-row{flex-direction:column;align-items:center;gap:44px}
+    .sig{text-align:center;min-width:0;width:100%}
+    .seal{transform:rotate(-9deg) scale(1.28)}
+    .seal.stamped{transform:rotate(-9deg) scale(.9)}
+    .masthead .nav{gap:24px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .seal{opacity:.95;transform:rotate(-9deg) scale(1);transition:none;animation:none}
+    .seal.stamped{animation:none;transform:rotate(-9deg) scale(1)}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+<div class="instrument">
+  <div class="frame" aria-hidden="true"></div>
+  <div class="rule-margin" aria-hidden="true"></div>
+  <div class="inner">
+
+    <!-- ===== masthead ===== -->
+    <header class="masthead">
+      <a href="index.html"><img class="lockup" src="images/03.png" alt="Venture Branding"></a>
+      <nav class="nav" aria-label="Primary">
+        <a href="blog.html">Blog</a>
+        <a href="#article-first">About</a>
+      </nav>
+    </header>
+
+    <hr class="rule-double" aria-hidden="true">
+
+    <main>
+      <!-- ===== INSTRUMENT HEAD (hero as title block) ===== -->
+      <section class="head" aria-labelledby="doc-title">
+        <p class="super">Articles of Brand Protection</p>
+        <p class="matter">
+          In the Matter of the Protection <span class="amp">of</span> a Brand<br>
+          &mdash;&nbsp;An Instrument of Trademark Counsel&nbsp;&mdash;
+        </p>
+        <div class="ornament" aria-hidden="true"></div>
+        <h1 class="title" id="doc-title">Protect your brand <em>before</em><br>someone else does.</h1>
+        <p class="recital">Register your logo and trademark with legal experts. Fast, secure, and fully managed.</p>
+        <div class="cta-wrap">
+          <span class="cta-lead">Whereof the reader may inform themselves</span>
+          <a class="seal-btn" href="blog.html">Read the blog</a>
+        </div>
+      </section>
+
+      <hr class="rule-hair" aria-hidden="true">
+
+      <!-- ===== RECITALS ===== -->
+      <section class="recitals" aria-label="Recitals">
+        <p class="part-label"><span class="no">§</span> Recitals</p>
+        <div class="ornament" aria-hidden="true" style="margin-bottom:28px"></div>
+        <div class="whereas">
+          <span class="w">Whereas,</span>
+          <p>a name, a logo, and a mark are among the first true assets a founder builds &mdash; and the first that another may take;</p>
+        </div>
+        <div class="whereas">
+          <span class="w">Whereas,</span>
+          <p>the earliest stages of a venture carry excitement, uncertainty, and optimism worth preserving;</p>
+        </div>
+        <div class="whereas">
+          <span class="w">Whereas,</span>
+          <p>this instrument is offered in the applicant's own words, and is submitted in support of the mark;</p>
+        </div>
+        <div class="whereas">
+          <span class="w">Now therefore,</span>
+          <p>let the following articles be entered, read, and kept of record.</p>
+        </div>
+      </section>
+
+      <hr class="rule-double" aria-hidden="true">
+
+      <!-- ===== ARTICLE THE FIRST — the applicant (bio) ===== -->
+      <section class="article" id="article-first" aria-labelledby="art1-title">
+        <div class="art-head">
+          <div class="art-no">Article the First</div>
+          <div class="art-of">Of the Applicant &mdash; Applicant's Statement</div>
+        </div>
+        <h2 class="art-title" id="art1-title">Helping founders bring their ideas to life.</h2>
+
+        <div class="plate">
+          <figure>
+            <img src="images/Cosey_Marion__1994x1058-2.jpg" alt="Founder, Venture Branding" loading="lazy">
+            <figcaption>Founder, Venture Branding</figcaption>
+          </figure>
+        </div>
+
+        <div class="body">
+          <div class="clause">
+            <div class="mk">(a)<span class="lbl">§ The Spark</span></div>
+            <p>My interest in startups began long before law school. During my sophomore year of college, after watching <em>The Social Network</em>, I became fascinated by the idea that a simple idea could grow into a transformative business. I spent countless hours brainstorming startup concepts with friends and roommates, pitching everything from social platforms to technology-enabled services. Most of those ideas never went anywhere, but the process sparked a lasting interest in entrepreneurship, innovation, and the people willing to take the risk of building something from nothing.</p>
+          </div>
+          <div class="clause">
+            <div class="mk">(b)<span class="lbl">§ First Filing</span></div>
+            <p>That interest followed me through law school, where I eventually launched a startup of my own and successfully secured federal trademark protection for its brand through an intent-to-use trademark application. Going through that process firsthand gave me an appreciation for the excitement, uncertainty, and optimism that accompany the earliest stages of a new venture.</p>
+          </div>
+          <div class="clause">
+            <div class="mk">(c)<span class="lbl">§ The Turn</span></div>
+            <p>Although I built my legal career in corporate law, I found myself most energized by the founders behind the businesses. I enjoyed learning about their ideas, understanding what they were trying to build, and helping them navigate the legal issues that stand between concept and execution. Over time, I realized that my greatest professional interest was not simply practicing law; it was helping founders bring their ideas to life.</p>
+          </div>
+          <div class="clause">
+            <div class="mk">(d)<span class="lbl">§ Registration</span></div>
+            <p>At Venture Branding, that philosophy begins with trademarks. For many founders, selecting and protecting a brand is one of the first major legal milestones in the life of a company. It is also one of the most exciting. A trademark transforms an idea into something tangible: a name, a brand, and an identity that customers can recognize and trust. My goal is to help founders protect that identity while preserving the momentum and excitement that inspired them to start building in the first place.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule-double" aria-hidden="true">
+
+      <!-- ===== SCHEDULE — from the blog ===== -->
+      <section class="schedule" aria-labelledby="sched-title">
+        <p class="part-label">Schedule &mdash; Further Reading</p>
+        <div class="ornament" aria-hidden="true" style="margin:12px 0 0"></div>
+        <h2 id="sched-title">Learn how the trademark process actually works.</h2>
+        <p>Essays on trademarks, brand protection, and the goals of the firm — written to help founders understand each step before they take it.</p>
+        <div class="refer">
+          <a class="refer-link" href="blog.html">Visit the blog<span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </section>
+
+      <hr class="rule-double" aria-hidden="true">
+
+      <!-- ===== EXECUTION — in witness whereof ===== -->
+      <section class="execution" aria-label="Execution">
+        <p class="part-label">In Witness Whereof</p>
+        <div class="ornament" aria-hidden="true" style="margin:12px 0 30px"></div>
+        <p class="witness">
+          <b>In witness whereof,</b> the applicant has set its hand and seal to this instrument, and does hereby affirm the foregoing to be true.
+        </p>
+        <div class="exec-row">
+          <div class="sig">
+            <span class="line">Venture Branding</span>
+            <div class="cap">Signature of applicant &middot; Founder, Venture Branding &nbsp;&middot;&nbsp; <span class="ls">L.S.</span></div>
+          </div>
+          <div class="seal" id="seal" aria-hidden="true">
+            <svg viewBox="0 0 158 158" role="presentation">
+              <circle cx="79" cy="79" r="76" fill="none" stroke="currentColor" stroke-width="2"/>
+              <circle cx="79" cy="79" r="58" fill="none" stroke="currentColor" stroke-width="1"/>
+              <path id="sealArc" d="M 79 79 m -66 0 a 66 66 0 1 1 132 0" fill="none"/>
+              <path id="sealArcB" d="M 79 79 m 66 0 a 66 66 0 1 1 -132 0" fill="none"/>
+              <text class="ring-text"><textPath href="#sealArc" startOffset="50%" text-anchor="middle">VENTURE BRANDING</textPath></text>
+              <text class="ring-text"><textPath href="#sealArcB" startOffset="50%" text-anchor="middle">REGISTERED &middot; PROTECTED</textPath></text>
+            </svg>
+            <div class="core">
+              <span class="r">&reg;</span>
+              <span class="t">Locus Sigilli</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <hr class="rule-double" aria-hidden="true">
+
+    <!-- ===== colophon / copyright ===== -->
+    <footer class="colophon">
+      <a href="index.html"><img class="lockup" src="images/03.png" alt="Venture Branding"></a>
+      <div class="marks">
+        <a href="blog.html">Blog</a>
+        <a href="#article-first">About</a>
+      </div>
+      <p class="copy">© 2026 Venture Branding, Inc. All rights reserved.</p>
+    </footer>
+
+  </div>
+</div>
+</div>
+
+<script>
+  (function(){
+    var seal = document.getElementById("seal");
+    if(!seal) return;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(reduce || !("IntersectionObserver" in window)){ seal.classList.add("stamped"); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ seal.classList.add("stamped"); io.disconnect(); }
+      });
+    },{threshold:.55});
+    io.observe(seal);
+  })();
+</script>
+
+</body>
+</html>
