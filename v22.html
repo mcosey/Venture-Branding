@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture Branding — Registered, Protected, and Unmistakably Yours</title>
+<meta name="description" content="Register your logo and trademark with legal experts. Fast, secure, and fully managed.">
+<link rel="icon" type="image/png" href="images/09.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0D151F;
+    --ink-2:#141f2b;
+    --paper:#f4f1ea;
+    --coral-deep:#B54553;
+    --coral:#C94D5B;
+    --coral-bright:#D44D5C;
+    --coral-text:#A83A48;
+    --wine:#6E2630;
+    --gray:#6a707c;
+    --gray-2:#8a909c;
+    --gray-line:#cfd2d8;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --serif:'Fraunces','Times New Roman',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--serif);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--coral);color:#fff}
+  img{max-width:100%}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 1.5rem}
+  .mono{font-family:var(--mono)}
+
+  /* ---------- scroll progress rail (fixed, left edge) ---------- */
+  .rail{
+    position:fixed;top:0;left:0;bottom:0;width:6px;z-index:40;
+    background:linear-gradient(var(--gray-line),var(--gray-line));
+    pointer-events:none;
+  }
+  .rail__fill{
+    position:absolute;left:0;top:0;width:100%;height:var(--p,0%);
+    background:linear-gradient(180deg,var(--coral-deep),var(--coral),var(--coral-bright));
+    transition:height .12s linear;
+  }
+  .rail__node{
+    position:fixed;left:-4px;width:14px;height:14px;border-radius:50%;
+    background:var(--paper);border:3px solid var(--gray);
+    z-index:41;transform:translateY(-50%);
+  }
+
+  /* ---------- top nav ---------- */
+  .nav{
+    max-width:1080px;margin:0 auto;
+    padding:1.15rem 1.5rem 1.15rem 2rem;
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    position:relative;z-index:5;
+  }
+  .nav__logo img{height:30px;display:block}
+  .nav__links{display:flex;gap:.3rem;align-items:center;font-family:var(--mono);
+    font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+  .nav__links a{
+    color:var(--ink);text-decoration:none;
+    padding:.5rem .8rem;border-bottom:2px solid transparent;
+    transition:border-color .2s,color .2s;
+  }
+  .nav__links a:hover{border-color:var(--coral);color:var(--coral-text)}
+  .nav__links a:focus-visible{outline:2px solid var(--coral-text);outline-offset:2px}
+
+  /* ---------- shared reveal primitive ---------- */
+  .reveal{opacity:0;transform:translateY(22px);
+    transition:opacity .7s ease,transform .7s cubic-bezier(.16,.84,.36,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* =========================================================
+     ACT ONE — BEFORE: thin, grey, exposed, fragile
+     ========================================================= */
+  .act{position:relative}
+  .before{
+    padding:3.2rem 0 4.5rem;
+    color:var(--gray);
+  }
+  .stagelabel{
+    display:inline-flex;align-items:center;gap:.6rem;
+    font-family:var(--mono);font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--gray);
+    padding-bottom:.5rem;border-bottom:1px dashed var(--gray-line);
+    margin-bottom:2rem;
+  }
+  .stagelabel i{width:8px;height:8px;border:1.5px solid var(--gray);border-radius:50%;display:inline-block}
+
+  .before h2.exposed{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(1.9rem,5.4vw,3.4rem);
+    line-height:1.14;
+    letter-spacing:.005em;
+    max-width:20ch;
+    color:var(--gray);
+    margin-bottom:1.4rem;
+  }
+  /* fragile / unprotected mark specimen */
+  .specimen{
+    display:inline-flex;flex-direction:column;gap:.4rem;
+    margin:.5rem 0 2rem;
+  }
+  .specimen__mark{
+    font-family:var(--serif);font-weight:500;
+    font-size:clamp(2.2rem,8vw,4rem);
+    letter-spacing:.02em;line-height:1;
+    color:var(--gray-2);
+    /* thin, hollow, exposed — outline only */
+    -webkit-text-stroke:1px var(--gray);
+    color:transparent;
+    position:relative;
+    padding-bottom:.15em;
+  }
+  .specimen__note{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gray);
+  }
+  .specimen__note b{color:var(--wine);font-weight:600}
+  .before__lead{
+    font-family:var(--serif);font-size:clamp(1.05rem,2.3vw,1.35rem);
+    line-height:1.55;max-width:46ch;color:var(--gray);font-style:italic;
+  }
+  .exposed-tags{
+    display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.9rem;
+    max-width:46ch;
+  }
+  .exposed-tags span{
+    font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gray);border:1px dashed var(--gray-line);
+    padding:.35rem .7rem;
+  }
+
+  /* =========================================================
+     THE LINE — the threshold / first use in commerce
+     ========================================================= */
+  .line{
+    position:relative;
+    padding:2.4rem 0;
+    background:
+      linear-gradient(180deg,var(--paper) 0%,var(--paper) 49.6%,var(--ink) 49.6%,var(--ink) 100%);
+  }
+  .line__inner{
+    position:relative;
+    border-top:3px solid var(--coral);
+    padding-top:0;
+  }
+  .line__mark{
+    position:absolute;left:50%;top:0;transform:translate(-50%,-50%);
+    background:var(--paper);
+    padding:0 1.1rem;
+    display:flex;align-items:center;gap:.7rem;
+  }
+  .line__mark span{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--coral-text);font-weight:600;white-space:nowrap;
+  }
+  .line__mark svg{width:22px;height:22px;flex:none}
+  .line__caption{
+    text-align:center;color:var(--paper);
+    padding:2.6rem 1.5rem 0;
+    max-width:52ch;margin:0 auto;
+  }
+  .line__caption .k{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--coral-bright);margin-bottom:.9rem;
+  }
+  .line__caption p{
+    font-family:var(--serif);font-size:clamp(1.1rem,2.6vw,1.45rem);
+    line-height:1.5;color:var(--paper);
+  }
+  .line__caption em{color:var(--coral-bright);font-style:normal}
+
+  /* =========================================================
+     ACT TWO — AFTER: solid, coral, protected, yours
+     ========================================================= */
+  .after{
+    background:var(--ink);color:var(--paper);
+    padding:3.4rem 0 4.8rem;
+    position:relative;
+  }
+  .after .stagelabel{color:var(--coral-bright);border-bottom-color:rgba(212,77,92,.4)}
+  .after .stagelabel i{border-color:var(--coral-bright);background:var(--coral)}
+
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:clamp(2.5rem,7.5vw,5.4rem);
+    line-height:1.03;
+    letter-spacing:-.018em;
+    max-width:15ch;
+    margin:.4rem 0 1.5rem;
+    color:var(--paper);
+  }
+  .hl{
+    position:relative;display:inline-block;
+    color:var(--coral-bright);
+  }
+  .hl::after{
+    content:"";position:absolute;left:-.04em;right:-.04em;bottom:.06em;height:.5em;
+    background:linear-gradient(120deg,var(--coral-deep),var(--coral),var(--coral-bright));
+    opacity:.22;z-index:-1;border-radius:2px;
+    transform:scaleX(var(--sx,1));transform-origin:left center;
+  }
+  /* solidify: the sealed / registered mark specimen, now filled */
+  .sealed{
+    display:inline-flex;align-items:center;gap:1rem;flex-wrap:wrap;
+    margin:.4rem 0 2rem;
+  }
+  .sealed__mark{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(2.4rem,8vw,4rem);line-height:1;
+    letter-spacing:.01em;
+    background:linear-gradient(120deg,var(--coral-deep),var(--coral),var(--coral-bright));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    position:relative;
+  }
+  .sealed__mark sup{
+    font-family:var(--mono);font-size:.28em;font-weight:600;
+    -webkit-text-fill-color:var(--coral-bright);color:var(--coral-bright);
+    vertical-align:super;letter-spacing:0;
+  }
+  .seal{
+    width:74px;height:74px;flex:none;position:relative;
+    display:grid;place-items:center;
+  }
+  .seal svg{width:100%;height:100%}
+  .after__sub{
+    font-family:var(--serif);
+    font-size:clamp(1.08rem,2.4vw,1.4rem);
+    max-width:44ch;color:var(--paper);opacity:.92;
+    margin-bottom:1rem;line-height:1.5;
+  }
+  .after__meta{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gray-2);
+    display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;
+    margin:1.6rem 0 2.3rem;
+    padding-top:1.1rem;border-top:1px solid rgba(244,241,234,.16);
+    max-width:44ch;
+  }
+  .after__meta b{color:var(--coral-bright);font-weight:600}
+  .btn{
+    display:inline-flex;align-items:center;gap:.7rem;
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    background:linear-gradient(120deg,var(--coral-deep),var(--coral),var(--coral-bright));
+    color:#fff;text-decoration:none;
+    padding:1rem 1.8rem;border:none;border-radius:2px;
+    box-shadow:0 8px 24px rgba(181,69,83,.35);
+    transition:transform .16s ease,box-shadow .16s ease;
+  }
+  .btn:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(181,69,83,.45)}
+  .btn:active{transform:translateY(0);box-shadow:0 6px 16px rgba(181,69,83,.35)}
+  .btn:focus-visible{outline:3px solid var(--coral-bright);outline-offset:4px}
+  .btn svg{width:16px;height:16px}
+
+  /* ---------- section eyebrow/heading on dark ---------- */
+  .sec{padding:4.4rem 0;border-top:1px solid rgba(244,241,234,.12)}
+  .eyebrow{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--coral-bright);margin-bottom:.9rem;
+  }
+  .sec-head{
+    font-family:var(--serif);font-weight:500;
+    font-size:clamp(1.7rem,4.2vw,2.8rem);
+    line-height:1.12;letter-spacing:-.01em;
+    max-width:22ch;margin-bottom:1.8rem;color:var(--paper);
+  }
+
+  /* ---------- ABOUT (protected side) ---------- */
+  .about__grid{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:2.4rem;align-items:start}
+  .about__photo{position:relative}
+  .about__photo img{
+    width:100%;display:block;border-radius:3px;
+    border:1px solid rgba(244,241,234,.18);
+  }
+  .about__badge{
+    position:absolute;left:1rem;bottom:1rem;
+    font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;
+    background:linear-gradient(120deg,var(--coral-deep),var(--coral-bright));
+    color:#fff;padding:.4rem .7rem;border-radius:2px;font-weight:600;
+  }
+  .photo-cap{
+    font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gray-2);margin-top:.9rem;line-height:1.5;
+  }
+  .about__body p{
+    font-family:var(--serif);
+    font-size:1.08rem;line-height:1.7;margin-bottom:1.1rem;
+    color:var(--paper);opacity:.9;max-width:64ch;
+  }
+  .about__body p:last-child{margin-bottom:0}
+  .about__body em{font-style:italic;color:var(--paper)}
+  .about__title{
+    font-family:var(--serif);font-weight:500;
+    font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.15;
+    letter-spacing:-.01em;margin-bottom:1.4rem;color:var(--paper);
+  }
+
+  /* ---------- FROM THE BLOG ---------- */
+  .blogcard{
+    border:1px solid rgba(244,241,234,.16);
+    border-left:4px solid var(--coral);
+    border-radius:3px;
+    padding:2rem 2.1rem;
+    background:rgba(255,255,255,.02);
+    max-width:64ch;
+  }
+  .blogcard p{
+    font-family:var(--serif);font-size:1.08rem;line-height:1.6;
+    color:var(--paper);opacity:.9;margin-bottom:1.4rem;max-width:56ch;
+  }
+  .link-mono{
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+    color:var(--coral-bright);text-decoration:none;
+    display:inline-flex;align-items:center;gap:.55rem;
+    border-bottom:2px solid var(--coral);padding-bottom:.2rem;width:fit-content;
+    transition:gap .18s ease;
+  }
+  .link-mono:hover{gap:.95rem}
+  .link-mono:focus-visible{outline:2px solid var(--coral-bright);outline-offset:3px}
+  .link-mono svg{width:15px;height:15px}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);color:var(--paper);
+    padding:2.8rem 0 2.4rem;
+    border-top:3px solid var(--coral);
+  }
+  .foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.4rem}
+  .foot__logo img{height:30px;display:block}
+  .foot__nav{display:flex;gap:.3rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+  .foot__nav a{color:var(--paper);text-decoration:none;padding:.45rem .8rem;border-bottom:2px solid transparent;transition:border-color .2s,color .2s}
+  .foot__nav a:hover{border-color:var(--coral);color:var(--coral-bright)}
+  .foot__nav a:focus-visible{outline:2px solid var(--coral-bright);outline-offset:2px}
+  .foot__meta{
+    max-width:1080px;margin:2rem auto 0;padding:1.4rem 1.5rem 0;
+    border-top:1px solid rgba(244,241,234,.14);
+    display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem;
+    font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-2);
+  }
+  .foot__meta b{color:var(--coral-bright);font-weight:600}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:760px){
+    .about__grid{grid-template-columns:1fr;gap:1.6rem}
+  }
+  @media(max-width:420px){
+    .wrap{padding:0 1.15rem}
+    .nav{padding:1rem 1.15rem 1rem 1.6rem}
+    .btn{width:100%;justify-content:center}
+    .line__mark span{letter-spacing:.18em}
+    .blogcard{padding:1.6rem 1.4rem}
+  }
+
+  /* ---------- reduced motion & no-JS: show both states fully ---------- */
+  html.no-js .reveal{opacity:1;transform:none}
+  html.no-js .hl::after{transform:none}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+    .hl::after{transform:none}
+    .rail__fill{transition:none}
+  }
+</style>
+</head>
+<body>
+<!-- scroll progress rail: greys -> coral as you cross into protection -->
+<div class="rail" aria-hidden="true"><div class="rail__fill" id="railFill"></div></div>
+<div class="rail__node" id="railNode" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="nav__logo" href="index.html" aria-label="Venture Branding home">
+    <img src="images/03.png" alt="Venture Branding">
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="blog.html">Blog</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<main>
+  <!-- ================= ACT ONE — BEFORE ================= -->
+  <section class="act before wrap" aria-label="Before protection: your mark, exposed">
+    <span class="stagelabel"><i></i>Before &middot; Exposed</span>
+    <h2 class="exposed reveal">A name in use is not the same as a name protected.</h2>
+    <div class="specimen reveal">
+      <span class="specimen__mark">YOUR BRAND</span>
+      <span class="specimen__note">Status: <b>unregistered</b> &middot; open &middot; unclaimed</span>
+    </div>
+    <p class="before__lead reveal">Out in the world, your mark is thin and open — anyone can trade near it, and nothing on paper says it belongs to you.</p>
+    <div class="exposed-tags reveal" aria-hidden="true">
+      <span>no federal record</span>
+      <span>no priority</span>
+      <span>no clear owner</span>
+    </div>
+  </section>
+
+  <!-- ================= THE LINE ================= -->
+  <section class="line" aria-label="The threshold: first use in commerce">
+    <div class="wrap">
+      <div class="line__inner">
+        <div class="line__mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          <span>The Line — First Use in Commerce</span>
+        </div>
+      </div>
+      <div class="line__caption reveal">
+        <div class="k">Cross the threshold</div>
+        <p>This is the moment a mark stops being just a name and becomes something the law can defend — <em>registered, and yours.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ACT TWO — AFTER ================= -->
+  <section class="act after" id="after">
+    <div class="wrap">
+      <!-- HERO / PAYOFF -->
+      <div class="hero" aria-labelledby="hero-h">
+        <span class="stagelabel reveal"><i></i>After &middot; Protected</span>
+        <div class="sealed reveal">
+          <span class="sealed__mark">YOUR BRAND<sup>&reg;</sup></span>
+          <span class="seal" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="sealg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#B54553"/>
+                  <stop offset="0.55" stop-color="#C94D5B"/>
+                  <stop offset="1" stop-color="#D44D5C"/>
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="46" stroke="url(#sealg)" stroke-width="3"/>
+              <circle cx="50" cy="50" r="38" stroke="url(#sealg)" stroke-width="1.5" stroke-dasharray="3 4"/>
+              <path d="M36 51l9 9 19-21" stroke="url(#sealg)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
+        <h1 id="hero-h" class="reveal">Registered, protected, and unmistakably <span class="hl">yours.</span></h1>
+        <p class="after__sub reveal">Register your logo and trademark with legal experts. Fast, secure, and fully managed.</p>
+        <div class="after__meta reveal" aria-hidden="true">
+          <span>State: <b>Protected</b></span>
+          <span>Owner: <b>You</b></span>
+          <span>Handling: <b>Counsel</b></span>
+        </div>
+        <a class="btn reveal" href="blog.html">
+          Read the blog
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <!-- ABOUT -->
+      <section class="sec" id="about" aria-labelledby="about-h">
+        <p class="eyebrow reveal">About</p>
+        <h2 class="sec-head reveal" id="about-h">Helping founders bring their ideas to life.</h2>
+        <div class="about__grid">
+          <figure class="about__photo reveal">
+            <img src="images/Cosey_Marion__1994x1058-2.jpg" alt="Founder, Venture Branding" loading="lazy">
+            <figcaption class="about__badge">Founder, Venture Branding</figcaption>
+          </figure>
+          <div class="about__body">
+            <h3 class="about__title reveal">Helping founders bring their ideas to life.</h3>
+            <p class="reveal">My interest in startups began long before law school. During my sophomore year of college, after watching <em>The Social Network</em>, I became fascinated by the idea that a simple idea could grow into a transformative business. I spent countless hours brainstorming startup concepts with friends and roommates, pitching everything from social platforms to technology-enabled services. Most of those ideas never went anywhere, but the process sparked a lasting interest in entrepreneurship, innovation, and the people willing to take the risk of building something from nothing.</p>
+            <p class="reveal">That interest followed me through law school, where I eventually launched a startup of my own and successfully secured federal trademark protection for its brand through an intent-to-use trademark application. Going through that process firsthand gave me an appreciation for the excitement, uncertainty, and optimism that accompany the earliest stages of a new venture.</p>
+            <p class="reveal">Although I built my legal career in corporate law, I found myself most energized by the founders behind the businesses. I enjoyed learning about their ideas, understanding what they were trying to build, and helping them navigate the legal issues that stand between concept and execution. Over time, I realized that my greatest professional interest was not simply practicing law; it was helping founders bring their ideas to life.</p>
+            <p class="reveal">At Venture Branding, that philosophy begins with trademarks. For many founders, selecting and protecting a brand is one of the first major legal milestones in the life of a company. It is also one of the most exciting. A trademark transforms an idea into something tangible: a name, a brand, and an identity that customers can recognize and trust. My goal is to help founders protect that identity while preserving the momentum and excitement that inspired them to start building in the first place.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FROM THE BLOG -->
+      <section class="sec" aria-labelledby="blog-h">
+        <p class="eyebrow reveal">From the Blog</p>
+        <h2 class="sec-head reveal" id="blog-h">Learn how the trademark process actually works.</h2>
+        <div class="blogcard reveal">
+          <p>Essays on trademarks, brand protection, and the goals of the firm — written to help founders understand each step before they take it.</p>
+          <a class="link-mono" href="blog.html">
+            Visit the blog
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="foot__logo" href="index.html" aria-label="Venture Branding home">
+      <img src="images/02.png" alt="Venture Branding">
+    </a>
+    <nav class="foot__nav" aria-label="Footer">
+      <a href="blog.html">Blog</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+  <div class="foot__meta">
+    <span>© 2026 Venture Branding, Inc. All rights reserved.</span>
+    <span>State: <b>Protected</b></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  root.classList.remove('no-js');
+
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reveals=[].slice.call(document.querySelectorAll('.reveal'));
+
+  if(reduce){
+    reveals.forEach(function(el){el.classList.add('in');});
+    return;
+  }
+
+  // --- reveal-on-scroll ---
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+      });
+    },{threshold:.18,rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(function(el){io.observe(el);});
+  }else{
+    reveals.forEach(function(el){el.classList.add('in');});
+  }
+
+  // --- scroll-progress rail: greys fill to coral as you cross the line ---
+  var fill=document.getElementById('railFill');
+  var node=document.getElementById('railNode');
+  var after=document.getElementById('after');
+  var ticking=false;
+
+  function update(){
+    ticking=false;
+    var doc=document.documentElement;
+    var max=doc.scrollHeight-doc.clientHeight;
+    var p=max>0?(doc.scrollTop||document.body.scrollTop)/max:0;
+    if(p<0)p=0;if(p>1)p=1;
+    fill.style.setProperty('--p',(p*100).toFixed(2)+'%');
+    node.style.top=(p*doc.clientHeight)+'px';
+    // node turns coral once we've reached the protected act
+    if(after){
+      var crossed=after.getBoundingClientRect().top<=doc.clientHeight*0.5;
+      node.style.borderColor=crossed?'#D44D5C':'#6a707c';
+      node.style.background=crossed?'#D44D5C':'#f4f1ea';
+    }
+  }
+  function onScroll(){
+    if(!ticking){window.requestAnimationFrame(update);ticking=true;}
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll,{passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

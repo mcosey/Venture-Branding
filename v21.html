@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture Branding — Registered, Protected, and Unmistakably Yours</title>
+<meta name="description" content="Register your logo and trademark with legal experts. Fast, secure, and fully managed.">
+<link rel="icon" type="image/png" href="images/09.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0D151F;
+    --navy-2:#16212E;
+    --paper:#F6F4EF;
+    --paper-2:#FBFAF7;
+    --ink:#0D151F;
+    --line:#CBC8C0;
+    --line-strong:#0D151F;
+    --muted:#5C6470;
+    --coral-deep:#B54553;
+    --coral:#C94D5B;
+    --coral-bright:#D44D5C;
+    --coral-text:#A83A48;
+    --grid-unit:24px;
+    --col-gap:24px;
+    --pad:clamp(20px,5vw,72px);
+    --maxw:1360px;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Archivo",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+
+  /* ---------- baseline grid backdrop ---------- */
+  .grid-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:
+      repeating-linear-gradient(to bottom, rgba(13,21,31,0.045) 0, rgba(13,21,31,0.045) 1px, transparent 1px, transparent var(--grid-unit));
+    opacity:.9;
+  }
+
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;}
+
+  .label{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;
+    line-height:1.4;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* ---------- shell ---------- */
+  .shell{
+    position:relative;
+    z-index:1;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 var(--pad);
+    border-left:1px solid var(--line-strong);
+    border-right:1px solid var(--line-strong);
+    background:transparent;
+  }
+
+  /* row: a labelled register entry */
+  .row{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    column-gap:var(--col-gap);
+    border-bottom:1px solid var(--line-strong);
+  }
+  .row__num{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    letter-spacing:.1em;
+    color:var(--coral-text);
+    padding:14px 0 0;
+    border-right:1px solid var(--line);
+  }
+  .row__body{padding:14px 0 clamp(28px,5vw,56px);}
+
+  /* ---------- header ---------- */
+  header.masthead{
+    display:grid;
+    grid-template-columns:64px 1fr auto;
+    column-gap:var(--col-gap);
+    align-items:center;
+    border-bottom:1px solid var(--line-strong);
+    min-height:72px;
+  }
+  .masthead__idx{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    color:var(--coral-text);
+    letter-spacing:.1em;
+    border-right:1px solid var(--line);
+    align-self:stretch;
+    display:flex;
+    align-items:center;
+  }
+  .masthead__brand{display:flex;align-items:center;gap:14px;min-width:0;}
+  .masthead__brand img{height:26px;width:auto;}
+  .masthead__meta{
+    display:none;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+  nav.mainnav{display:flex;gap:8px;align-items:center;}
+  nav.mainnav a{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    text-decoration:none;
+    padding:8px 12px;
+    border:1px solid var(--line);
+    color:var(--ink);
+    transition:background .18s ease,color .18s ease,border-color .18s ease;
+  }
+  nav.mainnav a:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    column-gap:var(--col-gap);
+    border-bottom:1px solid var(--line-strong);
+  }
+  .hero__num{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    color:var(--coral-text);
+    letter-spacing:.1em;
+    padding:18px 0 0;
+    border-right:1px solid var(--line);
+  }
+  .hero__body{padding:18px 0 clamp(36px,6vw,72px);}
+  .hero__label{margin:0 0 clamp(20px,4vw,40px);}
+
+  h1.hero__head{
+    font-weight:800;
+    letter-spacing:-.02em;
+    line-height:1.0;
+    margin:0;
+    font-size:clamp(44px,10.5vw,132px);
+    max-width:14ch;
+  }
+  h1.hero__head .yours{
+    position:relative;
+    color:var(--coral);
+    background:linear-gradient(100deg,var(--coral-deep),var(--coral),var(--coral-bright));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  h1.hero__head .yours::after{
+    content:"";
+    position:absolute;
+    left:0;right:0;
+    bottom:.06em;
+    height:.06em;
+    background:linear-gradient(90deg,var(--coral-deep),var(--coral-bright));
+    border-radius:2px;
+  }
+
+  .hero__foot{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    column-gap:var(--col-gap);
+    row-gap:24px;
+    margin-top:clamp(32px,5vw,56px);
+    align-items:end;
+  }
+  .hero__sub{grid-column:1 / span 7;margin:0;font-size:clamp(16px,2vw,20px);line-height:1.45;color:var(--ink);max-width:46ch;}
+  .hero__cta-wrap{grid-column:9 / span 4;justify-self:start;}
+  @media(max-width:820px){
+    .hero__sub{grid-column:1 / -1;}
+    .hero__cta-wrap{grid-column:1 / -1;}
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:13px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    text-decoration:none;
+    padding:15px 22px;
+    background:var(--navy);
+    color:#fff;
+    border:1px solid var(--navy);
+    transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+  }
+  .btn .arw{color:var(--coral-bright);transition:transform .18s ease;}
+  .btn:hover{background:#000;box-shadow:6px 6px 0 rgba(13,21,31,.15);}
+  .btn:hover .arw{transform:translateX(4px);}
+
+  /* ---------- section header row (spanning) ---------- */
+  .sec-head{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    column-gap:var(--col-gap);
+    border-bottom:1px solid var(--line-strong);
+  }
+  .sec-head__num{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    color:var(--coral-text);
+    letter-spacing:.1em;
+    padding:18px 0 0;
+    border-right:1px solid var(--line);
+  }
+  .sec-head__body{padding:18px 0 clamp(24px,4vw,40px);}
+  .sec-head h2{
+    font-weight:700;
+    letter-spacing:-.015em;
+    line-height:1.06;
+    margin:14px 0 0;
+    font-size:clamp(28px,4.5vw,52px);
+    max-width:22ch;
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    column-gap:var(--col-gap);
+    border-bottom:1px solid var(--line-strong);
+  }
+  .about-grid__num{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    color:var(--coral-text);
+    letter-spacing:.1em;
+    padding:18px 0 0;
+    border-right:1px solid var(--line);
+  }
+  .about-grid__body{padding:0 0 clamp(28px,5vw,56px);}
+
+  .about-media{
+    border-bottom:1px solid var(--line);
+    padding:18px 0 24px;
+    margin-bottom:24px;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    column-gap:var(--col-gap);
+    align-items:end;
+  }
+  .about-media figure{margin:0;}
+  .about-media img{
+    width:100%;
+    aspect-ratio:1994/1058;
+    object-fit:cover;
+    filter:grayscale(1) contrast(1.04);
+    border:1px solid var(--line-strong);
+  }
+  .about-media figcaption{
+    margin-top:10px;
+  }
+  .about-media__spec{align-self:end;}
+  .about-media__spec dl{margin:0;display:grid;grid-template-columns:auto 1fr;column-gap:14px;row-gap:8px;}
+  .about-media__spec dt{color:var(--muted);}
+  .about-media__spec dd{margin:0;color:var(--ink);text-align:right;}
+  @media(max-width:680px){
+    .about-media{grid-template-columns:1fr;row-gap:20px;}
+  }
+
+  .bio{
+    columns:2;
+    column-gap:var(--col-gap);
+    column-rule:1px solid var(--line);
+  }
+  .bio .entry{
+    break-inside:avoid;
+    display:grid;
+    grid-template-columns:auto 1fr;
+    column-gap:14px;
+    margin:0 0 22px;
+    padding-bottom:22px;
+    border-bottom:1px solid var(--line);
+  }
+  .bio .entry:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .bio .entry__n{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    color:var(--coral-text);
+    padding-top:.28em;
+  }
+  .bio p{margin:0;font-size:15px;line-height:1.62;color:#1c2530;}
+  .bio p em{font-style:italic;color:var(--navy);}
+  @media(max-width:680px){
+    .bio{columns:1;}
+  }
+
+  /* ---------- blog ---------- */
+  .blog{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    column-gap:var(--col-gap);
+    border-bottom:1px solid var(--line-strong);
+  }
+  .blog__num{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;color:var(--coral-text);letter-spacing:.1em;
+    padding:18px 0 0;border-right:1px solid var(--line);
+  }
+  .blog__body{
+    padding:18px 0 clamp(28px,5vw,56px);
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    column-gap:var(--col-gap);
+    row-gap:20px;
+    align-items:start;
+  }
+  .blog__eyebrow{grid-column:1 / -1;}
+  .blog h2{
+    grid-column:1 / span 7;
+    font-weight:700;letter-spacing:-.015em;line-height:1.08;margin:8px 0 0;
+    font-size:clamp(26px,4vw,46px);
+  }
+  .blog__text{grid-column:9 / span 4;}
+  .blog__text p{margin:0 0 20px;font-size:15px;line-height:1.62;color:#1c2530;}
+  @media(max-width:820px){
+    .blog h2{grid-column:1 / -1;}
+    .blog__text{grid-column:1 / -1;}
+  }
+  .link-inline{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+    text-decoration:none;color:var(--ink);
+    border-bottom:2px solid var(--coral);
+    padding-bottom:2px;
+    display:inline-flex;gap:8px;align-items:center;
+    transition:gap .18s ease,color .18s ease;
+  }
+  .link-inline .arw{color:var(--coral-text);}
+  .link-inline:hover{gap:14px;color:var(--coral-text);}
+
+  /* ---------- footer ---------- */
+  footer.foot{
+    position:relative;
+    z-index:1;
+    background:var(--navy);
+    color:#fff;
+    margin-top:0;
+  }
+  .foot__inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 var(--pad);
+    border-left:1px solid rgba(255,255,255,.16);
+    border-right:1px solid rgba(255,255,255,.16);
+  }
+  .foot__top{
+    display:grid;
+    grid-template-columns:64px 1fr auto;
+    column-gap:var(--col-gap);
+    align-items:center;
+    padding:clamp(28px,5vw,44px) 0;
+    border-bottom:1px solid rgba(255,255,255,.16);
+    min-height:100px;
+  }
+  .foot__idx{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;letter-spacing:.1em;color:var(--coral-bright);
+    border-right:1px solid rgba(255,255,255,.16);
+    align-self:stretch;display:flex;align-items:center;
+  }
+  .foot__brand img{height:30px;width:auto;}
+  .foot__nav{display:flex;gap:8px;}
+  .foot__nav a{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+    text-decoration:none;color:#fff;
+    padding:8px 12px;border:1px solid rgba(255,255,255,.24);
+    transition:background .18s ease,color .18s ease;
+  }
+  .foot__nav a:hover{background:#fff;color:var(--navy);}
+  .foot__bottom{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    column-gap:var(--col-gap);
+    padding:18px 0 clamp(28px,5vw,44px);
+  }
+  .foot__copy{
+    grid-column:2;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;letter-spacing:.08em;color:rgba(255,255,255,.6);
+  }
+  @media(max-width:680px){
+    .foot__top{grid-template-columns:1fr;row-gap:18px;}
+    .foot__idx{display:none;}
+    .foot__bottom{grid-template-columns:1fr;}
+    .foot__copy{grid-column:1;}
+  }
+
+  /* ---------- focus states ---------- */
+  a:focus-visible,.btn:focus-visible{
+    outline:3px solid var(--coral);
+    outline-offset:3px;
+  }
+
+  /* narrow: collapse the 64px gutter a bit but keep it visible */
+  @media(max-width:520px){
+    :root{--col-gap:14px;}
+    .row,.hero,.masthead,.sec-head,.about-grid,.blog,.hero__num,.masthead__idx,.foot__top,.foot__bottom{
+      grid-template-columns:40px 1fr;
+    }
+    header.masthead{grid-template-columns:40px 1fr auto;}
+    .foot__top{grid-template-columns:40px 1fr auto;}
+    .hero__foot{grid-template-columns:repeat(6,1fr);}
+    .blog__body{grid-template-columns:repeat(6,1fr);}
+    .about-media__spec dl{grid-template-columns:1fr;}
+    .about-media__spec dd{text-align:left;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none !important;animation:none !important;scroll-behavior:auto !important;}
+  }
+  html{scroll-behavior:smooth;}
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<div class="shell">
+  <header class="masthead">
+    <div class="masthead__idx">VB</div>
+    <div class="masthead__brand">
+      <img src="images/03.png" alt="Venture Branding">
+    </div>
+    <nav class="mainnav" aria-label="Primary">
+      <a href="blog.html">Blog</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-head">
+      <div class="hero__num">00</div>
+      <div class="hero__body">
+        <p class="label hero__label">Trademark Registration &nbsp;/&nbsp; Brand Protection Counsel</p>
+        <h1 class="hero__head" id="hero-head">Registered, protected, and unmistakably <span class="yours">yours.</span></h1>
+        <div class="hero__foot">
+          <p class="hero__sub">Register your logo and trademark with legal experts. Fast, secure, and fully managed.</p>
+          <div class="hero__cta-wrap">
+            <a class="btn" href="blog.html">Read the blog <span class="arw" aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT header -->
+    <section class="sec-head" id="about" aria-labelledby="about-head">
+      <div class="sec-head__num">01</div>
+      <div class="sec-head__body">
+        <p class="label">About</p>
+        <h2 id="about-head">Helping founders bring their ideas to life.</h2>
+      </div>
+    </section>
+
+    <!-- ABOUT body -->
+    <section class="about-grid" aria-label="Founder">
+      <div class="about-grid__num">01.1</div>
+      <div class="about-grid__body">
+        <div class="about-media">
+          <figure>
+            <img src="images/Cosey_Marion__1994x1058-2.jpg" alt="Founder, Venture Branding" loading="lazy">
+            <figcaption class="label">Founder, Venture Branding</figcaption>
+          </figure>
+          <div class="about-media__spec">
+            <dl class="label">
+              <dt>Focus</dt><dd>Trademarks</dd>
+              <dt>Practice</dt><dd>Brand protection</dd>
+              <dt>Serving</dt><dd>Founders</dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="bio">
+          <div class="entry">
+            <div class="entry__n">01</div>
+            <p>My interest in startups began long before law school. During my sophomore year of college, after watching <em>The Social Network</em>, I became fascinated by the idea that a simple idea could grow into a transformative business. I spent countless hours brainstorming startup concepts with friends and roommates, pitching everything from social platforms to technology-enabled services. Most of those ideas never went anywhere, but the process sparked a lasting interest in entrepreneurship, innovation, and the people willing to take the risk of building something from nothing.</p>
+          </div>
+          <div class="entry">
+            <div class="entry__n">02</div>
+            <p>That interest followed me through law school, where I eventually launched a startup of my own and successfully secured federal trademark protection for its brand through an intent-to-use trademark application. Going through that process firsthand gave me an appreciation for the excitement, uncertainty, and optimism that accompany the earliest stages of a new venture.</p>
+          </div>
+          <div class="entry">
+            <div class="entry__n">03</div>
+            <p>Although I built my legal career in corporate law, I found myself most energized by the founders behind the businesses. I enjoyed learning about their ideas, understanding what they were trying to build, and helping them navigate the legal issues that stand between concept and execution. Over time, I realized that my greatest professional interest was not simply practicing law; it was helping founders bring their ideas to life.</p>
+          </div>
+          <div class="entry">
+            <div class="entry__n">04</div>
+            <p>At Venture Branding, that philosophy begins with trademarks. For many founders, selecting and protecting a brand is one of the first major legal milestones in the life of a company. It is also one of the most exciting. A trademark transforms an idea into something tangible: a name, a brand, and an identity that customers can recognize and trust. My goal is to help founders protect that identity while preserving the momentum and excitement that inspired them to start building in the first place.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FROM THE BLOG -->
+    <section class="blog" aria-labelledby="blog-head">
+      <div class="blog__num">02</div>
+      <div class="blog__body">
+        <p class="label blog__eyebrow">From the Blog</p>
+        <h2 id="blog-head">Learn how the trademark process actually works.</h2>
+        <div class="blog__text">
+          <p>Essays on trademarks, brand protection, and the goals of the firm — written to help founders understand each step before they take it.</p>
+          <a class="link-inline" href="blog.html">Visit the blog <span class="arw" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="foot__inner">
+    <div class="foot__top">
+      <div class="foot__idx">VB</div>
+      <div class="foot__brand">
+        <img src="images/02.png" alt="Venture Branding">
+      </div>
+      <nav class="foot__nav" aria-label="Footer">
+        <a href="blog.html">Blog</a>
+        <a href="#about">About</a>
+      </nav>
+    </div>
+    <div class="foot__bottom">
+      <p class="foot__copy">© 2026 Venture Branding, Inc. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

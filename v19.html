@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture Branding — Registered, Protected, and Unmistakably Yours</title>
+<meta name="description" content="Register your logo and trademark with legal experts. Fast, secure, and fully managed.">
+<link rel="icon" type="image/png" href="images/09.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D151F;
+    --coral-deep: #B54553;
+    --coral-core: #C94D5B;
+    --coral-bright: #D44D5C;
+    --coral-ink: #A83A48;
+    --oxblood: #6E2630;
+    --cream: #F4EFE7;
+    --cream-deep: #EAE3D6;
+    --paper: #FBF8F2;
+    --hair: rgba(13, 21, 31, 0.32);
+    --hair-soft: rgba(13, 21, 31, 0.14);
+    --ink-soft: rgba(13, 21, 31, 0.62);
+    --serif-display: "Cormorant Garamond", Georgia, serif;
+    --serif-text: "EB Garamond", Georgia, serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--navy);
+    font-family: var(--serif-text);
+    font-size: 18px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Subtle paper tone */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.55), transparent 60%),
+      radial-gradient(100% 60% at 50% 100%, rgba(13,21,31,0.03), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  main, header, footer { position: relative; z-index: 1; }
+
+  a { color: inherit; }
+
+  ::selection { background: rgba(168, 58, 72, 0.22); }
+
+  :focus-visible {
+    outline: 2px solid var(--coral-ink);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 64px);
+  }
+
+  /* ------------- Top masthead ------------- */
+  .masthead {
+    padding: clamp(22px, 4vw, 40px) 0 0;
+  }
+  .masthead-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid var(--hair-soft);
+    padding-bottom: 18px;
+  }
+  .plate-id {
+    font-family: var(--serif-text);
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .masthead-nav {
+    display: flex;
+    gap: clamp(18px, 4vw, 34px);
+  }
+  .masthead-nav a {
+    font-family: var(--serif-text);
+    font-size: 0.74rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--navy);
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.35s ease, color 0.35s ease;
+  }
+  .masthead-nav a:hover { border-color: var(--coral-ink); color: var(--coral-ink); }
+
+  /* ------------- Specimen plate (hero) ------------- */
+  .specimen {
+    padding: clamp(40px, 7vw, 96px) 0 clamp(48px, 8vw, 110px);
+    text-align: center;
+  }
+
+  .specimen-eyebrow {
+    font-family: var(--serif-text);
+    font-style: italic;
+    font-size: 0.98rem;
+    letter-spacing: 0.06em;
+    color: var(--coral-ink);
+    margin: 0 0 clamp(30px, 5vw, 52px);
+  }
+  .specimen-eyebrow::before,
+  .specimen-eyebrow::after {
+    content: "";
+    display: inline-block;
+    width: 34px;
+    height: 1px;
+    background: var(--hair);
+    vertical-align: middle;
+    margin: 0 14px 4px;
+  }
+
+  /* The matted stage that holds the mark + callouts */
+  .stage {
+    position: relative;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(30px, 6vw, 70px) clamp(16px, 5vw, 64px);
+  }
+  /* thin matte frame */
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--hair-soft);
+  }
+  .stage::after {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border: 1px solid var(--hair-soft);
+  }
+
+  .mark-frame {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+  }
+  .mark-frame img {
+    display: block;
+    width: min(360px, 62vw);
+    height: auto;
+  }
+
+  /* corner registration ticks on the mark */
+  .tick {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--hair);
+    pointer-events: none;
+  }
+  .tick.tl { top: -14px; left: -14px; border-right: 0; border-bottom: 0; }
+  .tick.tr { top: -14px; right: -14px; border-left: 0; border-bottom: 0; }
+  .tick.bl { bottom: -14px; left: -14px; border-right: 0; border-top: 0; }
+  .tick.br { bottom: -14px; right: -14px; border-left: 0; border-top: 0; }
+
+  /* Callout labels — absolutely placed on wide screens */
+  .callout {
+    font-family: var(--serif-text);
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.35;
+    color: var(--ink-soft);
+  }
+  .callout .lead {
+    display: block;
+    font-style: normal;
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--coral-ink);
+    margin-bottom: 3px;
+  }
+
+  /* Desktop annotated layout — three columns: labels · mark · labels */
+  .annotations {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    justify-items: center;
+    gap: clamp(18px, 3vw, 40px);
+  }
+  .anno-col { display: flex; flex-direction: column; gap: clamp(32px, 6vw, 64px); width: 100%; max-width: 190px; }
+  .anno-col.left { align-items: flex-end; }
+  .anno-col.right { align-items: flex-start; }
+  .callout-abs { width: 100%; }
+  .anno-col.left .callout-abs { text-align: right; }
+  .anno-col.right .callout-abs { text-align: left; }
+  /* short hairline leader pointing toward the mark */
+  .callout-abs::after {
+    content: "";
+    display: block;
+    height: 1px;
+    background: var(--hair);
+    width: 46px;
+    margin-top: 8px;
+  }
+  .anno-col.left .callout-abs::after { margin-left: auto; }
+  .anno-col.right .callout-abs::after { margin-right: auto; }
+
+  /* Mobile stacked callouts (default hidden on desktop) */
+  .callout-list {
+    display: none;
+    margin: 34px auto 0;
+    max-width: 440px;
+    text-align: left;
+  }
+  .callout-list li {
+    list-style: none;
+    padding: 12px 0 12px 20px;
+    border-left: 1px solid var(--hair);
+    margin-bottom: 6px;
+  }
+  .callout-list { padding: 0; }
+
+  /* Plate title / caption block */
+  .plate-title {
+    margin: clamp(46px, 7vw, 84px) auto 0;
+    max-width: 720px;
+  }
+  h1 {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: clamp(2.1rem, 6.2vw, 3.85rem);
+    line-height: 1.08;
+    letter-spacing: -0.005em;
+    margin: 0;
+    color: var(--navy);
+  }
+  h1 .accent {
+    font-style: italic;
+    color: var(--coral-ink);
+    position: relative;
+    white-space: nowrap;
+  }
+  h1 .accent::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.06em;
+    height: 1px;
+    background: linear-gradient(90deg, var(--coral-deep), var(--coral-bright));
+    opacity: 0.7;
+  }
+
+  .plate-caption {
+    font-family: var(--serif-text);
+    font-size: 1.06rem;
+    color: var(--ink-soft);
+    max-width: 460px;
+    margin: 22px auto 0;
+    line-height: 1.6;
+  }
+
+  .plate-cta {
+    display: inline-block;
+    margin-top: clamp(30px, 5vw, 44px);
+    font-family: var(--serif-text);
+    font-size: 0.78rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--navy);
+    padding: 13px 30px;
+    border: 1px solid var(--hair);
+    background: transparent;
+    transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  }
+  .plate-cta:hover {
+    background: var(--navy);
+    color: var(--cream);
+    border-color: var(--navy);
+  }
+
+  /* ------------- Section divider ------------- */
+  .rule {
+    width: 100%;
+    height: 1px;
+    background: var(--hair-soft);
+    margin: 0 auto;
+  }
+
+  /* ------------- Provenance / About ------------- */
+  .provenance {
+    padding: clamp(56px, 9vw, 128px) 0;
+  }
+  .section-head {
+    text-align: center;
+    margin-bottom: clamp(44px, 6vw, 72px);
+  }
+  .eyebrow {
+    font-family: var(--serif-text);
+    font-size: 0.7rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--coral-ink);
+    margin: 0 0 16px;
+  }
+  .section-head h2 {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: clamp(1.7rem, 4.4vw, 2.85rem);
+    line-height: 1.14;
+    margin: 0;
+    max-width: 640px;
+    margin-inline: auto;
+    letter-spacing: -0.003em;
+  }
+
+  .provenance-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(36px, 6vw, 74px);
+    align-items: start;
+  }
+
+  /* Founder photo as a plate */
+  .founder-plate { position: relative; }
+  .founder-figure {
+    margin: 0;
+    padding: 14px;
+    background: var(--paper);
+    border: 1px solid var(--hair-soft);
+    position: relative;
+  }
+  .founder-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: saturate(0.92);
+  }
+  .founder-figure figcaption {
+    margin-top: 14px;
+    font-family: var(--serif-text);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    border-top: 1px solid var(--hair-soft);
+    padding-top: 12px;
+  }
+  .founder-figure figcaption .plate-no {
+    font-style: normal;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coral-ink);
+    white-space: nowrap;
+  }
+
+  .provenance-body {
+    max-width: 56ch;
+  }
+  .provenance-lead {
+    font-family: var(--serif-text);
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--hair-soft);
+  }
+  .provenance-body p {
+    margin: 0 0 1.15em;
+    font-size: 1.06rem;
+    line-height: 1.68;
+  }
+  /* Drop-cap on first paragraph */
+  .provenance-body p:first-of-type::first-letter {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: 3.4em;
+    line-height: 0.78;
+    float: left;
+    padding: 0.04em 0.12em 0 0;
+    color: var(--coral-ink);
+  }
+  .provenance-body em { font-style: italic; }
+
+  /* ------------- From the blog ------------- */
+  .blog {
+    padding: clamp(56px, 9vw, 120px) 0;
+    text-align: center;
+    background:
+      linear-gradient(180deg, transparent, rgba(13,21,31,0.02)) ,
+      var(--cream-deep);
+    border-top: 1px solid var(--hair-soft);
+    border-bottom: 1px solid var(--hair-soft);
+  }
+  .blog .eyebrow { color: var(--coral-ink); }
+  .blog h2 {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: clamp(1.7rem, 4.4vw, 2.75rem);
+    line-height: 1.14;
+    margin: 0 auto;
+    max-width: 560px;
+    letter-spacing: -0.003em;
+  }
+  .blog p {
+    max-width: 520px;
+    margin: 22px auto 0;
+    font-size: 1.06rem;
+    color: var(--ink-soft);
+  }
+  .blog-link {
+    display: inline-block;
+    margin-top: 30px;
+    font-family: var(--serif-text);
+    font-style: italic;
+    font-size: 1.12rem;
+    text-decoration: none;
+    color: var(--coral-ink);
+    border-bottom: 1px solid var(--coral-ink);
+    padding-bottom: 2px;
+    transition: opacity 0.3s ease, letter-spacing 0.3s ease;
+  }
+  .blog-link:hover { opacity: 0.72; }
+
+  /* ------------- Footer ------------- */
+  footer {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(46px, 7vw, 78px) 0 clamp(30px, 5vw, 44px);
+  }
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+  }
+  .footer-logo img {
+    height: 42px;
+    width: auto;
+    display: block;
+  }
+  .footer-nav {
+    display: flex;
+    gap: 30px;
+  }
+  .footer-nav a {
+    font-family: var(--serif-text);
+    font-size: 0.76rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(244, 239, 231, 0.82);
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  .footer-nav a:hover { color: #fff; border-color: var(--coral-bright); }
+  .footer-copy {
+    width: 100%;
+    margin-top: clamp(30px, 5vw, 46px);
+    padding-top: 22px;
+    border-top: 1px solid rgba(244, 239, 231, 0.16);
+    font-family: var(--serif-text);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    color: rgba(244, 239, 231, 0.6);
+  }
+  footer :focus-visible { outline-color: var(--coral-bright); }
+
+  /* ------------- Responsive ------------- */
+  @media (max-width: 860px) {
+    .provenance-grid {
+      grid-template-columns: 1fr;
+      max-width: 560px;
+      margin-inline: auto;
+    }
+    .founder-plate { max-width: 420px; margin-inline: auto; }
+  }
+
+  /* Below this, drop the flanking callout columns and stack them */
+  @media (max-width: 720px) {
+    .annotations { display: flex; justify-content: center; }
+    .anno-col { display: none; }
+    .callout-list { display: block; }
+    .stage { padding-left: 6px; padding-right: 6px; }
+    .tick.tl, .tick.tr, .tick.bl, .tick.br { display: none; }
+  }
+
+  @media (max-width: 460px) {
+    body { font-size: 17px; }
+    .masthead-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <span class="plate-id">Specimen&nbsp;·&nbsp;The Mark in Use</span>
+      <nav class="masthead-nav" aria-label="Primary">
+        <a href="blog.html">Blog</a>
+        <a href="#about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== Specimen plate (hero) ===== -->
+    <section class="specimen" aria-labelledby="page-title">
+      <div class="wrap">
+        <p class="specimen-eyebrow">A specimen of the mark, presented</p>
+
+        <div class="stage">
+          <div class="annotations">
+
+            <div class="anno-col left">
+              <p class="callout callout-abs c1"><span class="lead">The mark</span>The complete registered lockup as used.</p>
+              <p class="callout callout-abs c3"><span class="lead">Coral, the accent</span>The gradient reserved for emphasis.</p>
+            </div>
+
+            <div class="mark-frame">
+              <span class="tick tl" aria-hidden="true"></span>
+              <span class="tick tr" aria-hidden="true"></span>
+              <span class="tick bl" aria-hidden="true"></span>
+              <span class="tick br" aria-hidden="true"></span>
+              <img src="images/03.png" alt="Venture Branding logo: the VB scales monogram beside the Venture Branding wordmark">
+            </div>
+
+            <div class="anno-col right">
+              <p class="callout callout-abs c2"><span class="lead">VB monogram</span>Scales of justice set within the letterforms.</p>
+              <p class="callout callout-abs c4"><span class="lead">The wordmark</span>Venture Branding, set in full.</p>
+            </div>
+          </div>
+
+          <!-- Mobile-stacked version of the same annotations -->
+          <ul class="callout callout-list" aria-hidden="false">
+            <li><span class="lead">The mark</span>The complete registered lockup as used.</li>
+            <li><span class="lead">VB monogram</span>Scales of justice set within the letterforms.</li>
+            <li><span class="lead">Coral, the accent</span>The gradient reserved for emphasis.</li>
+            <li><span class="lead">The wordmark</span>Venture Branding, set in full.</li>
+          </ul>
+        </div>
+
+        <div class="plate-title">
+          <h1 id="page-title">Registered, protected, and unmistakably <span class="accent">yours</span>.</h1>
+          <p class="plate-caption">Register your logo and trademark with legal experts. Fast, secure, and fully managed.</p>
+          <br>
+          <a class="plate-cta" href="blog.html">Read the blog</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap"><div class="rule"></div></div>
+
+    <!-- ===== Provenance / About ===== -->
+    <section class="provenance" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">About</p>
+          <h2 id="about-title">Helping founders bring their ideas to life.</h2>
+        </div>
+
+        <div class="provenance-grid">
+          <div class="founder-plate">
+            <figure class="founder-figure">
+              <img src="images/Cosey_Marion__1994x1058-2.jpg" alt="Founder, Venture Branding" loading="lazy">
+              <figcaption>
+                <span>Founder, Venture Branding</span>
+                <span class="plate-no">Provenance</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="provenance-body">
+            <p class="provenance-lead">Provenance of the mark</p>
+            <p>My interest in startups began long before law school. During my sophomore year of college, after watching <em>The Social Network</em>, I became fascinated by the idea that a simple idea could grow into a transformative business. I spent countless hours brainstorming startup concepts with friends and roommates, pitching everything from social platforms to technology-enabled services. Most of those ideas never went anywhere, but the process sparked a lasting interest in entrepreneurship, innovation, and the people willing to take the risk of building something from nothing.</p>
+            <p>That interest followed me through law school, where I eventually launched a startup of my own and successfully secured federal trademark protection for its brand through an intent-to-use trademark application. Going through that process firsthand gave me an appreciation for the excitement, uncertainty, and optimism that accompany the earliest stages of a new venture.</p>
+            <p>Although I built my legal career in corporate law, I found myself most energized by the founders behind the businesses. I enjoyed learning about their ideas, understanding what they were trying to build, and helping them navigate the legal issues that stand between concept and execution. Over time, I realized that my greatest professional interest was not simply practicing law; it was helping founders bring their ideas to life.</p>
+            <p>At Venture Branding, that philosophy begins with trademarks. For many founders, selecting and protecting a brand is one of the first major legal milestones in the life of a company. It is also one of the most exciting. A trademark transforms an idea into something tangible: a name, a brand, and an identity that customers can recognize and trust. My goal is to help founders protect that identity while preserving the momentum and excitement that inspired them to start building in the first place.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== From the blog ===== -->
+    <section class="blog" aria-labelledby="blog-title">
+      <div class="wrap">
+        <p class="eyebrow">From the Blog</p>
+        <h2 id="blog-title">Learn how the trademark process actually works.</h2>
+        <p>Essays on trademarks, brand protection, and the goals of the firm — written to help founders understand each step before they take it.</p>
+        <a class="blog-link" href="blog.html">Visit the blog</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span class="footer-logo">
+        <img src="images/02.png" alt="Venture Branding">
+      </span>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="blog.html">Blog</a>
+        <a href="#about">About</a>
+      </nav>
+      <p class="footer-copy">© 2026 Venture Branding, Inc. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
