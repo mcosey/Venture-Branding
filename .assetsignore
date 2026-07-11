@@ -1,0 +1,8 @@
+.git
+.gitignore
+.assetsignore
+wrangler.toml
+.DS_Store
+*.log
+*.md
+.claude
