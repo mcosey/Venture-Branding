@@ -15,7 +15,7 @@ Updated October 3, 2026. Read this first; it summarizes the decisions already ma
 
 Repository: https://github.com/mcosey/Venture-Branding
 Local checkout: /Users/mcosey/Documents/Codex/2026-09-27/venture-branding-is-a-project-i-2/venture-branding
-Active development branch: `codex/client-portal`.
+Active development branch: `codex/attorney-workspace`, created from `codex/client-portal` after handoff commit `869151b`. Client portal work remains on `codex/client-portal`.
 The website/blog branch is `codex/v8-services`; Tylor's original branch is `tg`. Do not merge into or modify those branches without approval.
 
 Last implementation commit: `84b1130` — Remove Rights and Documents from portal navigation. Its push was verified against GitHub. The tree was clean before creating this handoff file. Verify current state rather than assuming this remains the newest commit.
@@ -107,4 +107,17 @@ Cloudflare configuration exists for Tylor's original `vb-test` project, but host
 
 Command-line pushes failed because this connection lacks GitHub authentication. GitHub Desktop is signed in as `mcosey`. Established workflow: commit only after approval; user clicks Push origin in GitHub Desktop; then verify `git ls-remote origin refs/heads/codex/client-portal` matches local HEAD. Do not install tools or extract credentials to work around authentication.
 
-Current next planning step: map the attorney onboarding/review workflow, screens, and exact client-versus-attorney automation controls. Obtain approval before implementation. Do not begin backend work merely because this document describes it.
+Current work: attorney workspace Phase 1 frontend is built locally and awaits user design/commit approval. After approval, propose Phase 2 (client / linked matter / trademark / services workflow). Exact client-versus-attorney automation controls still need agreement. Do not begin backend work without approval.
+
+## Attorney workspace Phase 1 — October 3 update
+
+User approved a separate branch and a sample-only dashboard/navigation prototype. `attorney.html` and `attorney/assets/workspace.css` / `workspace.js` provide Today, Clients & portfolios, Review queue, Automations, and Connected tools sections. Buttons open scope/sample previews; these are not full operational screens. Existing client pages have not been changed by this phase. Open locally at `/attorney.html`; there is intentionally no staff link added to the public homepage or client menu. This is navigation separation, NOT authentication.
+
+The user clarified that the workspace should coordinate established services, not replace them:
+- Microsoft 365 / Outlook: email, calendar, Office documents.
+- QuickBooks: accounting, bookkeeping, reconciliation, tax records. Do not build a duplicate ledger.
+- Clio: matters, legal billing, payments, internal legal operations. Do not build competing matter management or billing.
+- Calendly: scheduling.
+- iManage: earlier document-management choice; later user also listed Clio DMS. This overlap remains unresolved; retain iManage as a planning assumption pending clarification.
+
+No connections exist. Tool cards say Not connected and explain intended roles without requesting access. Capabilities, account requirements, sources of truth, and read/write permissions must be verified when integration work is authorized. The standalone bookkeeping/billing section from the first proposal was superseded. Phase 1 uses one sample client, four trademark records, and two review items. No invitations, decisions, messages, settings, payments, or outside records are created by its controls.
