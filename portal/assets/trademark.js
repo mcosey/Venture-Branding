@@ -60,6 +60,7 @@
     return;
   }
   const record = records[key];
+  document.querySelector("#mark-history-link").href = `use-history.html?mark=${key}`;
   const set = (id, text) => { document.getElementById(id).textContent = text; };
   document.title = `${record.name} — Venture Branding`;
   set('mark-title', record.name); set('record-art', record.art); set('mark-type', record.type);
