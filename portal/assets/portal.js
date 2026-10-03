@@ -8,7 +8,8 @@
     maintenance: ['Maintenance Reminder', 'The sample portfolio shows a maintenance review beginning in March 2031, with four use records available for review. Dates and evidence are illustrative, not calculated filing requirements.'],
     date: ['Next key date', 'March 12, 2027 is a sample Office Action response date. In a working portal, this would be verified by Venture Branding and linked to the corresponding application.', ['Sample matter: COACHIVATE', 'Client action: none currently shown', 'Status: response preparation']],
     automations: ['Background services, at a glance', 'The four dashboard cards illustrate the services in your portal vision. Each card opens a sample overview. Configuration and live services are reserved for a later phase.', ['Trademark Watch · Weekly', 'Brand Change Monitor · Monthly', 'Specimen Capture · Quarterly', 'Maintenance Reminder · Milestone-based']],
-    portfolio: ['Your portfolio', 'Four sample brand assets are shown on the dashboard: one registered mark, two pending applications, and one newly detected name. Select a row to see a short preview. Full portfolio pages are not built yet.'],
+    'add-mark': ['Add a new mark', 'This is a preview of where you could ask Venture Branding to add a brand name or logo to your portfolio. No mark will be added and no information will be submitted in this prototype.'],
+    'request-review': ['Request a brand review', 'A future review request would help Venture Branding understand your new brand and discuss appropriate next steps. Requests are not connected in this preview.'],
     cotivate: ['COTIVATE®', 'A sample registered word mark for Cotivate. Trademark Watch and Specimen Capture are shown as active in this concept.', ['Status: registered (sample)', 'Last watch scan: October 2, 2026', 'Maintenance review: March 2031']],
     coachivate: ['COACHIVATE™', 'A sample pending word-mark application. The next milestone shown is an Office Action response.', ['Status: pending (sample)', 'Next sample date: March 12, 2027', 'Client action: none shown']],
     logo: ['COTIVATE Logo', 'A sample pending logo application. The artwork displayed here is a placeholder for this design preview.', ['Status: pending (sample)', 'Recent activity: use evidence captured']],
@@ -46,6 +47,7 @@
   nav.querySelectorAll('a,button').forEach(item => item.addEventListener('click', closeMenu));
   document.addEventListener('keydown', event => { if(event.key === 'Escape' && nav.classList.contains('open')) { closeMenu(); menu.focus(); } });
   const search = document.querySelector('#portal-search');
+  if (!search) return; // Portfolio page has its own search and filters.
   const rows = [...document.querySelectorAll('[data-search]')];
   const result = document.querySelector('#search-result');
   const clear = document.querySelector('#clear-search');
