@@ -1,6 +1,8 @@
 (() => {
   'use strict';
   const details = {
+    configure: ['Configure automations', 'This preview shows five example services. In a working portal, this would be where you review the marks, approved sources, schedules, and delivery preferences with Venture Branding. No settings are changed here.', ['Trademark Watch · Weekly', 'Brand Change Monitor · Monthly', 'Specimen Capture · Quarterly', 'Maintenance Reminder · Milestone-based', 'Trademark Activity Digest · Monthly']],
+    digest: ['Trademark Activity Digest', 'An example monthly summary of your trademark portfolio. Email and portal delivery are illustrative; no messages will be sent.', ['Sample delivery: November 1, 2026', '2 scans completed', '1 potential match under Venture Branding review', '4 use records archived']],
     attention: ['Nothing needed from you', 'In this sample portfolio, there are no urgent client tasks. Venture Branding is reviewing one potential match and preparing for the next application milestone.'],
     watch: ['Trademark Watch', 'Sample scan completed October 2, 2026. Three potentially similar marks were flagged, with one selected for Venture Branding review. A potential match is not a finding of infringement.', ['Watching COTIVATE and COACHIVATE', 'Cadence: weekly', 'Review status: under VB review', 'Monitoring and reporting only; no enforcement or litigation.']],
     brand: ['A new chapter for CIRCLES', 'The sample Brand Change Monitor identified “CIRCLES” as a new branded term on a product page. It has not been filed as a trademark in this example.', ['Last review: September 28, 2026', 'Source: sample company website', 'Next step: discuss whether a trademark review is appropriate.']],
