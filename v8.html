@@ -68,6 +68,7 @@
   nav.top a:hover{color:#fff;background:rgba(255,255,255,.08)}
   nav.top a.cta{background:var(--coral-grad);color:#fff}
   nav.top a.cta:hover{filter:brightness(1.08)}
+  nav.top a.portal-login{border:1px solid rgba(232,145,154,.45)}
   .menu-toggle{display:none;background:transparent;border:1px solid var(--line);border-radius:999px;color:#e8ecf1;font:inherit;font-size:14px;padding:8px 16px;cursor:pointer}
   section[id]{scroll-margin-top:90px}
   .preparation{padding:clamp(72px,9vw,120px) 0;background:var(--navy-2);border-top:1px solid var(--line)}
@@ -242,7 +243,7 @@
     .blog__side{justify-content:flex-start}
     .hero__mono{opacity:.08}
   }
-  @media (max-width:760px){
+  @media (max-width:960px){
     .menu-toggle{display:block}
     nav.top{display:none;position:absolute;top:100%;left:0;right:0;padding:16px 20px 24px;background:var(--navy-2);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch}
     nav.top.open{display:flex}
@@ -286,6 +287,7 @@
     <a href="#services">Services</a>
     <a href="blog.html">Blog</a>
     <a href="#contact">Contact</a>
+    <a class="portal-login" href="portal.html">Login</a>
     <a class="cta" href="#contact">Book a Consultation</a>
   </nav>
 </header>
