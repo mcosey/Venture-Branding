@@ -2,6 +2,14 @@
   'use strict';
   const $ = selector => document.querySelector(selector);
   const clients = [{id:'flowrata',type:'Business',name:'FlowRata LLC',contact:'Sample contact',email:'flowrata@example.com',clioContact:'',clioMatter:'',quickbooks:'',portal:true,archived:false,sample:true}, {id:'mzp',type:'Business',name:'MZP Inc.',contact:'Sample contact',email:'mzp@example.com',clioContact:'',clioMatter:'',quickbooks:'',portal:false,archived:false,sample:false}, {id:'mario-cosey',type:'Individual',name:'Mario Cosey',contact:'Mario Cosey',email:'mario@example.com',clioContact:'',clioMatter:'',quickbooks:'',portal:false,archived:false,sample:false}];
+  const serviceNames = ['Trademark Watch','Brand Change Monitor','Specimen Capture','Maintenance Reminder','Trademark Activity Digest'];
+  clients.forEach(client => { client.marks = []; });
+  clients[0].marks = [
+    {name:'COTIVATE®',type:'Word',status:'Registered',legacy:'cotivate'},
+    {name:'COACHIVATE™',type:'Word',status:'Pending',legacy:'coachivate'},
+    {name:'COTIVATE Logo',type:'Logo',status:'Pending',legacy:'logo'},
+    {name:'CIRCLES',type:'Word',status:'Not yet filed',legacy:'circles'}
+  ].map(mark => ({...mark,application:'',registration:'',services:[...serviceNames]}));
   let selected = clients[0], editing = null, step = 0;
   const detail = $('[data-screen="client-flowrata"]'); detail.dataset.screen = 'client';
   const originalDetail = detail.innerHTML;
@@ -14,7 +22,7 @@
   function preview(title,body) { $('#staff-dialog-title').textContent=title; $('#staff-dialog-body').textContent=body; dialog.showModal(); }
   function clientRow(client) {
     const link=node('a',undefined,'client-preview'); link.href='#client-'+client.id;
-    const info=node('div'); info.append(node('h3',client.name),node('p',client.sample?'4 trademarks':'No trademarks yet'));
+    const info=node('div'); info.append(node('h3',client.name),node('p',client.marks.length ? client.marks.length+' trademark'+(client.marks.length===1?'':'s') : 'No trademarks yet'));
     link.append(info,node('span','Open client →','row-arrow')); return link;
   }
   function renderLists() {
@@ -56,6 +64,16 @@
       detail.querySelector('.service-list').replaceChildren(node('li','No services configured.'));
       const useCard=detail.querySelector('a[href="use-history.html"]').closest('section');useCard.remove();
     }
+    const markList = detail.querySelector('.mark-list'); markList.replaceChildren();
+    selected.marks.forEach((mark,index)=>{
+      const row=node('a'); row.href=mark.legacy?'trademark.html?mark='+mark.legacy:'#client-'+selected.id;
+      if(!mark.legacy){row.dataset.markIndex=String(index);}
+      const label=node('span',mark.name);label.append(node('small',mark.type+' mark'));
+      row.append(label,node('span',mark.status,'badge '+(mark.status==='Registered'?'green':mark.status==='Pending'?'blue':'amber')),node('span',mark.legacy?'↗':'→'));markList.append(row);
+    });
+    if(!selected.marks.length)markList.append(node('p','No trademarks yet.','empty-client'));
+    const configured=selected.portal?serviceNames:[];
+    detail.querySelector('.service-list').replaceChildren(...(configured.length?configured:['No portal add-on.']).map(text=>node('li',text)));
     if(selected.archived) detail.querySelector('[data-preview="mark"]').hidden=true;
   }
   const menu=$('.menu-toggle'),nav=$('#attorney-nav');
@@ -94,17 +112,56 @@
   $('#editor-next').addEventListener('click',()=>{if(step===0&&!validDetails())return;step++;showStep();});
   $('#editor-back').addEventListener('click',()=>{step--;showStep();});
   $('#editor-close').addEventListener('click',()=>editor.close());
-  form.addEventListener('submit',event=>{event.preventDefault();if(step<3){$('#editor-next').click();return;}if(!validDetails()){step=0;showStep();return;}let client=editing;if(client)Object.assign(client,values());else{client={...values(),id:crypto.randomUUID(),sample:false,archived:false};clients.push(client);}editor.close();location.hash='client-'+client.id;route();});
+  form.addEventListener('submit',event=>{event.preventDefault();if(step<3){$('#editor-next').click();return;}if(!validDetails()){step=0;showStep();return;}let client=editing;if(client)Object.assign(client,values());else{client={...values(),id:crypto.randomUUID(),sample:false,archived:false,marks:[]};clients.push(client);}editor.close();location.hash='client-'+client.id;route();});
   $('#archive-client').addEventListener('click',()=>{if(editing.archived){editing.archived=false;editor.close();route();}else $('#archive-confirm').hidden=false;});
   $('#archive-cancel').addEventListener('click',()=>$('#archive-confirm').hidden=true);
   $('#archive-yes').addEventListener('click',()=>{editing.archived=true;editor.close();location.hash='archived';route();});
+  const markEditor=$('#mark-editor'), markForm=$('#mark-form'); let markStep=0, markOwner=null, lookupResult=null;
+  const sampleRecords={
+    'DEMO-001':{name:'EXAMPLE BRAND · Sample',type:'Word',status:'Pending',application:'DEMO-001',registration:'',owner:'Example Owner LLC · Sample'},
+    'DEMO-002':{name:'EXAMPLE LOGO · Sample',type:'Logo',status:'Registered',application:'DEMO-APPLICATION-002',registration:'DEMO-002',owner:'Example Owner LLC · Sample'}
+  };
+  function isLookup(){return markForm.elements.path.value==='uspto';}
+  function markValues(){return isLookup()?{...lookupResult,services:[...serviceNames],source:'Sample lookup — not USPTO data'}:{name:markForm.elements.markName.value.trim(),type:markForm.elements.markType.value,status:'Not yet filed',application:'',registration:'',services:[...serviceNames],source:'Manual entry'};}
+  function renderMarkSummary(target,v){
+    target.replaceChildren();
+    const rows=[['Client',markOwner.name],['Mark',v.name],['Type',v.type],['Status',v.status]];
+    if(isLookup())rows.push(['Record owner',v.owner],['Application',v.application||'—'],['Registration',v.registration||'—'],['Source','Sample preview · Not retrieved from USPTO']);
+    rows.forEach(([key,value])=>target.append(node('dt',key),node('dd',value)));
+  }
+  function showMarkStep(){
+    document.querySelectorAll('[data-mark-step]').forEach(panel=>panel.hidden=Number(panel.dataset.markStep)!==markStep);
+    $('#mark-step-label').textContent=(markStep+1)+' of 3 · '+['Choose path',isLookup()?'Lookup':'Details','Review'][markStep];
+    $('#mark-back').hidden=markStep===0;$('#mark-next').hidden=markStep===2;$('#mark-save').hidden=markStep!==2;
+    $('#lookup-fields').hidden=!isLookup();$('#manual-fields').hidden=isLookup();$('#mark-details-title').textContent=isLookup()?'USPTO lookup':'Trademark details';
+    markForm.elements.markName.required=!isLookup();markForm.elements.markName.disabled=isLookup();
+    markForm.elements.confirmOwner.required=isLookup();markForm.elements.confirmOwner.disabled=!isLookup();$('#owner-confirm-label').hidden=!isLookup();
+    if(markStep===2)renderMarkSummary($('#mark-review'),markValues());
+  }
+  function resetLookup(){lookupResult=null;$('#lookup-result').replaceChildren();$('#lookup-message').textContent='';markForm.elements.confirmOwner.checked=false;}
+  function openMarkEditor(){if(selected.archived)return;markOwner=selected;markStep=0;markForm.reset();resetLookup();$('#mark-client').textContent=selected.name;showMarkStep();markEditor.showModal();}
+  markForm.elements.identifier.addEventListener('input',resetLookup);
+  markForm.querySelectorAll('[name="path"]').forEach(input=>input.addEventListener('change',()=>{resetLookup();showMarkStep();}));
+  $('#lookup-mark').addEventListener('click',()=>{
+    resetLookup();const id=markForm.elements.identifier.value.trim().toUpperCase();lookupResult=sampleRecords[id]||null;
+    if(!lookupResult){$('#lookup-message').textContent='Live lookup is not connected. Use DEMO-001 or DEMO-002 to try the preview.';return;}
+    renderMarkSummary($('#lookup-result'),lookupResult);$('#lookup-message').textContent='Sample record loaded. Confirm the owner before saving.';
+  });
+  $('#mark-close').addEventListener('click',()=>markEditor.close());
+  $('#mark-next').addEventListener('click',()=>{
+    if(markStep===1){if(isLookup()&&!lookupResult){$('#lookup-message').textContent='Preview a sample lookup before continuing.';return;}
+      if(!isLookup()){markForm.elements.markName.value=markForm.elements.markName.value.trim();if(!markForm.elements.markName.reportValidity())return;}}
+    markStep++;showMarkStep();
+  });
+  $('#mark-back').addEventListener('click',()=>{markStep--;showMarkStep();});
+  markForm.addEventListener('submit',event=>{event.preventDefault();if(markStep<2){$('#mark-next').click();return;}if(markOwner.archived)return;if(isLookup()&&(!lookupResult||!markForm.elements.confirmOwner.reportValidity()))return;const value=markValues();if(!value.name)return;markOwner.marks.push(value);markEditor.close();route();});
+  detail.addEventListener('click',event=>{const link=event.target.closest('[data-mark-index]');if(!link)return;event.preventDefault();const mark=selected.marks[Number(link.dataset.markIndex)];preview(mark.name,selected.name+' · '+mark.type+' · '+mark.status+'\nApplication: '+(mark.application||'—')+'\nRegistration: '+(mark.registration||'—')+'\nSource: '+(mark.source||'Sample'));});
   document.addEventListener('click',event=>{
     const button=event.target.closest('[data-preview],[data-action]');if(!button)return;
     if(button.dataset.action==='settings'){openEditor(selected);return;}
     const key=button.dataset.preview;
     if(key==='new-client'){openEditor(null);return;}
-    if(key==='mark')preview('Add New Mark · '+selected.name,'Mark setup is the next step. No mark is added in this preview.');
-    if(key==='services')preview(selected.name+' · Portal services','You approve services. Clients control permitted preferences. No services are running.');
+    if(key==='mark')openMarkEditor();
     if(key==='brand')preview('Brand review · '+clients[0].name,'Sample request: “I’m using CIRCLES for a new product. Can we discuss protecting it?” Requests are not connected yet.');
   });
   ['staff-close','staff-done'].forEach(id=>$('#'+id).addEventListener('click',()=>dialog.close()));

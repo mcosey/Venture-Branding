@@ -162,3 +162,18 @@ User approved adding a local setup flow plus per-client Client Settings and Arch
 Latest sample identity update: FlowRata LLC replaces Jordan Smith throughout the attorney workspace and linked client portal profile. Its route is #client-flowrata. Existing four sample marks, requests and appointments belong to that sample client. MZP Inc. is the second seeded business client, with an empty portfolio. Emails use example.com; contacts are placeholders. No real ownership assertions or external records are changed.
 
 Mario Cosey is now the third seeded sample client (individual, #client-mario-cosey), with an empty portfolio and placeholder mario@example.com email.
+
+## Add New Mark prototype
+
+Approved client workspace committed as 7f585a4 on codex/attorney-workspace. User can push that commit in GitHub Desktop. Subsequent Add New Mark changes are uncommitted, awaiting design approval.
+
+Add New Mark now opens a three-step details/services/review dialog scoped to the current client. Includes name, Word/Logo type, status, optional application and registration numbers, and the existing five service choices. Save updates that client's in-memory portfolio, count, and service summary. New marks open a details preview; original four marks retain links to the existing client-facing pages. No synchronization into static client pages, real automation activation, uploads, or persistence. All data resets on refresh. No entitlement enforcement is implemented: service choices are prototype configuration only, even if a client lacks a portal add-on; enforce purchased scope before live functionality.
+
+Checked mark creation/review, correct client ownership, details display, empty-name validation, cancellation without adding a record, and mobile fit. Archived clients cannot add marks. Further work on actual mark editing, shared storage, client portal synchronization and service permissions requires approval.
+
+
+Latest service direction supersedes attorney service selection: every portal-add-on client receives the full service set and controls their own toggles. Remove attorney service selection from Add New Mark and the Manage services control. Mark setup now has Details / Review only. Included portal services is a read-only summary based on the client add-on. No live services or client toggle synchronization implemented. The proposed USPTO lookup/manual-path redesign still awaits implementation approval; do not interpret this service correction as authorization for a live API/backend.
+
+## Two-path mark setup (latest)
+
+User approved the prototype redesign. Add New Mark now offers Already filed with the USPTO / Not yet filed. Unfiled path asks only name and Word/Logo type, sets Not yet filed, then review/save. Filed path accepts an identifier but has NO network lookup: DEMO-001 loads a pending fixture, DEMO-002 a registered fixture; all other identifiers receive a not-connected explanation. Fixtures explicitly include Sample in mark/owner and source. Review requires owner/mark confirmation. Changing the identifier invalidates the fixture and confirmation. Imported sample fields are read-only. No attorney service selection. No credentials, external connections, persistence or client-page synchronization added. Existing marks cannot yet be linked to a later serial number; future shared records and update timestamps remain planned. Checked both paths, unknown lookup feedback, confirmation gate, and saves.
