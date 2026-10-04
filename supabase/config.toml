@@ -19,8 +19,8 @@ sql_paths = ["./seed.sql"]
 
 [auth]
 enabled = true
-site_url = "http://127.0.0.1:8000"
-additional_redirect_urls = []
+site_url = "http://127.0.0.1:8000/login.html"
+additional_redirect_urls = ["http://127.0.0.1:8000/login.html", "http://127.0.0.1:8000/attorney-login.html"]
 enable_signup = false
 enable_anonymous_sign_ins = false
 
