@@ -2,3 +2,10 @@
 *.log
 .claude/
 work/
+
+# Future backend credentials and local Supabase runtime state
+.env
+.env.*
+!.env.example
+supabase/.temp/
+supabase/.branches/

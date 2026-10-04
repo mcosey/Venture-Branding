@@ -1,17 +1,10 @@
 (() => {
   'use strict';
   const $ = selector => document.querySelector(selector);
-  const clients = [{id:'flowrata',type:'Business',name:'FlowRata LLC',contact:'Sample contact',email:'flowrata@example.com',clioContact:'',clioMatter:'',quickbooks:'',portal:true,archived:false,sample:true}, {id:'mzp',type:'Business',name:'MZP Inc.',contact:'Sample contact',email:'mzp@example.com',clioContact:'',clioMatter:'',quickbooks:'',portal:false,archived:false,sample:false}, {id:'mario-cosey',type:'Individual',name:'Mario Cosey',contact:'Mario Cosey',email:'mario@example.com',clioContact:'',clioMatter:'',quickbooks:'',portal:false,archived:false,sample:false}];
+  const clients = [{id:'cotivate-llc',type:'Business',name:'Cotivate LLC',contact:'Mario Cosey',email:'',clioContact:'',clioMatter:'',quickbooks:'',portal:true,archived:false,sample:false,marks:[{name:'Cotivate',type:'Not specified',status:'Not provided',application:'',registration:'',services:[],source:'Manual entry'}]}];
   const serviceNames = ['Trademark Watch','Brand Change Monitor','Specimen Capture','Maintenance Reminder','Trademark Activity Digest'];
-  clients.forEach(client => { client.marks = []; });
-  clients[0].marks = [
-    {name:'COTIVATE®',type:'Word',status:'Registered',legacy:'cotivate'},
-    {name:'COACHIVATE™',type:'Word',status:'Pending',legacy:'coachivate'},
-    {name:'COTIVATE Logo',type:'Logo',status:'Pending',legacy:'logo'},
-    {name:'CIRCLES',type:'Word',status:'Not yet filed',legacy:'circles'}
-  ].map(mark => ({...mark,application:'',registration:'',services:[...serviceNames]}));
   let selected = clients[0], editing = null, step = 0;
-  const detail = $('[data-screen="client-flowrata"]'); detail.dataset.screen = 'client';
+  const detail = $('[data-screen="client-cotivate-llc"]'); detail.dataset.screen = 'client';
   const originalDetail = detail.innerHTML;
   const overviewList = $('[data-screen="overview"] .client-preview').parentElement;
   const directory = $('#client-result').parentElement;
@@ -37,18 +30,9 @@
     $('#archived-list').replaceChildren(); archived.forEach(c=>$('#archived-list').append(clientRow(c)));
     if(!archived.length)$('#archived-list').append(node('p','No archived clients.','empty-client'));
     const metric=$('.summary-grid a[href="#clients"]'); metric.querySelector('strong').textContent=active.length; metric.querySelector('small').textContent=active.length===1?active[0].name:'Active clients';
-    const sample=clients[0];
-    $('.summary-grid a[href="#requests"] strong').textContent=sample.archived?'0':'1';
-    document.querySelectorAll('[data-request-list]').forEach(list=>{
-      list.replaceChildren();
-      if(sample.archived || (list.dataset.requestList==='client' && !selected.sample)){list.append(node('p','No client requests.','empty-client'));return;}
-      const row=node('article',undefined,'request-row'), info=node('div');
-      info.append(node('h3','Brand review · CIRCLES'),node('p',sample.name+' · New request'));
-      const button=node('button','View request →','text-link'); button.dataset.preview='brand';
-      row.append(node('span','', 'request-dot'),info,button);list.append(row);
-    });
-    const count=$('[data-screen="requests"] .section-heading>span'); count.textContent=sample.archived?'0 requests':'1 sample request';
-    document.querySelectorAll('.appointment p').forEach(p=>p.textContent=sample.name);
+    $('.summary-grid a[href="#requests"] strong').textContent='0';
+    document.querySelectorAll('[data-request-list]').forEach(list=>list.replaceChildren(node('p','No client requests.','empty-client')));
+    $('[data-screen="requests"] .section-heading>span').textContent='0 requests';
   }
   function renderDetail() {
     detail.innerHTML=originalDetail;
@@ -58,11 +42,11 @@
     actions.append(node('span',selected.archived?'Archived':selected.portal?'Portal add-on · Not invited':'No portal add-on','badge'));
     if(selected.sample){const link=node('a','Preview client portal ↗','outline-button');link.href='portal.html';actions.append(link);}
     const settings=node('button','Client Settings','outline-button'); settings.dataset.action='settings';actions.append(settings);
-    const metadata=node('p',selected.contact+' · '+selected.email,'client-details');detail.querySelector('.page-heading').append(metadata);
+    const metadata=node('p',[selected.contact,selected.email].filter(Boolean).join(' · '),'client-details');detail.querySelector('.page-heading').append(metadata);
     if(!selected.sample){
       detail.querySelector('.mark-list').replaceChildren(node('p','No trademarks yet.','empty-client'));
       detail.querySelector('.service-list').replaceChildren(node('li','No services configured.'));
-      const useCard=detail.querySelector('a[href="use-history.html"]').closest('section');useCard.remove();
+      const useCard=detail.querySelector('[data-use-history]');if(useCard)useCard.replaceChildren(node('h2','Use history'),node('p','No use history.','empty-client'));
     }
     const markList = detail.querySelector('.mark-list'); markList.replaceChildren();
     selected.marks.forEach((mark,index)=>{
@@ -168,7 +152,6 @@
     const key=button.dataset.preview;
     if(key==='new-client'){openEditor(null);return;}
     if(key==='mark')openMarkEditor();
-    if(key==='brand')preview('Brand review · '+clients[0].name,'Sample request: “I’m using CIRCLES for a new product. Can we discuss protecting it?” Requests are not connected yet.');
   });
   ['staff-close','staff-done'].forEach(id=>$('#'+id).addEventListener('click',()=>dialog.close()));
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&nav.classList.contains('open')){closeMenu();menu.focus();}});

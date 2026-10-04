@@ -181,3 +181,29 @@ User approved the prototype redesign. Add New Mark now offers Already filed with
 ## Link / refresh existing marks
 
 Each active client's mark now offers Link USPTO Record, or Refresh USPTO Details after a sample link. Reuses lookup/review with explicit Existing mark and incoming values, requires owner confirmation, and updates the same in-memory object. Keeps prior snapshots in mark.history and preserves service settings; no duplicate mark is created. Sample updated timestamp reflects confirmation time, not a live USPTO fetch. Failed/canceled lookups do not modify the mark. Archived clients have no link/refresh controls. Linked legacy marks open their updated local detail preview rather than stale static client detail pages. Shared client-side synchronization remains future work. All state still resets on refresh. Tested linking an existing mark, unchanged mark count, and failure preservation. Await user approval before commit.
+
+
+## Clean baseline before connected prototype
+User requested clearing attorney sample data before connecting to the client side. Only Cotivate LLC remains, contact Mario Cosey, one mark named Cotivate (user confirmed corrected spelling). Email and external references are blank; mark type/status are unspecified, with no invented filing numbers. All attorney requests, appointments, archives and use-history examples cleared; stale links into old client demo data removed. Existing lookup demo fixtures remain only on explicit lookup, not seeded client data. Client-facing pages are not connected or reset yet. Complete this cleanup for review before building the connected prototype.
+
+
+## Current priority: five-day activation readiness
+
+Read [LAUNCH-READINESS.md](LAUNCH-READINESS.md) for the approved planning objective. User wants VB built and tested ahead of leaving big law, then operational within approximately five days. This is a target requiring rehearsal and maintenance, not a guarantee or authorization to provision infrastructure. Supabase is likely; no project or database exists yet. Skip throwaway prototype synchronization. Next is a backend scope/cost proposal and approval before account changes. Repository setup must recreate a lost project; real data/files/secrets require separate secure backups. Only the planning document was authorized in this turn.
+
+## Confirmed platform choices / next proposal
+
+Cloudflare is the chosen host; hosting work is deferred. Supabase Free is chosen for development. Supabase Auth will manage invitation/recovery flows, with a separate email sender chosen before real onboarding. Never invite clients into the Supabase administrative project team to make the default email sender work. See LAUNCH-READINESS.md's first implementation phase for scope and acceptance criteria. This turn authorized plan updates and an outline only: no project, account, installation, database or auth changes were made. Next proposed action is repository schema/access-policy/configuration work with tests, subject to user approval.
+
+## Repository database foundation draft
+
+User authorized writing database structure/access rules in the repository only. See supabase/README.md for the complete scope and verification limits. Added SQL migration, seed, local configuration template, environment-variable template and transactional pgTAP isolation tests. No project creation, install, credentials, auth users or network writes. No frontend connection. Neither Supabase CLI nor psql is installed, so database tests have NOT run. Do not claim policies are validated or production-ready. Obtain approval for a disposable test environment before execution. The draft uses MFA-gated firm staff, protected memberships, client-only preference writes, staff-only mark edits, preserved history, and archive-based client access removal (confirm this live behavior before deployment). Uncommitted; do not commit without approval.
+
+## Supabase development project created
+
+User created Venture Branding in the empty Cotivate Free organization. Confirmed dashboard Healthy, West US (Oregon), project ref omvkwiosonatswocbdgx. Project URL https://omvkwiosonatswocbdgx.supabase.co . Organization aicvfezdbwwfvzowrgom. No migrations, GitHub connection or backups shown at verification. Setup form had automatic table exposure disabled and automatic RLS enabled. No credentials were read or saved by the agent. Repo SQL remains unapplied and tests unexecuted. Next requires approval to apply the prepared foundation and synthetic seed to this project and execute transactional access tests; hosted Auth configuration also remains to be verified/configured with approval.
+
+
+## Applied foundation — October 4, 2026 (supersedes draft status)
+
+Explicit authorization received to apply schema/policies, seed Cotivate and run isolation tests on omvkwiosonatswocbdgx. Done via SQL Editor, without installing tools or obtaining secrets. Migration and seed applied; 39 pgTAP checks passed after correcting three test CTEs to top-level SQL. Test records rolled back: verified 1 client, 1 mark, 5 preferences, zero Auth users, zero memberships and 7 RLS-protected VB tables. See supabase/VERIFICATION.md for hashes/results and limitations. Manual SQL execution did NOT register CLI migration history; reconcile before future CLI pushes and never rerun initial creation SQL against this existing schema. Hosted Auth setup, real login/invitation/MFA/API testing and frontend wiring remain undone. Repository changes are uncommitted; ask before commit/new phase.
