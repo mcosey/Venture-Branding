@@ -66,10 +66,16 @@
     }
     const markList = detail.querySelector('.mark-list'); markList.replaceChildren();
     selected.marks.forEach((mark,index)=>{
-      const row=node('a'); row.href=mark.legacy?'trademark.html?mark='+mark.legacy:'#client-'+selected.id;
-      if(!mark.legacy){row.dataset.markIndex=String(index);}
+      const legacyPreview=mark.legacy&&!mark.linkedIdentifier;
+      const row=node('a'); row.href=legacyPreview?'trademark.html?mark='+mark.legacy:'#client-'+selected.id;
+      if(!legacyPreview){row.dataset.markIndex=String(index);}
       const label=node('span',mark.name);label.append(node('small',mark.type+' mark'));
-      row.append(label,node('span',mark.status,'badge '+(mark.status==='Registered'?'green':mark.status==='Pending'?'blue':'amber')),node('span',mark.legacy?'↗':'→'));markList.append(row);
+      row.append(label,node('span',mark.status,'badge '+(mark.status==='Registered'?'green':mark.status==='Pending'?'blue':'amber')),node('span',legacyPreview?'↗':'→'));
+      const entry=node('div',undefined,'mark-entry');entry.append(row);
+      const controls=node('div',undefined,'mark-controls');
+      if(!selected.archived){const linkButton=node('button',mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record','text-link');linkButton.dataset.linkMark=String(index);linkButton.setAttribute('aria-label',linkButton.textContent+' for '+mark.name);controls.append(linkButton);}
+      if(mark.updatedAt)controls.append(node('small','Sample updated '+new Date(mark.updatedAt).toLocaleString()));
+      entry.append(controls);markList.append(entry);
     });
     if(!selected.marks.length)markList.append(node('p','No trademarks yet.','empty-client'));
     const configured=selected.portal?serviceNames:[];
@@ -116,7 +122,7 @@
   $('#archive-client').addEventListener('click',()=>{if(editing.archived){editing.archived=false;editor.close();route();}else $('#archive-confirm').hidden=false;});
   $('#archive-cancel').addEventListener('click',()=>$('#archive-confirm').hidden=true);
   $('#archive-yes').addEventListener('click',()=>{editing.archived=true;editor.close();location.hash='archived';route();});
-  const markEditor=$('#mark-editor'), markForm=$('#mark-form'); let markStep=0, markOwner=null, lookupResult=null;
+  const markEditor=$('#mark-editor'), markForm=$('#mark-form'); let markStep=0, markOwner=null, lookupResult=null, editingMark=null;
   const sampleRecords={
     'DEMO-001':{name:'EXAMPLE BRAND · Sample',type:'Word',status:'Pending',application:'DEMO-001',registration:'',owner:'Example Owner LLC · Sample'},
     'DEMO-002':{name:'EXAMPLE LOGO · Sample',type:'Logo',status:'Registered',application:'DEMO-APPLICATION-002',registration:'DEMO-002',owner:'Example Owner LLC · Sample'}
@@ -125,21 +131,21 @@
   function markValues(){return isLookup()?{...lookupResult,services:[...serviceNames],source:'Sample lookup — not USPTO data'}:{name:markForm.elements.markName.value.trim(),type:markForm.elements.markType.value,status:'Not yet filed',application:'',registration:'',services:[...serviceNames],source:'Manual entry'};}
   function renderMarkSummary(target,v){
     target.replaceChildren();
-    const rows=[['Client',markOwner.name],['Mark',v.name],['Type',v.type],['Status',v.status]];
+    const rows=[...(editingMark?[['Existing mark',editingMark.name],['Action','Update this record; keep its history']]:[]),['Client',markOwner.name],['Mark',v.name],['Type',v.type],['Status',v.status]];
     if(isLookup())rows.push(['Record owner',v.owner],['Application',v.application||'—'],['Registration',v.registration||'—'],['Source','Sample preview · Not retrieved from USPTO']);
     rows.forEach(([key,value])=>target.append(node('dt',key),node('dd',value)));
   }
   function showMarkStep(){
     document.querySelectorAll('[data-mark-step]').forEach(panel=>panel.hidden=Number(panel.dataset.markStep)!==markStep);
-    $('#mark-step-label').textContent=(markStep+1)+' of 3 · '+['Choose path',isLookup()?'Lookup':'Details','Review'][markStep];
-    $('#mark-back').hidden=markStep===0;$('#mark-next').hidden=markStep===2;$('#mark-save').hidden=markStep!==2;
+    $('#mark-step-label').textContent=editingMark?markStep+' of 2 · '+(markStep===1?'Lookup':'Review'):(markStep+1)+' of 3 · '+['Choose path',isLookup()?'Lookup':'Details','Review'][markStep];
+    $('#mark-back').hidden=markStep===(editingMark?1:0);$('#mark-next').hidden=markStep===2;$('#mark-save').hidden=markStep!==2;
     $('#lookup-fields').hidden=!isLookup();$('#manual-fields').hidden=isLookup();$('#mark-details-title').textContent=isLookup()?'USPTO lookup':'Trademark details';
     markForm.elements.markName.required=!isLookup();markForm.elements.markName.disabled=isLookup();
     markForm.elements.confirmOwner.required=isLookup();markForm.elements.confirmOwner.disabled=!isLookup();$('#owner-confirm-label').hidden=!isLookup();
     if(markStep===2)renderMarkSummary($('#mark-review'),markValues());
   }
   function resetLookup(){lookupResult=null;$('#lookup-result').replaceChildren();$('#lookup-message').textContent='';markForm.elements.confirmOwner.checked=false;}
-  function openMarkEditor(){if(selected.archived)return;markOwner=selected;markStep=0;markForm.reset();resetLookup();$('#mark-client').textContent=selected.name;showMarkStep();markEditor.showModal();}
+  function openMarkEditor(mark=null){if(selected.archived)return;editingMark=mark;markOwner=selected;markStep=mark?1:0;markForm.reset();resetLookup();$('#mark-editor-title').textContent=mark?(mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record'):'Add New Mark';$('#mark-save').textContent=mark?'Update mark':'Save mark';markForm.elements.identifier.value=mark?.linkedIdentifier||'';$('#mark-client').textContent=selected.name+(mark?' · '+mark.name:'');showMarkStep();markEditor.showModal();}
   markForm.elements.identifier.addEventListener('input',resetLookup);
   markForm.querySelectorAll('[name="path"]').forEach(input=>input.addEventListener('change',()=>{resetLookup();showMarkStep();}));
   $('#lookup-mark').addEventListener('click',()=>{
@@ -154,8 +160,8 @@
     markStep++;showMarkStep();
   });
   $('#mark-back').addEventListener('click',()=>{markStep--;showMarkStep();});
-  markForm.addEventListener('submit',event=>{event.preventDefault();if(markStep<2){$('#mark-next').click();return;}if(markOwner.archived)return;if(isLookup()&&(!lookupResult||!markForm.elements.confirmOwner.reportValidity()))return;const value=markValues();if(!value.name)return;markOwner.marks.push(value);markEditor.close();route();});
-  detail.addEventListener('click',event=>{const link=event.target.closest('[data-mark-index]');if(!link)return;event.preventDefault();const mark=selected.marks[Number(link.dataset.markIndex)];preview(mark.name,selected.name+' · '+mark.type+' · '+mark.status+'\nApplication: '+(mark.application||'—')+'\nRegistration: '+(mark.registration||'—')+'\nSource: '+(mark.source||'Sample'));});
+  markForm.addEventListener('submit',event=>{event.preventDefault();if(markStep<2){$('#mark-next').click();return;}if(markOwner.archived)return;if(isLookup()&&(!lookupResult||!markForm.elements.confirmOwner.reportValidity()))return;const value=markValues();if(!value.name)return;if(isLookup()){value.linkedIdentifier=markForm.elements.identifier.value.trim().toUpperCase();value.updatedAt=new Date().toISOString();}if(editingMark){const history=editingMark.history||[];history.push({...editingMark,history:undefined});Object.assign(editingMark,value,{services:editingMark.services,history});}else markOwner.marks.push(value);markEditor.close();route();});
+  detail.addEventListener('click',event=>{const control=event.target.closest('[data-link-mark]');if(control){openMarkEditor(selected.marks[Number(control.dataset.linkMark)]);return;}const link=event.target.closest('[data-mark-index]');if(!link)return;event.preventDefault();const mark=selected.marks[Number(link.dataset.markIndex)];preview(mark.name,selected.name+' · '+mark.type+' · '+mark.status+'\nApplication: '+(mark.application||'—')+'\nRegistration: '+(mark.registration||'—')+'\nSource: '+(mark.source||'Sample'));});
   document.addEventListener('click',event=>{
     const button=event.target.closest('[data-preview],[data-action]');if(!button)return;
     if(button.dataset.action==='settings'){openEditor(selected);return;}
