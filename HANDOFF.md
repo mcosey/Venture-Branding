@@ -107,7 +107,7 @@ Cloudflare configuration exists for Tylor's original `vb-test` project, but host
 
 Command-line pushes failed because this connection lacks GitHub authentication. GitHub Desktop is signed in as `mcosey`. Established workflow: commit only after approval; user clicks Push origin in GitHub Desktop; then verify `git ls-remote origin refs/heads/codex/client-portal` matches local HEAD. Do not install tools or extract credentials to work around authentication.
 
-Current work: attorney workspace Phase 1 frontend is built locally and awaits user design/commit approval. After approval, propose Phase 2 (client / linked matter / trademark / services workflow). Exact client-versus-attorney automation controls still need agreement. Do not begin backend work without approval.
+Current work: the original attorney Phase 1 was committed as 6df36da and the user reported pushing it. The revised client-management hub described below now awaits design/commit approval. After approval, agree the next client-management workflow. Exact client-versus-attorney automation controls still need agreement. Do not begin backend work without approval.
 
 ## Attorney workspace Phase 1 — October 3 update
 
@@ -121,3 +121,44 @@ The user clarified that the workspace should coordinate established services, no
 - iManage: earlier document-management choice; later user also listed Clio DMS. This overlap remains unresolved; retain iManage as a planning assumption pending clarification.
 
 No connections exist. Tool cards say Not connected and explain intended roles without requesting access. Capabilities, account requirements, sources of truth, and read/write permissions must be verified when integration work is authorized. The standalone bookkeeping/billing section from the first proposal was superseded. Phase 1 uses one sample client, four trademark records, and two review items. No invitations, decisions, messages, settings, payments, or outside records are created by its controls.
+
+
+## Current attorney direction — supersedes the original Phase 1 layout
+
+The user corrected the scope: this is their internal hub for managing all clients and their calendar, supporting the existing client-facing portal. Center the experience on client work, not on features or integrations.
+
+- Navigation: Overview, Clients, Calendar, Tasks, with separate views inside attorney.html.
+- Clients is the complete client directory (currently one sample client, Cotivate). Search by client/contact; open Cotivate for its four existing marks, five portal services, tasks and use history. Do not invent additional clients merely to fill the interface.
+- Existing client-facing trademark and use-history pages are linked as explicitly labeled previews; no shared database or editing capability exists yet. Future attorney-approved records/services should supply the corresponding client's portal.
+- Overview summarizes clients needing follow-up, appointments and tasks. Calendar contains two explicitly illustrative appointments. Tasks contains three illustrative client tasks; no edits or completion are persisted.
+- Removed dedicated Review queue, Automations, and Connected tools navigation and integration cards. Findings belong within client context or actionable tasks, not a separate feature-led homepage.
+- Outside tools remain architecture considerations, not mandatory navigation destinations. Keep the responsibilities and unresolved iManage/Clio overlap above in mind. Do not duplicate their systems or connect them without approval.
+- Client-facing pages are unchanged. Still static/sample only, no auth, backend, invitations, calendar synchronization, live services or actual client data.
+- Current revisions are on codex/attorney-workspace; do not commit or push until user approval. Continue ending responses with the next step and seek approval before a new phase or significant changes.
+
+
+## Latest correction: organize by client, not mark (supersedes prior hub examples)
+
+- Cotivate is a trademark, not the client. Attorney directory, overview, appointments and request ownership use Jordan Smith (existing fictional sample contact) as the sample client. Client record route: #client-jordan-smith. Marks are shown inside that client's record. Model clients separately from their owned marks when real data is authorized; actual legal owner details still require verification.
+- Replace Tasks with Client requests. No invented attorney to-do feed or watch-derived tasks. One clearly sample brand-review request illustrates the existing client portal Request a Review control; no request submission, synchronization or live inbox exists yet.
+- Navigation: Overview, Clients, Calendar, Client requests. Preserve appointments.
+- User explicitly dislikes filler/taglines, explanatory dummy prose and verbose sample text. Use concise functional headings, labels and one brief sample-state notice. Keep detailed limitations in handoff notes or relevant preview dialogs.
+- These revisions support the existing client portal; client-facing files remain unchanged. Await review before committing.
+
+
+Overview and Clients now have Add New Client buttons; the sample client detail has Add New Mark. Buttons open previews only. User requested a proposed client-setup flow with future Clio/QuickBooks linking; actual setup forms, integrations, persistence and invitations are not yet authorized or implemented. Attorney controls which marks belong to each client.
+
+## Client setup / settings prototype
+
+User approved adding a local setup flow plus per-client Client Settings and Archived Clients navigation. Implemented in attorney.html and attorney/assets/workspace.js/css:
+- Four-step Add New Client: details (individual/business, client name, contact, email), optional Clio contact/matter and QuickBooks customer references, portal add-on, review/save.
+- All state is JavaScript memory for this page session only. Refresh resets to Jordan Smith; explicit top notice warns to use sample information. No localStorage, database, API calls, account connections or invitations.
+- New clients get their own internal ID and empty marks/services/requests, never Jordan's sample portfolio. Jordan's four sample marks continue to link to existing client previews.
+- Client Settings edits the same details. Archive requires an inline confirmation, retains the record, removes it from active lists, and moves it to Archived Clients. Open an archived client and use Client Settings → Restore client to restore. External access, accounting and matters are not affected. Real access revocation/retention policies still require design before backend work.
+- Related-record references are plain text only, not active integrations. Add New Mark and Manage services remain explanatory previews.
+- Verified create/review, edit, archive/restore, empty new-client portfolio, mobile form fit and JS syntax. No changes committed yet; ask user to review before saving a commit.
+
+
+Latest sample identity update: FlowRata LLC replaces Jordan Smith throughout the attorney workspace and linked client portal profile. Its route is #client-flowrata. Existing four sample marks, requests and appointments belong to that sample client. MZP Inc. is the second seeded business client, with an empty portfolio. Emails use example.com; contacts are placeholders. No real ownership assertions or external records are changed.
+
+Mario Cosey is now the third seeded sample client (individual, #client-mario-cosey), with an empty portfolio and placeholder mario@example.com email.

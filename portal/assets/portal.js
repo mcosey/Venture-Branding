@@ -20,7 +20,7 @@
     rights: ['Rights', 'A future place to see ownership, assignments, and licenses connected to each mark. This section is not built in the dashboard preview.'],
     documents: ['Documents', 'A future place for application records, USPTO correspondence, registration certificates, and other matter documents. No client documents are stored in this preview.'],
     messages: ['Messages', 'Two illustrative updates show how Venture Branding could keep a client informed. Messaging is not connected.', ['Venture Branding · We are reviewing a potential watch match. No action is needed from you at this time.', 'Venture Branding · Your latest use records have been added to the sample portfolio.']],
-    profile: ['Jordan Smith · Sample account', 'Jordan and the portfolio information are demonstration content. There is no signed-in account. Use “Back to website” below to return to the V8 homepage.']
+    profile: ['FlowRata LLC · Sample account', 'FlowRata LLC and the portfolio information are demonstration content. There is no signed-in account. Use “Back to website” below to return to the V8 homepage.']
   };
   const dialog = document.querySelector('#detail-dialog');
   document.querySelectorAll('[data-detail]').forEach(button => button.addEventListener('click', () => {
