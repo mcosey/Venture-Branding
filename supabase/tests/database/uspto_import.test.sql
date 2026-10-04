@@ -1,0 +1,28 @@
+-- After all migrations, in a disposable test database. Test changes roll back.
+begin;
+create extension if not exists pgtap with schema extensions;
+set local search_path=public,extensions;
+select no_plan();
+insert into auth.users(id,email) values ('a1000000-0000-0000-0000-000000000001','import-staff@example.com'),('a1000000-0000-0000-0000-000000000002','import-client@example.com');
+insert into vb_private.staff_members(user_id) values ('a1000000-0000-0000-0000-000000000001');
+insert into public.vb_clients(id,name,client_type,contact_name) values ('b1000000-0000-0000-0000-000000000001','Import fixture','business','Fixture');
+insert into public.vb_marks(id,client_id,name) values ('c1000000-0000-0000-0000-000000000001','b1000000-0000-0000-0000-000000000001','Before');
+select set_config('test.uspto_details','{"name":"EXAMPLE","status":"inactive","uspto_status_text":"602 — Abandoned","application_number":"01234567","source_checked_at":"2026-10-04T00:00:00Z","filing_date":"2020-01-01"}',true);
+set local role anon;
+select throws_ok($$select public.vb_save_uspto_mark(null,null,null,'{}')$$,'42501',null,'Anonymous import denied');
+reset role;
+set local role authenticated;
+select set_config('request.jwt.claims','{"sub":"a1000000-0000-0000-0000-000000000002","role":"authenticated","aal":"aal2"}',true);
+select throws_ok($$select public.vb_save_uspto_mark(null,null,null,'{}')$$,'42501',null,'Client import denied even with MFA');
+select set_config('request.jwt.claims','{"sub":"a1000000-0000-0000-0000-000000000001","role":"authenticated","aal":"aal1"}',true);
+select throws_ok($$select public.vb_save_uspto_mark(null,null,null,'{}')$$,'42501',null,'Staff needs MFA');
+select set_config('request.jwt.claims','{"sub":"a1000000-0000-0000-0000-000000000001","role":"authenticated","aal":"aal2"}',true);
+select lives_ok($$select public.vb_save_uspto_mark('b1000000-0000-0000-0000-000000000001','c1000000-0000-0000-0000-000000000001',(select updated_at from public.vb_marks where id='c1000000-0000-0000-0000-000000000001'),current_setting('test.uspto_details')::jsonb)$$,'Staff imports into existing mark');
+select is((select name from public.vb_marks where id='c1000000-0000-0000-0000-000000000001'),'EXAMPLE','Same mark updated');
+select is((select status from public.vb_marks where id='c1000000-0000-0000-0000-000000000001'),'inactive','Abandoned stays inactive');
+select throws_ok($$select public.vb_save_uspto_mark('b1000000-0000-0000-0000-000000000001','c1000000-0000-0000-0000-000000000001','2000-01-01',current_setting('test.uspto_details')::jsonb)$$,'40001',null,'Stale update denied');
+select throws_ok($$select public.vb_save_uspto_mark('b1000000-0000-0000-0000-000000000001',null,null,current_setting('test.uspto_details')::jsonb)$$,'23505',null,'Duplicate active serial for same client denied');
+update public.vb_clients set archived_at=now() where id='b1000000-0000-0000-0000-000000000001';
+select throws_ok($$select public.vb_save_uspto_mark('b1000000-0000-0000-0000-000000000001',null,null,current_setting('test.uspto_details')::jsonb)$$,'42501',null,'Archived client cannot import');
+select * from finish();
+rollback;

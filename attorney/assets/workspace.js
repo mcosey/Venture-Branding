@@ -9,7 +9,7 @@ import {setupGate} from '../../auth/gate.mjs';
     const saved=await loadRecords(db,'staff');
     clients.splice(0,clients.length,...saved.clients.map(c=>{
       const r=saved.references.find(r=>r.client_id===c.id)||{};
-      return {id:c.id,type:c.client_type==='business'?'Business':'Individual',name:c.name,contact:c.contact_name,email:c.contact_email||'',clioContact:r.clio_contact_reference||'',clioMatter:r.clio_matter_reference||'',quickbooks:r.quickbooks_customer_reference||'',portal:c.portal_enabled,archived:Boolean(c.archived_at),updatedAt:c.updated_at,sample:false,marks:saved.marks.filter(m=>m.client_id===c.id).map(m=>({id:m.id,name:m.name,type:typeLabel(m.mark_type),status:statusLabel(m.status),application:m.application_number||'',registration:m.registration_number||'',source:m.source==='uspto'?'USPTO':'Manual entry',services:[]}))};
+      return {id:c.id,type:c.client_type==='business'?'Business':'Individual',name:c.name,contact:c.contact_name,email:c.contact_email||'',clioContact:r.clio_contact_reference||'',clioMatter:r.clio_matter_reference||'',quickbooks:r.quickbooks_customer_reference||'',portal:c.portal_enabled,archived:Boolean(c.archived_at),updatedAt:c.updated_at,sample:false,marks:saved.marks.filter(m=>m.client_id===c.id).map(m=>({id:m.id,updatedAt:m.updated_at,linkedIdentifier:m.application_number||'',name:m.name,type:typeLabel(m.mark_type),status:statusLabel(m.status),application:m.application_number||'',registration:m.registration_number||'',source:m.source==='uspto'?'USPTO':'Manual entry',services:[]}))};
     }));
   }
   try{await reloadRecords();}catch(error){gate.lock(error.message);return;}
@@ -77,7 +77,7 @@ import {setupGate} from '../../auth/gate.mjs';
       const entry=node('div',undefined,'mark-entry');entry.append(row);
       const controls=node('div',undefined,'mark-controls');
       if(!selected.archived){const linkButton=node('button',mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record','text-link');linkButton.dataset.linkMark=String(index);linkButton.setAttribute('aria-label',linkButton.textContent+' for '+mark.name);controls.append(linkButton);}
-      if(mark.updatedAt)controls.append(node('small','Sample updated '+new Date(mark.updatedAt).toLocaleString()));
+      if(mark.updatedAt)controls.append(node('small','Updated '+new Date(mark.updatedAt).toLocaleString()));
       entry.append(controls);markList.append(entry);
     });
     if(!selected.marks.length)markList.append(node('p','No trademarks yet.','empty-client'));
@@ -128,13 +128,13 @@ import {setupGate} from '../../auth/gate.mjs';
   $('#archive-client').addEventListener('click',()=>{if(editing.archived)archiveClient(false);else $('#archive-confirm').hidden=false;});
   $('#archive-cancel').addEventListener('click',()=>$('#archive-confirm').hidden=true);
   $('#archive-yes').addEventListener('click',()=>archiveClient(true));
-  const markEditor=$('#mark-editor'), markForm=$('#mark-form'); let markStep=0, markOwner=null, lookupResult=null, editingMark=null;
+  const markEditor=$('#mark-editor'), markForm=$('#mark-form'); let markStep=0, markOwner=null, lookupResult=null, editingMark=null, lookupVersion=0;
   function isLookup(){return markForm.elements.path.value==='uspto';}
-  function markValues(){return isLookup()?{...lookupResult,services:[...serviceNames],source:'Sample lookup — not USPTO data'}:{name:markForm.elements.markName.value.trim(),type:markForm.elements.markType.value,status:'Not yet filed',application:'',registration:'',services:[...serviceNames],source:'Manual entry'};}
+  function markValues(){return isLookup()?{...lookupResult,services:[...serviceNames],source:'USPTO'}:{name:markForm.elements.markName.value.trim(),type:markForm.elements.markType.value,status:'Not yet filed',application:'',registration:'',services:[...serviceNames],source:'Manual entry'};}
   function renderMarkSummary(target,v){
     target.replaceChildren();
     const rows=[...(editingMark?[['Existing mark',editingMark.name],['Action','Update this record; keep its history']]:[]),['Client',markOwner.name],['Mark',v.name],['Type',v.type],['Status',v.status]];
-    if(isLookup())rows.push(['Record owner',v.owner],['Application',v.application||'—'],['Registration',v.registration||'—'],['Source','Sample preview · Not retrieved from USPTO']);
+    if(isLookup())rows.push(['Record owner',v.owner],['Application',v.application||'—'],['Registration',v.registration||'—'],['Filed',v.filingDate||'Not provided'],['Registered',v.registrationDate||'Not provided'],['Status date',v.statusDate||'Not provided'],['Retrieved',v.checkedAt],['Source','USPTO TSDR']);
     rows.forEach(([key,value])=>target.append(node('dt',key),node('dd',value)));
   }
   function showMarkStep(){
@@ -146,19 +146,36 @@ import {setupGate} from '../../auth/gate.mjs';
     markForm.elements.confirmOwner.required=isLookup();markForm.elements.confirmOwner.disabled=!isLookup();$('#owner-confirm-label').hidden=!isLookup();
     if(markStep===2)renderMarkSummary($('#mark-review'),markValues());
   }
-  function resetLookup(){lookupResult=null;$('#lookup-result').replaceChildren();$('#lookup-message').textContent='';markForm.elements.confirmOwner.checked=false;}
-  function openMarkEditor(mark=null){if(selected.archived)return;if(mark){preview('USPTO connection','USPTO lookup is not connected yet. Your saved mark remains unchanged.');return;}editingMark=mark;markOwner=selected;markStep=mark?1:0;markForm.reset();resetLookup();$('#mark-editor-title').textContent=mark?(mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record'):'Add New Mark';$('#mark-save').textContent=mark?'Update mark':'Save mark';markForm.elements.identifier.value=mark?.linkedIdentifier||'';$('#mark-client').textContent=selected.name+(mark?' · '+mark.name:'');showMarkStep();markEditor.showModal();}
+  function resetLookup(){lookupVersion++;lookupResult=null;$('#lookup-result').replaceChildren();$('#lookup-message').textContent='';markForm.elements.confirmOwner.checked=false;}
+  function openMarkEditor(mark=null){if(selected.archived)return;editingMark=mark;markOwner=selected;markStep=mark?1:0;markForm.reset();resetLookup();$('#mark-editor-title').textContent=mark?(mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record'):'Add New Mark';$('#mark-save').textContent=mark?'Update mark':'Save mark';markForm.elements.identifier.value=mark?.linkedIdentifier||'';$('#mark-client').textContent=selected.name+(mark?' · '+mark.name:'');showMarkStep();markEditor.showModal();}
   markForm.elements.identifier.addEventListener('input',resetLookup);
   markForm.querySelectorAll('[name="path"]').forEach(input=>input.addEventListener('change',()=>{resetLookup();showMarkStep();}));
-  $('#lookup-mark').addEventListener('click',()=>{resetLookup();$('#lookup-message').textContent='USPTO lookup is not connected yet. No record was changed.';});
+  async function usptoRequest(action){
+    await requireAccess(db,'staff');
+    const {data,error}=await db.functions.invoke('uspto-lookup',{body:{action,serial:markForm.elements.identifier.value.trim(),clientId:markOwner.id,markId:editingMark?.id||null,expectedUpdatedAt:editingMark?.updatedAt||null,fingerprint:lookupResult?.fingerprint,confirmOwner:markForm.elements.confirmOwner.checked}});
+    if(error){let message='USPTO connection unavailable. Nothing was saved.';try{const body=await error.context.json();if(typeof body.error==='string')message=body.error;}catch{}throw new Error(message);}
+    if(!data||data.error)throw new Error(data?.error||'USPTO returned no record.');return data;
+  }
+  let lookingUp=false;
+  $('#lookup-mark').addEventListener('click',async()=>{
+    if(lookingUp)return;resetLookup();const version=lookupVersion;
+    if(!/^\d{8}$/.test(markForm.elements.identifier.value.trim())){$('#lookup-message').textContent='Enter the eight-digit application serial number.';return;}
+    lookingUp=true;$('#lookup-mark').disabled=true;$('#lookup-message').textContent='Retrieving USPTO record…';
+    const serial=markForm.elements.identifier.value.trim(),owner=markOwner,mark=editingMark;
+    try{const result=await usptoRequest('preview');if(version!==lookupVersion||!markEditor.open||owner!==markOwner||mark!==editingMark||serial!==markForm.elements.identifier.value.trim())return;
+      const r=result.record;lookupResult={name:r.name,type:typeLabel(r.mark_type),status:r.uspto_status_text,owner:r.record_owner,application:r.application_number,registration:r.registration_number,filingDate:r.filing_date,registrationDate:r.registration_date,statusDate:r.uspto_status_date,checkedAt:result.checkedAt,fingerprint:result.fingerprint};
+      renderMarkSummary($('#lookup-result'),lookupResult);$('#lookup-message').textContent='Review this record before saving.';
+    }catch(error){if(version===lookupVersion&&markEditor.open)$('#lookup-message').textContent=error.message;}finally{lookingUp=false;$('#lookup-mark').disabled=false;}
+  });
   $('#mark-close').addEventListener('click',()=>markEditor.close());
+  markEditor.addEventListener('close',resetLookup);
   $('#mark-next').addEventListener('click',()=>{
-    if(markStep===1){if(isLookup()&&!lookupResult){$('#lookup-message').textContent='Live USPTO lookup is not connected yet.';return;}
+    if(markStep===1){if(isLookup()&&!lookupResult){$('#lookup-message').textContent='Look up a record before continuing.';return;}
       if(!isLookup()){markForm.elements.markName.value=markForm.elements.markName.value.trim();if(!markForm.elements.markName.reportValidity())return;}}
     markStep++;showMarkStep();
   });
   $('#mark-back').addEventListener('click',()=>{markStep--;showMarkStep();});
-  markForm.addEventListener('submit',event=>{event.preventDefault();if(markStep<2){$('#mark-next').click();return;}if(markOwner.archived||isLookup())return;const value=markValues();if(!value.name)return;save(async()=>{const {error}=await db.from('vb_marks').insert({client_id:markOwner.id,name:value.name,mark_type:value.type.toLowerCase(),status:'not_filed',source:'manual'});if(error)throw new Error('Mark could not be saved. Please retry.');markEditor.close();});});
+  markForm.addEventListener('submit',event=>{event.preventDefault();if(markStep<2){$('#mark-next').click();return;}if(markOwner.archived)return;if(isLookup()){if(!lookupResult||!markForm.elements.confirmOwner.checked){markForm.elements.confirmOwner.reportValidity();return;}save(async()=>{await usptoRequest('save');markEditor.close();});return;}const value=markValues();if(!value.name)return;save(async()=>{const {error}=await db.from('vb_marks').insert({client_id:markOwner.id,name:value.name,mark_type:value.type.toLowerCase(),status:'not_filed',source:'manual'});if(error)throw new Error('Mark could not be saved. Please retry.');markEditor.close();});});
   detail.addEventListener('click',event=>{const control=event.target.closest('[data-link-mark]');if(control){openMarkEditor(selected.marks[Number(control.dataset.linkMark)]);return;}const link=event.target.closest('[data-mark-index]');if(!link)return;event.preventDefault();const mark=selected.marks[Number(link.dataset.markIndex)];preview(mark.name,selected.name+' · '+mark.type+' · '+mark.status+'\nApplication: '+(mark.application||'—')+'\nRegistration: '+(mark.registration||'—')+'\nSource: '+(mark.source||'Sample'));});
   document.addEventListener('click',event=>{
     const button=event.target.closest('[data-preview],[data-action]');if(!button)return;

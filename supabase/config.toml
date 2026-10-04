@@ -32,3 +32,7 @@ double_confirm_changes = true
 [auth.mfa.totp]
 enroll_enabled = true
 verify_enabled = true
+
+# Handler validates Auth identity and the server-derived MFA staff role itself.
+[functions.uspto-lookup]
+verify_jwt = false

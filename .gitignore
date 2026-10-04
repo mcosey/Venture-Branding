@@ -9,3 +9,6 @@ work/
 !.env.example
 supabase/.temp/
 supabase/.branches/
+
+# Local function test dependencies
+node_modules/
