@@ -1,7 +1,26 @@
-(() => {
+import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs';
+import {setupGate} from '../../auth/gate.mjs';
+(async () => {
   'use strict';
   const $ = selector => document.querySelector(selector);
-  const clients = [{id:'cotivate-llc',type:'Business',name:'Cotivate LLC',contact:'Mario Cosey',email:'',clioContact:'',clioMatter:'',quickbooks:'',portal:true,archived:false,sample:false,marks:[{name:'Cotivate',type:'Not specified',status:'Not provided',application:'',registration:'',services:[],source:'Manual entry'}]}];
+  const db=createConnection('staff'), gate=setupGate(db,'staff');
+  const clients=[];
+  async function reloadRecords(){
+    const saved=await loadRecords(db,'staff');
+    clients.splice(0,clients.length,...saved.clients.map(c=>{
+      const r=saved.references.find(r=>r.client_id===c.id)||{};
+      return {id:c.id,type:c.client_type==='business'?'Business':'Individual',name:c.name,contact:c.contact_name,email:c.contact_email||'',clioContact:r.clio_contact_reference||'',clioMatter:r.clio_matter_reference||'',quickbooks:r.quickbooks_customer_reference||'',portal:c.portal_enabled,archived:Boolean(c.archived_at),updatedAt:c.updated_at,sample:false,marks:saved.marks.filter(m=>m.client_id===c.id).map(m=>({id:m.id,name:m.name,type:typeLabel(m.mark_type),status:statusLabel(m.status),application:m.application_number||'',registration:m.registration_number||'',source:m.source==='uspto'?'USPTO':'Manual entry',services:[]}))};
+    }));
+  }
+  try{await reloadRecords();}catch(error){gate.lock(error.message);return;}
+  let saving=false;
+  async function save(action){
+    if(saving)return;saving=true;
+    const buttons=[...document.querySelectorAll('dialog button')];buttons.forEach(b=>b.disabled=true);
+    try{await requireAccess(db,'staff');await action();await reloadRecords();route();}
+    catch(error){const target=document.querySelector('dialog[open]');if(target){let note=target.querySelector('[data-save-error]');if(!note){note=document.createElement('p');note.dataset.saveError='';note.className='connection-error';note.setAttribute('role','alert');target.append(note);}note.textContent=error.message||'Unable to save. Please retry.';}else gate.lock(error.message);}
+    finally{saving=false;buttons.forEach(b=>b.disabled=false);}
+  }
   const serviceNames = ['Trademark Watch','Brand Change Monitor','Specimen Capture','Maintenance Reminder','Trademark Activity Digest'];
   let selected = clients[0], editing = null, step = 0;
   const detail = $('[data-screen="client-cotivate-llc"]'); detail.dataset.screen = 'client';
@@ -39,7 +58,7 @@
     detail.querySelector('h1').textContent=selected.name;
     const back=detail.querySelector('.page-heading a');back.href=selected.archived?'#archived':'#clients';back.textContent=selected.archived?'← Archived Clients':'← All clients';
     const actions=detail.querySelector('.client-actions'); actions.replaceChildren();
-    actions.append(node('span',selected.archived?'Archived':selected.portal?'Portal add-on · Not invited':'No portal add-on','badge'));
+    actions.append(node('span',selected.archived?'Archived':selected.portal?'Portal enabled':'No portal add-on','badge'));
     if(selected.sample){const link=node('a','Preview client portal ↗','outline-button');link.href='portal.html';actions.append(link);}
     const settings=node('button','Client Settings','outline-button'); settings.dataset.action='settings';actions.append(settings);
     const metadata=node('p',[selected.contact,selected.email].filter(Boolean).join(' · '),'client-details');detail.querySelector('.page-heading').append(metadata);
@@ -70,7 +89,7 @@
   function closeMenu(){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}
   menu.addEventListener('click',()=>{menu.setAttribute('aria-expanded',String(nav.classList.toggle('open')));});
   function route(){
-    const requested=location.hash.slice(1)||'overview'; let view=requested;
+    let requested=location.hash.slice(1)||'overview'; if(requested==='client-cotivate-llc')requested='client-10000000-0000-0000-0000-000000000001'; let view=requested;
     if(requested.startsWith('client-')){
       selected=clients.find(c=>c.id===requested.slice(7));view=selected?'client':'missing';
       if(selected)renderDetail();else selected=clients[0];
@@ -91,10 +110,10 @@
     $('#step-label').textContent=`${step+1} of 4 · ${['Details','Related records','Portal access','Review'][step]}`;
     $('#editor-back').hidden=step===0;$('#editor-next').hidden=step===3;$('#editor-save').hidden=step!==3;
     $('#archive-controls').hidden=!editing||step!==0;
-    if(step===3){const v=values();$('#client-review').replaceChildren();const labels={type:'Type',name:'Client',contact:'Contact',email:'Email',clioContact:'Clio contact',clioMatter:'Clio matter',quickbooks:'QuickBooks customer'};fields.forEach(key=>$('#client-review').append(node('dt',labels[key]),node('dd',v[key]||'Not linked')));$('#client-review').append(node('dt','Portal'),node('dd',v.portal?'Add-on purchased · Not invited':'No add-on'));}
+    if(step===3){const v=values();$('#client-review').replaceChildren();const labels={type:'Type',name:'Client',contact:'Contact',email:'Email',clioContact:'Clio contact',clioMatter:'Clio matter',quickbooks:'QuickBooks customer'};fields.forEach(key=>$('#client-review').append(node('dt',labels[key]),node('dd',v[key]||'Not linked')));$('#client-review').append(node('dt','Portal'),node('dd',v.portal?'Portal enabled':'No add-on'));}
   }
   function openEditor(client){
-    editing=client;step=0;form.reset();if(client){fields.forEach(key=>form.elements[key].value=client[key]);form.elements.portal.checked=client.portal;}
+    editing=client;step=0;form.reset();editor.querySelector('[data-save-error]')?.remove();if(client){fields.forEach(key=>form.elements[key].value=client[key]);form.elements.portal.checked=client.portal;}
     $('#editor-title').textContent=client?'Client Settings':'Add New Client';$('#editor-save').textContent=client?'Save changes':'Save client';
     $('#archive-confirm').hidden=true;$('#archive-client').textContent=client?.archived?'Restore client':'Archive client';showStep();editor.showModal();
   }
@@ -102,15 +121,14 @@
   $('#editor-next').addEventListener('click',()=>{if(step===0&&!validDetails())return;step++;showStep();});
   $('#editor-back').addEventListener('click',()=>{step--;showStep();});
   $('#editor-close').addEventListener('click',()=>editor.close());
-  form.addEventListener('submit',event=>{event.preventDefault();if(step<3){$('#editor-next').click();return;}if(!validDetails()){step=0;showStep();return;}let client=editing;if(client)Object.assign(client,values());else{client={...values(),id:crypto.randomUUID(),sample:false,archived:false,marks:[]};clients.push(client);}editor.close();location.hash='client-'+client.id;route();});
-  $('#archive-client').addEventListener('click',()=>{if(editing.archived){editing.archived=false;editor.close();route();}else $('#archive-confirm').hidden=false;});
+  form.addEventListener('submit',event=>{event.preventDefault();if(step<3){$('#editor-next').click();return;}if(!validDetails()){step=0;showStep();return;}
+    save(async()=>{const v=values();const {data,error}=await db.rpc('vb_save_client',{record_id:editing?.id||null,expected_updated_at:editing?.updatedAt||null,details:{name:v.name,client_type:v.type.toLowerCase(),contact_name:v.contact,contact_email:v.email,portal_enabled:v.portal,clio_contact_reference:v.clioContact,clio_matter_reference:v.clioMatter,quickbooks_customer_reference:v.quickbooks}});if(error)throw new Error('Client could not be saved. Reload if another edit changed this record.');await reloadRecords();editor.close();location.hash='client-'+data;});
+  });
+  async function archiveClient(archived){await save(async()=>{const {data,error}=await db.from('vb_clients').update({archived_at:archived?new Date().toISOString():null}).eq('id',editing.id).eq('updated_at',editing.updatedAt).select('id');if(error||data.length!==1)throw new Error('Client changed or access is unavailable. Reload and try again.');editor.close();location.hash=archived?'archived':'clients';});}
+  $('#archive-client').addEventListener('click',()=>{if(editing.archived)archiveClient(false);else $('#archive-confirm').hidden=false;});
   $('#archive-cancel').addEventListener('click',()=>$('#archive-confirm').hidden=true);
-  $('#archive-yes').addEventListener('click',()=>{editing.archived=true;editor.close();location.hash='archived';route();});
+  $('#archive-yes').addEventListener('click',()=>archiveClient(true));
   const markEditor=$('#mark-editor'), markForm=$('#mark-form'); let markStep=0, markOwner=null, lookupResult=null, editingMark=null;
-  const sampleRecords={
-    'DEMO-001':{name:'EXAMPLE BRAND · Sample',type:'Word',status:'Pending',application:'DEMO-001',registration:'',owner:'Example Owner LLC · Sample'},
-    'DEMO-002':{name:'EXAMPLE LOGO · Sample',type:'Logo',status:'Registered',application:'DEMO-APPLICATION-002',registration:'DEMO-002',owner:'Example Owner LLC · Sample'}
-  };
   function isLookup(){return markForm.elements.path.value==='uspto';}
   function markValues(){return isLookup()?{...lookupResult,services:[...serviceNames],source:'Sample lookup — not USPTO data'}:{name:markForm.elements.markName.value.trim(),type:markForm.elements.markType.value,status:'Not yet filed',application:'',registration:'',services:[...serviceNames],source:'Manual entry'};}
   function renderMarkSummary(target,v){
@@ -129,22 +147,18 @@
     if(markStep===2)renderMarkSummary($('#mark-review'),markValues());
   }
   function resetLookup(){lookupResult=null;$('#lookup-result').replaceChildren();$('#lookup-message').textContent='';markForm.elements.confirmOwner.checked=false;}
-  function openMarkEditor(mark=null){if(selected.archived)return;editingMark=mark;markOwner=selected;markStep=mark?1:0;markForm.reset();resetLookup();$('#mark-editor-title').textContent=mark?(mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record'):'Add New Mark';$('#mark-save').textContent=mark?'Update mark':'Save mark';markForm.elements.identifier.value=mark?.linkedIdentifier||'';$('#mark-client').textContent=selected.name+(mark?' · '+mark.name:'');showMarkStep();markEditor.showModal();}
+  function openMarkEditor(mark=null){if(selected.archived)return;if(mark){preview('USPTO connection','USPTO lookup is not connected yet. Your saved mark remains unchanged.');return;}editingMark=mark;markOwner=selected;markStep=mark?1:0;markForm.reset();resetLookup();$('#mark-editor-title').textContent=mark?(mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record'):'Add New Mark';$('#mark-save').textContent=mark?'Update mark':'Save mark';markForm.elements.identifier.value=mark?.linkedIdentifier||'';$('#mark-client').textContent=selected.name+(mark?' · '+mark.name:'');showMarkStep();markEditor.showModal();}
   markForm.elements.identifier.addEventListener('input',resetLookup);
   markForm.querySelectorAll('[name="path"]').forEach(input=>input.addEventListener('change',()=>{resetLookup();showMarkStep();}));
-  $('#lookup-mark').addEventListener('click',()=>{
-    resetLookup();const id=markForm.elements.identifier.value.trim().toUpperCase();lookupResult=sampleRecords[id]||null;
-    if(!lookupResult){$('#lookup-message').textContent='Live lookup is not connected. Use DEMO-001 or DEMO-002 to try the preview.';return;}
-    renderMarkSummary($('#lookup-result'),lookupResult);$('#lookup-message').textContent='Sample record loaded. Confirm the owner before saving.';
-  });
+  $('#lookup-mark').addEventListener('click',()=>{resetLookup();$('#lookup-message').textContent='USPTO lookup is not connected yet. No record was changed.';});
   $('#mark-close').addEventListener('click',()=>markEditor.close());
   $('#mark-next').addEventListener('click',()=>{
-    if(markStep===1){if(isLookup()&&!lookupResult){$('#lookup-message').textContent='Preview a sample lookup before continuing.';return;}
+    if(markStep===1){if(isLookup()&&!lookupResult){$('#lookup-message').textContent='Live USPTO lookup is not connected yet.';return;}
       if(!isLookup()){markForm.elements.markName.value=markForm.elements.markName.value.trim();if(!markForm.elements.markName.reportValidity())return;}}
     markStep++;showMarkStep();
   });
   $('#mark-back').addEventListener('click',()=>{markStep--;showMarkStep();});
-  markForm.addEventListener('submit',event=>{event.preventDefault();if(markStep<2){$('#mark-next').click();return;}if(markOwner.archived)return;if(isLookup()&&(!lookupResult||!markForm.elements.confirmOwner.reportValidity()))return;const value=markValues();if(!value.name)return;if(isLookup()){value.linkedIdentifier=markForm.elements.identifier.value.trim().toUpperCase();value.updatedAt=new Date().toISOString();}if(editingMark){const history=editingMark.history||[];history.push({...editingMark,history:undefined});Object.assign(editingMark,value,{services:editingMark.services,history});}else markOwner.marks.push(value);markEditor.close();route();});
+  markForm.addEventListener('submit',event=>{event.preventDefault();if(markStep<2){$('#mark-next').click();return;}if(markOwner.archived||isLookup())return;const value=markValues();if(!value.name)return;save(async()=>{const {error}=await db.from('vb_marks').insert({client_id:markOwner.id,name:value.name,mark_type:value.type.toLowerCase(),status:'not_filed',source:'manual'});if(error)throw new Error('Mark could not be saved. Please retry.');markEditor.close();});});
   detail.addEventListener('click',event=>{const control=event.target.closest('[data-link-mark]');if(control){openMarkEditor(selected.marks[Number(control.dataset.linkMark)]);return;}const link=event.target.closest('[data-mark-index]');if(!link)return;event.preventDefault();const mark=selected.marks[Number(link.dataset.markIndex)];preview(mark.name,selected.name+' · '+mark.type+' · '+mark.status+'\nApplication: '+(mark.application||'—')+'\nRegistration: '+(mark.registration||'—')+'\nSource: '+(mark.source||'Sample'));});
   document.addEventListener('click',event=>{
     const button=event.target.closest('[data-preview],[data-action]');if(!button)return;
@@ -155,5 +169,7 @@
   });
   ['staff-close','staff-done'].forEach(id=>$('#'+id).addEventListener('click',()=>dialog.close()));
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&nav.classList.contains('open')){closeMenu();menu.focus();}});
-  route();
+  route();gate.unlock();
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)gate.lock('Checking access…');else reloadRecords().then(()=>{route();gate.unlock();}).catch(error=>gate.lock(error.message));});
+  window.addEventListener('pageshow',event=>{if(event.persisted){gate.lock();reloadRecords().then(()=>{route();gate.unlock();}).catch(error=>gate.lock(error.message));}});
 })();

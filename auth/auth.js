@@ -1,4 +1,5 @@
 import {nextStep, validConfiguration} from './flow.mjs';
+import {requireAccess} from './connection.mjs';
 const $ = id => document.getElementById(id);
 const audience = document.body.dataset.audience;
 const initialTitle = $('heading').textContent;
@@ -65,7 +66,10 @@ async function refresh() {
   } else if (step === 'set-password') {
     show('set-password','Set your password','Choose a password for your Venture Branding account.');
   } else {
-    show('signed-in','Sign-in complete',''); clearSecrets();
+    await requireAccess(client,audience);
+    clearSecrets();
+    show('signed-in','Opening your workspace…','');
+    location.replace(audience === 'staff' ? 'attorney.html' : 'portal.html');
   }
 }
 $('forgot').addEventListener('click', () => {show('recovery','Reset your password','We’ll email you a reset link.');$('recovery-email').value=$('email').value;});

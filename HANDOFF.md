@@ -2,6 +2,10 @@
 
 Updated October 3, 2026. Read this first; it summarizes the decisions already made. This file is project context, not authorization to implement everything described below. The user's next request determines the work.
 
+## Latest connection work — October 4, 2026
+
+User reported pushing sign-in commit 7e19e05 and authorized starting portal connection + clearing client dummy data. Read CONNECTION.md first for current implementation and verification boundaries; older preview-only notes below are historical. New role/save migration applied manually; 51 DB tests and 13 local flow tests passed. User approved committing the connection checkpoint after live verification. Cotivate membership approved and applied; actual client UI read and preference persistence across re-login verified, temporary preference restored off. Attorney contact edit/save/reload and propagation to client greeting verified; original Mario Cosey contact restored. Automatic entry verified for both client and attorney. Sign-in now automatically opens the appropriate workspace after access checks, at user request. See CONNECTION.md for remaining verification. Live USPTO must be attorney-initiated, with client read-only display; abandoned Cotivate record will be the test case once its identifier is provided.
+
 ## Working with the user
 
 - The user is nontechnical. Explain outcomes and choices in plain language; avoid unnecessary code details.
@@ -217,3 +221,5 @@ Attorney onboarding status: approved email invitation sent through the Auth User
 ## Attorney access approved and granted — October 4, 2026
 
 User completed authenticator and explicitly authorized verification plus firm-wide attorney access. Verified email confirmation and verified TOTP factor for exact invited account, then inserted its protected staff membership using a guarded transaction. Confirmed active membership. Database checks passed: AAL1 blocked, AAL2 allowed Cotivate client/mark reads. No secrets read; no client membership granted; no policies weakened. Account provision is complete; live authenticated portal wiring is still pending. See auth/README.md. Do not repeat the grant or claim browser API acceptance tests passed. Existing login/docs changes remain uncommitted; obtain approval before commit or starting portal wiring.
+
+Cotivate-only membership is now granted after explicit user approval. Exact invited account matched; no staff membership or other active client membership. Private audit event recorded. Actual-account database claim checks passed and rolled back preference test change. Next: user accepts client invitation and tests login/connected pages, plus attorney page/save/reload review. No commit yet; no live USPTO request executed.
