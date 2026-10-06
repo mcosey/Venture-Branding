@@ -36,3 +36,7 @@ verify_enabled = true
 # Handler validates Auth identity and the server-derived MFA staff role itself.
 [functions.uspto-lookup]
 verify_jwt = false
+
+# Validates caller identity and staff MFA before admin invitation delivery.
+[functions.client-invite]
+verify_jwt = false

@@ -2,6 +2,10 @@
 
 Updated October 3, 2026. Read this first; it summarizes the decisions already made. This file is project context, not authorization to implement everything described below. The user's next request determines the work.
 
+## Latest invitation work — October 5, 2026
+
+User approved implementation and then activation of attorney invitation/access controls; Clio/QuickBooks deferred. Read INVITATIONS.md. Migration applied and client-invite deployed with local login redirect. 31 local tests pass; hosted invitation SQL 21 + isolation SQL 51 pass, rollback fixtures. Deployed signed-out request 401; real signed-in Cotivate client request 403. Attorney card confirms Cotivate Active with cotivateapp@gmail.com. No emails sent and no Cotivate access changed. Client setup details/review only, references preserved internally. New clients portal-disabled; enable then explicitly invite. Archive/restore keep access disabled. Auto-review blocked opening Disable confirmation, so no attempt to bypass; database tests verify behavior. Real invitation delivery/onboarding remains untested, needs approved test email/client. User approved committing this checkpoint; user will push through GitHub Desktop.
+
 ## Latest USPTO work — October 4, 2026
 
 User approved and completed live import of serial 88897764 into existing Cotivate mark 20000000-0000-0000-0000-000000000001. Attorney-initiated lookup/review/save verified, both portals reloaded with one COTIVATE Word / Inactive mark; client detail shows exact 606 abandoned status, owner Cotivate LLC, filing date 2020-05-01, status date 2023-11-27, no registration, source USPTO. No duplicate. 25 local tests and hosted SQL checks 9 + 51 passed. Manual refresh only; no scheduled USPTO jobs. User approved committing this checkpoint; user will push through GitHub Desktop. Read USPTO.md for implementation/deployment details. Older notes below are historical.

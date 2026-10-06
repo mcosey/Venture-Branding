@@ -5,8 +5,11 @@ import {setupGate} from '../../auth/gate.mjs';
   const $ = selector => document.querySelector(selector);
   const db=createConnection('staff'), gate=setupGate(db,'staff');
   const clients=[];
+  let accessRecords=[], accessReady=false;
   async function reloadRecords(){
     const saved=await loadRecords(db,'staff');
+    const access=await db.rpc('vb_portal_access_status');
+    accessReady=!access.error;accessRecords=access.data||[];
     clients.splice(0,clients.length,...saved.clients.map(c=>{
       const r=saved.references.find(r=>r.client_id===c.id)||{};
       return {id:c.id,type:c.client_type==='business'?'Business':'Individual',name:c.name,contact:c.contact_name,email:c.contact_email||'',clioContact:r.clio_contact_reference||'',clioMatter:r.clio_matter_reference||'',quickbooks:r.quickbooks_customer_reference||'',portal:c.portal_enabled,archived:Boolean(c.archived_at),updatedAt:c.updated_at,sample:false,marks:saved.marks.filter(m=>m.client_id===c.id).map(m=>({id:m.id,updatedAt:m.updated_at,linkedIdentifier:m.application_number||'',name:m.name,type:typeLabel(m.mark_type),status:statusLabel(m.status),application:m.application_number||'',registration:m.registration_number||'',source:m.source==='uspto'?'USPTO':'Manual entry',services:[]}))};
@@ -58,10 +61,11 @@ import {setupGate} from '../../auth/gate.mjs';
     detail.querySelector('h1').textContent=selected.name;
     const back=detail.querySelector('.page-heading a');back.href=selected.archived?'#archived':'#clients';back.textContent=selected.archived?'← Archived Clients':'← All clients';
     const actions=detail.querySelector('.client-actions'); actions.replaceChildren();
-    actions.append(node('span',selected.archived?'Archived':selected.portal?'Portal enabled':'No portal add-on','badge'));
+    actions.append(node('span',selected.archived?'Archived':selected.portal?'Portal enabled':'Portal disabled','badge'));
     if(selected.sample){const link=node('a','Preview client portal ↗','outline-button');link.href='portal.html';actions.append(link);}
     const settings=node('button','Client Settings','outline-button'); settings.dataset.action='settings';actions.append(settings);
     const metadata=node('p',[selected.contact,selected.email].filter(Boolean).join(' · '),'client-details');detail.querySelector('.page-heading').append(metadata);
+    renderAccessPanel();
     if(!selected.sample){
       detail.querySelector('.mark-list').replaceChildren(node('p','No trademarks yet.','empty-client'));
       detail.querySelector('.service-list').replaceChildren(node('li','No services configured.'));
@@ -103,17 +107,17 @@ import {setupGate} from '../../auth/gate.mjs';
   }
   window.addEventListener('hashchange',()=>{route();const heading=$('[data-screen]:not([hidden]) h1');heading.tabIndex=-1;heading.focus();window.scrollTo(0,0);});
   $('#client-search').addEventListener('input',renderLists);
-  const fields=['type','name','contact','email','clioContact','clioMatter','quickbooks'];
-  function values(){const value={};fields.forEach(key=>value[key]=form.elements[key].value.trim());value.portal=form.elements.portal.checked;return value;}
+  const fields=['type','name','contact','email'];
+  function values(){const value={};fields.forEach(key=>value[key]=form.elements[key].value.trim());return value;}
   function showStep(){
     document.querySelectorAll('[data-step]').forEach(panel=>panel.hidden=Number(panel.dataset.step)!==step);
-    $('#step-label').textContent=`${step+1} of 4 · ${['Details','Related records','Portal access','Review'][step]}`;
-    $('#editor-back').hidden=step===0;$('#editor-next').hidden=step===3;$('#editor-save').hidden=step!==3;
+    $('#step-label').textContent=`${step+1} of 2 · ${['Details','Review'][step]}`;
+    $('#editor-back').hidden=step===0;$('#editor-next').hidden=step===1;$('#editor-save').hidden=step!==1;
     $('#archive-controls').hidden=!editing||step!==0;
-    if(step===3){const v=values();$('#client-review').replaceChildren();const labels={type:'Type',name:'Client',contact:'Contact',email:'Email',clioContact:'Clio contact',clioMatter:'Clio matter',quickbooks:'QuickBooks customer'};fields.forEach(key=>$('#client-review').append(node('dt',labels[key]),node('dd',v[key]||'Not linked')));$('#client-review').append(node('dt','Portal'),node('dd',v.portal?'Portal enabled':'No add-on'));}
+    if(step===1){const v=values();$('#client-review').replaceChildren();const labels={type:'Type',name:'Client',contact:'Contact',email:'Contact email'};fields.forEach(key=>$('#client-review').append(node('dt',labels[key]),node('dd',v[key]||'Not provided')));}
   }
   function openEditor(client){
-    editing=client;step=0;form.reset();editor.querySelector('[data-save-error]')?.remove();if(client){fields.forEach(key=>form.elements[key].value=client[key]);form.elements.portal.checked=client.portal;}
+    editing=client;step=0;form.reset();editor.querySelector('[data-save-error]')?.remove();if(client){fields.forEach(key=>form.elements[key].value=client[key]);}
     $('#editor-title').textContent=client?'Client Settings':'Add New Client';$('#editor-save').textContent=client?'Save changes':'Save client';
     $('#archive-confirm').hidden=true;$('#archive-client').textContent=client?.archived?'Restore client':'Archive client';showStep();editor.showModal();
   }
@@ -121,13 +125,60 @@ import {setupGate} from '../../auth/gate.mjs';
   $('#editor-next').addEventListener('click',()=>{if(step===0&&!validDetails())return;step++;showStep();});
   $('#editor-back').addEventListener('click',()=>{step--;showStep();});
   $('#editor-close').addEventListener('click',()=>editor.close());
-  form.addEventListener('submit',event=>{event.preventDefault();if(step<3){$('#editor-next').click();return;}if(!validDetails()){step=0;showStep();return;}
-    save(async()=>{const v=values();const {data,error}=await db.rpc('vb_save_client',{record_id:editing?.id||null,expected_updated_at:editing?.updatedAt||null,details:{name:v.name,client_type:v.type.toLowerCase(),contact_name:v.contact,contact_email:v.email,portal_enabled:v.portal,clio_contact_reference:v.clioContact,clio_matter_reference:v.clioMatter,quickbooks_customer_reference:v.quickbooks}});if(error)throw new Error('Client could not be saved. Reload if another edit changed this record.');await reloadRecords();editor.close();location.hash='client-'+data;});
+  form.addEventListener('submit',event=>{event.preventDefault();if(step<1){$('#editor-next').click();return;}if(!validDetails()){step=0;showStep();return;}
+    save(async()=>{const v=values();const {data,error}=await db.rpc('vb_save_client',{record_id:editing?.id||null,expected_updated_at:editing?.updatedAt||null,details:{name:v.name,client_type:v.type.toLowerCase(),contact_name:v.contact,contact_email:v.email,portal_enabled:editing?.portal||false,clio_contact_reference:editing?.clioContact||null,clio_matter_reference:editing?.clioMatter||null,quickbooks_customer_reference:editing?.quickbooks||null}});if(error)throw new Error('Client could not be saved. Reload if another edit changed this record.');await reloadRecords();editor.close();location.hash='client-'+data;});
   });
-  async function archiveClient(archived){await save(async()=>{const {data,error}=await db.from('vb_clients').update({archived_at:archived?new Date().toISOString():null}).eq('id',editing.id).eq('updated_at',editing.updatedAt).select('id');if(error||data.length!==1)throw new Error('Client changed or access is unavailable. Reload and try again.');editor.close();location.hash=archived?'archived':'clients';});}
+  async function archiveClient(archived){await save(async()=>{const {data,error}=await db.from('vb_clients').update({archived_at:archived?new Date().toISOString():null,portal_enabled:false}).eq('id',editing.id).eq('updated_at',editing.updatedAt).select('id');if(error||data.length!==1)throw new Error('Client changed or access is unavailable. Reload and try again.');editor.close();location.hash=archived?'archived':'clients';});}
   $('#archive-client').addEventListener('click',()=>{if(editing.archived)archiveClient(false);else $('#archive-confirm').hidden=false;});
   $('#archive-cancel').addEventListener('click',()=>$('#archive-confirm').hidden=true);
   $('#archive-yes').addEventListener('click',()=>archiveClient(true));
+  const accessEditor=$('#access-editor');let accessClient=null,accessAction=null;
+  const accessLabels={active:'Active',pending:'Invitation pending',not_invited:'Not invited',disabled:'Disabled',archived:'Archived',sending:'Sending invitation',failed:'Invitation needs attention'};
+  function renderAccessPanel(){
+    const card=node('section',undefined,'panel card');card.append(node('h2','Portal access'));
+    const record=accessRecords.find(r=>r.client_id===selected.id);
+    card.append(node('p',accessReady?(accessLabels[record?.access_status]||'Unavailable'):'Access controls awaiting setup.','client-details'));
+    if(record?.login_email)card.append(node('p','Sign-in email: '+record.login_email));
+    if(record?.last_invited_at)card.append(node('p','Last invitation: '+new Date(record.last_invited_at).toLocaleString(),'muted'));
+    const actions=node('div',undefined,'client-actions');
+    function button(label,action){const b=node('button',label,'outline-button');b.dataset.access=action;b.disabled=!accessReady||selected.archived||!record;actions.append(b);}
+    if(!selected.archived){
+      if(selected.portal){
+        if(record?.access_status!=='active')button(record?.login_email?'Resend invitation':'Invite to Portal','invite');
+        button('Disable portal access','disable');
+      }else button('Enable portal access','enable');
+    }
+    card.append(actions);detail.querySelector('.hub-grid').before(card);
+  }
+  function openAccess(action){
+    if(!accessReady||selected.archived)return;
+    accessClient={...selected};accessAction=action;
+    const state=accessRecords.find(r=>r.client_id===selected.id);
+    $('#access-form').reset();accessEditor.querySelector('[data-save-error]')?.remove();$('#access-error').textContent='';
+    $('#access-client').textContent=selected.name;
+    $('#access-title').textContent=action==='invite'?'Invite to Portal':action==='enable'?'Enable portal access':'Disable portal access';
+    $('#invite-email-label').hidden=action!=='invite';$('#invite-email').disabled=action!=='invite';$('#invite-email').required=action==='invite';
+    $('#invite-email').value=state?.login_email||selected.email;$('#invite-email').readOnly=Boolean(state?.login_email);
+    $('#access-explanation').textContent=action==='invite'?'Send an invitation to this address for this client only. Contact details will not change.':action==='enable'?'This restores access for an existing member. For a new client, send an invitation afterward.':'The client will lose portal access. Their records will be kept.';
+    $('#access-confirm-label').textContent=action==='invite'?'I confirm the client and recipient above.':action==='enable'?'Enable access for this client.':'Disable access for this client.';
+    $('#access-submit').textContent=action==='invite'?'Send invitation':'Confirm';accessEditor.showModal();
+  }
+  ['access-close','access-cancel'].forEach(id=>$('#'+id).addEventListener('click',()=>accessEditor.close()));
+  detail.addEventListener('click',event=>{const button=event.target.closest('[data-access]');if(button)openAccess(button.dataset.access);});
+  $('#access-form').addEventListener('submit',event=>{
+    event.preventDefault();if(!$('#access-form').reportValidity())return;
+    const client=accessClient,action=accessAction,email=$('#invite-email').value.trim();
+    save(async()=>{
+      if(action==='invite'){
+        const {data,error}=await db.functions.invoke('client-invite',{body:{clientId:client.id,email,expectedUpdatedAt:client.updatedAt,confirmSend:true}});
+        if(error||data?.error){let message=data?.error;try{if(!message&&error?.context)message=(await error.context.json()).error;}catch{}throw new Error(message||'Invitation not sent. Check access setup and try again.');}
+      }else{
+        const {error}=await db.rpc('vb_set_portal_access',{target_client:client.id,enabled:action==='enable',expected_updated_at:client.updatedAt});
+        if(error)throw new Error('Access could not be changed. Reload and try again.');
+      }
+      accessEditor.close();
+    });
+  });
   const markEditor=$('#mark-editor'), markForm=$('#mark-form'); let markStep=0, markOwner=null, lookupResult=null, editingMark=null, lookupVersion=0;
   function isLookup(){return markForm.elements.path.value==='uspto';}
   function markValues(){return isLookup()?{...lookupResult,services:[...serviceNames],source:'USPTO'}:{name:markForm.elements.markName.value.trim(),type:markForm.elements.markType.value,status:'Not yet filed',application:'',registration:'',services:[...serviceNames],source:'Manual entry'};}
