@@ -1,9 +1,11 @@
-import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs';
+import {renderWatchSetup,renderAgentCards} from './watch-setup.js';
+import {renderNewMark,clearMarkDrafts} from './new-mark.js';
+import {createConnection,loadRecords,typeLabel,statusLabel} from '../../auth/connection.mjs';
 import {setupGate} from '../../auth/gate.mjs';
 const db=createConnection('client'),gate=setupGate(db,'client');
 const main=document.querySelector('main'),page=main.dataset.page;
+db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT')clearMarkDrafts();});
 let records,selectedId;
-const services={trademark_watch:'Trademark Watch',brand_change_monitor:'Brand Change Monitor',specimen_capture:'Specimen Capture',maintenance_reminder:'Maintenance Reminder',activity_digest:'Trademark Activity Digest'};
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 function link(text,href,cls='text-link'){const n=el('a',text,cls);n.href=href;return n;}
 function panel(title,text){const n=el('section',undefined,'panel connected-card');n.append(el('h2',title));if(text)n.append(el('p',text,'muted'));return n;}
@@ -13,8 +15,9 @@ function render(){
  const marks=records.marks.filter(m=>m.client_id===client.id);
  document.querySelector('#client-name').textContent=client.name;
  const choice=document.querySelector('#client-choice');choice.replaceChildren(...records.clients.map(c=>new Option(c.name,c.id)));choice.value=selectedId;choice.parentElement.hidden=records.clients.length<2;
- main.replaceChildren();const heading=el('section',undefined,'portfolio-heading');const h=el('div');h.append(el('p','CLIENT PORTAL','eyebrow'),el('h1',({portal:'Welcome, '+client.contact_name,portfolio:'Trademark Portfolio',automations:'Automations',trademark:'Trademark',watch:'Trademark Watch','use-history':'Use History'})[page]));heading.append(h);main.append(heading);
- if(page==='portal'){
+ main.replaceChildren();const heading=el('section',undefined,'portfolio-heading');const h=el('div');h.append(el('p','CLIENT PORTAL','eyebrow'),el('h1',({portal:'Welcome, '+client.contact_name,portfolio:'Trademark Portfolio','new-mark':'Add New Mark',automations:'VB Agents','watch-setup':'Trademark Watch',trademark:'Trademark',watch:'Trademark Watch','use-history':'Use History'})[page]));heading.append(h);if(['portal','portfolio'].includes(page))heading.append(link('+ Add New Mark',`new-mark.html?client=${encodeURIComponent(client.id)}`,'mark-primary'));main.append(heading);
+ if(page==='new-mark'){renderNewMark(main,client);
+ }else if(page==='portal'){
   const summary=el('section',undefined,'portfolio-stats');
   for(const [count,label] of [[marks.length,'Marks'],[marks.filter(m=>m.status==='registered').length,'Registered'],[marks.filter(m=>m.status==='pending').length,'Pending']]){const stat=el('div',undefined,'panel portfolio-stat');stat.append(el('strong',String(count)),el('h2',label));summary.append(stat);}main.append(summary);
   const portfolio=panel('Your portfolio');portfolio.append(markList(marks),link('View portfolio →','portfolio.html'));main.append(portfolio);
@@ -27,13 +30,9 @@ function render(){
   if(!mark){main.append(panel('Trademark not found','This record is not available in your portfolio.'),link('Back to portfolio →','portfolio.html'));return;}
   h.querySelector('h1').textContent=mark.name;const card=panel('Trademark details');const dl=el('dl',undefined,'connected-fields');
   for(const [label,value] of [['Type',typeLabel(mark.mark_type)],['Status',statusLabel(mark.status)],['USPTO status',mark.uspto_status_text||'Not retrieved'],['Application number',mark.application_number||'Not provided'],['Registration number',mark.registration_number||'Not provided'],['Owner',mark.record_owner||'Not provided'],['Filing date',mark.filing_date||'Not provided'],['Registration date',mark.registration_date||'Not provided'],['USPTO status date',mark.uspto_status_date||'Not provided'],['Last retrieved',mark.source_checked_at?new Date(mark.source_checked_at).toLocaleString():'Not retrieved'],['Source',mark.source==='uspto'?'USPTO':'Entered by Venture Branding']]){const item=el('div');item.append(el('dt',label),el('dd',value));dl.append(item);}card.append(dl);main.append(link('← Portfolio','portfolio.html'),card,panel('Use history','No evidence recorded.'),panel('Deadlines','No verified deadlines recorded.'));
- }else if(page==='automations'){
-  main.append(el('p','Preferences are saved. Monitoring and scheduled services are not connected yet.','muted'));
-  const grid=el('div',undefined,'connected-grid');for(const [key,title] of Object.entries(services)){
-   const pref=records.preferences.find(p=>p.client_id===selectedId&&p.service===key);const card=panel(title);const label=el('label',undefined,'connected-toggle'),toggle=el('input');toggle.type='checkbox';toggle.checked=pref?.enabled===true;toggle.disabled=!pref;label.append(toggle,el('span','Enabled preference'));const msg=el('p','Not running','muted');msg.setAttribute('role','status');card.append(label,msg);
-   toggle.addEventListener('change',async()=>{toggle.disabled=true;const desired=toggle.checked;try{await requireAccess(db,'client');const {data,error}=await db.from('vb_service_preferences').update({enabled:desired}).eq('client_id',selectedId).eq('service',key).select('enabled');if(error||data.length!==1)throw new Error();pref.enabled=data[0].enabled;toggle.checked=pref.enabled;msg.textContent='Saved · Service not connected';}catch{toggle.checked=pref.enabled;msg.textContent='Not saved. Please retry or sign in again.';}finally{toggle.disabled=false;}});grid.append(card);
-  }main.append(grid);
- }else if(page==='watch')main.append(panel('Watch findings','No findings. Trademark Watch is not connected yet.'));
+ }else if(page==='automations'){renderAgentCards(main,client);
+ }else if(page==='watch-setup'){renderWatchSetup(main,client,marks);
+ }else if(page==='watch'){const card=panel('Watch findings','No findings. Trademark Watch is not connected yet.');card.append(link('Configure Trademark Watch →','trademark-watch.html?client='+encodeURIComponent(client.id)));main.append(card);}
  else if(page==='use-history')main.append(panel('Evidence of use','No evidence recorded. Automatic capture is not connected yet.'));
 }
 async function refresh(){gate.lock();try{records=await loadRecords(db,'client');if(!records.clients.length)throw new Error('No active client workspace is assigned to this account.');const requested=new URLSearchParams(location.search).get('client');selectedId=selectedId||requested||records.clients[0].id;render();gate.unlock();}catch(error){main.replaceChildren();gate.lock(error.message);}}
