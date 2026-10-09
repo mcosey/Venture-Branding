@@ -1,4 +1,4 @@
-import {renderBrandMonitor,clearBrandMonitorDrafts} from './brand-monitor.js';
+import {renderBrandMonitor,clearBrandMonitorDrafts} from './brand-monitor.js?v=20261008-settings';
 import {renderWatchSetup,renderAgentCards} from './watch-setup.js';
 import {renderNewMark,clearMarkDrafts} from './new-mark.js';
 import {createConnection,loadRecords,typeLabel,statusLabel} from '../../auth/connection.mjs';
@@ -32,7 +32,7 @@ function render(){
   h.querySelector('h1').textContent=mark.name;const card=panel('Trademark details');const dl=el('dl',undefined,'connected-fields');
   for(const [label,value] of [['Type',typeLabel(mark.mark_type)],['Status',statusLabel(mark.status)],['USPTO status',mark.uspto_status_text||'Not retrieved'],['Application number',mark.application_number||'Not provided'],['Registration number',mark.registration_number||'Not provided'],['Owner',mark.record_owner||'Not provided'],['Filing date',mark.filing_date||'Not provided'],['Registration date',mark.registration_date||'Not provided'],['USPTO status date',mark.uspto_status_date||'Not provided'],['Last retrieved',mark.source_checked_at?new Date(mark.source_checked_at).toLocaleString():'Not retrieved'],['Source',mark.source==='uspto'?'USPTO':'Entered by Venture Branding']]){const item=el('div');item.append(el('dt',label),el('dd',value));dl.append(item);}card.append(dl);main.append(link('← Portfolio','portfolio.html'),card,panel('Use history','No evidence recorded.'),panel('Deadlines','No verified deadlines recorded.'));
  }else if(page==='automations'){renderAgentCards(main,client);
- }else if(page==='brand-monitor'){renderBrandMonitor(main,client);
+ }else if(page==='brand-monitor'){renderBrandMonitor(main,client,db);
  }else if(page==='watch-setup'){renderWatchSetup(main,client,marks);
  }else if(page==='watch'){const card=panel('Watch findings','No findings. Trademark Watch is not connected yet.');card.append(link('Configure Trademark Watch →','trademark-watch.html?client='+encodeURIComponent(client.id)));main.append(card);}
  else if(page==='use-history')main.append(panel('Evidence of use','No evidence recorded. Automatic capture is not connected yet.'));
