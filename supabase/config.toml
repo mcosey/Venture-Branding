@@ -40,3 +40,7 @@ verify_jwt = false
 # Validates caller identity and staff MFA before admin invitation delivery.
 [functions.client-invite]
 verify_jwt = false
+
+# Checks client identity and scoped settings before a bounded Cotivate-only fetch.
+[functions.bcm-scan]
+verify_jwt = false

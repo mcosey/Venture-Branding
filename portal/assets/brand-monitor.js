@@ -1,5 +1,5 @@
-// Saved configuration only; no crawling, credentials, or request delivery.
-import {bcmCategories,bcmValues,loadBcmSettings,saveBcmSettings} from '../../auth/bcm.mjs';
+// Manual public baseline pilot; no scheduled monitoring or legal findings.
+import {bcmCategories,bcmValues,loadBcmSettings,saveBcmSettings,loadBcmScans,createBcmBaseline} from '../../auth/bcm.mjs';
 const drafts=new Map();
 export function clearBrandMonitorDrafts(){drafts.clear();}
 const categories=Object.keys(bcmCategories);
@@ -20,7 +20,7 @@ export function renderBrandMonitor(main,client,db){
   try{const saved=await loadBcmSettings(db,client.id);if(drafts.get(client.id)!==state)return;
    if(saved){Object.assign(state,{urls:saved.urls.join('\n'),exclude:saved.exclusions.join('\n'),access:saved.access_mode,frequency:saved.frequency==='weekly'?'Weekly':'Monthly',categories:[...saved.categories],version:saved.version,saved:true});}
    else Object.assign(state,{version:0,saved:false,urls:'',exclude:'',access:'public',frequency:'Weekly',categories:[...categories]});
-   state.loaded=true;state.message='';
+   state.loaded=true;state.message='';state.scanError='';try{state.scans=await loadBcmScans(db,client.id);}catch(e){state.scans=[];state.scanError=e.message;}
   }catch(error){state.loadError=error.message;state.loaded=false;}
   finally{state.loading=false;if(drafts.get(client.id)===state&&content.isConnected)draw();}
  }
@@ -49,7 +49,15 @@ export function renderBrandMonitor(main,client,db){
   if(state.message)summary.append(el('p',state.message,'bcm-muted'));
   const reload=button('Reload saved settings',()=>{load();});reload.disabled=state.loading||state.busy;summary.append(reload,el('p','Reload replaces unsaved edits with the last saved settings.','bcm-muted'));
   submit.disabled=!state.loaded||state.busy;
-  summary.append(button('View example finding →',()=>{state.view='findings';draw();}));
+  const baseline=button('Create baseline',async()=>{
+   if(state.busy)return;state.busy=true;state.message='Reading the saved public homepage…';draw();
+   try{await createBcmBaseline(db,client.id,state.version);await load();state.message='Baseline saved. No change findings were created.';state.view='history';}
+   catch(e){state.message=e.message;try{state.scans=await loadBcmScans(db,client.id);}catch{}}
+   finally{state.busy=false;if(content.isConnected)draw();}
+  },true);
+  baseline.disabled=!state.saved||!!state.scanError||state.busy||state.loading||(state.scans||[]).some(r=>r.status==='completed'&&r.settings_version===state.version);
+  summary.append(baseline,el('p','Uses saved settings. First scan supports Cotivate’s public homepage only. Scheduling and comparisons are not connected.','bcm-muted'));
+  if(state.scanError)summary.append(el('p',state.scanError,'bcm-muted'));
   function updateSummary(){summaryBody.replaceChildren();const count=state.urls.split('\n').filter(v=>v.trim()).length;for(const [key,value] of [['Pages',String(count)],['Access',state.access==='public'?'Public / readable':'Dedicated account'],['Frequency',state.frequency],['Change types',String(state.categories.length)]]){const row=el('div');row.append(el('dt',key),el('dd',value));summaryBody.append(row);}}
   form.addEventListener('submit',event=>{event.preventDefault();error.textContent='';let values;
    try{values=bcmValues(state,permission.checked).urls;}catch(e){error.textContent=e.message;return;}
@@ -69,14 +77,22 @@ export function renderBrandMonitor(main,client,db){
   });updateSummary();
  }
  function findings(){
-  const toolbar=el('div',undefined,'bcm-toolbar');toolbar.append(el('h2','Possible changes'),button('Edit settings',()=>{state.view='settings';draw();}));content.append(toolbar);
-  if(state.finding==='dismissed'){const empty=panel('No findings on your list');empty.append(button('Restore finding',()=>{state.finding='new';draw();}));content.append(empty);return;}
-  const finding=panel(),top=el('div',undefined,'bcm-toolbar'),name=el('div');name.append(el('p','POSSIBLE NEW FEATURE NAME','bcm-kicker'),el('h2','Coachivate'));top.append(name,el('span',state.finding==='kept'?'Kept on your list':'New finding','badge'));finding.append(top);
-  const evidence=el('div',undefined,'bcm-evidence');for(const [label,text] of [['Where it appeared','cotivate.com/features/coachivate'],['Page text observed','“Introducing Coachivate, a new coaching workspace for your team.”'],['Previous snapshot','This name was not present.'],['Change identified','A new feature name appears in the page heading and description.']]){const cell=el('div');cell.append(el('h3',label),el('p',text));evidence.append(cell);}finding.append(evidence);
-  finding.append(el('p','Consider scheduling a call to discuss this branding change with your attorney.','bcm-suggestion'));
-  const actions=el('div',undefined,'bcm-actions'),call=button('Discuss with attorney →',()=>dialog.showModal(),true);actions.append(call,button(state.finding==='kept'?'Remove from kept list':'Keep on list',()=>{state.finding=state.finding==='kept'?'new':'kept';draw();}),button('Dismiss',()=>{state.finding='dismissed';draw();}));finding.append(actions);content.append(finding);
-  const dialog=el('dialog',undefined,'bcm-dialog');dialog.setAttribute('aria-labelledby','bcm-call-title');const title=el('h2','Would you like to schedule a call?');title.id='bcm-call-title';dialog.append(title,el('p','Scheduling a call does not create an attorney-client relationship or automatically modify or expand the scope of any existing representation. Any additional work must be separately agreed to with Venture Branding.'),el('p','Scheduling is not connected yet. No appointment has been booked or request sent.','bcm-muted'),button('Back to finding',()=>dialog.close(),true));content.append(dialog);dialog.addEventListener('close',()=>call.focus());
+  const p=panel('No changes identified yet');p.append(el('p','The first scan saves a baseline. Comparing later scans and identifying potential branding changes comes next.','bcm-muted'));content.append(p);
  }
- function history(){const p=panel('No scans yet');p.append(el('p','Scan history will appear once monitoring is connected.','bcm-muted'),button('Configure monitoring',()=>{state.view='settings';draw();}));content.append(p);}
+ function history(){
+  const p=panel('Scan history');content.append(p);
+  p.append(button('Refresh scan history',async()=>{state.scanError='';try{state.scans=await loadBcmScans(db,client.id);}catch(e){state.scanError=e.message;}if(content.isConnected)draw();}));
+  if(state.scanError)p.append(el('p',state.scanError,'bcm-muted'));
+  if(!state.scans?.length)p.append(el('p','No scans yet.','bcm-muted'));
+  for(const run of state.scans||[]){
+   const stale=run.status==='running'&&Date.now()-Date.parse(run.started_at)>120000;
+   const card=panel(run.status==='completed'?'Baseline saved':run.status==='failed'?'Scan failed':stale?'Scan interrupted':'Scan in progress');
+   card.append(el('p',new Date(run.started_at).toLocaleString()+' · Settings version '+run.settings_version,'bcm-muted'));
+   if(run.snapshot){const snapshot=run.snapshot;card.append(el('p',snapshot.url),el('h3',snapshot.title||'Page text'));
+    const details=el('details'),label=el('summary','View captured text');details.append(label,el('p',snapshot.text));card.append(details,el('p','Public HTML text only. No authenticated content, visual logo analysis, or legal assessment.','bcm-muted'));
+   }else if(run.status==='failed'||stale)card.append(el('p','No baseline saved. Return to Setup to retry.','bcm-muted'));
+   p.append(card);
+  }
+ }
  if(state.loaded)draw();else load();
 }

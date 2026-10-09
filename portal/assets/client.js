@@ -1,4 +1,4 @@
-import {renderBrandMonitor,clearBrandMonitorDrafts} from './brand-monitor.js?v=20261008-settings';
+import {renderBrandMonitor,clearBrandMonitorDrafts} from './brand-monitor.js?v=20261008-baseline';
 import {renderWatchSetup,renderAgentCards} from './watch-setup.js';
 import {renderNewMark,clearMarkDrafts} from './new-mark.js';
 import {createConnection,loadRecords,typeLabel,statusLabel} from '../../auth/connection.mjs';

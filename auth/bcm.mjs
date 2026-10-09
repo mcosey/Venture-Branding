@@ -29,3 +29,13 @@ export async function saveBcmSettings(db,clientId,version,draft,authorized){
  const {data,error}=await db.rpc('vb_save_bcm_settings',{target_client:clientId,expected_version:version,details,authorized:true});
  if(error)throw failure(error);return data;
 }
+export async function loadBcmScans(db,clientId){
+ await requireAccess(db,'client');
+ const {data,error}=await db.from('vb_bcm_scans').select('*').eq('client_id',clientId).order('started_at',{ascending:false}).limit(10);
+ if(error)throw new Error('Baseline scanning is not connected yet.');return data;
+}
+export async function createBcmBaseline(db,clientId,version){
+ await requireAccess(db,'client');
+ const {data,error}=await db.functions.invoke('bcm-scan',{body:{clientId,version}});
+ if(error||data?.status!=='completed')throw new Error(data?.error||'Baseline could not complete. Reload scan history before retrying.');return data;
+}
