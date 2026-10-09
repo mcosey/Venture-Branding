@@ -1,0 +1,63 @@
+// UI-only BCM proposal. No crawling, credentials, persistence, or request delivery.
+const drafts=new Map();
+export function clearBrandMonitorDrafts(){drafts.clear();}
+const categories=['Product names','Feature names','Slogans and taglines','Logos','Sub-brands','Renamed products or features','Changes to existing branding'];
+const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
+function button(text,action,primary=false){const b=el('button',text,primary?'bcm-button bcm-primary':'bcm-button');b.type='button';b.addEventListener('click',action);return b;}
+function panel(title){const p=el('section',undefined,'panel bcm-panel');if(title)p.append(el('h2',title));return p;}
+export function renderBrandMonitor(main,client){
+ let state=drafts.get(client.id);
+ if(!state){state={urls:'',exclude:'',access:'public',frequency:'Weekly',categories:[...categories],view:'settings',finding:'new',review:false};drafts.set(client.id,state);}
+ const crumb=el('nav',undefined,'watch-crumb');crumb.setAttribute('aria-label','Breadcrumb');const back=el('a','VB Agents');back.href='automations.html?client='+encodeURIComponent(client.id);crumb.append(back,el('span','›'),el('span','Brand Change Monitor'));main.prepend(crumb);
+ main.append(el('p','Find possible branding changes on your website or product.','watch-intro'));
+ const tabs=el('nav',undefined,'bcm-tabs');tabs.setAttribute('aria-label','Brand Change Monitor views');
+ const content=el('div',undefined,'bcm-content'),tabButtons=[];
+ for(const [key,label] of [['settings','Setup'],['findings','Findings'],['history','Scan history']]){const b=button(label,()=>{state.view=key;draw();});tabButtons.push({key,b});tabs.append(b);}
+ main.append(tabs,content);
+ function draw(){for(const {key,b} of tabButtons){b.classList.toggle('selected',state.view===key);b.setAttribute('aria-pressed',String(state.view===key));}content.replaceChildren();if(state.view==='settings')setup();else if(state.view==='findings')findings();else history();}
+ function setup(){
+  state.review=false;
+  const layout=el('div',undefined,'bcm-layout'),form=el('form',undefined,'bcm-form'),summary=panel('Configuration');layout.append(form,summary);content.append(layout);
+  function field(parent,label,name,value,multiline=false){const wrap=el('label',label,'bcm-field'),input=el(multiline?'textarea':'input');input.name=name;input.value=value;input.maxLength=3000;if(multiline)input.rows=3;else input.type='text';wrap.append(input);parent.append(wrap);input.addEventListener('input',()=>{state[name]=input.value;state.review=false;review.hidden=true;updateSummary();});return input;}
+  const sources=panel('1. Choose pages');form.append(sources);
+  const urls=field(sources,'Website or product URLs — one per line','urls',state.urls,true);urls.placeholder='https://yourwebsite.com/products\nhttps://yourwebsite.com/features';urls.required=true;
+  field(sources,'Exclude pages or paths (optional)','exclude',state.exclude,true).placeholder='/account\n/billing';
+  const access=panel('2. Access');form.append(access);const accessOptions=el('fieldset');accessOptions.append(el('legend','How can BCM read these pages?'));access.append(accessOptions);
+  const accessNote=el('p',undefined,'bcm-muted');
+  for(const [value,label] of [['public','Public / readable pages'],['account','Dedicated monitoring account']]){const wrap=el('label',undefined,'bcm-choice'),input=el('input');input.type='radio';input.name='access';input.value=value;input.checked=state.access===value;wrap.append(input,el('span',label));accessOptions.append(wrap);input.addEventListener('change',()=>{state.access=value;state.review=false;review.hidden=true;accessMessage();updateSummary();});}
+  access.append(accessNote);
+  function accessMessage(){accessNote.textContent=state.access==='public'?'Pages that can be read without signing in.':'Secure account connection will be added later. Use a dedicated account with limited access; do not enter credentials here.';}
+  accessMessage();
+  const options=panel('3. Monitoring');form.append(options);const checkGrid=el('fieldset',undefined,'bcm-check-grid');checkGrid.append(el('legend','Changes to look for'));options.append(checkGrid);
+  for(const category of categories){const wrap=el('label',undefined,'bcm-choice'),input=el('input');input.type='checkbox';input.checked=state.categories.includes(category);wrap.append(input,el('span',category));checkGrid.append(wrap);input.addEventListener('change',()=>{state.categories=[...checkGrid.querySelectorAll('input:checked')].map(n=>n.nextElementSibling.textContent);state.review=false;review.hidden=true;updateSummary();});}
+  const frequency=el('label','Scan frequency','bcm-field'),select=el('select');for(const value of ['Weekly','Monthly'])select.add(new Option(value,value));select.value=state.frequency;frequency.append(select);options.append(frequency);select.addEventListener('change',()=>{state.frequency=select.value;state.review=false;review.hidden=true;updateSummary();});
+  const authorize=el('label',undefined,'bcm-choice'),permission=el('input');permission.type='checkbox';permission.required=true;authorize.append(permission,el('span','I own these pages or have permission to monitor them.'));form.append(authorize);
+  const error=el('p',undefined,'bcm-error');error.setAttribute('role','alert');form.append(error);
+  const submit=el('button','Review setup','bcm-button bcm-primary');submit.type='submit';form.append(submit);
+  const review=panel('Review setup');review.hidden=!state.review;form.append(review);
+  const summaryBody=el('dl',undefined,'bcm-summary');summary.append(summaryBody,el('p','Settings stay on this page until you leave or reload. Monitoring is not connected.','bcm-muted'));
+  summary.append(button('View example finding →',()=>{state.view='findings';draw();}));
+  function updateSummary(){summaryBody.replaceChildren();const count=state.urls.split('\n').filter(v=>v.trim()).length;for(const [key,value] of [['Pages',String(count)],['Access',state.access==='public'?'Public / readable':'Dedicated account'],['Frequency',state.frequency],['Change types',String(state.categories.length)]]){const row=el('div');row.append(el('dt',key),el('dd',value));summaryBody.append(row);}}
+  form.addEventListener('submit',event=>{event.preventDefault();error.textContent='';const values=state.urls.split('\n').map(v=>v.trim()).filter(Boolean);
+   if(!values.length){error.textContent='Add at least one website or product URL.';urls.focus();return;}
+   try{for(const value of values){const url=new URL(value);if(!['https:','http:'].includes(url.protocol)||url.username||url.password)throw new Error();}}catch{error.textContent='Enter complete http:// or https:// URLs without usernames or passwords.';urls.focus();return;}
+   if(!state.categories.length){error.textContent='Choose at least one change type.';return;}
+   state.review=true;review.hidden=false;review.replaceChildren(el('h2','Review setup'));const list=el('ul');for(const value of values)list.append(el('li',value));review.append(list);
+   if(state.exclude.trim())review.append(el('p','Excluded: '+state.exclude,'bcm-muted'));
+   review.append(el('p',state.frequency+' · '+state.categories.join(', '),'bcm-muted'));
+   review.append(el('p','When connected, the first scan will establish a baseline. Future scans will compare against it.','bcm-muted'));
+   const start=button('Start monitoring',()=>{},true);start.disabled=true;review.append(start,el('p',state.access==='account'?'Secure sign-in access and monitoring are not connected yet.':'Page-access checks and monitoring are not connected yet.','bcm-muted'));review.scrollIntoView({block:'nearest',behavior:'smooth'});
+  });updateSummary();
+ }
+ function findings(){
+  const toolbar=el('div',undefined,'bcm-toolbar');toolbar.append(el('h2','Possible changes'),button('Edit settings',()=>{state.view='settings';draw();}));content.append(toolbar);
+  if(state.finding==='dismissed'){const empty=panel('No findings on your list');empty.append(button('Restore finding',()=>{state.finding='new';draw();}));content.append(empty);return;}
+  const finding=panel(),top=el('div',undefined,'bcm-toolbar'),name=el('div');name.append(el('p','POSSIBLE NEW FEATURE NAME','bcm-kicker'),el('h2','Coachivate'));top.append(name,el('span',state.finding==='kept'?'Kept on your list':'New finding','badge'));finding.append(top);
+  const evidence=el('div',undefined,'bcm-evidence');for(const [label,text] of [['Where it appeared','cotivate.com/features/coachivate'],['Page text observed','“Introducing Coachivate, a new coaching workspace for your team.”'],['Previous snapshot','This name was not present.'],['Change identified','A new feature name appears in the page heading and description.']]){const cell=el('div');cell.append(el('h3',label),el('p',text));evidence.append(cell);}finding.append(evidence);
+  finding.append(el('p','Consider scheduling a call to discuss this branding change with your attorney.','bcm-suggestion'));
+  const actions=el('div',undefined,'bcm-actions'),call=button('Discuss with attorney →',()=>dialog.showModal(),true);actions.append(call,button(state.finding==='kept'?'Remove from kept list':'Keep on list',()=>{state.finding=state.finding==='kept'?'new':'kept';draw();}),button('Dismiss',()=>{state.finding='dismissed';draw();}));finding.append(actions);content.append(finding);
+  const dialog=el('dialog',undefined,'bcm-dialog');dialog.setAttribute('aria-labelledby','bcm-call-title');const title=el('h2','Would you like to schedule a call?');title.id='bcm-call-title';dialog.append(title,el('p','Scheduling a call does not create an attorney-client relationship or automatically modify or expand the scope of any existing representation. Any additional work must be separately agreed to with Venture Branding.'),el('p','Scheduling is not connected yet. No appointment has been booked or request sent.','bcm-muted'),button('Back to finding',()=>dialog.close(),true));content.append(dialog);dialog.addEventListener('close',()=>call.focus());
+ }
+ function history(){const p=panel('No scans yet');p.append(el('p','Scan history will appear once monitoring is connected.','bcm-muted'),button('Configure monitoring',()=>{state.view='settings';draw();}));content.append(p);}
+ draw();
+}
