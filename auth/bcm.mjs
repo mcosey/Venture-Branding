@@ -34,8 +34,14 @@ export async function loadBcmScans(db,clientId){
  const {data,error}=await db.from('vb_bcm_scans').select('*').eq('client_id',clientId).order('started_at',{ascending:false}).limit(10);
  if(error)throw new Error('Baseline scanning is not connected yet.');return data;
 }
-export async function createBcmBaseline(db,clientId,version){
+export function compareBcmSnapshots(baseline,current){
+ const split=value=>String(value||'').replace(/\s+/g,' ').trim().split(/(?<=[.!?])\s+(?=[A-Z0-9“\"'])|(?<=\s)(?=Relaunching|There is|Email address|We'll|Today's|Build a calmer)/).map(x=>x.trim()).filter(x=>x.length>=8);
+ const normalize=value=>value.toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
+ const before=split(baseline?.text),after=split(current?.text),old=new Set(before.map(normalize)),fresh=new Set(after.map(normalize));
+ return {added:after.filter(line=>!old.has(normalize(line))),removed:before.filter(line=>!fresh.has(normalize(line)))};
+}
+export async function createBcmBaseline(db,clientId,version,action='baseline'){
  await requireAccess(db,'client');
- const {data,error}=await db.functions.invoke('bcm-scan',{body:{clientId,version}});
- if(error||data?.status!=='completed')throw new Error(data?.error||'Baseline could not complete. Reload scan history before retrying.');return data;
+ const {data,error}=await db.functions.invoke('bcm-scan',{body:{clientId,version,action}});
+ if(error||data?.status!=='completed')throw new Error(data?.error||(action==='comparison'?'Comparison scan could not complete. Refresh scan history before retrying.':'Baseline could not complete. Refresh scan history before retrying.'));return data;
 }

@@ -11,7 +11,8 @@ export function extractSnapshot(html){
  const clean=html.replace(/<!--[\s\S]*?-->/g,' ').replace(/<(script|style|noscript|svg|template)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,' ');
  const title=plain(clean.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i)?.[1]||'').slice(0,500);
  const headings=[...clean.matchAll(/<h[1-3]\b[^>]*>([\s\S]*?)<\/h[1-3]\s*>/gi)].map(m=>plain(m[1]).slice(0,500)).filter(Boolean).slice(0,100);
- const text=plain(clean.match(/<body\b[^>]*>([\s\S]*?)<\/body\s*>/i)?.[1]||clean);
+ const body=clean.match(/<body\b[^>]*>([\s\S]*?)<\/body\s*>/i)?.[1]||clean;
+ const text=plain(body.replace(/<\/(?:p|h[1-6]|li|section|article|div|button|br)\s*>/gi,' . '));
  if(text.length<40)throw new Error('The page did not provide enough readable text.');
  if(text.length>60000)throw new Error('The page exceeds this scanner’s text limit.');
  return {url:BASELINE_URL,title,headings,text,extractor:'source-text-v1'};
