@@ -40,6 +40,36 @@ export function compareBcmSnapshots(baseline,current){
  const before=split(baseline?.text),after=split(current?.text),old=new Set(before.map(normalize)),fresh=new Set(after.map(normalize));
  return {added:after.filter(line=>!old.has(normalize(line))),removed:before.filter(line=>!fresh.has(normalize(line)))};
 }
+export function findBcmCandidates(baseline,current){
+ const changes=compareBcmSnapshots(baseline,current),candidates=[],seen=new Set();
+ const normalize=value=>String(value||'').toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
+ const noise=/\b(cookie|privacy policy|terms of (?:use|service)|all rights reserved|copyright|subscribe|contact us|sign in|log in|log out|checkout)\b/i;
+ const genericHeadings=new Set(['home','about us','our services','our products','products and services','features','pricing','contact','contact us','learn more','get started','frequently asked questions','faq']);
+ const phrase=(line,pattern)=>{const match=line.match(pattern);return match?.[1]?.replace(/^[“"']|[”"']$/g,'').trim()||line.slice(0,120);};
+ function add(type,title,line,reason){const key=type+'|'+normalize(line);if(seen.has(key))return;seen.add(key);candidates.push({type,title,term:title==='Possible new brand wording'?line.slice(0,120):phrase(line,termPatterns[type]||/$^/),excerpt:line,reason});}
+ const termPatterns={
+  rename:/\b(?:renamed\s+(?:to|as)|now called|now known as|rebranded as|formerly\s+)(?:our\s+)?([“"']?[^,.;:!?]{2,70})/i,
+  product:/\b(?:(?:introducing|meet|launching|launched|launch of)\s+(?:(?:our|the)\s+)?(?:new\s+)?|(?:new\s+)?(?:product|feature|tool|platform|service|sub[- ]brand)\s+(?:called|named|is)\s+|(?:product|feature|tool|platform|service)\s+(?:called|named)\s+)([A-Z][\p{L}\p{N}'’&-]*(?:\s+[A-Z][\p{L}\p{N}'’&-]*){0,2})/iu,
+  slogan:/\b(?:new\s+)?(?:tagline|tag line|slogan)(?:\s+is)?\s*[:=]?\s*[“"']?([^”"'.,;!?]{3,80})/i,
+  presentation:/\b(?:new logo|updated logo|redesigned logo|new brand identity|brand refresh|rebrand(?:ed|ing)?)\b/i
+ };
+ for(const line of changes.added){
+  if(noise.test(line))continue;
+  if(/\b(?:renamed\s+(?:to|as)|now called|now known as|rebranded as|formerly\s+)\b/i.test(line))add('rename','Possible name change',line,'The new text includes wording that may indicate a name change.');
+  else if(/\b(?:tagline|tag line|slogan)\b/i.test(line))add('slogan','Possible new slogan or tagline',line,'The new text describes wording as a slogan or tagline.');
+  else if(/\b(?:introducing|meet|launching|launch of|new\s+(?:product|feature|tool|platform|service|sub[- ]brand)|(?:product|feature|tool|platform|service)\s+(?:called|named))\b/i.test(line))add('product','Possible new product or feature name',line,'The new text uses product, feature, or launch language.');
+  else if(/\b(?:new logo|updated logo|redesigned logo|new brand identity|brand refresh|rebrand(?:ed|ing)?)\b/i.test(line))add('presentation','Possible branding presentation change',line,'The new text refers to a branding or logo change.');
+ }
+ const oldHeadings=new Set((baseline?.headings||[]).map(normalize));
+ for(const heading of current?.headings||[]){
+  const words=heading.trim().split(/\s+/).length,norm=normalize(heading);
+  if(oldHeadings.has(norm)||genericHeadings.has(norm)||words<2||words>9||noise.test(heading))continue;
+  if(!changes.added.some(line=>normalize(line).includes(norm)))continue;
+  if(candidates.some(candidate=>normalize(candidate.excerpt).includes(norm)))continue;
+  add('heading','Possible new prominent brand wording',heading,'A new short page heading appeared; it could be a product name or slogan.');
+ }
+ return candidates;
+}
 export async function createBcmBaseline(db,clientId,version,action='baseline'){
  await requireAccess(db,'client');
  const {data,error}=await db.functions.invoke('bcm-scan',{body:{clientId,version,action}});

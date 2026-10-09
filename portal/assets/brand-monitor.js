@@ -1,5 +1,5 @@
 // Manual public baseline pilot; no scheduled monitoring or legal findings.
-import {bcmCategories,bcmValues,loadBcmSettings,saveBcmSettings,loadBcmScans,createBcmBaseline,compareBcmSnapshots} from '../../auth/bcm.mjs';
+import {bcmCategories,bcmValues,loadBcmSettings,saveBcmSettings,loadBcmScans,createBcmBaseline,compareBcmSnapshots,findBcmCandidates} from '../../auth/bcm.mjs';
 const drafts=new Map();
 export function clearBrandMonitorDrafts(){drafts.clear();}
 const categories=Object.keys(bcmCategories);
@@ -78,23 +78,45 @@ export function renderBrandMonitor(main,client,db){
   });updateSummary();
  }
  function findings(){
-  const p=panel('No changes identified yet');p.append(el('p','The first scan saves a baseline. Comparing later scans and identifying potential branding changes comes next.','bcm-muted'));content.append(p);
+  const reports=[];
+  for(const run of state.scans||[]){
+   if(run.status!=='completed'||run.scan_type!=='comparison'||!run.snapshot)continue;
+   const baseline=(state.scans||[]).find(item=>item.id===run.baseline_id&&item.status==='completed'&&item.scan_type==='baseline');
+   if(!baseline)continue;
+   for(const candidate of findBcmCandidates(baseline.snapshot,run.snapshot))reports.push({run,candidate});
+  }
+  const latest=new Map();for(const item of reports){const key=item.candidate.type+'|'+item.candidate.term.toLocaleLowerCase();if(!latest.has(key))latest.set(key,item);}
+  const p=el('section',undefined,'bcm-results-view');p.append(el('h2','Possible changes to review'));content.append(p);
+  const comparisons=(state.scans||[]).filter(run=>run.status==='completed'&&run.scan_type==='comparison');
+  const baseline=(state.scans||[]).some(run=>run.status==='completed'&&run.scan_type==='baseline');
+  if(state.scanError)p.append(el('p',state.scanError,'bcm-error'));
+  if(!comparisons.length){
+   p.append(el('p',baseline?'A baseline is saved, but no comparison has been run yet. Run “Scan for changes” in Setup when you want to compare the homepage again.':'The first check saves a baseline. Later manual checks can be compared with it.','bcm-muted'));
+   p.append(button('Go to Setup',()=>{state.view='settings';draw();}));return;
+  }
+  if(!latest.size){
+   p.append(el('p','No specific branding cue was identified by the current text rules.','bcm-muted'));
+   return;
+  }
+  for(const {run,candidate} of latest.values()){
+   const item=el('article',undefined,'bcm-result-item');item.append(el('h3',candidate.title),el('p',candidate.term,'bcm-candidate-term'),el('p',candidate.reason,'bcm-muted'));
+   const evidence=el('details');evidence.append(el('summary','Review page evidence'),el('p',candidate.excerpt),el('p',run.snapshot.url+' · '+new Date(run.finished_at||run.started_at).toLocaleDateString(),'bcm-muted'));item.append(evidence);
+   const discuss=el('a','Discuss this with Venture Branding','bcm-button bcm-primary');discuss.href='new-mark.html?client='+encodeURIComponent(client.id)+'&mark='+encodeURIComponent(candidate.term);item.append(discuss);
+   p.append(item);
+  }
  }
  function history(){
-  const p=panel('Scan history');content.append(p);
+  const p=el('section',undefined,'bcm-results-view bcm-history-view');p.append(el('h2','Scan history'));content.append(p);
   p.append(button('Refresh scan history',async()=>{state.scanError='';try{state.scans=await loadBcmScans(db,client.id);}catch(e){state.scanError=e.message;}if(content.isConnected)draw();}));
-  p.append(el('p','A record of manual checks of Cotivate’s public homepage. The first check saves a baseline; later checks compare page text with it. Checks do not run automatically.','bcm-muted'));
   if(state.scanError)p.append(el('p',state.scanError,'bcm-muted'));
   if(!state.scans?.length)p.append(el('p','No scans yet.','bcm-muted'));
   for(const run of state.scans||[]){
    const stale=run.status==='running'&&Date.now()-Date.parse(run.started_at)>120000;
-   const card=panel(run.status==='completed'?(run.scan_type==='comparison'?'Text comparison saved':'Baseline saved'):run.status==='failed'?'Scan failed':stale?'Scan interrupted':'Scan in progress');
-   card.append(el('p',new Date(run.started_at).toLocaleString(),'bcm-muted'));
-   if(run.snapshot){const snapshot=run.snapshot;card.append(el('p',snapshot.url),el('h3',snapshot.title||'Page text'));
-    if(run.scan_type==='comparison'){const baseline=(state.scans||[]).find(x=>x.id===run.baseline_id&&x.status==='completed');if(!baseline){card.append(el('p','The comparison baseline is unavailable.','bcm-muted'));}else{const changes=compareBcmSnapshots(baseline.snapshot,snapshot);const totals=changes.added.length+changes.removed.length;card.append(el('p',totals?`Compared with the saved baseline: ${changes.added.length} text additions · ${changes.removed.length} text removals`:'No text differences from the saved baseline','bcm-muted'));for(const [label,lines] of [['Text added',changes.added],['Text removed',changes.removed]])if(lines.length){const section=el('section',undefined,'bcm-change-section');section.append(el('h3',label));const list=el('ul');for(const line of lines)list.append(el('li',line));section.append(list);card.append(section);}card.append(el('p','These are page-text differences only. They do not identify brand changes or determine legal significance.','bcm-muted'));}}
-    const details=el('details'),label=el('summary',run.scan_type==='comparison'?'View latest captured text':'View captured text');details.append(label,el('p',snapshot.text));card.append(details,el('p','Public HTML text only. No authenticated content or visual logo analysis.','bcm-muted'));
-   }else if(run.status==='failed'||stale)card.append(el('p','No baseline saved. Return to Setup to retry.','bcm-muted'));
-   p.append(card);
+   const item=el('article',undefined,'bcm-history-item');item.append(el('h3',run.status==='completed'?(run.scan_type==='comparison'?'Text comparison':'Baseline'):run.status==='failed'?'Scan failed':stale?'Scan interrupted':'Scan in progress'),el('p',new Date(run.started_at).toLocaleString(),'bcm-muted'));
+   if(run.snapshot){const snapshot=run.snapshot;item.append(el('p',snapshot.url,'bcm-muted'));
+    if(run.scan_type==='comparison'){const baseline=(state.scans||[]).find(x=>x.id===run.baseline_id&&x.status==='completed');if(!baseline)item.append(el('p','The comparison baseline is unavailable.','bcm-muted'));else{const count=findBcmCandidates(baseline.snapshot,snapshot).length;item.append(el('p',count?`${count} possible change${count===1?'':'s'} to review in Findings.`:'No specific branding cue was identified by the current text rules.','bcm-muted'));}}
+   }else if(run.status==='failed'||stale)item.append(el('p','No baseline saved. Return to Setup to retry.','bcm-muted'));
+   p.append(item);
   }
  }
  if(state.loaded)draw();else load();

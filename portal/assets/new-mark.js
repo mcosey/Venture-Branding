@@ -3,7 +3,7 @@ const drafts=new Map();
 export function clearMarkDrafts(){drafts.clear();}
 export function renderNewMark(main,client){
  const el=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
- const draft=drafts.get(client.id)||{};drafts.set(client.id,draft);
+ const draft=drafts.get(client.id)||{};if(!drafts.has(client.id)){const suggested=new URLSearchParams(location.search).get('mark');if(suggested)draft.name=suggested.slice(0,200);}drafts.set(client.id,draft);
  const form=el('form');form.className='panel connected-card mark-intake';
  form.append(el('p','Tell us about the mark you’d like to discuss.'));
  function field(key,label,kind,options){const wrap=el('label',label);let input;

@@ -1,6 +1,6 @@
-import {renderBrandMonitor,clearBrandMonitorDrafts} from './brand-monitor.js?v=20261008-bcm-comparison';
+import {renderBrandMonitor,clearBrandMonitorDrafts} from './brand-monitor.js?v=20261008-bcm-candidates';
 import {renderWatchSetup,renderAgentCards} from './watch-setup.js';
-import {renderNewMark,clearMarkDrafts} from './new-mark.js';
+import {renderNewMark,clearMarkDrafts} from './new-mark.js?v=20261008-bcm-candidates';
 import {createConnection,loadRecords,typeLabel,statusLabel} from '../../auth/connection.mjs';
 import {setupGate} from '../../auth/gate.mjs';
 const db=createConnection('client'),gate=setupGate(db,'client');
