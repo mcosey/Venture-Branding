@@ -26,7 +26,7 @@ test('initial HTML fallback matches shared renderer and contains only decorative
 
 test('each portal entry ships its destination skeleton with no interactive or private content',async()=>{
  const {pageSkeleton,loadingLabels}=await import('../shared/loading.mjs');
- const files=['portfolio','trademark','account','new-mark','automations','brand-monitor','trademark-watch','watch','watch-finding','maintenance'];
+ const files=['portfolio','trademark','account','new-mark','automations','brand-monitor','trademark-watch','watch','watch-finding','use-history','maintenance'];
  for(const file of files){
   const html=readFileSync(new URL('../'+file+'.html',import.meta.url),'utf8');
   const layout=file==='account'?'account':html.match(/data-page="([^"]+)"/)[1];

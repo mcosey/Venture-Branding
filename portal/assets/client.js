@@ -1,3 +1,4 @@
+import {renderEvidence} from './evidence.js';
 import {renderMaintenance} from './maintenance.js?v=20261010-maintenance-live';
 import {loadBrandMapBcm} from './brand-map-bcm.mjs';
 import {renderBrandMap} from './brand-map.js?v=20261010-bcm-display';
@@ -13,13 +14,14 @@ const gate=setupGate(db,'client');
 const main=document.querySelector('main'),page=main.dataset.page;
 const homeLink=document.querySelector('#portal-nav a[href="portal.html"]');
 if(homeLink){for(const node of homeLink.childNodes)if(node.nodeType===3&&node.textContent.includes('Dashboard'))node.textContent='Brand Map';}
-let records,selectedId,mapRevision=0;
-db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){mapRevision++;records=null;selectedId=null;main.replaceChildren();clearMarkDrafts();clearBrandMonitorDrafts();}});
+let records,selectedId,mapRevision=0,evidenceDispose=()=>{};
+db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){evidenceDispose();mapRevision++;records=null;selectedId=null;main.replaceChildren();clearMarkDrafts();clearBrandMonitorDrafts();}});
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 function link(text,href,cls='text-link'){const n=el('a',text,cls);n.href=href;return n;}
 function panel(title,text){const n=el('section',undefined,'panel connected-card');n.append(el('h2',title));if(text)n.append(el('p',text,'muted'));return n;}
 function markList(marks){const wrap=el('div');if(!marks.length)wrap.append(el('p','No trademarks yet.','connected-empty'));for(const m of marks){const row=link('',`trademark.html?mark=${encodeURIComponent(m.id)}&client=${encodeURIComponent(selectedId)}`,'connected-row');const info=el('span',m.name);info.append(el('small',typeLabel(m.mark_type)));row.append(info,el('span',statusLabel(m.status),'badge'),el('span','View →'));wrap.append(row);}return wrap;}
 function render(){
+ evidenceDispose();evidenceDispose=()=>{};
  const mapTicket=++mapRevision;
  if(!records)return;
  const client=records.clients.find(c=>c.id===selectedId);if(!client)throw new Error('This client is not available to your account.');
@@ -32,7 +34,7 @@ function render(){
   loadBrandMapBcm(db,client.id).then(state=>{if(current())update(state);},()=>{if(current())update({status:'error'});});
   return;
  }
- main.replaceChildren();const heading=el('section',undefined,'portfolio-heading');const h=el('div');h.append(el('p','CLIENT PORTAL','eyebrow'),el('h1',({portal:'Welcome, '+client.contact_name,portfolio:'Trademark Portfolio','new-mark':'Add New Mark',automations:'VB Agents','brand-monitor':'Brand Change Monitor','watch-setup':'Trademark Watch',trademark:'Trademark',watch:'Trademark Watch','use-history':'Use History',maintenance:'Maintenance Reminder'})[page]));heading.append(h);if(['portal','portfolio'].includes(page))heading.append(link('+ Add New Mark',`new-mark.html?client=${encodeURIComponent(client.id)}`,'mark-primary'));main.append(heading);
+ main.replaceChildren();const heading=el('section',undefined,'portfolio-heading');const h=el('div');h.append(el('p','CLIENT PORTAL','eyebrow'),el('h1',({portal:'Welcome, '+client.contact_name,portfolio:'Trademark Portfolio','new-mark':'Add New Mark',automations:'VB Agents','brand-monitor':'Brand Change Monitor','watch-setup':'Trademark Watch',trademark:'Trademark',watch:'Trademark Watch','use-history':'Evidence of Use',maintenance:'Maintenance Reminder'})[page]));heading.append(h);if(['portal','portfolio'].includes(page))heading.append(link('+ Add New Mark',`new-mark.html?client=${encodeURIComponent(client.id)}`,'mark-primary'));main.append(heading);
  if(page==='new-mark'){renderNewMark(main,client);
  }else if(page==='portfolio'){
   const search=el('input',undefined,'connected-search');search.type='search';search.placeholder='Search your trademarks';search.setAttribute('aria-label','Search trademarks');
@@ -41,19 +43,19 @@ function render(){
   const id=new URLSearchParams(location.search).get('mark');const mark=marks.find(m=>m.id===id);
   if(!mark){main.append(panel('Trademark not found','This record is not available in your portfolio.'),link('Back to portfolio →','portfolio.html'));return;}
   h.querySelector('h1').textContent=mark.name;const card=panel('Trademark details');const dl=el('dl',undefined,'connected-fields');
-  for(const [label,value] of [['Type',typeLabel(mark.mark_type)],['Status',statusLabel(mark.status)],['USPTO status',mark.uspto_status_text||'Not retrieved'],['Application number',mark.application_number||'Not provided'],['Registration number',mark.registration_number||'Not provided'],['Owner',mark.record_owner||'Not provided'],['Filing date',mark.filing_date||'Not provided'],['Registration date',mark.registration_date||'Not provided'],['USPTO status date',mark.uspto_status_date||'Not provided'],['Last retrieved',mark.source_checked_at?new Date(mark.source_checked_at).toLocaleString():'Not retrieved'],['Source',mark.source==='uspto'?'USPTO':'Entered by Venture Branding']]){const item=el('div');item.append(el('dt',label),el('dd',value));dl.append(item);}card.append(dl);main.append(link('← Portfolio','portfolio.html'),card,panel('Use history','No evidence recorded.'),panel('Deadlines','No verified deadlines recorded.'));
+  for(const [label,value] of [['Type',typeLabel(mark.mark_type)],['Status',statusLabel(mark.status)],['USPTO status',mark.uspto_status_text||'Not retrieved'],['Application number',mark.application_number||'Not provided'],['Registration number',mark.registration_number||'Not provided'],['Owner',mark.record_owner||'Not provided'],['Filing date',mark.filing_date||'Not provided'],['Registration date',mark.registration_date||'Not provided'],['USPTO status date',mark.uspto_status_date||'Not provided'],['Last retrieved',mark.source_checked_at?new Date(mark.source_checked_at).toLocaleString():'Not retrieved'],['Source',mark.source==='uspto'?'USPTO':'Entered by Venture Branding']]){const item=el('div');item.append(el('dt',label),el('dd',value));dl.append(item);}card.append(dl);main.append(link('← Portfolio','portfolio.html'),card,link('View or upload evidence →',`use-history.html?client=${encodeURIComponent(client.id)}&mark=${encodeURIComponent(mark.id)}`),panel('Deadlines','No verified deadlines recorded.'));
  }else if(page==='maintenance'){renderMaintenance(main,client,marks,db);
  }else if(page==='automations'){renderAgentCards(main,client);
  }else if(page==='brand-monitor'){renderBrandMonitor(main,client,db);
  }else if(page==='watch-setup'){renderWatchSetup(main,client,marks);
  }else if(page==='watch-detail'){renderWatchDetail(main,client,marks);
  }else if(page==='watch'){renderWatchResults(main,client);}
- else if(page==='use-history')main.append(panel('Evidence of use','No evidence recorded. Automatic capture is not connected yet.'));
+ else if(page==='use-history')evidenceDispose=renderEvidence(main,client,marks,db);
 }
 async function refresh(){mapRevision++;const ticket=gate.lock();try{const loaded=await loadRecords(db,'client');if(!gate.current(ticket))return;records=loaded;if(!records.clients.length)throw new Error('No active client workspace is assigned to this account.');const requested=new URLSearchParams(location.search).get('client');selectedId=selectedId||requested||records.clients[0].id;render();gate.unlock(ticket);}catch(error){if(!gate.current(ticket))return;main.replaceChildren();gate.lock(error.message);}}
 document.querySelector('#client-choice').addEventListener('change',event=>{selectedId=event.target.value;render();});
 const menu=document.querySelector('.menu-toggle'),nav=document.querySelector('#portal-nav');menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});
-document.querySelector('#messages-button')?.addEventListener('click',()=>{mapRevision++;main.replaceChildren(panel('Messages','Messaging is not connected yet.'));});
-document.addEventListener('visibilitychange',()=>{if(document.hidden){mapRevision++;gate.lock();main.replaceChildren();}else refresh();});
+document.querySelector('#messages-button')?.addEventListener('click',()=>{evidenceDispose();mapRevision++;main.replaceChildren(panel('Messages','Messaging is not connected yet.'));});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){evidenceDispose();mapRevision++;gate.lock();main.replaceChildren();}else refresh();});
 window.addEventListener('pageshow',event=>{if(event.persisted)refresh();});
 await refresh();

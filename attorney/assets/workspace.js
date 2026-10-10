@@ -1,3 +1,4 @@
+import {renderEvidence} from '../../portal/assets/evidence.js';
 import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
 import {showRegionLoading} from '../../shared/loading.mjs';
 import {createMaintenanceRepository} from '../../auth/maintenance.mjs?v=20261010-maintenance-live';
@@ -10,6 +11,7 @@ import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-
   let db;try{db=createConnection('staff');}catch(error){showConnectionError('staff');throw error;}
 const  gate=setupGate(db,'staff');
   const filings=setupFilingWorkspace(db);
+  let evidenceDispose=()=>{};
   const clients=[];
   let accessRecords=[], accessReady=false;
   async function reloadRecords(ticket){
@@ -33,10 +35,10 @@ const  gate=setupGate(db,'staff');
     catch(error){const target=document.querySelector('dialog[open]');if(target){let note=target.querySelector('[data-save-error]');if(!note){note=document.createElement('p');note.dataset.saveError='';note.className='connection-error';note.setAttribute('role','alert');target.append(note);}note.textContent=error.message||'Unable to save. Please retry.';}else gate.lock(error.message);}
     finally{saving=false;buttons.forEach(b=>b.disabled=false);}
   }
-  const serviceNames = ['Trademark Watch','Brand Change Monitor','Specimen Capture','Maintenance Reminder','Trademark Activity Digest'];
+  const serviceNames = ['Trademark Watch','Brand Change Monitor','Evidence of Use','Maintenance Reminder','Trademark Activity Digest'];
   let selected = clients[0], editing = null, step = 0;
   const maintenanceEditor=createMaintenanceEditor(createMaintenanceRepository(db));
-  db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){maintenanceEditor.clear();}});
+  db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){maintenanceEditor.clear();evidenceDispose();}});
   const detail = $('[data-screen="client-cotivate-llc"]'); detail.dataset.screen = 'client';
   const originalDetail = detail.innerHTML;
   const overviewList = $('[data-screen="overview"] .client-preview').parentElement;
@@ -100,12 +102,14 @@ const  gate=setupGate(db,'staff');
     if(!selected.marks.length)markList.append(node('p','No trademarks yet.','empty-client'));
     const configured=selected.portal?serviceNames:[];
     detail.querySelector('.service-list').replaceChildren(...(configured.length?configured:['No portal add-on.']).map(text=>node('li',text)));
+    const evidenceHost=detail.querySelector('[data-use-history]');if(evidenceHost){evidenceHost.replaceChildren();evidenceDispose=renderEvidence(evidenceHost,selected,selected.marks,db,{audience:'staff'});}
     if(selected.archived) detail.querySelector('[data-preview="mark"]').hidden=true;
   }
   const menu=$('.menu-toggle'),nav=$('#attorney-nav');
   function closeMenu(){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}
   menu.addEventListener('click',()=>{menu.setAttribute('aria-expanded',String(nav.classList.toggle('open')));});
   function route(){
+    evidenceDispose();evidenceDispose=()=>{};
     let requested=location.hash.slice(1)||'overview'; if(requested==='client-cotivate-llc')requested='client-10000000-0000-0000-0000-000000000001'; let view=requested;
     if(requested.startsWith('client-')){
       selected=clients.find(c=>c.id===requested.slice(7));view=selected?'client':'missing';
@@ -252,6 +256,6 @@ const  gate=setupGate(db,'staff');
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&nav.classList.contains('open')){closeMenu();menu.focus();}});
   route();gate.unlock(initialTicket);
   async function refreshWorkspace(){const ticket=gate.lock();try{if(!await reloadRecords(ticket))return;route();gate.unlock(ticket);}catch(error){if(gate.current(ticket))gate.lock(error.message);}}
-  document.addEventListener('visibilitychange',()=>{if(document.hidden){gate.lock();}else refreshWorkspace();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){evidenceDispose();gate.lock();}else refreshWorkspace();});
   window.addEventListener('pageshow',event=>{if(event.persisted)refreshWorkspace();});
 })();
