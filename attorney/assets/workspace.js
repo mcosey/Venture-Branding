@@ -1,4 +1,4 @@
-import {renderEvidence} from '../../portal/assets/evidence.js';
+import {renderEvidence} from '../../portal/assets/evidence.js?v=20261010-use-history';
 import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
 import {showRegionLoading} from '../../shared/loading.mjs';
 import {createMaintenanceRepository} from '../../auth/maintenance.mjs?v=20261010-maintenance-live';
@@ -35,7 +35,7 @@ const  gate=setupGate(db,'staff');
     catch(error){const target=document.querySelector('dialog[open]');if(target){let note=target.querySelector('[data-save-error]');if(!note){note=document.createElement('p');note.dataset.saveError='';note.className='connection-error';note.setAttribute('role','alert');target.append(note);}note.textContent=error.message||'Unable to save. Please retry.';}else gate.lock(error.message);}
     finally{saving=false;buttons.forEach(b=>b.disabled=false);}
   }
-  const serviceNames = ['Trademark Watch','Brand Change Monitor','Evidence of Use','Maintenance Reminder','Trademark Activity Digest'];
+  const serviceNames = ['Trademark Watch','Brand Change Monitor','Use History','Maintenance Reminder','Trademark Activity Digest'];
   let selected = clients[0], editing = null, step = 0;
   const maintenanceEditor=createMaintenanceEditor(createMaintenanceRepository(db));
   db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){maintenanceEditor.clear();evidenceDispose();}});

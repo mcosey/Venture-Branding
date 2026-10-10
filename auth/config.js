@@ -6,3 +6,7 @@ window.VB_AUTH_CONFIG = Object.freeze({
 
 // Manual private Evidence of Use uploads are activated for this workspace.
 window.VB_EVIDENCE_ENABLED = true;
+
+// Private account inbox and automatic digest delivery are activated.
+window.VB_DIGEST_ENABLED = true;
+window.VB_DIGEST_SCHEDULED = true;

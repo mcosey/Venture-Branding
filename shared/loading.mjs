@@ -11,7 +11,7 @@ export const loadingLabels = Object.freeze({
  'brand-map':'Brand Map',portfolio:'Portfolio',trademark:'trademark details',account:'Account Settings',
  'new-mark':'mark intake',automations:'VB Agents','brand-monitor':'Brand Change Monitor',
  'watch-setup':'Trademark Watch setup',watch:'Watch','watch-detail':'Watch finding',
- 'use-history':'Use History',maintenance:'Maintenance'
+ 'use-history':'Use History',maintenance:'Maintenance',digest:'Trademark Activity Digest',inbox:'Messages'
 });
 const repeat = (count,render) => Array.from({length:count},render).join('');
 const panel = content => `<div class="vb-loading-card">${bar('heading')}${content}</div>`;

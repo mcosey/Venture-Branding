@@ -5,7 +5,7 @@ const input=(type)=>{const n=el('input');n.type=type;return n;};
 export function renderEvidence(host,client,marks,db,{audience='client',markId=null}={}){
  if(!document.querySelector('[data-evidence-style]')){const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('./evidence.css',import.meta.url).href;style.dataset.evidenceStyle='';document.head.append(style);}
  const repo=createEvidenceRepository(db,audience),root=el('section',undefined,audience==='staff'?'evidence-area evidence-inline':'panel connected-card evidence-area');host.append(root);
- root.append(el('h2','Evidence of Use'),el('p',audience==='client'?'Upload screenshots or photos showing how you use your trademark. Your attorney can view the files.':'Files uploaded by this client.','muted'));
+ root.append(el('h2','Use History'),el('p',audience==='client'?'Upload screenshots or photos showing how you use your trademark. Your attorney can view the files.':'Files uploaded by this client.','muted'));
  if(!repo){root.append(el('p','Evidence uploads are not connected in this workspace.','muted'));return ()=>{};}
  const allowed=marks.filter(m=>(!m.client_id||m.client_id===client.id)&&(!markId||m.id===markId));
  let disposed=false,revision=0,uploadId=null,blobUrls=new Set();

@@ -1,11 +1,12 @@
-import {renderEvidence} from './evidence.js';
+import {renderDigest} from './digest.js?v=20261010-digest-live';
+import {renderEvidence} from './evidence.js?v=20261010-use-history';
 import {renderMaintenance} from './maintenance.js?v=20261010-maintenance-live';
 import {loadBrandMapBcm} from './brand-map-bcm.mjs';
 import {renderBrandMap} from './brand-map.js?v=20261010-bcm-display';
 import {renderBrandMonitor,clearBrandMonitorDrafts} from './brand-monitor.js?v=20261009-bcm-public-pages';
 import {renderWatchDetail} from './watch-detail.js';
 import {renderWatchResults} from './watch-results.js';
-import {renderWatchSetup,renderAgentCards} from './watch-setup.js?v=20261009-maintenance';
+import {renderWatchSetup,renderAgentCards} from './watch-setup.js?v=20261010-digest';
 import {renderNewMark,clearMarkDrafts} from './new-mark.js?v=20261008-bcm-candidates';
 import {createConnection,loadRecords,typeLabel,statusLabel} from '../../auth/connection.mjs';
 import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-preview';
@@ -34,7 +35,7 @@ function render(){
   loadBrandMapBcm(db,client.id).then(state=>{if(current())update(state);},()=>{if(current())update({status:'error'});});
   return;
  }
- main.replaceChildren();const heading=el('section',undefined,'portfolio-heading');const h=el('div');h.append(el('p','CLIENT PORTAL','eyebrow'),el('h1',({portal:'Welcome, '+client.contact_name,portfolio:'Trademark Portfolio','new-mark':'Add New Mark',automations:'VB Agents','brand-monitor':'Brand Change Monitor','watch-setup':'Trademark Watch',trademark:'Trademark',watch:'Trademark Watch','use-history':'Evidence of Use',maintenance:'Maintenance Reminder'})[page]));heading.append(h);if(['portal','portfolio'].includes(page))heading.append(link('+ Add New Mark',`new-mark.html?client=${encodeURIComponent(client.id)}`,'mark-primary'));main.append(heading);
+ main.replaceChildren();const heading=el('section',undefined,'portfolio-heading');const h=el('div');h.append(el('p','CLIENT PORTAL','eyebrow'),el('h1',({portal:'Welcome, '+client.contact_name,portfolio:'Trademark Portfolio','new-mark':'Add New Mark',automations:'VB Agents','brand-monitor':'Brand Change Monitor','watch-setup':'Trademark Watch',trademark:'Trademark',watch:'Trademark Watch','use-history':'Use History',digest:'Trademark Activity Digest',inbox:'Messages',maintenance:'Maintenance Reminder'})[page]));heading.append(h);if(['portal','portfolio'].includes(page))heading.append(link('+ Add New Mark',`new-mark.html?client=${encodeURIComponent(client.id)}`,'mark-primary'));main.append(heading);
  if(page==='new-mark'){renderNewMark(main,client);
  }else if(page==='portfolio'){
   const search=el('input',undefined,'connected-search');search.type='search';search.placeholder='Search your trademarks';search.setAttribute('aria-label','Search trademarks');
@@ -50,12 +51,13 @@ function render(){
  }else if(page==='watch-setup'){renderWatchSetup(main,client,marks);
  }else if(page==='watch-detail'){renderWatchDetail(main,client,marks);
  }else if(page==='watch'){renderWatchResults(main,client);}
+ else if(page==='digest'||page==='inbox')evidenceDispose=renderDigest(main,client,db,{view:page==='inbox'?'inbox':'settings'});
  else if(page==='use-history')evidenceDispose=renderEvidence(main,client,marks,db);
 }
 async function refresh(){mapRevision++;const ticket=gate.lock();try{const loaded=await loadRecords(db,'client');if(!gate.current(ticket))return;records=loaded;if(!records.clients.length)throw new Error('No active client workspace is assigned to this account.');const requested=new URLSearchParams(location.search).get('client');selectedId=selectedId||requested||records.clients[0].id;render();gate.unlock(ticket);}catch(error){if(!gate.current(ticket))return;main.replaceChildren();gate.lock(error.message);}}
 document.querySelector('#client-choice').addEventListener('change',event=>{selectedId=event.target.value;render();});
 const menu=document.querySelector('.menu-toggle'),nav=document.querySelector('#portal-nav');menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});
-document.querySelector('#messages-button')?.addEventListener('click',()=>{evidenceDispose();mapRevision++;main.replaceChildren(panel('Messages','Messaging is not connected yet.'));});
+document.querySelector('#messages-button')?.addEventListener('click',()=>{location.href='messages.html?client='+encodeURIComponent(selectedId);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){evidenceDispose();mapRevision++;gate.lock();main.replaceChildren();}else refresh();});
 window.addEventListener('pageshow',event=>{if(event.persisted)refresh();});
 await refresh();
