@@ -1,0 +1,158 @@
+{
+  "prepared_only": true,
+  "project": "imvkhicfmidzbzsbhkzs",
+  "run_id": "813aabca-15c9-45f8-8f3b-06a582182bc4",
+  "label": "bm-race-813aabca",
+  "namespace": 135506621,
+  "client_id": "2ba5b51e-62d8-48db-915f-b273e84736bb",
+  "user_id": "7da00277-4ee2-4719-bfa4-43e77f4fb6ed",
+  "staff_id": "eb1493cf-c9fe-4956-a57e-0ce120c55c02",
+  "cases": [
+    {
+      "index": 1,
+      "id": "read-committed/cycle",
+      "isolation": "read committed",
+      "scenario": "cycle",
+      "assets": [
+        "fd142b5a-a3f6-4101-893e-05800cce7fc1",
+        "18e6f562-5e21-4a31-800c-f85cc497b3b9"
+      ],
+      "mark_id": null,
+      "application_number": "90000001",
+      "expected_code": "22023"
+    },
+    {
+      "index": 2,
+      "id": "read-committed/stale-edit",
+      "isolation": "read committed",
+      "scenario": "stale-edit",
+      "assets": [
+        "2a59ad79-aa74-491e-ac99-7ac76d283af6"
+      ],
+      "mark_id": null,
+      "application_number": "90000002",
+      "expected_code": "40001"
+    },
+    {
+      "index": 3,
+      "id": "read-committed/membership-revocation",
+      "isolation": "read committed",
+      "scenario": "membership-revocation",
+      "assets": [
+        "ca9f9ade-0e14-4a07-9f57-6438bb7ad404"
+      ],
+      "mark_id": null,
+      "application_number": "90000003",
+      "expected_code": "42501"
+    },
+    {
+      "index": 4,
+      "id": "read-committed/direct-mark-update",
+      "isolation": "read committed",
+      "scenario": "direct-mark-update",
+      "assets": [
+        "8b8e7f07-63b5-49a6-a2e8-31e968d47368"
+      ],
+      "mark_id": "e618603b-0870-444b-b05c-002ec03d3497",
+      "application_number": "90000004",
+      "expected_code": "40001"
+    },
+    {
+      "index": 5,
+      "id": "read-committed/uspto-import",
+      "isolation": "read committed",
+      "scenario": "uspto-import",
+      "assets": [
+        "feb8d9ed-965f-45bd-a627-ab4bcc9d15bc"
+      ],
+      "mark_id": "a9ae4510-128c-4782-b5b7-e7b8b2fcea6c",
+      "application_number": "90000005",
+      "expected_code": "40001"
+    },
+    {
+      "index": 6,
+      "id": "read-committed/review-and-status-refresh",
+      "isolation": "read committed",
+      "scenario": "review-and-status-refresh",
+      "assets": [
+        "c4ac0364-cd70-41c2-b7d2-d8572a0b2778"
+      ],
+      "mark_id": "c02015f4-14e3-4f15-9292-09774decc262",
+      "application_number": "90000006",
+      "expected_code": "00000"
+    },
+    {
+      "index": 7,
+      "id": "repeatable-read/cycle",
+      "isolation": "repeatable read",
+      "scenario": "cycle",
+      "assets": [
+        "6253e2f6-8784-4f3c-b4e4-94a6113d2c51",
+        "5519344a-caea-4e91-85c1-0cfe55e96d12"
+      ],
+      "mark_id": null,
+      "application_number": "90000007",
+      "expected_code": "40001"
+    },
+    {
+      "index": 8,
+      "id": "repeatable-read/stale-edit",
+      "isolation": "repeatable read",
+      "scenario": "stale-edit",
+      "assets": [
+        "daab1bd9-0221-4873-ae93-30d2d31bd93e"
+      ],
+      "mark_id": null,
+      "application_number": "90000008",
+      "expected_code": "40001"
+    },
+    {
+      "index": 9,
+      "id": "repeatable-read/membership-revocation",
+      "isolation": "repeatable read",
+      "scenario": "membership-revocation",
+      "assets": [
+        "bc121fa5-9fc1-489b-a8ac-d83229919457"
+      ],
+      "mark_id": null,
+      "application_number": "90000009",
+      "expected_code": "40001"
+    },
+    {
+      "index": 10,
+      "id": "repeatable-read/direct-mark-update",
+      "isolation": "repeatable read",
+      "scenario": "direct-mark-update",
+      "assets": [
+        "0d223c64-ad77-47ce-ac74-f55fef505cd6"
+      ],
+      "mark_id": "fb750360-1320-4bea-8e2a-f323f2176593",
+      "application_number": "90000010",
+      "expected_code": "40001"
+    },
+    {
+      "index": 11,
+      "id": "repeatable-read/uspto-import",
+      "isolation": "repeatable read",
+      "scenario": "uspto-import",
+      "assets": [
+        "73460f11-21b7-4069-a536-89d9562a5307"
+      ],
+      "mark_id": "2b2bb3c7-56ae-4b22-8696-254abdc9bc81",
+      "application_number": "90000011",
+      "expected_code": "40001"
+    },
+    {
+      "index": 12,
+      "id": "repeatable-read/review-and-status-refresh",
+      "isolation": "repeatable read",
+      "scenario": "review-and-status-refresh",
+      "assets": [
+        "8a050ee3-e296-4fb7-8a55-85e9237ea2db"
+      ],
+      "mark_id": "c491758e-0988-491a-bf15-0e9d497ce306",
+      "application_number": "90000012",
+      "expected_code": "00000"
+    }
+  ]
+}

@@ -6,10 +6,10 @@ export function bcmValues(draft,authorized){
  const urls=lines(draft.urls),exclusions=lines(draft.exclude);
  if(urls.length<1||urls.length>20)throw new Error('Enter between 1 and 20 page URLs.');
  for(const value of urls){
-  if(value.length>2048||!/^https?:\/\/[A-Za-z0-9.-]+(:[0-9]{1,5})?(\/[^\s?#@]*)?$/.test(value))throw new Error('Use complete public page URLs without credentials, query strings, or fragments.');
-  try{new URL(value);}catch{throw new Error('Enter a valid website URL.');}
+  if(value.length>2048||!/^https:\/\/[A-Za-z0-9.-]+(:443)?(\/[^\s?#@]*)?$/.test(value))throw new Error('Use complete public HTTPS page URLs without credentials, query strings, fragments, or custom ports.');
+  try{const parsed=new URL(value);if(!parsed.hostname.includes('.')||/^\d{1,3}(?:\.\d{1,3}){3}$/.test(parsed.hostname)||/(^|\.)(localhost|local|internal|test|invalid|example|lan|home\.arpa)$/i.test(parsed.hostname))throw new Error();}catch{throw new Error('Enter a valid public HTTPS website URL.');}
  }
- if(new Set(urls).size!==urls.length)throw new Error('Remove duplicate page URLs.');
+ if(new Set(urls.map(value=>new URL(value).href)).size!==urls.length)throw new Error('Remove duplicate page URLs.');
  if(exclusions.length>50||exclusions.some(s=>s.length>512||!/^\/[^\s?#]*$/.test(s)))throw new Error('Use up to 50 excluded paths beginning with /, without query strings or fragments.');
  if(!['public','account'].includes(draft.access)||!['Weekly','Monthly'].includes(draft.frequency))throw new Error('Choose valid access and frequency options.');
  const selected=draft.categories;
@@ -44,29 +44,22 @@ export function findBcmCandidates(baseline,current){
  const changes=compareBcmSnapshots(baseline,current),candidates=[],seen=new Set();
  const normalize=value=>String(value||'').toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
  const noise=/\b(cookie|privacy policy|terms of (?:use|service)|all rights reserved|copyright|subscribe|contact us|sign in|log in|log out|checkout)\b/i;
- const genericHeadings=new Set(['home','about us','our services','our products','products and services','features','pricing','contact','contact us','learn more','get started','frequently asked questions','faq']);
- const phrase=(line,pattern)=>{const match=line.match(pattern);return match?.[1]?.replace(/^[“"']|[”"']$/g,'').trim()||line.slice(0,120);};
- function add(type,title,line,reason){const key=type+'|'+normalize(line);if(seen.has(key))return;seen.add(key);candidates.push({type,title,term:title==='Possible new brand wording'?line.slice(0,120):phrase(line,termPatterns[type]||/$^/),excerpt:line,reason});}
+ const stripQuotes=value=>String(value||'').replace(/^[“"']|[”"']$/g,'').trim();
+ const termFrom=(line,pattern,requireCapitalized=true)=>{const match=line.match(pattern);const quoted=match?.[1],plain=match?.[2];const term=stripQuotes(quoted||plain);if(!term||(requireCapitalized&&!quoted&&!/^\p{Lu}/u.test(term))||new Set(['product','feature','tool','platform','service','sub brand','new','our','the']).has(normalize(term)))return null;return term;};
+ function add(type,title,line,term,reason){const key=type+'|'+normalize(term);if(seen.has(key))return;seen.add(key);candidates.push({type,title,term,excerpt:line,reason});}
  const termPatterns={
-  rename:/\b(?:renamed\s+(?:to|as)|now called|now known as|rebranded as|formerly\s+)(?:our\s+)?([“"']?[^,.;:!?]{2,70})/i,
-  product:/\b(?:(?:introducing|meet|launching|launched|launch of)\s+(?:(?:our|the)\s+)?(?:new\s+)?|(?:new\s+)?(?:product|feature|tool|platform|service|sub[- ]brand)\s+(?:called|named|is)\s+|(?:product|feature|tool|platform|service)\s+(?:called|named)\s+)([A-Z][\p{L}\p{N}'’&-]*(?:\s+[A-Z][\p{L}\p{N}'’&-]*){0,2})/iu,
-  slogan:/\b(?:new\s+)?(?:tagline|tag line|slogan)(?:\s+is)?\s*[:=]?\s*[“"']?([^”"'.,;!?]{3,80})/i,
+  rename:/\b(?:renamed\s+(?:to|as)|now\s+(?:called|known\s+as)|rebranded\s+as|formerly\s+(?:called|known\s+as))\s+(?:our\s+)?(?:[“"']([^”"']{2,70})[”"']|([\p{L}\p{N}'’&-]+(?:\s+[\p{L}\p{N}'’&-]+){0,2})\b)/iu,
+  product:/\b(?:(?:introducing|meet|launching|launched|launch of)\s+(?:(?:our|the)\s+)?(?:new\s+)?|(?:new\s+)?(?:product|feature|tool|platform|service|sub[- ]brand)\s+(?:(?:called|named|is)\s+|[:—-]\s*)?)(?:[“"']([^”"']{2,70})[”"']|([\p{L}\p{N}'’&-]+(?:\s+[\p{L}\p{N}'’&-]+){0,2})\b)/iu,
+  slogan:/\b(?:new\s+)?(?:tagline|tag\s+line|slogan)(?:(?:\s+(?:is|reads|says))?\s*[:=—-]\s*|\s+(?:is|reads|says)\s+)[“"']?([^”"'“\n.!?;]{3,80})/i,
   presentation:/\b(?:new logo|updated logo|redesigned logo|new brand identity|brand refresh|rebrand(?:ed|ing)?)\b/i
  };
  for(const line of changes.added){
   if(noise.test(line))continue;
-  if(/\b(?:renamed\s+(?:to|as)|now called|now known as|rebranded as|formerly\s+)\b/i.test(line))add('rename','Possible name change',line,'The new text includes wording that may indicate a name change.');
-  else if(/\b(?:tagline|tag line|slogan)\b/i.test(line))add('slogan','Possible new slogan or tagline',line,'The new text describes wording as a slogan or tagline.');
-  else if(/\b(?:introducing|meet|launching|launch of|new\s+(?:product|feature|tool|platform|service|sub[- ]brand)|(?:product|feature|tool|platform|service)\s+(?:called|named))\b/i.test(line))add('product','Possible new product or feature name',line,'The new text uses product, feature, or launch language.');
-  else if(/\b(?:new logo|updated logo|redesigned logo|new brand identity|brand refresh|rebrand(?:ed|ing)?)\b/i.test(line))add('presentation','Possible branding presentation change',line,'The new text refers to a branding or logo change.');
- }
- const oldHeadings=new Set((baseline?.headings||[]).map(normalize));
- for(const heading of current?.headings||[]){
-  const words=heading.trim().split(/\s+/).length,norm=normalize(heading);
-  if(oldHeadings.has(norm)||genericHeadings.has(norm)||words<2||words>9||noise.test(heading))continue;
-  if(!changes.added.some(line=>normalize(line).includes(norm)))continue;
-  if(candidates.some(candidate=>normalize(candidate.excerpt).includes(norm)))continue;
-  add('heading','Possible new prominent brand wording',heading,'A new short page heading appeared; it could be a product name or slogan.');
+  const rename=termFrom(line,termPatterns.rename),product=termFrom(line,termPatterns.product),slogan=termFrom(line,termPatterns.slogan,false);
+  if(rename)add('rename','Possible name change',line,rename,'The new text explicitly says a name changed.');
+  else if(slogan)add('slogan','Possible new slogan or tagline',line,slogan,'The new text labels this wording as a slogan or tagline.');
+  else if(product)add('product','Possible new product or feature name',line,product,'The new text explicitly introduces or names a product or feature.');
+  else if(termPatterns.presentation.test(line))add('presentation','Possible brand identity change',line,'Brand identity change','The new text explicitly mentions a rebrand, brand refresh, or logo change.');
  }
  return candidates;
 }

@@ -32,10 +32,15 @@ select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-0
 select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details()||'{"password":"secret"}',true)$$,'22023',null,'Secret/unknown fields rejected');
 select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details()||'{"urls":["https://example.com?token=secret"]}',true)$$,'22023',null,'Query strings rejected');
 select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details()||'{"urls":["https://user:pass@example.com/"]}',true)$$,'22023',null,'URL credentials rejected');
+select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details()||'{"urls":["http://example.com/"]}',true)$$,'22023',null,'HTTP pages rejected');
+select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details()||'{"urls":["https://localhost/"]}',true)$$,'22023',null,'Local hosts rejected');
+select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details()||'{"urls":["https://10.0.0.2/"]}',true)$$,'22023',null,'IP address targets rejected');
+select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details()||'{"urls":["https://example.com:8443/"]}',true)$$,'22023',null,'Custom ports rejected');
 select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details()||'{"categories":["unknown"]}',true)$$,'22023',null,'Unknown category rejected');
 select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details()||'{"urls":[null]}',true)$$,'22023',null,'Non-string URL rejected');
-select lives_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details(),true)$$,'Own initial save succeeds');
+select lives_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details()||'{"urls":["https://example.com/products","https://example.net/features"]}',true)$$,'Own initial save accepts multiple public pages');
 select is((select count(*)::integer from public.vb_bcm_settings),1,'Only own row readable');
+select is((select cardinality(urls) from public.vb_bcm_settings),2,'Both saved page URLs retained');
 select is((select version from public.vb_bcm_settings),1,'First revision recorded');
 select throws_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',0,pg_temp.bcm_details(),true)$$,'40001',null,'Duplicate initial save conflicts');
 select lives_ok($$select public.vb_save_bcm_settings('b8000000-0000-0000-0000-000000000001',1,pg_temp.bcm_details()||'{"frequency":"monthly"}',true)$$,'Own versioned update succeeds');

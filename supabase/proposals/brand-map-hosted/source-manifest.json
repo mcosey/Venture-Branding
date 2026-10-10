@@ -1,0 +1,19 @@
+{
+  "prepared_only": true,
+  "project": "imvkhicfmidzbzsbhkzs",
+  "prohibited_projects": [
+    "omvkwiosonatswocbdgx",
+    "yjhzhflyuxcxugfgspby"
+  ],
+  "fixture_namespace": "03abbc4c-be77-4a0a-b800-e84a5c167a99",
+  "source_hashes": {
+    "../brand-map/001-brand-assets.sql": "21147e0c3c5687daf51d4f82e69872b33984cecf0dc34a2754ae235e152fedf3",
+    "../brand-map/brand-assets.test.sql": "fa5b63c982f1ba1b784fe2d0ee9e8c0a5ca480a03bb57c25610677eb54e7f041"
+  },
+  "file_hashes": {
+    "01-readonly-preflight.sql": "1c34a1c84e22b8cf42a38b5d6f1490fee7dc8a3d0dd9efc9f5d3d577d588e7ab",
+    "02-rollback-check.BLOCKED.sql": "a0f19aa2a56055e486e41dba0effa629521a31b41f1e39988f2c673e83acef63",
+    "03-readonly-postcheck.sql": "8e4da9e89781f1e4aff0571e03d838776bb2801fff5f2b89adc6517812d5abf0"
+  },
+  "concurrency_scenarios_executed": 0
+}

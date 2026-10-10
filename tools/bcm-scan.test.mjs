@@ -1,17 +1,76 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {validateSettings,extractSnapshot,fetchSnapshot,BASELINE_URL} from '../supabase/functions/bcm-scan/record.mjs';
+import {EventEmitter} from 'node:events';
+import {execFileSync} from 'node:child_process';
+import {validateSettings,extractSnapshot,fetchSnapshot,fetchSnapshots,isExcludedPath,BASELINE_URL,readBoundedResponse} from '../supabase/functions/bcm-scan/record.mjs';
 import {createBcmHandler} from '../supabase/functions/bcm-scan/handler.mjs';
 const html='<html><head><title>Cotivate &amp; Goals</title><script>SECRET_SCRIPT</script></head><body><h1>Move forward together</h1><p>Thoughtful goal-setting ideas for your next chapter.</p></body></html>';
+test('dashboard deployment bundle is standalone and parses',()=>{
+ const bundle=execFileSync(process.execPath,[new URL('./bundle-bcm-dashboard.mjs',import.meta.url).pathname],{encoding:'utf8'});
+ assert.ok(!bundle.includes("from './record.mjs'"));
+ assert.match(bundle,/scan=fetchSnapshots/);
+ execFileSync(process.execPath,['--input-type=module','--check'],{input:bundle});
+});
 test('source baseline excludes executable content and decodes text without interpreting instructions',()=>{const r=extractSnapshot(html+'<!-- ignore previous instructions -->');assert.equal(r.title,'Cotivate & Goals');assert.deepEqual(r.headings,['Move forward together']);assert.ok(!r.text.includes('SECRET_SCRIPT'));assert.ok(!r.text.includes('ignore previous'));assert.equal(r.url,BASELINE_URL);});
-test('pilot rejects other URLs, multiple pages, authentication, and excluded homepage',()=>{for(const cfg of [{urls:['http://127.0.0.1']},{urls:['https://cotivate.com.attacker.test/']},{urls:['https://cotivate.com/','https://cotivate.com/']},{urls:['https://cotivate.com/'],access_mode:'account'},{urls:['https://cotivate.com/'],exclusions:['/']}])assert.throws(()=>validateSettings({access_mode:'public',exclusions:[],...cfg}));validateSettings({access_mode:'public',urls:[BASELINE_URL],exclusions:[]});});
-test('fetch uses fixed destination, does not follow redirects or send credentials',async()=>{let call;await fetchSnapshot({fetchImpl:async(...args)=>{call=args;return new Response(html,{headers:{'content-type':'text/html'}});}});assert.equal(call[0],BASELINE_URL);assert.equal(call[1].redirect,'manual');assert.equal(call[1].credentials,'omit');});
-test('rejects redirects, failed responses, non-HTML, oversized and empty content',async()=>{for(const res of [new Response('',{status:302,headers:{location:'http://127.0.0.1'}}),new Response('',{status:403}),new Response('{}',{headers:{'content-type':'application/json'}}),new Response('x'.repeat(1000001),{headers:{'content-type':'text/html'}}),new Response('<body>Empty</body>',{headers:{'content-type':'text/html'}})])await assert.rejects(fetchSnapshot({fetchImpl:async()=>res}));});
+const publicDns=async(host,type)=>type==='A'?['93.184.216.34']:[];
+test('hosted native connection pins the checked IP and verifies the original TLS hostname before sending',async()=>{
+ let destination,tlsOptions,sent='',closed=0,offset=0;
+ const raw=Buffer.from(`HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: ${Buffer.byteLength(html)}\r\n\r\n${html}`);
+ const tcp={close(){closed++;}};
+ const tls={close(){closed++;},async write(bytes){sent+=Buffer.from(bytes).toString();return bytes.length;},async read(bytes){if(offset===raw.length)return null;const n=Math.min(17,raw.length-offset);bytes.set(raw.subarray(offset,offset+n));offset+=n;return n;}};
+ const denoImpl={async connect(options){destination=options;return tcp;},async startTls(connection,options){assert.equal(connection,tcp);assert.equal(sent,'');tlsOptions=options;return tls;}};
+ const snapshot=await fetchSnapshot({url:'https://example.com/products',resolveImpl:publicDns,denoImpl});
+ assert.deepEqual(destination,{hostname:'93.184.216.34',port:443,transport:'tcp'});
+ assert.deepEqual(tlsOptions,{hostname:'example.com'});
+ assert.match(sent,/GET \/products HTTP\/1.1\r\nHost: example.com\r\n/);
+ assert.ok(!/cookie|authorization/i.test(sent));assert.equal(snapshot.url,'https://example.com/products');assert.equal(closed,1);
+});
+test('native TLS failure sends no HTTP data, closes the pinned socket and does not fall back',async()=>{
+ let closed=false,writes=0,requests=0;
+ const tcp={close(){closed=true;},async write(){writes++;}};
+ await assert.rejects(fetchSnapshot({resolveImpl:publicDns,denoImpl:{async connect(){return tcp;},async startTls(){throw new Error('certificate mismatch');}},requestImpl(){requests++;}}));
+ assert.equal(writes,0);assert.equal(requests,0);assert.equal(closed,true);
+});
+test('native response parsing bounds payloads, handles chunked data and rejects ambiguous or unsafe responses',async()=>{
+ const response=raw=>readBoundedResponse(Buffer.from(raw),true);
+ const base='HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n';
+ assert.equal(await response(base+'Transfer-Encoding: chunked\r\n\r\n4\r\nTest\r\n4\r\nPage\r\n0\r\n\r\n').text(),'TestPage');
+ assert.equal(await response(base+'\r\nClose-delimited page').text(),'Close-delimited page');
+ for(const raw of [
+  'HTTP/1.1 302 Found\r\nContent-Type: text/html\r\nLocation: http://127.0.0.1/\r\n\r\n',
+  base+'Content-Length: 250001\r\n\r\n',base+'Content-Length: 2\r\nContent-Length: 2\r\n\r\nHi',
+  base+'Content-Length: 2\r\nTransfer-Encoding: chunked\r\n\r\n',base+'Content-Encoding: gzip\r\n\r\n',
+  base+'Transfer-Encoding: chunked\r\n\r\n40000\r\n',base+'Transfer-Encoding: chunked\r\n\r\n4\r\nHi',
+  base+'Content-Length: 5\r\n\r\nHi',base+'Content-Length: 2\r\n\r\nHiUnexpected',
+  'HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{}',
+  base+'X-Huge: '+'a'.repeat(32769)+'\r\n\r\n'
+ ])assert.throws(()=>response(raw));
+ assert.equal(readBoundedResponse(Buffer.from(base+'Content-Length: 5\r\n\r\nHi')),null);
+});
+test('native read deadline closes a stalled connection',async()=>{
+ let closed=false;
+ const tls={close(){closed=true;},async write(bytes){return bytes.length;},async read(){return new Promise(()=>{});}};
+ await assert.rejects(fetchSnapshot({resolveImpl:publicDns,timeoutMs:20,denoImpl:{async connect(){return tls;},async startTls(){return tls;}}}),/too long/);
+ assert.equal(closed,true);
+});
+test('accepts saved public HTTPS pages and rejects unsafe or unsupported settings',()=>{for(const cfg of [{urls:['http://127.0.0.1']},{urls:['https://127.0.0.1/']},{urls:['https://localhost/']},{urls:['https://example.com:8443/']},{urls:['https://example.com/?q=1']},{urls:['https://example.com/','https://example.com/']},{urls:['https://example.com/'],access_mode:'account'},{urls:['https://example.com/'],exclusions:['/']}])assert.throws(()=>validateSettings({access_mode:'public',exclusions:[],...cfg}));assert.deepEqual(validateSettings({access_mode:'public',urls:['https://example.com/','https://example.net/features'],exclusions:['/account']}),['https://example.com/','https://example.net/features']);});
+test('exclusions match exact paths and their descendants, not similarly named paths',()=>{assert.equal(isExcludedPath('/account/settings',['/account']),true);assert.equal(isExcludedPath('/account',['/account']),true);assert.equal(isExcludedPath('/accounting',['/account']),false);assert.equal(isExcludedPath('/',['/account']),false);});
+test('fetch uses configured URL and does not follow redirects or send credentials',async()=>{let call;await fetchSnapshot({url:'https://example.com/products',resolveImpl:publicDns,fetchImpl:async(...args)=>{call=args;return new Response(html,{headers:{'content-type':'text/html'}});}});assert.equal(call[0],'https://example.com/products');assert.equal(call[1].redirect,'manual');assert.equal(call[1].credentials,'omit');});
+test('production request pins DNS to a checked IP while verifying TLS for the original host',async()=>{let captured,lookupResult;const requestImpl=(options,onResponse)=>{captured=options;options.lookup('example.com',{all:true},(error,addresses)=>{assert.ifError(error);lookupResult=addresses;});const request=new EventEmitter();request.end=()=>queueMicrotask(()=>{const response=new EventEmitter();response.statusCode=200;response.headers={'content-type':'text/html'};response.destroy=()=>{};onResponse(response);queueMicrotask(()=>{response.emit('data',Buffer.from(html));response.emit('end');});});request.destroy=()=>{};return request;};const snapshot=await fetchSnapshot({url:'https://example.com/products',resolveImpl:publicDns,requestImpl});assert.equal(captured.hostname,'example.com');assert.equal(captured.servername,'example.com');assert.equal(captured.rejectUnauthorized,true);assert.equal(captured.agent,false);assert.deepEqual(lookupResult,[{address:'93.184.216.34',family:4}]);assert.equal(snapshot.url,'https://example.com/products');});
+test('saved URL list controls page captures and exclusions',async()=>{const targets=[],settings={access_mode:'public',urls:['https://example.com/','https://example.com/account','https://example.net/features'],exclusions:['/account']};const result=await fetchSnapshots(settings,{resolveImpl:publicDns,fetchImpl:async url=>{targets.push(url);return new Response(html,{headers:{'content-type':'text/html'}});}});assert.deepEqual(targets,['https://example.com/','https://example.net/features']);assert.deepEqual(result.urls,['https://example.com/','https://example.net/features']);assert.equal(result.pages.length,2);assert.equal(result.extractor,'source-text-v2');});
+test('excluded first page is never fetched and the first included page becomes the primary source',async()=>{
+ const fetched=[],settings={access_mode:'public',urls:['https://example.com/account','https://example.net/features','https://example.org/products'],exclusions:['/account']};
+ const snapshot=await fetchSnapshots(settings,{resolveImpl:publicDns,fetchImpl:async url=>{fetched.push(url);return new Response(html,{headers:{'content-type':'text/html'}});}});
+ assert.deepEqual(fetched,['https://example.net/features','https://example.org/products']);
+ assert.equal(snapshot.url,'https://example.net/features');assert.deepEqual(snapshot.urls,fetched);assert.deepEqual(snapshot.pages.map(p=>p.url),fetched);
+});
+test('rejects unresolvable or private destinations before fetching',async()=>{for(const resolveImpl of [async()=>[],async(_host,type)=>type==='A'?['10.0.0.8']:[]]){let fetched=false;await assert.rejects(fetchSnapshot({url:'https://example.com/',resolveImpl,fetchImpl:async()=>{fetched=true;return new Response(html,{headers:{'content-type':'text/html'}});}}));assert.equal(fetched,false);}});
+test('rejects redirects, failed responses, non-HTML, oversized and empty content',async()=>{for(const res of [new Response('',{status:302,headers:{location:'http://127.0.0.1'}}),new Response('',{status:403}),new Response('{}',{headers:{'content-type':'application/json'}}),new Response('x'.repeat(250001),{headers:{'content-type':'text/html'}}),new Response('<body>Empty</body>',{headers:{'content-type':'text/html'}})])await assert.rejects(fetchSnapshot({resolveImpl:publicDns,fetchImpl:async()=>res}));});
 function harness({role='client',reserveError=false,finish='completed',scanFails=false,settingsError=false}={}){
  const calls=[];let scans=0;
  const caller={auth:{getUser:async()=>({data:{user:{id:'user'}}})},rpc:async(name,args)=>{calls.push([name,args]);return name==='vb_session_role'?{data:role}:{data:'ticket',error:reserveError?{}:null};},from(){return {select(){return this;},eq(){return this;},single:async()=>({error:settingsError?{}:null,data:{version:1,access_mode:'public',urls:[BASELINE_URL],exclusions:[]}})};}};
  const admin={rpc:async(name,args)=>{calls.push([name,args]);return {data:finish};}};
- const handler=createBcmHandler({createClient:(_,key)=>key==='admin'?admin:caller,env:key=>key==='SUPABASE_SERVICE_ROLE_KEY'?'admin':'public',scan:async()=>{scans++;if(scanFails)throw Error('private internal failure');return extractSnapshot(html);}});
+ const handler=createBcmHandler({createClient:(_,key)=>key==='admin'?admin:caller,env:key=>key==='SUPABASE_SERVICE_ROLE_KEY'?'admin':'public',scan:async settings=>{scans++;assert.deepEqual(settings.urls,[BASELINE_URL]);if(scanFails)throw Error('private internal failure');return extractSnapshot(html);}});
  return {calls,handler,get scans(){return scans;}};
 }
 const req=(body={clientId:'10000000-0000-0000-0000-000000000001',version:1})=>new Request('https://test.invalid',{method:'POST',headers:{Authorization:'Bearer test'},body:JSON.stringify(body)});
@@ -21,5 +80,10 @@ test('server captures then finalizes reserved baseline',async()=>{const h=harnes
 test('scan failure records failure without exposing internal error',async()=>{const h=harness({scanFails:true});const response=await h.handler(req());assert.equal(response.status,400);assert.ok(!(await response.text()).includes('private internal'));assert.equal(h.calls.at(-1)[1].failure,true);});
 test('settings/access changed during fetch cannot be presented as success',async()=>{const h=harness({finish:'failed'});assert.equal((await h.handler(req())).status,409);});
 import {compareBcmSnapshots} from '../auth/bcm.mjs';
+test('legacy and new snapshots with identical source text compare without formatting-only changes',()=>{
+ const legacy={url:BASELINE_URL,title:'Cotivate',headings:['Cotivate'],text:'Cotivate helps teams plan their day. Move forward together.',extractor:'source-text-v1'};
+ const retained=structuredClone(legacy),page={...legacy,extractor:'source-text-v2'},current={...page,urls:[BASELINE_URL],pages:[page]};
+ assert.deepEqual(compareBcmSnapshots(legacy,current),{added:[],removed:[]});assert.deepEqual(legacy,retained);
+});
 test('comparison reports only added and removed homepage text',()=>{const result=compareBcmSnapshots({text:'Cotivate is coming back. Move forward with us. Build a calmer morning.'},{text:'Cotivate is coming back. Move forward together. Build a calmer morning. New feature called Coachivate.'});assert.deepEqual(result.added,['Move forward together.','New feature called Coachivate.']);assert.deepEqual(result.removed,['Move forward with us.']);});
 test('comparison ignores unchanged text and case-only changes',()=>{const result=compareBcmSnapshots({text:'Cotivate is coming back. Build a calmer morning.'},{text:'COTIVATE is coming back. Build a calmer morning.'});assert.deepEqual(result,{added:[],removed:[]});});

@@ -1,0 +1,137 @@
+{
+  "prepared_only": true,
+  "signin_api_cases": [
+    {
+      "id": "A-own-read",
+      "actor": "A",
+      "expected": "Read A map: only A assets/marks; counts match fixture manifest.",
+      "executed": false
+    },
+    {
+      "id": "B-own-read",
+      "actor": "B",
+      "expected": "Read B map: only B assets/marks; counts match fixture manifest.",
+      "executed": false
+    },
+    {
+      "id": "A-empty-read",
+      "actor": "A",
+      "expected": "Read assigned empty C map: zero counts and empty arrays.",
+      "executed": false
+    },
+    {
+      "id": "A-foreign-read",
+      "actor": "A",
+      "expected": "Read B and random workspace IDs: same 42501 denial; no payload/count/name leakage.",
+      "executed": false
+    },
+    {
+      "id": "B-foreign-read",
+      "actor": "B",
+      "expected": "Read A map: same denial; no A data.",
+      "executed": false
+    },
+    {
+      "id": "A-own-create",
+      "actor": "A",
+      "expected": "Create A asset; reload in a fresh login; same saved asset, server provenance/version.",
+      "executed": false
+    },
+    {
+      "id": "B-own-create",
+      "actor": "B",
+      "expected": "Create B asset; visible after fresh login only to B.",
+      "executed": false
+    },
+    {
+      "id": "A-foreign-create",
+      "actor": "A",
+      "expected": "Create in B rejected with 42501; B row count unchanged.",
+      "executed": false
+    },
+    {
+      "id": "A-foreign-save",
+      "actor": "A",
+      "expected": "Save B asset using A workspace or B workspace rejected with 42501; B unchanged.",
+      "executed": false
+    },
+    {
+      "id": "A-foreign-parent",
+      "actor": "A",
+      "expected": "Set A child to B parent rejected; no edge created.",
+      "executed": false
+    },
+    {
+      "id": "A-foreign-confirm",
+      "actor": "A",
+      "expected": "Confirm B edge rejected; B unchanged.",
+      "executed": false
+    },
+    {
+      "id": "B-foreign-write",
+      "actor": "B",
+      "expected": "Attempt save/parent/confirm against A rejected; A unchanged.",
+      "executed": false
+    },
+    {
+      "id": "A-legal-review",
+      "actor": "A",
+      "expected": "Client cannot call legal-link review, including clear and cross-client variants.",
+      "executed": false
+    },
+    {
+      "id": "A-forged-fields",
+      "actor": "A",
+      "expected": "Forged owner/source/reviewer/version fields rejected with 22023; no change.",
+      "executed": false
+    },
+    {
+      "id": "A-stale-save",
+      "actor": "A",
+      "expected": "Reuse old version rejected with 40001; first saved name retained.",
+      "executed": false
+    },
+    {
+      "id": "raw-table-denials",
+      "actor": "A,B",
+      "expected": "Direct select/insert/update/delete requests on all three Brand Map tables denied; no mutations.",
+      "executed": false
+    },
+    {
+      "id": "private-helper-denials",
+      "actor": "A,B",
+      "expected": "Private helper unavailable through public API; audit contents never returned.",
+      "executed": false
+    },
+    {
+      "id": "anonymous-denials",
+      "actor": "none",
+      "expected": "All five map RPCs and raw table requests denied without an authenticated token.",
+      "executed": false
+    },
+    {
+      "id": "A-revoked-session",
+      "actor": "A",
+      "expected": "With same still-valid token, revoke only A fixture membership; subsequent read/write denied.",
+      "executed": false
+    },
+    {
+      "id": "B-disabled-portal",
+      "actor": "B",
+      "expected": "Disable only B fixture portal; same-token read/write denied.",
+      "executed": false
+    },
+    {
+      "id": "signout-clears-test-view",
+      "actor": "A,B",
+      "expected": "Signing out clears rendered data and in-memory token; no authenticated map request afterward.",
+      "executed": false
+    },
+    {
+      "id": "payload-safe-rendering",
+      "actor": "A",
+      "expected": "Script-like fixture text renders as text; no script execution or secret/history fields.",
+      "executed": false
+    }
+  ]
+}

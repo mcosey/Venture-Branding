@@ -1,0 +1,15 @@
+# Brand Map existing-account read-only check completed
+
+2026-10-10. User approved the BCM Test two-existing-account read-only phase. Branch remains codex/attorney-workspace; repository application files and parallel work preserved. No new accounts, application data writes, permissions, scans, installation, commit/push/deployment.
+
+Completed live checks for cotivate-filing@example.test and mithril-zeppelin-filing@example.test using private password entry by the user. Auth identity and existing client role verified; each had only its expected fictional workspace and one own trademark (Not yet filed). Targeted reads of the other workspace and mark returned no rows, and manually altered other-client portal URLs were denied with empty main and hidden workspace. No other client's mark rendered. Both normal local sign-outs returned the login page; reopening portal after final sign-out independently verified empty main/hidden workspace and sign-in requirement.
+
+Saved BCM reads succeeded for both with zero scans/findings; map displayed No saved monitor scans yet. Dashboard independently showed two fictional workspaces, two one-per-client marks, three Auth identities (attorney excluded), zero vb_bcm_scans. Therefore live nonempty findings and populated scan-row isolation remain unverified; do not label empty scan negative reads as a populated-row privacy proof.
+
+The user reported an accidental account selection; freshly reloading confirmed Mithril's identity and repeated only current read-only checks. No credential/token/session-store inspection or logging. Existing test accounts retained. Normal Auth session/sign-out logs are implicit in login, not app database edits.
+
+Artifacts: /Users/mcosey/Documents/Codex/2026-10-09/living-brand-map-users-mcosey-documents-2/outputs/brand-map-readonly-test/results.md and results.json; screenshots cotivate-signed-in.png, mithril-signed-in.png, both other-client-denied.png files and signed-out-denied.png. README documents exact source-copy adaptations and transport guards. Renderer/model/BCM loader/detection rules/gate were exact source copies. Test-only connection config/transport and portal branch retained in isolated copy, other feature imports omitted/navigation inert.
+
+Own browser tab7 closed and loopback8879 unified exec session18961 stopped after completion. Own admin tab6 already closed. Original user Supabase tab1 and parallel servers left alone. No cleanup SQL/new-account removal applicable; do not execute earlier sign-in-write-test package.
+
+Next phase requires user approval: verify the finished homepage locally against Cotivate's existing Production saved records/scans using existing client sign-in. Read-only only; no scans, DB/account/security changes or publication. Explain this is the final saved-data check before a separate publishing approval, not another feature/backend build. If positive cues absent, report the actual empty findings honestly. Do not promise actual logo inventory or restart IP-asset backend. Recommend GPT-6.1 Sol/medium.

@@ -1,5 +1,5 @@
-import {fetchSnapshot,validateSettings} from './record.mjs';
-export function createBcmHandler({createClient,env,scan=fetchSnapshot}){
+import {fetchSnapshots,validateSettings} from './record.mjs';
+export function createBcmHandler({createClient,env,scan=fetchSnapshots}){
  const origins=(env('VB_ALLOWED_ORIGINS')||'http://127.0.0.1:8000').split(',').map(s=>s.trim());
  return async req=>{
   const origin=req.headers.get('origin')||'';
@@ -27,14 +27,14 @@ export function createBcmHandler({createClient,env,scan=fetchSnapshot}){
    if(reserved.error)return reply({error:'A baseline or comparison may already exist, settings changed, or a scan is in progress. Reload scan history before retrying.'},409);
    ticket=reserved.data;
    admin=createClient(env('SUPABASE_URL'),key,{auth:{persistSession:false,autoRefreshToken:false}});
-   const snapshot=await scan();
+   const snapshot=await scan(settings.data);
    const result=await admin.rpc('vb_finish_bcm_baseline',{ticket,snapshot,failure:false});
    if(result.error)throw new Error('Unable to save baseline.');
    if(result.data!=='completed')return reply({error:'Settings or access changed during the scan. No baseline was saved.'},409);
    return reply({id:ticket,status:'completed',action});
   }catch{
    if(admin&&ticket)try{await admin.rpc('vb_finish_bcm_baseline',{ticket,snapshot:null,failure:true});}catch{}
-   return reply({error:ticket?'Scan failed. No new baseline was saved. Check scan history and try again.':'Unable to start. Save public settings for https://cotivate.com/ and try again.'},400);
+   return reply({error:ticket?'Scan failed. No new baseline was saved. Check saved public pages and scan history before retrying.':'Unable to start. Save public HTTPS page settings and try again.'},400);
   }
  };
 }

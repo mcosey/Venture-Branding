@@ -1,0 +1,21 @@
+{
+  "prepared_only": true,
+  "database_queries_executed": 5,
+  "accounts_created": 0,
+  "source_hashes": {
+    "supabase/proposals/brand-map/concurrency.test.mjs": "675cef5067e7ca854730094fa5306579fb68c807db8cf055eca2cb961d5a4014",
+    "supabase/proposals/brand-map/001-brand-assets.sql": "21147e0c3c5687daf51d4f82e69872b33984cecf0dc34a2754ae235e152fedf3",
+    "auth/connection.mjs": "5099810d442477895bc0bf592241ec9894654db87f8249ea806a5d70250d0573"
+  },
+  "file_hashes": {
+    "README.md": "c6014c2fd394a12b78c426110d3d1d34e63ee2a8e884ec17b03a36a2d63e4f85",
+    "probe-first.BLOCKED.sql": "30dffed630091226b90dc46d30c15a203d44426ef714b0dd83851f140549f23d",
+    "probe-observer.BLOCKED.sql": "d292252dfed70ec55bb3aed20bb1813a403429f2487ecde4ad3098002dce6970",
+    "probe-second.BLOCKED.sql": "29db9f7eb2ef7ee5eee7fe63452db8a7d02f3f64e0cf2858462f52c792ce2225",
+    "race-protocol.md": "e580ea4bcf703d900826aea5b2d70c051582266567c034beb4ca76a2912e67f1",
+    "setup-and-cleanup.md": "00042c3eb1ffb7140aafc3d6bd1a39a40696ef035f13318dc2871ceda01c9ea6",
+    "test-matrix.json": "5083e9e7d62fa8f3cbfebe8d0c90ef35ccb93d0185540e542a9b49fed702ae06"
+  },
+  "artifact_check": "12 write-race cases and 22 sign-in cases remain unrun; default probe copies stay blocked. Approved read-only capability probe passed.",
+  "executed_query_scope": "Separate approved capability phase: one read-only preflight, two bounded read-only participants, one read-only observer, one read-only postcheck."
+}

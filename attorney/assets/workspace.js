@@ -1,23 +1,30 @@
 import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
+import {showRegionLoading} from '../../shared/loading.mjs';
+import {createMaintenanceRepository} from '../../auth/maintenance.mjs?v=20261010-maintenance-live';
+import {createMaintenanceEditor} from './maintenance-editor.js?v=20261010-maintenance-live';
 import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs';
-import {setupGate} from '../../auth/gate.mjs';
+import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-preview';
 (async () => {
   'use strict';
   const $ = selector => document.querySelector(selector);
-  const db=createConnection('staff'), gate=setupGate(db,'staff');
+  let db;try{db=createConnection('staff');}catch(error){showConnectionError('staff');throw error;}
+const  gate=setupGate(db,'staff');
   const filings=setupFilingWorkspace(db);
   const clients=[];
   let accessRecords=[], accessReady=false;
-  async function reloadRecords(){
+  async function reloadRecords(ticket){
     const saved=await loadRecords(db,'staff');
     const access=await db.rpc('vb_portal_access_status');
+    if(ticket!==undefined&&!gate.current(ticket))return false;
     accessReady=!access.error;accessRecords=access.data||[];
     clients.splice(0,clients.length,...saved.clients.map(c=>{
       const r=saved.references.find(r=>r.client_id===c.id)||{};
       return {id:c.id,type:c.client_type==='business'?'Business':'Individual',name:c.name,contact:c.contact_name,email:c.contact_email||'',clioContact:r.clio_contact_reference||'',clioMatter:r.clio_matter_reference||'',quickbooks:r.quickbooks_customer_reference||'',portal:c.portal_enabled,archived:Boolean(c.archived_at),updatedAt:c.updated_at,sample:false,marks:saved.marks.filter(m=>m.client_id===c.id).map(m=>({id:m.id,updatedAt:m.updated_at,linkedIdentifier:m.application_number||'',name:m.name,type:typeLabel(m.mark_type),status:statusLabel(m.status),application:m.application_number||'',registration:m.registration_number||'',source:m.source==='uspto'?'USPTO':'Manual entry',services:[]}))};
     }));
+    return true;
   }
-  try{await reloadRecords();}catch(error){gate.lock(error.message);return;}
+  const initialTicket=gate.lock();
+  try{if(!await reloadRecords(initialTicket))return;}catch(error){if(gate.current(initialTicket))gate.lock(error.message);return;}
   let saving=false;
   async function save(action){
     if(saving)return;saving=true;
@@ -28,6 +35,8 @@ import {setupGate} from '../../auth/gate.mjs';
   }
   const serviceNames = ['Trademark Watch','Brand Change Monitor','Specimen Capture','Maintenance Reminder','Trademark Activity Digest'];
   let selected = clients[0], editing = null, step = 0;
+  const maintenanceEditor=createMaintenanceEditor(createMaintenanceRepository(db));
+  db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){maintenanceEditor.clear();}});
   const detail = $('[data-screen="client-cotivate-llc"]'); detail.dataset.screen = 'client';
   const originalDetail = detail.innerHTML;
   const overviewList = $('[data-screen="overview"] .client-preview').parentElement;
@@ -83,6 +92,7 @@ import {setupGate} from '../../auth/gate.mjs';
       const entry=node('div',undefined,'mark-entry');entry.append(row);
       const controls=node('div',undefined,'mark-controls');
       if(!selected.archived){const linkButton=node('button',mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record','text-link');linkButton.dataset.linkMark=String(index);linkButton.setAttribute('aria-label',linkButton.textContent+' for '+mark.name);controls.append(linkButton);}
+      if(!selected.archived){const maintenance=node('button','Maintenance dates','text-link');maintenance.type='button';maintenance.dataset.maintenanceMark=String(index);maintenance.setAttribute('aria-label','Maintenance dates for '+mark.name);controls.append(maintenance);}
       if(!selected.archived){const filingButton=node('button','Filings','text-link');filingButton.dataset.filingMark=String(index);filingButton.setAttribute('aria-label','Filings for '+mark.name);controls.append(filingButton);}
       if(mark.updatedAt)controls.append(node('small','Updated '+new Date(mark.updatedAt).toLocaleString()));
       entry.append(controls);markList.append(entry);
@@ -200,7 +210,7 @@ import {setupGate} from '../../auth/gate.mjs';
     markForm.elements.confirmOwner.required=isLookup();markForm.elements.confirmOwner.disabled=!isLookup();$('#owner-confirm-label').hidden=!isLookup();
     if(markStep===2)renderMarkSummary($('#mark-review'),markValues());
   }
-  function resetLookup(){lookupVersion++;lookupResult=null;$('#lookup-result').replaceChildren();$('#lookup-message').textContent='';markForm.elements.confirmOwner.checked=false;}
+  function resetLookup(){lookupVersion++;$('#lookup-result').setAttribute('aria-busy','false');lookupResult=null;$('#lookup-result').replaceChildren();$('#lookup-message').textContent='';markForm.elements.confirmOwner.checked=false;}
   function openMarkEditor(mark=null){if(selected.archived)return;editingMark=mark;markOwner=selected;markStep=mark?1:0;markForm.reset();resetLookup();$('#mark-editor-title').textContent=mark?(mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record'):'Add New Mark';$('#mark-save').textContent=mark?'Update mark':'Save mark';markForm.elements.identifier.value=mark?.linkedIdentifier||'';$('#mark-client').textContent=selected.name+(mark?' · '+mark.name:'');showMarkStep();markEditor.showModal();}
   markForm.elements.identifier.addEventListener('input',resetLookup);
   markForm.querySelectorAll('[name="path"]').forEach(input=>input.addEventListener('change',()=>{resetLookup();showMarkStep();}));
@@ -214,12 +224,12 @@ import {setupGate} from '../../auth/gate.mjs';
   $('#lookup-mark').addEventListener('click',async()=>{
     if(lookingUp)return;resetLookup();const version=lookupVersion;
     if(!/^\d{8}$/.test(markForm.elements.identifier.value.trim())){$('#lookup-message').textContent='Enter the eight-digit application serial number.';return;}
-    lookingUp=true;$('#lookup-mark').disabled=true;$('#lookup-message').textContent='Retrieving USPTO record…';
+    lookingUp=true;$('#lookup-mark').disabled=true;const finishLookup=showRegionLoading($('#lookup-result'),'Retrieving USPTO record…','fields');
     const serial=markForm.elements.identifier.value.trim(),owner=markOwner,mark=editingMark;
     try{const result=await usptoRequest('preview');if(version!==lookupVersion||!markEditor.open||owner!==markOwner||mark!==editingMark||serial!==markForm.elements.identifier.value.trim())return;
       const r=result.record;lookupResult={name:r.name,type:typeLabel(r.mark_type),status:r.uspto_status_text,owner:r.record_owner,application:r.application_number,registration:r.registration_number,filingDate:r.filing_date,registrationDate:r.registration_date,statusDate:r.uspto_status_date,checkedAt:result.checkedAt,fingerprint:result.fingerprint};
       renderMarkSummary($('#lookup-result'),lookupResult);$('#lookup-message').textContent='Review this record before saving.';
-    }catch(error){if(version===lookupVersion&&markEditor.open)$('#lookup-message').textContent=error.message;}finally{lookingUp=false;$('#lookup-mark').disabled=false;}
+    }catch(error){if(version===lookupVersion&&markEditor.open){$('#lookup-result').replaceChildren();$('#lookup-message').textContent=error.message;}}finally{if(version===lookupVersion)finishLookup();lookingUp=false;$('#lookup-mark').disabled=false;}
   });
   $('#mark-close').addEventListener('click',()=>markEditor.close());
   markEditor.addEventListener('close',resetLookup);
@@ -230,7 +240,7 @@ import {setupGate} from '../../auth/gate.mjs';
   });
   $('#mark-back').addEventListener('click',()=>{markStep--;showMarkStep();});
   markForm.addEventListener('submit',event=>{event.preventDefault();if(markStep<2){$('#mark-next').click();return;}if(markOwner.archived)return;if(isLookup()){if(!lookupResult||!markForm.elements.confirmOwner.checked){markForm.elements.confirmOwner.reportValidity();return;}save(async()=>{await usptoRequest('save');markEditor.close();});return;}const value=markValues();if(!value.name)return;save(async()=>{const {error}=await db.from('vb_marks').insert({client_id:markOwner.id,name:value.name,mark_type:value.type.toLowerCase(),status:'not_filed',source:'manual'});if(error)throw new Error('Mark could not be saved. Please retry.');markEditor.close();});});
-  detail.addEventListener('click',event=>{const filing=event.target.closest('[data-filing-mark]');if(filing){filings.open(selected,selected.marks[Number(filing.dataset.filingMark)]);return;}const control=event.target.closest('[data-link-mark]');if(control){openMarkEditor(selected.marks[Number(control.dataset.linkMark)]);return;}const link=event.target.closest('[data-mark-index]');if(!link)return;event.preventDefault();const mark=selected.marks[Number(link.dataset.markIndex)];preview(mark.name,selected.name+' · '+mark.type+' · '+mark.status+'\nApplication: '+(mark.application||'—')+'\nRegistration: '+(mark.registration||'—')+'\nSource: '+(mark.source||'Sample'));});
+  detail.addEventListener('click',event=>{const filing=event.target.closest('[data-filing-mark]');if(filing){filings.open(selected,selected.marks[Number(filing.dataset.filingMark)]);return;}const maintenance=event.target.closest('[data-maintenance-mark]');if(maintenance){maintenanceEditor.open(selected,selected.marks[Number(maintenance.dataset.maintenanceMark)],maintenance);return;}const control=event.target.closest('[data-link-mark]');if(control){openMarkEditor(selected.marks[Number(control.dataset.linkMark)]);return;}const link=event.target.closest('[data-mark-index]');if(!link)return;event.preventDefault();const mark=selected.marks[Number(link.dataset.markIndex)];preview(mark.name,selected.name+' · '+mark.type+' · '+mark.status+'\nApplication: '+(mark.application||'—')+'\nRegistration: '+(mark.registration||'—')+'\nSource: '+(mark.source||'Sample'));});
   document.addEventListener('click',event=>{
     const button=event.target.closest('[data-preview],[data-action]');if(!button)return;
     if(button.dataset.action==='settings'){openEditor(selected);return;}
@@ -240,7 +250,8 @@ import {setupGate} from '../../auth/gate.mjs';
   });
   ['staff-close','staff-done'].forEach(id=>$('#'+id).addEventListener('click',()=>dialog.close()));
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&nav.classList.contains('open')){closeMenu();menu.focus();}});
-  route();gate.unlock();
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)gate.lock('Checking access…');else reloadRecords().then(()=>{route();gate.unlock();}).catch(error=>gate.lock(error.message));});
-  window.addEventListener('pageshow',event=>{if(event.persisted){gate.lock();reloadRecords().then(()=>{route();gate.unlock();}).catch(error=>gate.lock(error.message));}});
+  route();gate.unlock(initialTicket);
+  async function refreshWorkspace(){const ticket=gate.lock();try{if(!await reloadRecords(ticket))return;route();gate.unlock(ticket);}catch(error){if(gate.current(ticket))gate.lock(error.message);}}
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){gate.lock();}else refreshWorkspace();});
+  window.addEventListener('pageshow',event=>{if(event.persisted)refreshWorkspace();});
 })();

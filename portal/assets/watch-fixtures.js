@@ -1,0 +1,8 @@
+// Fictional UI fixtures from the user's reference. Never written to the database.
+export const watchFixtures=[
+ {name:'COTIV8',type:'Word Mark',serial:'98765432',date:'2026-10-02',class:'42',relevance:'High',goods:'Software as a service (SaaS) featuring online platforms for goal tracking and personal productivity.',reasons:['Highly similar spelling','Similar pronunciation','Overlapping services']},
+ {name:'COTIVATE PRO',type:'Design + Word',serial:'98761234',date:'2026-09-28',class:'41',relevance:'High',goods:'Educational services, namely providing online non-downloadable courses in personal development and productivity.',reasons:['Similar mark structure','Same root term','Related services'],logo:'△'},
+ {name:'COACTIVATE',type:'Word Mark',serial:'98760001',date:'2026-09-25',class:'42',relevance:'Moderate',goods:'Providing online non-downloadable software for business coaching and team collaboration.',reasons:['Similar pronunciation','Related services','Different commercial impression']},
+ {name:'COTIVA',type:'Design + Word',serial:'98759999',date:'2026-09-24',class:'9',relevance:'Moderate',goods:'Downloadable software for habit tracking and productivity management.',reasons:['Similar root term','Related services','Design element differs'],logo:'C'},
+ {name:'ACTIVOTE',type:'Word Mark',serial:'98751111',date:'2026-09-20',class:'35',relevance:'Low',goods:'Business consulting services in the field of voting technology.',reasons:['Different meaning','Different industry','Lower likelihood of confusion']}
+].map((record,index)=>({...record,status:index===4?'Reviewed':'Unreviewed'}));
