@@ -1,9 +1,11 @@
+import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
 import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs';
 import {setupGate} from '../../auth/gate.mjs';
 (async () => {
   'use strict';
   const $ = selector => document.querySelector(selector);
   const db=createConnection('staff'), gate=setupGate(db,'staff');
+  const filings=setupFilingWorkspace(db);
   const clients=[];
   let accessRecords=[], accessReady=false;
   async function reloadRecords(){
@@ -81,6 +83,7 @@ import {setupGate} from '../../auth/gate.mjs';
       const entry=node('div',undefined,'mark-entry');entry.append(row);
       const controls=node('div',undefined,'mark-controls');
       if(!selected.archived){const linkButton=node('button',mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record','text-link');linkButton.dataset.linkMark=String(index);linkButton.setAttribute('aria-label',linkButton.textContent+' for '+mark.name);controls.append(linkButton);}
+      if(!selected.archived){const filingButton=node('button','Filings','text-link');filingButton.dataset.filingMark=String(index);filingButton.setAttribute('aria-label','Filings for '+mark.name);controls.append(filingButton);}
       if(mark.updatedAt)controls.append(node('small','Updated '+new Date(mark.updatedAt).toLocaleString()));
       entry.append(controls);markList.append(entry);
     });
@@ -227,7 +230,7 @@ import {setupGate} from '../../auth/gate.mjs';
   });
   $('#mark-back').addEventListener('click',()=>{markStep--;showMarkStep();});
   markForm.addEventListener('submit',event=>{event.preventDefault();if(markStep<2){$('#mark-next').click();return;}if(markOwner.archived)return;if(isLookup()){if(!lookupResult||!markForm.elements.confirmOwner.checked){markForm.elements.confirmOwner.reportValidity();return;}save(async()=>{await usptoRequest('save');markEditor.close();});return;}const value=markValues();if(!value.name)return;save(async()=>{const {error}=await db.from('vb_marks').insert({client_id:markOwner.id,name:value.name,mark_type:value.type.toLowerCase(),status:'not_filed',source:'manual'});if(error)throw new Error('Mark could not be saved. Please retry.');markEditor.close();});});
-  detail.addEventListener('click',event=>{const control=event.target.closest('[data-link-mark]');if(control){openMarkEditor(selected.marks[Number(control.dataset.linkMark)]);return;}const link=event.target.closest('[data-mark-index]');if(!link)return;event.preventDefault();const mark=selected.marks[Number(link.dataset.markIndex)];preview(mark.name,selected.name+' · '+mark.type+' · '+mark.status+'\nApplication: '+(mark.application||'—')+'\nRegistration: '+(mark.registration||'—')+'\nSource: '+(mark.source||'Sample'));});
+  detail.addEventListener('click',event=>{const filing=event.target.closest('[data-filing-mark]');if(filing){filings.open(selected,selected.marks[Number(filing.dataset.filingMark)]);return;}const control=event.target.closest('[data-link-mark]');if(control){openMarkEditor(selected.marks[Number(control.dataset.linkMark)]);return;}const link=event.target.closest('[data-mark-index]');if(!link)return;event.preventDefault();const mark=selected.marks[Number(link.dataset.markIndex)];preview(mark.name,selected.name+' · '+mark.type+' · '+mark.status+'\nApplication: '+(mark.application||'—')+'\nRegistration: '+(mark.registration||'—')+'\nSource: '+(mark.source||'Sample'));});
   document.addEventListener('click',event=>{
     const button=event.target.closest('[data-preview],[data-action]');if(!button)return;
     if(button.dataset.action==='settings'){openEditor(selected);return;}

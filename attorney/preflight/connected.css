@@ -1,0 +1,15 @@
+#filing-editor{width:min(1100px,94vw);max-width:1100px;max-height:92vh;overflow:auto}
+#filing-editor fieldset{border:1px solid #d6ddd9;border-radius:12px;margin:18px 0;padding:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#filing-editor fieldset[hidden],#filing-editor [hidden]{display:none}
+#filing-editor label{display:block}#filing-editor label input:not([type=checkbox]),#filing-editor select,#filing-editor textarea{width:100%;box-sizing:border-box}
+#filing-editor button{margin:6px 8px 6px 0}.filing-tabs{display:flex;flex-wrap:wrap;margin:18px 0;gap:8px}
+.filing-tabs [aria-current]{font-weight:700;text-decoration:underline}
+.filing-review-row{border-bottom:1px solid #d6ddd9;padding:16px 0}.filing-review-row pre{white-space:pre-wrap;overflow-wrap:anywhere}
+#filing-status{min-height:1.5em}#filing-comparison p{overflow-wrap:anywhere}
+@media(max-width:700px){#filing-editor fieldset{grid-template-columns:1fr}}
+
+#filing-editor .filing-copy{border:1px solid #b28294;border-radius:8px;padding:9px 16px;min-width:108px;background:#202431;color:#f8edf1;font-weight:600;cursor:pointer;transition:background .15s,border-color .15s}
+#filing-editor .filing-copy:hover:not(:disabled){background:#493048;border-color:#e5a9bc}
+#filing-editor .filing-copy:focus-visible{outline:2px solid #ffd8df;outline-offset:3px}
+#filing-editor .filing-copy[data-copied=true]{background:#203e35;border-color:#87c5a7;color:#d4f7e3}
+#filing-editor .filing-copy:disabled{cursor:default;opacity:.65}
