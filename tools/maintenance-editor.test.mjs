@@ -55,3 +55,32 @@ test('entry retrieval shows skeleton and clears busy status on success and failu
  const failed=setup({list:async()=>{throw new Error('Could not retrieve entries');},clear(){}});await failed.editor.open({id:'one',name:'Client'},{id:'mark',name:'Mark'});
  assert(failed.dialog.textContent.includes('Could not retrieve entries'));assert(!failed.dialog.all().some(n=>n.className.startsWith('vb-skeleton')));
 });
+
+test('closing a pending read removes its announcement without clearing the reopened loader',async()=>{
+ const pending=[];const repository={list:()=>new Promise(resolve=>pending.push(resolve)),clear(){}};
+ const {editor,dialog}=setup(repository);
+ const announcements=()=>dialog.all().filter(n=>n.className==='vb-loading-status');
+ const first=editor.open({id:'one',name:'First client'},{id:'first',name:'First mark'});
+ assert.equal(announcements().length,1);
+ dialog.close();assert.equal(announcements().length,0);
+ const second=editor.open({id:'two',name:'Second client'},{id:'second',name:'Second mark'});
+ assert.equal(announcements().length,1);
+ pending[0]([{id:'old',draft:data,published:null}]);await first;await new Promise(resolve=>setImmediate(resolve));
+ const list=dialog.all().find(n=>n.className==='am-list');
+ assert.equal(list.attributes['aria-busy'],'true');assert.equal(announcements().length,1);
+ assert(!dialog.textContent.includes(data.description));
+ pending[1]([]);await second;
+ assert.equal(announcements().length,0);assert.equal(list.attributes['aria-busy'],'false');
+ assert(list.textContent.includes('No maintenance entries'));
+});
+
+test('clearing the editor removes a pending loader before its response settles',async()=>{
+ let finish;const {editor,dialog}=setup({list:()=>new Promise(resolve=>finish=resolve),clear(){}});
+ const work=editor.open({id:'one',name:'Client'},{id:'mark',name:'Mark'});
+ editor.clear();assert(!dialog.open);
+ assert.equal(dialog.all().filter(n=>n.className==='vb-loading-status').length,0);
+ assert.equal(dialog.all().find(n=>n.className==='am-list').attributes['aria-busy'],'false');
+ finish([{id:'old',draft:data,published:null}]);await work;
+ assert.equal(dialog.all().filter(n=>n.className==='vb-loading-status').length,0);
+ assert(!dialog.textContent.includes(data.description));
+});
