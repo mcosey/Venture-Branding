@@ -5,13 +5,13 @@ function link(text,href){const node=el('a',text,'bm-link');node.href=href;return
 function button(text,label,action){const node=el('button',text);node.type='button';if(label)node.setAttribute('aria-label',label);node.addEventListener('click',action);return node;}
 function dateLabel(value){if(!value)return 'Not retrieved';const date=new Date(value);return Number.isNaN(date.getTime())?'Not retrieved':date.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});}
 
-export function renderBrandMap(main,client,records,bcmState={status:"loading"}){
+export function renderBrandMap(main,client,records,bcmState={status:"retired"}){
  const model=brandMapModel(client,records);
  let selected=null,page=0,zoom=1;
  let bcm={status:"loading"},nodes=model.marks;
  const monitorUrl=`brand-monitor.html?client=${encodeURIComponent(model.clientId)}`;
  const root=el('div',undefined,'bm-home');
- const intro=el('section',undefined,'bm-intro');intro.append(el('h1','Brand Map'),el('p','Your saved trademarks and possible branding changes, together.'));
+ const intro=el('section',undefined,'bm-intro');intro.append(el('h1','Brand Map'),el('p','Your saved trademark records, together.'));
  const portfolioUrl=`portfolio.html?client=${encodeURIComponent(model.clientId)}`;
  intro.append(link('View Portfolio →',portfolioUrl));root.append(intro);
  const summary=el('section',undefined,'bm-summary');summary.setAttribute('aria-label','Saved trademark record counts');
@@ -24,9 +24,9 @@ export function renderBrandMap(main,client,records,bcmState={status:"loading"}){
  const zoomIn=button('+','Zoom in',()=>setZoom(zoom+.15)),zoomOut=button('−','Zoom out',()=>setZoom(zoom-.15));
  const reset=button('Reset','Reset map zoom and position',()=>{setZoom(1);viewport.scrollTop=0;viewport.scrollLeft=0;});controls.append(zoomValue,zoomIn,zoomOut,reset);toolbar.append(title,controls);ecosystem.append(toolbar);
  const viewport=el('div',undefined,'bm-viewport');viewport.tabIndex=0;viewport.setAttribute('aria-label','Portfolio map. Scroll to explore when zoomed.');
- const canvas=el('div',undefined,'bm-canvas');canvas.setAttribute('role','group');canvas.setAttribute('aria-label','Company workspace, saved trademark records, and possible detected branding');viewport.append(canvas);ecosystem.append(viewport);
+ const canvas=el('div',undefined,'bm-canvas');canvas.setAttribute('role','group');canvas.setAttribute('aria-label','Company workspace and saved trademark records');viewport.append(canvas);ecosystem.append(viewport);
  const pager=el('div',undefined,'bm-pager');pager.setAttribute('aria-label','Record pages');const previous=button('← Previous',null,()=>showPage(page-1,true));const pageLabel=el('span');pageLabel.setAttribute('aria-live','polite');const next=button('Next →',null,()=>showPage(page+1,true));pager.append(previous,pageLabel,next);ecosystem.append(pager);
- const legend=el('p','Solid lines: trademark records. Dashed lines: possible monitor findings. Lines show workspace membership, not ownership or parent-brand relationships.','bm-legend');ecosystem.append(legend);layout.append(ecosystem);
+ const legend=el('p','Lines connect saved trademark records to your workspace. They do not establish ownership or parent-brand relationships.','bm-legend');ecosystem.append(legend);layout.append(ecosystem);
  const right=el('div',undefined,'bm-right');const detail=el('section',undefined,'bm-detail');detail.setAttribute('aria-labelledby','bm-detail-title');
  const back=button('↑ Back to map',null,()=>{const node=[...canvas.querySelectorAll('button')].find(node=>node.dataset.markId===(selected||''));node?.focus();node?.scrollIntoView({block:'center'});});back.className='bm-back';detail.append(back,el('p','Selected record','bm-eyebrow'));
  const detailTitle=el('h2');detailTitle.id='bm-detail-title';detailTitle.tabIndex=-1;const subtitle=el('p',undefined,'bm-subtitle'),facts=el('dl',undefined,'bm-facts'),detailsLink=link('View trademark details →',portfolioUrl);detail.append(detailTitle,subtitle,facts,detailsLink);right.append(detail);
@@ -57,11 +57,12 @@ export function renderBrandMap(main,client,records,bcmState={status:"loading"}){
    const node=button(undefined,null,()=>select(mark.id,true));node.className=mark.kind==='detected'?'bm-node bm-detected':'bm-node';node.dataset.markId=mark.id;node.style.left=`${x}%`;node.style.top=`${y}%`;node.setAttribute('aria-pressed','false');node.setAttribute('aria-controls',detail.id);
    node.append(el('span',mark.kind==='detected'?'Possible monitor finding':mark.type+' mark','bm-type'),el('strong',mark.name),el('span',mark.status,'bm-record-status'));canvas.append(node);
   }
-  if(!view.items.length){canvas.classList.add('bm-empty-canvas');const empty=el('p','No trademark records or monitor findings are available in this workspace yet.','bm-empty');canvas.append(empty);}else canvas.classList.remove('bm-empty-canvas');
+  if(!view.items.length){canvas.classList.add('bm-empty-canvas');const empty=el('p','No saved trademark records are available in this workspace yet.','bm-empty');canvas.append(empty);}else canvas.classList.remove('bm-empty-canvas');
   pager.hidden=view.pages===1;previous.disabled=page===0;next.disabled=page===view.pages-1;pageLabel.textContent=`${page+1} of ${view.pages} · ${view.items.length} of ${nodes.length} items`;
   controls.hidden=!view.items.length;select(null);if(moveFocus)company.focus();
  }
  function updateBcm(state){
+  if(state?.status==='retired'){nodes=model.marks;activity.hidden=true;attention.hidden=true;activity.replaceChildren();attention.replaceChildren();showPage(page);return;}
   // Ignore mismatched workspace data even if a caller supplies it accidentally.
   bcm=state?.status==='ready'&&state.clientId!==model.clientId?{status:'error'}:state||{status:'error'};
   const previousSelection=selected,previousPage=page,previousZoom=zoom;

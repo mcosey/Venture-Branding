@@ -8,6 +8,8 @@ export function createBcmHandler({createClient,env,scan=fetchSnapshots}){
   if(origin&&!origins.includes(origin))return reply({error:'Origin not allowed.'},403);
   if(req.method==='OPTIONS')return new Response(null,{status:204,headers:{...headers,'Access-Control-Allow-Headers':'authorization, apikey, content-type, x-client-info','Access-Control-Allow-Methods':'POST, OPTIONS'}});
   if(req.method!=='POST')return reply({error:'POST required.'},405);
+  // Retired: preserve implementation below, but never reserve or fetch a scan.
+  return reply({error:'Brand Change Monitor has been retired.'},410);
   let admin,ticket;
   try{
    const authorization=req.headers.get('authorization')||'';

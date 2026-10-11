@@ -58,7 +58,7 @@ test('switching clients removes prior nodes, selected details, links, and zoom s
  main.querySelectorAll('button[data-mark-id]').find(node=>node.dataset.markId==='two').click();assert.equal(main.querySelector('.bm-detail').querySelector('a').href,'trademark.html?mark=two&client=client-two');
 });
 test('empty portfolios show the company and honest unavailable states without sample assets',()=>{
- const main=page();renderBrandMap(main,client,[]);assert.equal(main.querySelectorAll('button[data-mark-id]').length,1);assert(main.textContent.includes('No trademark records'));assert(main.textContent.includes('Loading saved monitor activity'));assert.equal(main.querySelector('#bm-detail-title').textContent,client.name);assert(!main.textContent.includes('Northline'));
+ const main=page();renderBrandMap(main,client,[]);assert.equal(main.querySelectorAll('button[data-mark-id]').length,1);assert(main.textContent.includes('No saved trademark records'));assert(!main.textContent.includes('monitor activity'));assert.equal(main.querySelector('#bm-detail-title').textContent,client.name);assert(!main.textContent.includes('Northline'));
 });
 test('zoom limits, reset, and page changes retain access to every record',()=>{
  const main=page();renderBrandMap(main,client,Array.from({length:8},(_,i)=>record(String(i))));
@@ -99,17 +99,9 @@ test('portal entry renders through the existing access gate and handles client c
  }
  const allowed=await run();assert(allowed.main.textContent.includes('Brand Map'));assert.equal(allowed.gates.at(-1),'unlocked');assert(allowed.main.textContent.includes('Mark first'));assert(!allowed.main.textContent.includes('Mark second'));
  allowed.choice.listeners.change({target:{value:'client-two'}});assert(allowed.main.textContent.includes('Mark second'));assert(!allowed.main.textContent.includes('Mark first'));
- const pending=[];const deferred=(_db,id)=>new Promise(resolve=>pending.push({id,resolve}));
- const raced=await run({loader:deferred});
- raced.choice.listeners.change({target:{value:'client-two'}});
- const result=(id,name)=>({...brandMapBcmModel(id,[]),findings:[{id:'bcm:test',kind:'detected',name,type:'Possible product',status:'Needs review'}]});
- pending[1].resolve(result('client-two','Second finding'));await Promise.resolve();
- pending[0].resolve(result('client-one','PRIVATE first finding'));await Promise.resolve();
- assert(raced.main.textContent.includes('Second finding'));assert(!raced.main.textContent.includes('PRIVATE'));
- raced.choice.listeners.change({target:{value:'client-one'}});raced.authEvents.callback('SIGNED_OUT');
- pending[2].resolve(result('client-one','PRIVATE signed-out finding'));await Promise.resolve();assert.equal(raced.main.children.length,0);
- const hidden=await run({loader:deferred});hidden.doc.hidden=true;hidden.events.visibilitychange();pending.at(-1).resolve(result('client-one','PRIVATE hidden finding'));await Promise.resolve();assert.equal(hidden.main.children.length,0);
- const failed=await run({loader:async()=>{throw new Error('Private backend error');}});await Promise.resolve();assert(failed.main.textContent.includes('Mark first'));assert(failed.main.textContent.includes('could not be loaded'));assert(!failed.main.textContent.includes('Private backend'));
+ const retired=await run({loader:()=>{throw new Error('Retired monitor should not load');}});assert(retired.main.textContent.includes('Mark first'));assert(!retired.main.textContent.includes('monitor'));
+ retired.choice.listeners.change({target:{value:'client-two'}});assert(retired.main.textContent.includes('Mark second'));assert(!retired.main.textContent.includes('Mark first'));
+ retired.authEvents.callback('SIGNED_OUT');assert.equal(retired.main.children.length,0);
  const denied=await run({user:false});assert.equal(denied.main.children.length,0);assert.deepEqual(denied.queryTables,[]);assert.equal(denied.gates.at(-1),'Please sign in again.');
  const tampered=await run({requested:'unauthorized-client'});assert.equal(tampered.main.children.length,0);assert.equal(tampered.gates.at(-1),'This client is not available to your account.');
 });

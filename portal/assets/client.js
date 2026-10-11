@@ -1,12 +1,10 @@
-import {renderDigest} from './digest.js?v=20261010-digest-live';
+import {renderDigest} from './digest.js?v=20261011-bcm-retired';
 import {renderEvidence} from './evidence.js?v=20261010-use-history';
 import {renderMaintenance} from './maintenance.js?v=20261010-maintenance-live';
-import {loadBrandMapBcm} from './brand-map-bcm.mjs';
-import {renderBrandMap} from './brand-map.js?v=20261010-bcm-display';
-import {renderBrandMonitor,clearBrandMonitorDrafts} from './brand-monitor.js?v=20261009-bcm-public-pages';
+import {renderBrandMap} from './brand-map.js?v=20261011-bcm-retired';
 import {renderWatchDetail} from './watch-detail.js';
 import {renderWatchResults} from './watch-results.js';
-import {renderWatchSetup,renderAgentCards} from './watch-setup.js?v=20261010-digest';
+import {renderWatchSetup,renderAgentCards} from './watch-setup.js?v=20261011-bcm-retired';
 import {renderNewMark,clearMarkDrafts} from './new-mark.js?v=20261008-bcm-candidates';
 import {createConnection,loadRecords,typeLabel,statusLabel} from '../../auth/connection.mjs';
 import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-preview';
@@ -16,7 +14,7 @@ const main=document.querySelector('main'),page=main.dataset.page;
 const homeLink=document.querySelector('#portal-nav a[href="portal.html"]');
 if(homeLink){for(const node of homeLink.childNodes)if(node.nodeType===3&&node.textContent.includes('Dashboard'))node.textContent='Brand Map';}
 let records,selectedId,mapRevision=0,evidenceDispose=()=>{};
-db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){evidenceDispose();mapRevision++;records=null;selectedId=null;main.replaceChildren();clearMarkDrafts();clearBrandMonitorDrafts();}});
+db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){evidenceDispose();mapRevision++;records=null;selectedId=null;main.replaceChildren();clearMarkDrafts();}});
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 function link(text,href,cls='text-link'){const n=el('a',text,cls);n.href=href;return n;}
 function panel(title,text){const n=el('section',undefined,'panel connected-card');n.append(el('h2',title));if(text)n.append(el('p',text,'muted'));return n;}
@@ -30,9 +28,7 @@ function render(){
  document.querySelector('#client-name').textContent=client.name;
  const choice=document.querySelector('#client-choice');choice.replaceChildren(...records.clients.map(c=>new Option(c.name,c.id)));choice.value=selectedId;choice.parentElement.hidden=records.clients.length<2;
  if(page==='portal'){
-  const update=renderBrandMap(main,client,records.marks,{status:'loading'});
-  const current=()=>mapTicket===mapRevision&&!document.hidden;
-  loadBrandMapBcm(db,client.id).then(state=>{if(current())update(state);},()=>{if(current())update({status:'error'});});
+  renderBrandMap(main,client,records.marks,{status:'retired'});
   return;
  }
  main.replaceChildren();const heading=el('section',undefined,'portfolio-heading');const h=el('div');h.append(el('p','CLIENT PORTAL','eyebrow'),el('h1',({portal:'Welcome, '+client.contact_name,portfolio:'Trademark Portfolio','new-mark':'Add New Mark',automations:'VB Agents','brand-monitor':'Brand Change Monitor','watch-setup':'Trademark Watch',trademark:'Trademark',watch:'Trademark Watch','use-history':'Use History',digest:'Trademark Activity Digest',inbox:'Messages',maintenance:'Maintenance Reminder'})[page]));heading.append(h);if(['portal','portfolio'].includes(page))heading.append(link('+ Add New Mark',`new-mark.html?client=${encodeURIComponent(client.id)}`,'mark-primary'));main.append(heading);
@@ -47,7 +43,7 @@ function render(){
   for(const [label,value] of [['Type',typeLabel(mark.mark_type)],['Status',statusLabel(mark.status)],['USPTO status',mark.uspto_status_text||'Not retrieved'],['Application number',mark.application_number||'Not provided'],['Registration number',mark.registration_number||'Not provided'],['Owner',mark.record_owner||'Not provided'],['Filing date',mark.filing_date||'Not provided'],['Registration date',mark.registration_date||'Not provided'],['USPTO status date',mark.uspto_status_date||'Not provided'],['Last retrieved',mark.source_checked_at?new Date(mark.source_checked_at).toLocaleString():'Not retrieved'],['Source',mark.source==='uspto'?'USPTO':'Entered by Venture Branding']]){const item=el('div');item.append(el('dt',label),el('dd',value));dl.append(item);}card.append(dl);main.append(link('← Portfolio','portfolio.html'),card,link('View or upload evidence →',`use-history.html?client=${encodeURIComponent(client.id)}&mark=${encodeURIComponent(mark.id)}`),panel('Deadlines','No verified deadlines recorded.'));
  }else if(page==='maintenance'){renderMaintenance(main,client,marks,db);
  }else if(page==='automations'){renderAgentCards(main,client);
- }else if(page==='brand-monitor'){renderBrandMonitor(main,client,db);
+ }else if(page==='brand-monitor'){main.append(panel('Brand Change Monitor retired','Website monitoring is no longer available. Existing monitoring records have been preserved.'),link('Return to Brand Map →',`portal.html?client=${encodeURIComponent(client.id)}`));
  }else if(page==='watch-setup'){renderWatchSetup(main,client,marks);
  }else if(page==='watch-detail'){renderWatchDetail(main,client,marks);
  }else if(page==='watch'){renderWatchResults(main,client);}
