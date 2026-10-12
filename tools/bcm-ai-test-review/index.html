@@ -1,0 +1,9 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BCM AI · Test review</title><link rel="stylesheet" href="review.css"></head><body>
+<header><span>VENTURE BRANDING</span><h1>Brand Change Monitor</h1><p>One website. Possible brand discoveries. Attorney review before client updates.</p></header>
+<main><aside id="notice">Local preview · fictional records. Nothing connects to client accounts or runs paid research in preview mode.</aside>
+<nav aria-label="Review mode"><button id="clientMode">Client view</button><button id="staffMode">Attorney view</button><button id="retry">Reload saved records</button></nav>
+<details id="connection"><summary>Connect to BCM Test</summary><p>Uses existing Test accounts only. Production stays retired. Sign in privately below; never enter an OpenAI API key here.</p>
+<form id="login"><label>Email<input name="email" type="email" autocomplete="username" required></label><label>Password<input name="password" type="password" autocomplete="current-password" required></label><button>Sign in to Test</button></form>
+<form id="mfa" hidden><label>Authenticator code<input name="code" inputmode="numeric" autocomplete="one-time-code" required pattern="[0-9]{6}"></label><button>Verify</button></form><button id="logout" hidden>Sign out of Test</button></details>
+<p id="message" role="status" aria-live="polite"></p><div id="content" aria-busy="false"></div>
+</main><script type="module" src="review.mjs"></script></body></html>

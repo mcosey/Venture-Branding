@@ -4,6 +4,8 @@ export function bcmValues(draft,authorized){
  if(authorized!==true)throw new Error('Confirm that you have permission to monitor these pages.');
  const lines=value=>String(value||'').split('\n').map(s=>s.trim()).filter(Boolean);
  const urls=lines(draft.urls),exclusions=lines(draft.exclude);
+ if(draft.discovery!==undefined&&!['pages','site'].includes(draft.discovery))throw new Error('Choose a valid page discovery option.');
+ if(draft.discovery==='site'&&urls.length!==1)throw new Error('Enter one starting website address for automatic discovery.');
  if(urls.length<1||urls.length>20)throw new Error('Enter between 1 and 20 page URLs.');
  for(const value of urls){
   if(value.length>2048||!/^https:\/\/[A-Za-z0-9.-]+(:443)?(\/[^\s?#@]*)?$/.test(value))throw new Error('Use complete public HTTPS page URLs without credentials, query strings, fragments, or custom ports.');
@@ -14,7 +16,7 @@ export function bcmValues(draft,authorized){
  if(!['public','account'].includes(draft.access)||!['Weekly','Monthly'].includes(draft.frequency))throw new Error('Choose valid access and frequency options.');
  const selected=draft.categories;
  if(!Array.isArray(selected)||!selected.length||selected.length>7||new Set(selected).size!==selected.length||selected.some(k=>!Object.hasOwn(bcmCategories,k)))throw new Error('Choose at least one valid change type.');
- return {urls,exclusions,access_mode:draft.access,frequency:draft.frequency.toLowerCase(),categories:[...selected]};
+ return {urls:draft.discovery==='site'?urls.map(url=>new URL(url).href):urls,exclusions,access_mode:draft.access,frequency:draft.frequency.toLowerCase(),categories:[...selected],...(draft.discovery==='site'?{discovery_mode:'site'}:{})};
 }
 function failure(error){return new Error(error?.code==='40001'?'Settings changed elsewhere. Reload saved settings before trying again.':error?.code==='42501'?'Your access to this client is unavailable.':['42P01','42883','PGRST202','PGRST205'].includes(error?.code)?'Saved settings are not available yet. Database setup is pending.':'Settings could not be loaded or saved. Please try again.');}
 export async function loadBcmSettings(db,clientId){

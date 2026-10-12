@@ -1,9 +1,10 @@
+import {aiTestEnabled,renderAiBcm} from '../../portal/assets/bcm-ai.js?v=20261011-test-portal';
 import {renderEvidence} from '../../portal/assets/evidence.js?v=20261010-use-history';
 import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
 import {showRegionLoading} from '../../shared/loading.mjs';
 import {createMaintenanceRepository} from '../../auth/maintenance.mjs?v=20261010-maintenance-live';
 import {createMaintenanceEditor} from './maintenance-editor.js?v=20261010-maintenance-live';
-import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs';
+import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs?v=20261011-test-portal';
 import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-preview';
 (async () => {
   'use strict';
@@ -12,6 +13,9 @@ import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-
 const  gate=setupGate(db,'staff');
   const filings=setupFilingWorkspace(db);
   let evidenceDispose=()=>{};
+  const aiTest=aiTestEnabled(db);
+  const bcmScreen=document.createElement('section');bcmScreen.dataset.screen='bcm';bcmScreen.hidden=true;
+  if(aiTest)document.querySelector('#main').insertBefore(bcmScreen,document.querySelector('#main footer'));
   const clients=[];
   let accessRecords=[], accessReady=false;
   async function reloadRecords(ticket){
@@ -76,6 +80,7 @@ const  gate=setupGate(db,'staff');
     const actions=detail.querySelector('.client-actions'); actions.replaceChildren();
     actions.append(node('span',selected.archived?'Archived':selected.portal?'Portal enabled':'Portal disabled','badge'));
     if(selected.sample){const link=node('a','Preview client portal ↗','outline-button');link.href='portal.html';actions.append(link);}
+    if(aiTest&&!selected.archived){const review=node('a','Review brand discoveries · Test','outline-button');review.href='#bcm-'+selected.id;actions.append(review);}
     const settings=node('button','Client Settings','outline-button'); settings.dataset.action='settings';actions.append(settings);
     const metadata=node('p',[selected.contact,selected.email].filter(Boolean).join(' · '),'client-details');detail.querySelector('.page-heading').append(metadata);
     renderAccessPanel();
@@ -111,15 +116,18 @@ const  gate=setupGate(db,'staff');
   function route(){
     evidenceDispose();evidenceDispose=()=>{};
     let requested=location.hash.slice(1)||'overview'; if(requested==='client-cotivate-llc')requested='client-10000000-0000-0000-0000-000000000001'; let view=requested;
-    if(requested.startsWith('client-')){
+    if(aiTest&&requested.startsWith('bcm-')){
+      selected=clients.find(c=>c.id===requested.slice(4)&&!c.archived);view=selected?'bcm':'missing';
+      bcmScreen.replaceChildren();if(selected){const heading=node('div',undefined,'page-heading'),back=node('a','← Back to client','text-link');back.href='#client-'+selected.id;heading.append(back,node('h1','Brand discoveries'),node('p',selected.name));bcmScreen.append(heading);evidenceDispose=renderAiBcm(bcmScreen,selected,db,{audience:'staff'});}
+    }else if(requested.startsWith('client-')){
       selected=clients.find(c=>c.id===requested.slice(7));view=selected?'client':'missing';
       if(selected)renderDetail();else selected=clients[0];
     } else if(!['overview','clients','calendar','requests','archived'].includes(view))view='overview';
     document.querySelectorAll('[data-screen]').forEach(screen=>screen.hidden=screen.dataset.screen!==view);
-    const section=view==='client'?(selected.archived?'archived':'clients'):view;
+    const section=view==='bcm'?'clients':view==='client'?(selected.archived?'archived':'clients'):view;
     nav.querySelectorAll('a').forEach(link=>{if(link.dataset.view===section)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
     const labels={requests:'Client requests',archived:'Archived Clients',missing:'Client not found'};
-    $('#location-label').textContent=view==='client'?'Clients / '+selected.name:labels[view]||view[0].toUpperCase()+view.slice(1);
+    $('#location-label').textContent=['client','bcm'].includes(view)?'Clients / '+selected.name:labels[view]||view[0].toUpperCase()+view.slice(1);
     renderLists();closeMenu();
   }
   window.addEventListener('hashchange',()=>{route();const heading=$('[data-screen]:not([hidden]) h1');heading.tabIndex=-1;heading.focus();window.scrollTo(0,0);});

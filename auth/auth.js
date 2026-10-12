@@ -1,5 +1,5 @@
-import {nextStep, validConfiguration} from './flow.mjs';
-import {requireAccess} from './connection.mjs';
+import {nextStep, validConfiguration} from './flow.mjs?v=20261011-test-portal';
+import {requireAccess} from './connection.mjs?v=20261011-test-portal';
 const $ = id => document.getElementById(id);
 const audience = document.body.dataset.audience;
 const initialTitle = $('heading').textContent;
@@ -119,8 +119,9 @@ async function initialize() {
     document.querySelectorAll('form button,#forgot').forEach(button=>button.disabled=true);
     message('Sign-in setup is not available yet. Please contact Venture Branding.',true);return;
   }
+  if(window.VB_AUTH_CONFIG.environment==='bcm-test'&&!['127.0.0.1','localhost'].includes(location.hostname))throw Error('Test preview is local only.');
   client=window.supabase.createClient(window.VB_AUTH_CONFIG.url,window.VB_AUTH_CONFIG.publishableKey,{
-    auth:{storage:sessionStorage,storageKey:'vb-auth-'+audience,persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'implicit'}
+    auth:{storage:sessionStorage,storageKey:(window.VB_AUTH_CONFIG.environment==='bcm-test'?'vb-bcm-ai-test-':'vb-auth-')+audience,persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'implicit'}
   });
   client.auth.onAuthStateChange(event=>{
     if(event==='PASSWORD_RECOVERY')passwordSetup=true;

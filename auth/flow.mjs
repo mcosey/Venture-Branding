@@ -7,6 +7,7 @@ export function nextStep({user, audience, currentLevel, nextLevel, passwordSetup
   return 'signed-in';
 }
 export function validConfiguration(config) {
-  return config?.url === 'https://omvkwiosonatswocbdgx.supabase.co'
+  return (config?.url === 'https://omvkwiosonatswocbdgx.supabase.co'
+      || (config?.environment === 'bcm-test' && config?.url === 'https://imvkhicfmidzbzsbhkzs.supabase.co'))
     && /^sb_publishable_[A-Za-z0-9_-]+$/.test(config.publishableKey);
 }

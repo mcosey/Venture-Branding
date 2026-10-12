@@ -1,7 +1,10 @@
-import {validConfiguration} from './flow.mjs';
+import {validConfiguration} from './flow.mjs?v=20261011-test-portal';
 export function createConnection(audience) {
- if(!['staff','client'].includes(audience)||!validConfiguration(window.VB_AUTH_CONFIG)||!window.supabase)throw new Error('Connection unavailable.');
- return window.supabase.createClient(window.VB_AUTH_CONFIG.url,window.VB_AUTH_CONFIG.publishableKey,{auth:{storage:sessionStorage,storageKey:'vb-auth-'+audience,persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});
+ if(!['staff','client'].includes(audience))throw new Error('Workspace audience unavailable.');
+ if(!validConfiguration(window.VB_AUTH_CONFIG))throw new Error('Connection configuration unavailable.');
+ if(!window.supabase)throw new Error('Sign-in library unavailable.');
+ if(window.VB_AUTH_CONFIG.environment==='bcm-test'&&!['127.0.0.1','localhost'].includes(window.location.hostname))throw new Error('Test preview is local only.');
+ return window.supabase.createClient(window.VB_AUTH_CONFIG.url,window.VB_AUTH_CONFIG.publishableKey,{auth:{storage:sessionStorage,storageKey:(window.VB_AUTH_CONFIG.environment==='bcm-test'?'vb-bcm-ai-test-':'vb-auth-')+audience,persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});
 }
 export async function requireAccess(db,audience){
  const {data,error}=await db.auth.getUser();
