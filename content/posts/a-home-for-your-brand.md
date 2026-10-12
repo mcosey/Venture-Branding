@@ -9,7 +9,7 @@ image: ""
 imageAlt: ""
 ---
 
-Every business begins with an idea. Over time, that idea takes on a name, a look, and a story people recognize. This journal will be a place to explore the decisions that shape that identity.
+Every business begins with an idea. Over time, that idea takes on a name, a look, and a story people recognize. This blog will be a place to explore the decisions that shape that identity.
 
 This is a **layout sample**, written only to demonstrate the blog. It is not a published article or legal guidance.
 
@@ -19,7 +19,7 @@ Future articles can explain unfamiliar concepts in clear language, explore quest
 
 The aim is useful, thoughtful reading: enough detail to help readers ask better questions, presented in a format that is comfortable on a phone or a larger screen.
 
-> A good article gives the reader something to consider—and a clear next step when they want to learn more.
+> A good article gives the reader something to consider, and a clear next step when they want to learn more.
 
 ## Space for practical explanations
 

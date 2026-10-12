@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Venture Branding — Registered, Protected, and Unmistakably Yours</title>
-<meta name="description" content="Register your logo and trademark with legal experts. Fast, secure, and fully managed.">
+<title>Venture Branding ,  Registered, Protected, and Unmistakably Yours</title>
+<meta name="description" content="Register and manage your trademarks. Fast, secure, and fully managed.">
 <link rel="icon" type="image/png" href="images/09.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -118,6 +118,7 @@
   h1.hero__title .accent{
     background:var(--coral-grad);-webkit-background-clip:text;background-clip:text;
     -webkit-text-fill-color:transparent;font-style:italic;
+    padding-inline-end:.12em;margin-inline-end:-.12em;
   }
   .hero__sub{
     margin-top:26px;max-width:46ch;font-size:clamp(1.05rem,2vw,1.28rem);
@@ -195,20 +196,26 @@
   .about__photo{position:relative}
   .about__photo img{width:100%;border-radius:18px;box-shadow:0 30px 60px -30px rgba(13,21,31,.5)}
   .about__photo figcaption{margin-top:14px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
-  .about__photo .badge{
-    position:absolute;left:-18px;bottom:64px;background:var(--navy);color:#fff;
-    padding:14px 20px;border-radius:14px;display:flex;align-items:center;gap:12px;
-    box-shadow:0 18px 40px -18px rgba(13,21,31,.6);
-  }
-  .about__photo .badge img{width:30px;height:auto;border-radius:0;box-shadow:none}
-  .about__photo .badge span{font-size:13px;line-height:1.3;font-weight:500}
+  .about__photo .founder-name{display:block;margin-bottom:5px;font-size:18px;letter-spacing:0;text-transform:none;color:var(--ink);font-weight:600}
+  .about__background{min-width:0}
+  .about__logos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;margin:28px 0 0;padding:0}
+  .about__logos li{display:flex;align-items:center;justify-content:center;min-width:0;min-height:86px;padding:16px;background:#fff;border:1px solid rgba(13,21,31,.1);border-radius:12px}
+  .about__logos img{display:block;width:100%;height:auto;max-height:54px;object-fit:contain}
+  .about__tfa{position:relative;width:100%;aspect-ratio:1024 / 150;overflow:hidden}
+  .about__tfa img{position:absolute;top:-33.333%;left:0;width:100%;height:auto;max-height:none}
   .about__bio{position:relative}
   .about__bio p{color:#333c47;font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.72;margin-bottom:1.3em}
-  .about__bio p:first-child::first-letter{
-    font-family:'Fraunces',serif;font-size:3.6em;line-height:.8;float:left;
-    padding:6px 12px 0 0;color:var(--coral-deep);font-weight:600;
-  }
-  .about__bio p:last-child{margin-bottom:0}
+  .about__experience{padding-bottom:28px}
+  .about__experience + .about__experience{border-top:1px solid rgba(13,21,31,.14);padding-top:28px}
+  .about__bio ul{padding-left:1.2em;margin:0 0 22px;color:#333c47;font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.72}
+  .about__bio li{padding-left:.2em;margin-bottom:.4em}
+  .about__bio li::marker{color:var(--coral-deep)}
+  .about__bio em{font-style:italic}
+  .about__experience--founder > p strong{color:var(--coral-deep);font-weight:700}
+  .about__experience p:last-child{margin-bottom:0}
+  .about__closing{border-top:2px solid var(--coral-deep);padding-top:28px}
+  .about__closing p:last-child{margin-bottom:0}
+  .about__closing strong{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(1.4rem,2.3vw,1.85rem);line-height:1.4;color:var(--ink)}
 
   /* ---- BLOG ---- */
   .blog{position:relative;background:var(--navy);color:#e8ecf1;padding:clamp(84px,12vw,160px) 0;overflow:hidden}
@@ -252,8 +259,6 @@
   }
   @media (max-width:560px){
     .about{border-radius:24px 24px 0 0}
-    .about__photo .badge{left:0}
-    .about__bio p:first-child::first-letter{font-size:3em}
   }
 
   /* ---- reduced motion: static, fully readable ---- */
@@ -303,9 +308,9 @@
     </div>
     <img class="hero__mono" src="images/09.png" alt="" aria-hidden="true" data-parallax="0.08">
     <div class="wrap">
-      <span class="hero__eyebrow reveal in">Trademark &amp; brand protection</span>
-      <h1 class="hero__title reveal in d1" id="hero-title">Registered, protected, and unmistakably <span class="accent">yours</span>.</h1>
-      <p class="hero__sub reveal in d2">Register your logo and trademark with legal experts. Fast, secure, and fully managed.</p>
+      <span class="hero__eyebrow reveal in">Trademark Counsel for Founders</span>
+      <h1 class="hero__title reveal in d1" id="hero-title">You focus on building.<br>I focus on protecting your <span class="accent">brand</span>.</h1>
+      <p class="hero__sub reveal in d2">Register and manage your trademarks. Fast, secure, and fully managed.</p>
       <div class="hero__actions reveal in d3">
         <a class="btn" href="#contact">Book a Consultation
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -322,13 +327,12 @@
   <section class="preparation" id="services" aria-labelledby="services-title">
     <div class="wrap">
       <span class="eyebrow">Services</span>
-      <h2 id="services-title">Protect your brand. Prepare for what’s next.</h2>
-      <p>Practical trademark guidance for founders—from choosing a name and filing an application to maintaining a registered mark.</p>
+      <h2 id="services-title">AI Enhanced Protection</h2>
       <div class="services-grid">
         <article class="service-card">
           <span class="service-number" aria-hidden="true">01</span>
-          <h3>Trademark Search &amp; Strategy</h3>
-          <p>Build your brand on an informed decision. We assess your proposed name or logo, identify potential conflicts, and help you understand your filing options.</p>
+          <h3>Flat Fees. No Surprises.</h3>
+          <p>I believe in pricing transparency. Its as simple as that. You get the best out of me, no matter how long it takes.</p>
         </article>
         <article class="service-card">
           <span class="service-number" aria-hidden="true">02</span>
@@ -357,17 +361,12 @@
         </article>
         <article class="service-card">
           <span class="service-number" aria-hidden="true">07</span>
-          <h3>Trademark Consultations</h3>
-          <p>Get clarity before your next step. Discuss brand selection, application strategy, USPTO correspondence, or maintaining an existing registration.</p>
+          <h3>Access to the VB Portal</h3>
+          <p>Manage your trademark portfolio, explore your Brand Map, and follow updates in one workspace. VB’s proprietary AI workflow is in development to research brand changes and surface findings for review.</p>
         </article>
       </div>
-      <div class="service-scope">
-        <h3>Our scope</h3>
-        <p>Venture Branding focuses on trademark advice, applications, and maintenance. We do not handle enforcement, litigation, trademark oppositions or cancellations, or appeals. Monitoring includes reporting potential conflicts; it does not include taking action against third parties.</p>
-      </div>
       <div class="services-action">
-        <p>Explore your next step</p>
-        <a class="btn" href="#contact">Book a Consultation</a>
+        <a class="btn" href="pricing.html">Explore Pricing &amp; Packages</a>
       </div>
     </div>
   </section>
@@ -376,30 +375,30 @@
   <section class="horizon" id="how" aria-labelledby="how-title" data-horizon>
     <div class="horizon__sticky">
       <div class="horizon__head">
-        <div class="horizon__label">The process
-          <span id="how-title">Four steps from idea to registered mark.</span>
+        <div class="horizon__label">The VB Portal
+          <span id="how-title">Your Own Work Space</span>
         </div>
       </div>
       <div class="htrack" id="htrack">
         <article class="hpanel">
           <div class="hpanel__num">01</div>
-          <div><h3>Clear the name</h3><p>A comprehensive search reveals whether your brand is available and worth building on — before you invest in it.</p></div>
-          <div class="hpanel__tag">Search &amp; strategy</div>
+          <div><h3>Brand Map</h3><p>See your trademark records together in one workspace. Explore your portfolio, select a mark, and open its details without losing the bigger picture.</p></div>
+          <div class="hpanel__tag">Your brand, connected</div>
         </article>
         <article class="hpanel">
           <div class="hpanel__num">02</div>
-          <div><h3>File with confidence</h3><p>Your application is prepared and submitted by a legal expert, structured to withstand scrutiny from the start.</p></div>
-          <div class="hpanel__tag">Application</div>
+          <div><h3>Portfolio</h3><p>Keep your trademark records, statuses, and maintenance information organized. Find the details you need and understand the next step for each mark.</p></div>
+          <div class="hpanel__tag">Clarity at a glance</div>
         </article>
         <article class="hpanel">
           <div class="hpanel__num">03</div>
-          <div><h3>Navigate review</h3><p>Office actions, deadlines, and correspondence are handled for you — fully managed, so momentum never stalls.</p></div>
-          <div class="hpanel__tag">Prosecution</div>
+          <div><h3>Brand Change Monitor</h3><p>In development: VB’s proprietary workflow uses AI to research changes in your public brand presence and surface potential new names, products, and branding for review.</p></div>
+          <div class="hpanel__tag">Proprietary AI workflow · In development</div>
         </article>
         <article class="hpanel">
           <div class="hpanel__num">04</div>
-          <div><h3>Own your identity</h3><p>Registration turns your idea into a protected asset — a name and mark customers can recognize and trust.</p></div>
-          <div class="hpanel__tag">Registration</div>
+          <div><h3>AI Enhanced Monitoring and Updates</h3><p>Follow trademark activity and receive organized updates through your VB Digest. In development: VB’s proprietary AI workflow will help surface relevant brand changes for review alongside those updates.</p></div>
+          <div class="hpanel__tag">Stay informed</div>
         </article>
       </div>
       <div class="hprogress" aria-hidden="true">
@@ -416,21 +415,51 @@
   <section class="about" id="about" aria-labelledby="about-title">
     <div class="wrap">
       <span class="eyebrow eyebrow--dot reveal">About</span>
-      <h2 class="about__head reveal d1" id="about-title">Helping founders bring their ideas to life.</h2>
+      <h2 class="about__head reveal d1" id="about-title">Not just an attorney.</h2>
       <div class="about__grid">
-        <figure class="about__photo reveal">
+        <div class="about__background reveal">
+        <figure class="about__photo">
           <img src="images/Cosey_Marion__1994x1058-2.jpg" alt="Founder, Venture Branding" loading="lazy">
-          <div class="badge">
-            <img src="images/09.png" alt="" aria-hidden="true">
-            <span>Founder,<br>Venture Branding</span>
-          </div>
-          <figcaption>Founder, Venture Branding</figcaption>
+          <figcaption><span class="founder-name">Mario Coesy</span>Founder</figcaption>
         </figure>
+        <ul class="about__logos" aria-label="Education and experience">
+          <li><img src="images/about/penn-carey-law.png" alt="Penn Carey Law, University of Pennsylvania" loading="lazy"></li>
+          <li><img src="images/about/university-of-chicago.png" alt="The University of Chicago" loading="lazy"></li>
+          <li><img src="images/about/purdue-university.png" alt="Purdue University" loading="lazy"></li>
+          <li><div class="about__tfa"><img src="images/about/teach-for-america.png" alt="Teach For America" loading="lazy"></div></li>
+        </ul>
+        </div>
         <div class="about__bio reveal d1">
-          <p>My interest in startups began long before law school. During my sophomore year of college, after watching <em>The Social Network</em>, I became fascinated by the idea that a simple idea could grow into a transformative business. I spent countless hours brainstorming startup concepts with friends and roommates, pitching everything from social platforms to technology-enabled services. Most of those ideas never went anywhere, but the process sparked a lasting interest in entrepreneurship, innovation, and the people willing to take the risk of building something from nothing.</p>
-          <p>That interest followed me through law school, where I eventually launched a startup of my own and successfully secured federal trademark protection for its brand through an intent-to-use trademark application. Going through that process firsthand gave me an appreciation for the excitement, uncertainty, and optimism that accompany the earliest stages of a new venture.</p>
-          <p>Although I built my legal career in corporate law, I found myself most energized by the founders behind the businesses. I enjoyed learning about their ideas, understanding what they were trying to build, and helping them navigate the legal issues that stand between concept and execution. Over time, I realized that my greatest professional interest was not simply practicing law; it was helping founders bring their ideas to life.</p>
-          <p>At Venture Branding, that philosophy begins with trademarks. For many founders, selecting and protecting a brand is one of the first major legal milestones in the life of a company. It is also one of the most exciting. A trademark transforms an idea into something tangible: a name, a brand, and an identity that customers can recognize and trust. My goal is to help founders protect that identity while preserving the momentum and excitement that inspired them to start building in the first place.</p>
+          <div class="about__experience">
+              <p>Yes, I have experience with:</p>
+              <ul>
+                <li>Structured Finance;</li>
+                <li>Securitizations;</li>
+                <li>M&amp;A;</li>
+                <li>Public Company matters;</li>
+                <li>Securities matters;</li>
+                <li>a ~$500 million de-SPAC transaction.</li>
+              </ul>
+              <p>Sure, that experience matters.</p>
+          </div>
+          <div class="about__experience about__experience--founder">
+              <p><strong>BUT</strong> I’ve also:</p>
+              <ul>
+                <li>Built a startup;</li>
+                <li>Filed my own trademark application pro se before law school;</li>
+                <li>Built pitch decks;</li>
+                <li>Hired software developers; fired software developers;</li>
+                <li>Had co-founder squabbles;</li>
+                <li>Talked to customers;</li>
+                <li>Launched on Product Hunt <em>(went horribly)</em>;</li>
+                <li>Entered a pitch competition <em>(rejected)</em>;</li>
+                <li>Applied to Y Combinator <em>(rejected)</em>.</li>
+              </ul>
+          </div>
+          <div class="about__closing">
+          <p>I know what it’s like to actually build, fail, and build again.</p>
+          <p><strong>I’m not just an attorney; I’m a fellow founder who gets it.</strong></p>
+          </div>
         </div>
       </div>
     </div>
@@ -442,8 +471,7 @@
     <div class="wrap">
       <div class="blog__text">
         <span class="eyebrow eyebrow--dot reveal" style="color:var(--coral-text)">From the Blog</span>
-        <h2 class="reveal d1" id="blog-title">Learn how the trademark process actually works.</h2>
-        <p class="reveal d1">Essays on trademarks, brand protection, and the goals of the firm — written to help founders understand each step before they take it.</p>
+        <h2 class="reveal d1" id="blog-title">Practical advice for founders who want to get it right.</h2>
         <a class="btn reveal d2" href="blog.html">Visit the blog
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
@@ -452,7 +480,8 @@
         <div class="blog__card">
           <img src="images/09.png" alt="" aria-hidden="true">
           <h3>Written for founders</h3>
-          <p>Clear, practical writing on protecting your brand — no jargon, just the steps that matter.</p>
+          <p>Explore articles on trademarks, venture capital law, and general startup advice from an attorney and fellow founder.</p>
+
         </div>
       </div>
     </div>
@@ -461,8 +490,8 @@
   <section class="preparation" id="contact" aria-labelledby="contact-title">
     <div class="wrap">
       <span class="eyebrow">Contact &amp; consultations</span>
-      <h2 id="contact-title">Let’s talk about your brand.</h2>
-      <p>Consultation booking and contact details are being prepared. Appointments are not yet available through this site.</p>
+      <h2 id="contact-title">Let’s Talk</h2>
+      <div class="services-action"><button class="btn" type="button" disabled title="Consultation booking link pending">Consultation</button></div>
     </div>
   </section>
 
@@ -508,7 +537,7 @@
   var header = document.getElementById('header');
   var progressBar = document.getElementById('progressBar');
 
-  // Reveal on enter (works even with reduced motion — CSS already shows them, but harmless)
+  // Reveal on enter (works even with reduced motion ,  CSS already shows them, but harmless)
   if(!reduce && 'IntersectionObserver' in window){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
