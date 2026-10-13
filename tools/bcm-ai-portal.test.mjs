@@ -19,6 +19,11 @@ test('Test connection cannot run off localhost or use the Production session key
  window.VB_AUTH_CONFIG={url:'https://omvkwiosonatswocbdgx.supabase.co',publishableKey:'sb_publishable_dummy'};createConnection('client');assert.equal(args[2].auth.storageKey,'vb-auth-client');
  delete globalThis.window;delete globalThis.sessionStorage;
 });
+
+// The shared portal renderer now targets the installed Production workflow.
+{
+const url='https://omvkwiosonatswocbdgx.supabase.co';
+const config={environment:'bcm-production',bcmEnabled:true,url,allowBcmResearch:false};
 class Element{
  constructor(tag,text=''){this.tag=tag;this._text=text;this.children=[];this.attributes={};this.listeners={};this.isConnected=true;this.classList={toggle(){}};}
  append(...n){this.children.push(...n);}
@@ -36,11 +41,11 @@ const tick=()=>new Promise(r=>setImmediate(r));
 function harness(load){
  const document={createElement:tag=>new Element(tag)};
  const source=readFileSync(new URL('../portal/assets/bcm-ai.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'').replace(/export /g,'');
- const ctx={document,window:{VB_AUTH_CONFIG:config},Option:function(text,value){const n=new Element('option',text);n.value=value;return n;},URL,bcmCategories:{product_names:'Product names'},assertTest:db=>{if(db.supabaseUrl!==url)throw Error('Test only');},loadAiWorkspace:load,reviewAiFinding:async()=>{throw Error('Staff access expired');},showRegionLoading(target,label){target.replaceChildren(new Element('p',label));return ()=>{};}};
- return vm.runInNewContext(source+';({renderAiBcm,aiTestEnabled})',ctx);
+ const ctx={document,window:{VB_AUTH_CONFIG:config},Option:function(text,value){const n=new Element('option',text);n.value=value;return n;},URL,bcmCategories:{product_names:'Product names'},assertProduction:db=>{if(db.supabaseUrl!==url)throw Error('Test only');},loadAiWorkspace:load,reviewAiFinding:async()=>{throw Error('Staff access expired');},showRegionLoading(target,label){target.replaceChildren(new Element('p',label));return ()=>{};}};
+ return vm.runInNewContext(source+';({renderAiBcm,aiBcmEnabled})',ctx);
 }
-test('Production cannot mount the new renderer or query AI records',()=>{
- let calls=0;const api=harness(async()=>{calls++;return data();});assert.throws(()=>api.renderAiBcm(new Element('main'),{id:'a'},{supabaseUrl:'https://omvkwiosonatswocbdgx.supabase.co'}),/Test only/);assert.equal(calls,0);
+test('Wrong project cannot mount the new renderer or query AI records',()=>{
+ let calls=0;const api=harness(async()=>{calls++;return data();});assert.throws(()=>api.renderAiBcm(new Element('main'),{id:'a'},{supabaseUrl:'https://imvkhicfmidzbzsbhkzs.supabase.co'}),/Test only/);assert.equal(calls,0);
 });
 test('late fetch cannot reinsert findings after disposal/client switch',async()=>{
  let resolve;const api=harness(()=>new Promise(r=>resolve=r)),main=new Element('main');const dispose=api.renderAiBcm(main,{id:'a'},{supabaseUrl:url});assert.match(main.textContent,/Loading Brand Change Monitor/);dispose();resolve(data());await tick();assert.doesNotMatch(main.textContent,/Reviewed name|Private unreviewed/);
@@ -60,3 +65,5 @@ test('failed staff action clears private records until protected reload succeeds
  const note=main.all().find(n=>n.tag==='textarea');note.value='Test';const form=main.all().find(n=>n.tag==='form');form.onsubmit({preventDefault(){},submitter:{value:'approve'}});await tick();
  assert.match(main.textContent,/Staff access expired|Reload saved records/);assert.doesNotMatch(main.textContent,/Private unreviewed name/);
 });
+
+}

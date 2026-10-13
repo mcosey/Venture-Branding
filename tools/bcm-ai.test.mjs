@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {nameKey,website,settingsValid,sourceAllowed,observationsValid,researchWebsite,TEST_URL} from '../supabase/functions/bcm-ai/research.mjs';
 import {createAiBcmHandler} from '../supabase/functions/bcm-ai/handler.mjs';
-import {assertTest} from '../auth/bcm-ai.mjs';
+import {assertProduction} from '../auth/bcm-ai.mjs';
 const id='10000000-0000-0000-0000-000000000001',ticket='20000000-0000-0000-0000-000000000001';
 const cfg={urls:['https://www.harvey.ai/'],exclusions:['/careers'],access_mode:'public',frequency:'weekly',categories:['product_names','feature_names']};
 const row={name:'Memory',kind:'feature',context:'A remembered work context.',passage:'Memory helps you retain context.',url:'https://www.harvey.ai/features'};
@@ -10,7 +10,7 @@ function worker({scheduled=false,current=true,job={ticket,settings:cfg},role='cl
  const run=createAiBcmHandler({scheduled,env:n=>env[n],createClient:()=>({auth:{getUser:async()=>({data:{user:user?{id}:null}})},rpc:async(name,args)=>{calls.push({name,args});if(name==='vb_session_role')return {data:role};if(['vb_begin_bcm_ai_run','vb_claim_bcm_ai_due_run'].includes(name))return {data:job,error:claimError?{}:null};if(name==='vb_bcm_ai_run_is_current')return {data:current};return {data:final};}}),research:async()=>{researchCalls++;if(fail)throw Error('SECRET PRIVATE diagnostic');return {observations:[row]};}});
  return {run,calls,get researchCalls(){return researchCalls;}};}
 const request=(body=JSON.stringify({clientId:id,version:1}),headers={},method='POST')=>new Request('https://fixture.invalid',{method,headers:{Authorization:'Bearer fixture-user',...headers},...(method==='POST'?{body}:{})});
-test('Production deployment fails closed before any database or API access',async()=>{const w=worker({envOverrides:{SUPABASE_URL:'https://omvkwiosonatswocbdgx.supabase.co'}});assert.equal((await w.run(request())).status,503);assert.equal(w.calls.length,0);assert.equal(w.researchCalls,0);assert.throws(()=>assertTest({supabaseUrl:'https://production.invalid'}));});
+test('Production deployment fails closed before any database or API access',async()=>{const w=worker({envOverrides:{SUPABASE_URL:'https://omvkwiosonatswocbdgx.supabase.co'}});assert.equal((await w.run(request())).status,503);assert.equal(w.calls.length,0);assert.equal(w.researchCalls,0);assert.throws(()=>assertProduction({supabaseUrl:'https://production.invalid'}));});
 test('sign-in, client role and reservation required before paid research',async()=>{for(const [opts,status] of [[{user:false},401],[{role:'staff'},403],[{claimError:true},409]]){const w=worker(opts);assert.equal((await w.run(request())).status,status);assert.equal(w.researchCalls,0);}});
 test('manual payload cannot inject URLs, query another worker or skip saved versions',async()=>{for(const body of ['{','null','[]',JSON.stringify({clientId:id,version:1,url:'https://evil.com'}),JSON.stringify({clientId:id,version:0})]){const w=worker();assert.equal((await w.run(request(body))).status,400);assert.equal(w.calls.length,0);assert.equal(w.researchCalls,0);}});
 test('browser origins and wrong methods are denied without research',async()=>{for(const [req,status] of [[request(undefined,{origin:'https://evil.com'}),403],[request(undefined,{},'GET'),405],[request(undefined,{Authorization:''}),401]]){const w=worker();assert.equal((await w.run(req)).status,status);assert.equal(w.researchCalls,0);}});

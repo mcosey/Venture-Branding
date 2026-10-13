@@ -1,0 +1,9 @@
+REVIEW ONLY — no secret values; do not upload this as a secrets file.
+BCM_AI_RELEASE_ENABLED=false
+VB_ALLOWED_ORIGINS=http://127.0.0.1:8000
+# Origin above is the existing local review portal only. Public hosting is unconfirmed.
+# OPENAI_API_KEY: enter privately in Production after separate approval.
+# BCM_SCHEDULER_SECRET: existing private Production value; confirm privately.
+# Supabase URL/anon/service keys are platform-provided; never place service keys in frontend.
+# Only after approval: new bcm-ai-scan / bcm-ai-schedule gateway legacy JWT setting off.
+# Their built-in verified client/private scheduler authorization remains required.

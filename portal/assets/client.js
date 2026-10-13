@@ -1,4 +1,4 @@
-import {aiTestEnabled,renderAiBcm} from './bcm-ai.js?v=20261011-test-portal';
+import {aiBcmEnabled,renderAiBcm} from './bcm-ai.js?v=20261012-bcm-production';
 import {renderDigest} from './digest.js?v=20261011-bcm-retired';
 import {renderEvidence} from './evidence.js?v=20261010-use-history';
 import {renderMaintenance} from './maintenance.js?v=20261010-maintenance-live';
@@ -7,7 +7,7 @@ import {renderWatchDetail} from './watch-detail.js';
 import {renderWatchResults} from './watch-results.js';
 import {renderWatchSetup,renderAgentCards} from './watch-setup.js?v=20261011-bcm-retired';
 import {renderNewMark,clearMarkDrafts} from './new-mark.js?v=20261008-bcm-candidates';
-import {createConnection,loadRecords,typeLabel,statusLabel} from '../../auth/connection.mjs?v=20261011-test-portal';
+import {createConnection,loadRecords,typeLabel,statusLabel} from '../../auth/connection.mjs?v=20261012-bcm-production';
 import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-preview';
 let db;try{db=createConnection('client');}catch(error){showConnectionError('client');throw error;}
 const gate=setupGate(db,'client');
@@ -43,8 +43,8 @@ function render(){
   h.querySelector('h1').textContent=mark.name;const card=panel('Trademark details');const dl=el('dl',undefined,'connected-fields');
   for(const [label,value] of [['Type',typeLabel(mark.mark_type)],['Status',statusLabel(mark.status)],['USPTO status',mark.uspto_status_text||'Not retrieved'],['Application number',mark.application_number||'Not provided'],['Registration number',mark.registration_number||'Not provided'],['Owner',mark.record_owner||'Not provided'],['Filing date',mark.filing_date||'Not provided'],['Registration date',mark.registration_date||'Not provided'],['USPTO status date',mark.uspto_status_date||'Not provided'],['Last retrieved',mark.source_checked_at?new Date(mark.source_checked_at).toLocaleString():'Not retrieved'],['Source',mark.source==='uspto'?'USPTO':'Entered by Venture Branding']]){const item=el('div');item.append(el('dt',label),el('dd',value));dl.append(item);}card.append(dl);main.append(link('← Portfolio','portfolio.html'),card,link('View or upload evidence →',`use-history.html?client=${encodeURIComponent(client.id)}&mark=${encodeURIComponent(mark.id)}`),panel('Deadlines','No verified deadlines recorded.'));
  }else if(page==='maintenance'){renderMaintenance(main,client,marks,db);
- }else if(page==='automations'){renderAgentCards(main,client);if(aiTestEnabled(db)){const card=panel('Brand Change Monitor · Test','Public website research, with attorney review before client updates.');card.append(link('Open Brand Change Monitor →',`brand-monitor.html?client=${encodeURIComponent(client.id)}`));main.append(card);}
- }else if(page==='brand-monitor'){if(aiTestEnabled(db)){evidenceDispose=renderAiBcm(main,client,db);return;}main.append(panel('Brand Change Monitor retired','Website monitoring is no longer available. Existing monitoring records have been preserved.'),link('Return to Brand Map →',`portal.html?client=${encodeURIComponent(client.id)}`));
+ }else if(page==='automations'){renderAgentCards(main,client);if(aiBcmEnabled(db)){const card=panel('Brand Change Monitor','Public website research, with attorney review before client updates.');card.append(link('Open Brand Change Monitor →',`brand-monitor.html?client=${encodeURIComponent(client.id)}`));main.append(card);}
+ }else if(page==='brand-monitor'){if(aiBcmEnabled(db)){evidenceDispose=renderAiBcm(main,client,db);return;}main.append(panel('Brand Change Monitor retired','Website monitoring is no longer available. Existing monitoring records have been preserved.'),link('Return to Brand Map →',`portal.html?client=${encodeURIComponent(client.id)}`));
  }else if(page==='watch-setup'){renderWatchSetup(main,client,marks);
  }else if(page==='watch-detail'){renderWatchDetail(main,client,marks);
  }else if(page==='watch'){renderWatchResults(main,client);}

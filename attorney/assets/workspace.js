@@ -1,10 +1,10 @@
-import {aiTestEnabled,renderAiBcm} from '../../portal/assets/bcm-ai.js?v=20261011-test-portal';
+import {aiBcmEnabled,renderAiBcm} from '../../portal/assets/bcm-ai.js?v=20261012-bcm-production';
 import {renderEvidence} from '../../portal/assets/evidence.js?v=20261010-use-history';
 import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
 import {showRegionLoading} from '../../shared/loading.mjs';
 import {createMaintenanceRepository} from '../../auth/maintenance.mjs?v=20261010-maintenance-live';
 import {createMaintenanceEditor} from './maintenance-editor.js?v=20261010-maintenance-live';
-import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs?v=20261011-test-portal';
+import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs?v=20261012-bcm-production';
 import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-preview';
 (async () => {
   'use strict';
@@ -13,7 +13,7 @@ import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-
 const  gate=setupGate(db,'staff');
   const filings=setupFilingWorkspace(db);
   let evidenceDispose=()=>{};
-  const aiTest=aiTestEnabled(db);
+  const aiTest=aiBcmEnabled(db);
   const bcmScreen=document.createElement('section');bcmScreen.dataset.screen='bcm';bcmScreen.hidden=true;
   if(aiTest)document.querySelector('#main').insertBefore(bcmScreen,document.querySelector('#main footer'));
   const clients=[];
@@ -80,7 +80,7 @@ const  gate=setupGate(db,'staff');
     const actions=detail.querySelector('.client-actions'); actions.replaceChildren();
     actions.append(node('span',selected.archived?'Archived':selected.portal?'Portal enabled':'Portal disabled','badge'));
     if(selected.sample){const link=node('a','Preview client portal ↗','outline-button');link.href='portal.html';actions.append(link);}
-    if(aiTest&&!selected.archived){const review=node('a','Review brand discoveries · Test','outline-button');review.href='#bcm-'+selected.id;actions.append(review);}
+    if(aiTest&&!selected.archived){const review=node('a','Review brand discoveries','outline-button');review.href='#bcm-'+selected.id;actions.append(review);}
     const settings=node('button','Client Settings','outline-button'); settings.dataset.action='settings';actions.append(settings);
     const metadata=node('p',[selected.contact,selected.email].filter(Boolean).join(' · '),'client-details');detail.querySelector('.page-heading').append(metadata);
     renderAccessPanel();
