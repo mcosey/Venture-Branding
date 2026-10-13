@@ -165,7 +165,8 @@ begin
  or jsonb_typeof(payload->'consulted_urls') is distinct from 'array' or jsonb_array_length(payload->'consulted_urls') not between 1 and 60
  or jsonb_typeof(payload->'coverage_note') is distinct from 'string' or length(payload->>'coverage_note')>2000
  or jsonb_typeof(payload->'usage') is distinct from 'object' then raise exception 'Invalid research payload'; end if;
- initial:=not exists(select 1 from public.vb_bcm_ai_runs where client_id=target and domain=r.domain and status='completed');
+ -- The first three successful passes for this client/domain form the baseline.
+ initial:=(select count(*) from public.vb_bcm_ai_runs where client_id=target and domain=r.domain and status='completed')<3;
  for o in select value from jsonb_array_elements(payload->'observations') loop
   if jsonb_typeof(o)<>'object' or exists(select 1 from unnest(array['name','kind','context','passage','url','name_key']) f where jsonb_typeof(o->f) is distinct from 'string')
   or length(btrim(o->>'name')) not between 1 and 150 or length(btrim(o->>'context')) not between 1 and 300
@@ -188,7 +189,7 @@ begin
     changed:=vb_private.bcm_ai_name(item.passage) is distinct from vb_private.bcm_ai_name(o->>'passage');
     update public.vb_bcm_ai_observations set last_seen=now(),last_run=ticket,
      kind=o->>'kind',context=o->>'context',passage=o->>'passage',source_url=o->>'url',revision=revision+1,
-     state=case when changed and state='known' and o->>'kind' in ('rename','identity') and kind is distinct from o->>'kind' then 'needs_review' else state end where id=item.id;
+     state=case when not initial and changed and state='known' and o->>'kind' in ('rename','identity') and kind is distinct from o->>'kind' then 'needs_review' else state end where id=item.id;
     -- Approval/dismissal persists. Changed evidence remains available to the attorney;
     -- it never silently edits a previously approved client-facing snapshot.
    end if;
@@ -241,6 +242,17 @@ begin
  if not vb_private.is_client_member(target_client) then raise exception 'Client access required' using errcode='42501'; end if;
  return coalesce((select jsonb_agg(to_jsonb(r)) from (select id,status,started_at,finished_at,observation_count from public.vb_bcm_ai_runs where client_id=target_client order by started_at desc limit 20) r),'[]');
 end; $$;
+create or replace function public.vb_bcm_ai_baseline_progress(target_client uuid) returns jsonb
+language plpgsql security definer set search_path='' as $$
+declare hostname text; passes integer;
+begin
+ if not (vb_private.is_staff() or vb_private.is_client_member(target_client)) then raise exception 'Client access required' using errcode='42501';end if;
+ select vb_private.bcm_ai_domain(urls[1]) into hostname from public.vb_bcm_settings where client_id=target_client;
+ select least(count(*),3)::integer into passes from public.vb_bcm_ai_runs where client_id=target_client and domain=hostname and status='completed';
+ return jsonb_build_object('completed',passes,'remaining',3-passes);
+end; $$;
+revoke all on function public.vb_bcm_ai_baseline_progress(uuid) from public,anon;
+grant execute on function public.vb_bcm_ai_baseline_progress(uuid) to authenticated;
 create function public.vb_set_bcm_ai_monitoring(target_client uuid,expected_settings_version integer,expected_revision integer,enabled boolean)
 returns public.vb_bcm_schedules language plpgsql security definer set search_path='' as $$
 declare cfg public.vb_bcm_settings;
@@ -249,7 +261,7 @@ begin
  if auth.jwt()->>'aal' is distinct from 'aal2' and exists(select 1 from auth.mfa_factors where user_id=auth.uid() and status='verified') then raise exception 'Verify authenticator' using errcode='42501';end if;
  perform 1 from public.vb_clients where id=target_client for update;
  select * into cfg from public.vb_bcm_settings where client_id=target_client;
- if enabled and (not public.vb_bcm_ai_ready() or not coalesce(vb_private.bcm_ai_valid(cfg),false)) then raise exception 'AI research unavailable for these settings';end if;
+ if enabled and (((public.vb_bcm_ai_baseline_progress(target_client)->>'remaining')::integer)>0 or not public.vb_bcm_ai_ready() or not coalesce(vb_private.bcm_ai_valid(cfg),false)) then raise exception 'AI research unavailable for these settings';end if;
  return public.vb_set_bcm_monitoring(target_client,expected_settings_version,expected_revision,enabled);
 end; $$;
 revoke all on function public.vb_set_bcm_ai_monitoring(uuid,integer,integer,boolean) from public,anon;

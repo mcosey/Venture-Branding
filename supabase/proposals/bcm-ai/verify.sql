@@ -27,7 +27,7 @@ begin
  select * into cfg from public.vb_bcm_settings where client_id=a;
  update vb_private.bcm_ai_config set ready=false;
  begin perform public.vb_begin_bcm_ai_run(a,cfg.version);raise exception 'Disabled research allowed';exception when raise_exception then if SQLERRM<>'Test not connected' then raise;end if;checks:=checks+1;end;
- update vb_private.bcm_ai_config set ready=true;
+ update vb_private.bcm_ai_config set ready=true,max_runs=20;
  update vb_private.bcm_scheduler_config set ready=true;
  -- Allow only this transaction's small synthetic matrix, below the configured production-independent Test ceiling.
  if (select count(*) from public.vb_bcm_ai_runs)>12 then raise exception 'Insufficient remaining Test attempts for this rollback matrix'; end if;
@@ -36,6 +36,13 @@ begin
  p:=jsonb_build_object('source','openai-observations-v1','model','gpt-6-luna','domain','example.com','coverage','limited','coverage_note','Synthetic rollback evidence','consulted_urls',jsonb_build_array('https://example.com/'),'usage','{}'::jsonb,'observations',jsonb_build_array(jsonb_build_object('name','BCM Test Anchor','name_key','bcm test anchor','kind','product','context','Synthetic baseline','passage','BCM Test Anchor exists.','url','https://example.com/')));
  if public.vb_finish_bcm_ai_run((job->>'ticket')::uuid,p,false)<>'completed' then raise exception 'Baseline failure';end if;
  if not exists(select 1 from public.vb_bcm_ai_observations where client_id=a and name_key='bcm test anchor' and state='known') then raise exception 'Baseline mislabeled new';end if;checks:=checks+1;
+ -- Complete the two remaining baseline passes before testing later discoveries.
+ for revision in 1..2 loop
+  perform set_config('request.jwt.claims',jsonb_build_object('sub',ua,'role','authenticated','aal','aal2')::text,true);
+  job:=public.vb_begin_bcm_ai_run(a,cfg.version);
+  perform set_config('request.jwt.claims',jsonb_build_object('role','service_role')::text,true);
+  perform public.vb_finish_bcm_ai_run((job->>'ticket')::uuid,jsonb_set(p,'{observations}','[]'::jsonb),false);
+ end loop;
  -- Repeated finalization must neither write another finding nor consume another reservation.
  if public.vb_finish_bcm_ai_run((job->>'ticket')::uuid,p,false)<>'completed' then raise exception 'Non-idempotent finish';end if;checks:=checks+1;
  perform set_config('request.jwt.claims',jsonb_build_object('sub',ua,'role','authenticated','aal','aal2')::text,true);
