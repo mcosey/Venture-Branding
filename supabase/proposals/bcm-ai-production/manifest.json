@@ -2,9 +2,7 @@
   "source_commit": "954f3db0f3de3990de7894888a020f53e73f96de",
   "production_project": "omvkwiosonatswocbdgx",
   "production_system_id": "7690937621030482216",
-  "status": "INSTALLED / SINGLE-CLIENT OPENAI WEEKLY PILOT ACTIVE; TOTAL ATTEMPT CAP7",
-  "pilot_max_runs": 7,
-  "pilot_client": "10000000-0000-0000-0000-000000000001",
+  "status": "GENERAL-CLIENT PRODUCTION ROLLOUT APPLIED; UTC MONTHLY LIMITS",
   "activation_defaults": "worker switch absent/off, DB ready false, no job, no client enabled",
   "files": {
     "frontend.patch": "0b5e9b5b192bfdc8373e8652d18a207b4c6aa0f2263c2ce3155772bc1ced685f",
@@ -46,5 +44,12 @@
     "sql/09-weekly-pilot-dispatcher.sql": "62d40a647b6f01ff44740ae0c7b02ca54cda5b39a110efb974dbb9f01b871945"
   },
   "integration_source": "Current codex/attorney-workspace branch; original review copies remain pinned to source_commit",
-  "current_pilot_state": "4 runs used,3 remaining; next October19,2026; key renewal required"
+  "current_pilot_state": "Superseded by general-client monthly allowances",
+  "historical_pilot_max_runs": 7,
+  "historical_pilot_client": "10000000-0000-0000-0000-000000000001",
+  "monthly_limits": {
+    "client_attempts": 8,
+    "vb_attempts": 200
+  },
+  "active_source": "supabase/proposals/bcm-ai-client-rollout; see handoff37"
 }

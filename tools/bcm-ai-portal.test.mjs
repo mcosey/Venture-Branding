@@ -42,7 +42,7 @@ function harness(load){
  const document={createElement:tag=>new Element(tag)};
  const source=readFileSync(new URL('../portal/assets/bcm-ai.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'').replace(/export /g,'');
  const ctx={document,window:{VB_AUTH_CONFIG:config},Option:function(text,value){const n=new Element('option',text);n.value=value;return n;},URL,bcmCategories:{product_names:'Product names'},assertProduction:db=>{if(db.supabaseUrl!==url)throw Error('Test only');},loadAiWorkspace:load,reviewAiFinding:async()=>{throw Error('Staff access expired');},showRegionLoading(target,label){target.replaceChildren(new Element('p',label));return ()=>{};}};
- return vm.runInNewContext(source+';({renderAiBcm,aiBcmEnabled})',ctx);
+ return vm.runInNewContext(source+';({renderAiBcm,aiBcmEnabled,aiResearchControls,aiAllowanceMessage})',ctx);
 }
 test('Wrong project cannot mount the new renderer or query AI records',()=>{
  let calls=0;const api=harness(async()=>{calls++;return data();});assert.throws(()=>api.renderAiBcm(new Element('main'),{id:'a'},{supabaseUrl:'https://imvkhicfmidzbzsbhkzs.supabase.co'}),/Test only/);assert.equal(calls,0);
@@ -64,6 +64,25 @@ test('failed staff action clears private records until protected reload succeeds
  const status=main.all().find(n=>n.tag==='select'&&n.attributes['aria-label']==='Finding status');status.value='all';status.onchange();
  const note=main.all().find(n=>n.tag==='textarea');note.value='Test';const form=main.all().find(n=>n.tag==='form');form.onsubmit({preventDefault(){},submitter:{value:'approve'}});await tick();
  assert.match(main.textContent,/Staff access expired|Reload saved records/);assert.doesNotMatch(main.textContent,/Private unreviewed name/);
+});
+
+test('monthly caps disable paid actions while pause remains available',()=>{
+ const api=harness(async()=>data()),state={...data(),baseline:{remaining:0},allowance:{available:true,reason:'available'}};
+ assert.deepEqual(JSON.parse(JSON.stringify(api.aiResearchControls(state,true))),{run:true,start:true,pause:false});
+ for(const reason of ['client_limit','global_limit','paused']){
+  const blocked={...state,ready:false,allowance:{available:false,reason},schedule:{enabled:true}};
+  const buttons=api.aiResearchControls(blocked,true);assert.equal(buttons.run,false);assert.equal(buttons.start,false);assert.equal(buttons.pause,true);assert.match(api.aiAllowanceMessage(blocked.allowance),/allowance|paused/);
+ }
+ assert.equal(api.aiResearchControls({...state,allowance:undefined},true).run,false);
+ assert.equal(api.aiResearchControls({...state,baseline:{remaining:2}},true).start,false);
+});
+test('client limit is rendered without private findings or shared usage counts',async()=>{
+ const state={...data(),ready:false,baseline:{remaining:0},schedule:{enabled:true,revision:1},allowance:{available:false,reason:'client_limit',used:8,limit:8,remaining:0,resets_at:'2026-11-01T00:00:00Z'}};
+ const api=harness(async()=>state),main=new Element('main');api.renderAiBcm(main,{id:'a'},{supabaseUrl:url});await tick();
+ assert.match(main.textContent,/8 of 8 monthly checks used/);assert.match(main.textContent,/Allowance resets/);
+ assert.equal(main.all().find(n=>n.tag==='button'&&n.textContent.trim()==='Pause monitoring').disabled,false);
+ assert.equal(main.all().find(n=>n.tag==='button'&&n.textContent.trim()==='Run research now').disabled,true);
+ assert.doesNotMatch(main.textContent,/Private unreviewed name/);
 });
 
 }

@@ -1,5 +1,5 @@
 import {loadReviewedMap} from './brand-map-reviewed.mjs?v=20261012-reviewed-map';
-import {aiBcmEnabled,renderAiBcm} from './bcm-ai.js?v=20261012-baseline-map';
+import {aiBcmEnabled,renderAiBcm} from './bcm-ai.js?v=20261013-client-rollout';
 import {renderDigest} from './digest.js?v=20261011-bcm-retired';
 import {renderEvidence} from './evidence.js?v=20261010-use-history';
 import {renderMaintenance} from './maintenance.js?v=20261010-maintenance-live';

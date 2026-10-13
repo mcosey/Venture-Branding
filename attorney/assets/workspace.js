@@ -1,4 +1,4 @@
-import {aiBcmEnabled,renderAiBcm} from '../../portal/assets/bcm-ai.js?v=20261012-baseline-map';
+import {aiBcmEnabled,renderAiBcm} from '../../portal/assets/bcm-ai.js?v=20261013-client-rollout';
 import {renderEvidence} from '../../portal/assets/evidence.js?v=20261010-use-history';
 import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
 import {showRegionLoading} from '../../shared/loading.mjs';
