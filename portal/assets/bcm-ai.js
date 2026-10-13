@@ -1,4 +1,5 @@
-import {loadAiWorkspace,runAiResearch,reviewAiFinding,setAiMonitoring,assertProduction} from '../../auth/bcm-ai.mjs?v=20261012-bcm-production';
+import {collectBaseline} from '../../auth/bcm-baseline.mjs';
+import {loadAiWorkspace,runAiResearch,reviewAiFinding,setAiMonitoring,assertProduction} from '../../auth/bcm-ai.mjs?v=20261012-baseline-map';
 import {saveBcmSettings,bcmCategories} from '../../auth/bcm.mjs';
 import {showRegionLoading} from '../../shared/loading.mjs';
 
@@ -12,13 +13,13 @@ function panel(title){const n=el('section',undefined,'panel bcm-panel');n.append
 function sourceURL(value){try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password?u.href:null;}catch{return null;}}
 
 // Each mounted workspace owns its state. Disposing it invalidates pending reads/writes.
-export function renderAiBcm(main,client,db,{audience='client'}={}){
+export function renderAiBcm(main,client,db,{audience='client',initialView='settings'}={}){
  assertProduction(db);if(!aiBcmEnabled(db)||!['client','staff'].includes(audience))throw Error('BCM is not enabled for this portal.');
  const root=el('section',undefined,'bcm-ai'),notice=el('p',undefined,'bcm-muted'),tabs=el('nav',undefined,'bcm-tabs'),content=el('div');
  notice.textContent='Public website research. Some pages and changes may be missed. Newly observed does not mean newly launched. Sign-in pages and image-only logos are outside this monitor.';
  tabs.setAttribute('aria-label','Brand Change Monitor views');
  root.append(notice,tabs,content);main.append(root);
- let alive=true,generation=0,busy=false,state,view=audience==='staff'?'queue':'settings',status='',filter='needs_review';
+ let alive=true,generation=0,busy=false,state,view=audience==='staff'?'queue':initialView==='updates'?'updates':'settings',status='',filter='needs_review';
  const current=ticket=>alive&&root.isConnected&&ticket===generation;
  const availableViews=audience==='staff'?[['queue','Private review queue'],['history','Research history']]:[['settings','Settings'],['updates','Reviewed updates'],['history','Research history']];
  const tabButtons=availableViews.map(([key,label])=>{const b=button(label,()=>{view=key;draw();});tabs.append(b);return {key,b};});
@@ -56,10 +57,11 @@ export function renderAiBcm(main,client,db,{audience='client'}={}){
   const exclusions=el('details',undefined,'bcm-advanced');exclusions.append(el('summary','Optional exclusions'));const wrap=el('label','Do not report evidence from these paths','bcm-field'),paths=el('textarea');paths.name='exclude';paths.rows=3;paths.value=(cfg?.exclusions||[]).join('\n');wrap.append(paths);exclusions.append(wrap,el('p','These filter reported evidence. Hosted search may still consult those pages.','bcm-muted'));preferences.append(exclusions);
   const permission=el('input');permission.type='checkbox';permission.required=true;const consent=el('label',undefined,'bcm-choice');consent.append(permission,el('span','I own this website or have permission to monitor it.'));preferences.append(consent);
   const save=el('button','Save settings','bcm-button bcm-primary');save.type='submit';preferences.append(save,el('p','Saving does not run research and pauses automatic monitoring.','bcm-muted'));
+  monitor.append(el('h3','Starting reference list'),el('p',`${state.baseline?.completed??0} of 3 successful checks completed for this website.`),el('p','The first three checks collect baseline names without new-discovery alerts. Building the list can make up to three paid checks and stops on failure. Later discoveries are newly observed, not proof of a new launch.','bcm-muted'));
   const row=state.schedule,researchAllowed=state.ready&&window.VB_AUTH_CONFIG.allowBcmResearch===true;monitor.append(el('p',row?.enabled?'Monitoring is on':'Monitoring is paused'),el('p',state.ready?'Research is connected.':'Research is paused or the pilot allowance has been reached. Your settings and saved results remain available.','bcm-muted'));
   if(row?.enabled&&row.next_run_at)monitor.append(el('p','Next check: '+new Date(row.next_run_at).toLocaleString()));
-  const actions=el('div',undefined,'bcm-actions'),toggle=button(row?.enabled?'Pause monitoring':'Start monitoring',()=>act(()=>setAiMonitoring(db,client.id,cfg.version,row.revision,!row.enabled),'Monitoring preference saved.'),true),run=button('Run research now',()=>act(()=>runAiResearch(db,client.id,cfg.version),'Research saved. Any findings need attorney review.'));
-  toggle.disabled=!researchAllowed||!cfg||!row;run.disabled=!researchAllowed||!cfg;actions.append(toggle,run);monitor.append(actions,el('p','Run research uses the saved settings and incurs API charges. Saving settings does not run paid research.','bcm-muted'),button('Reload saved settings',reload));
+  const actions=el('div',undefined,'bcm-actions'),toggle=button(row?.enabled?'Pause monitoring':'Start monitoring',()=>act(()=>setAiMonitoring(db,client.id,cfg.version,row.revision,!row.enabled),'Monitoring preference saved.'),true),run=button(state.baseline?.remaining>0?'Build starting reference list':'Run research now',()=>act(()=>collectBaseline(state,{run:(id,version)=>runAiResearch(db,id,version),load:id=>loadAiWorkspace(db,'client',id)}),'Successful checks saved. Baseline names do not create new-discovery alerts.'));
+  toggle.disabled=!researchAllowed||!cfg||!row||(!row.enabled&&state.baseline?.remaining>0);run.disabled=!researchAllowed||!cfg;actions.append(toggle,run);monitor.append(actions,el('p','Run research uses the saved settings and incurs API charges. Saving settings does not run paid research.','bcm-muted'),button('Reload saved settings',reload));
   form.addEventListener('input',()=>{toggle.disabled=true;run.disabled=true;});form.addEventListener('change',()=>{toggle.disabled=true;run.disabled=true;});
   form.onsubmit=e=>{e.preventDefault();if(busy)return;const draft={urls:url.value,frequency:frequency.value==='monthly'?'Monthly':'Weekly',categories:[...categories.querySelectorAll('input:checked')].map(n=>n.value),exclude:paths.value,access:'public',discovery:'site'};act(()=>saveBcmSettings(db,client.id,cfg?.version||0,draft,permission.checked),'Settings saved. Monitoring remains paused.');};
  }

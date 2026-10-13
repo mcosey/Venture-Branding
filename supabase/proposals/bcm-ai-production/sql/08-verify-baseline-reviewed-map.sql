@@ -1,0 +1,78 @@
+rollback;
+-- Existing Production identity and saved public observations; all writes are rolled back. No API calls.
+begin;
+do $$ begin if (select system_identifier::text from pg_control_system())<>'7690937621030482216' then raise exception 'BCM Production required';end if;end;$$;
+do $verify$
+declare target uuid:='10000000-0000-0000-0000-000000000001'; actor uuid; reviewer uuid; finding uuid; cfg public.vb_bcm_settings; job jsonb; p jsonb; i integer; total integer; before_count integer; payloads jsonb:= $saved$[{"source": "openai-observations-v1", "model": "gpt-6-luna", "domain": "baseline-replay.example.com", "coverage": "limited", "coverage_note": "Saved OpenAI benchmark replay; no API request", "consulted_urls": ["https://baseline-replay.example.com/evidence"], "usage": {}, "observations": [{"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "ChatGPT", "passage": "ChatGPT — the main consumer-facing product", "name_key": "chatgpt", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "ChatGPT Work", "passage": "ChatGPT Work — presented as an agent for ambitious work", "name_key": "chatgpt work", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "Codex", "passage": "Codex — a distinct product name for coding and software-development work.", "name_key": "codex", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "Dots", "passage": "Dots — branded as “always-on agents built to handle everything.”", "name_key": "dots", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "API Platform", "passage": "API Platform — developer-facing platform positioned with the headline “Build leading AI products on OpenAI’s platform.”", "name_key": "api platform", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "slogan", "name": "“Frontier intelligence everywhere you work”", "passage": "“Frontier intelligence everywhere you work” — business-facing positioning.", "name_key": "frontier intelligence everywhere you work", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "slogan", "name": "“Pioneering research on the path to AGI”", "passage": "“Pioneering research on the path to AGI” — research positioning.", "name_key": "pioneering research on the path to agi", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "slogan", "name": "“Build leading AI products on OpenAI’s platform”", "passage": "“Build leading AI products on OpenAI’s platform”", "name_key": "build leading ai products on openai s platform", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "sub_brand", "name": "ChatGPT Business, ChatGPT Enterprise, and ChatGPT for Education", "passage": "ChatGPT Business, ChatGPT Enterprise, and ChatGPT for Education", "name_key": "chatgpt business chatgpt enterprise and chatgpt for education", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "identity", "name": "OpenAI parent identity", "passage": "a consistent OpenAI parent identity", "name_key": "openai parent identity", "context": "Saved benchmark candidate; replay only."}]}, {"source": "openai-observations-v1", "model": "gpt-6-luna", "domain": "baseline-replay.example.com", "coverage": "limited", "coverage_note": "Saved OpenAI benchmark replay; no API request", "consulted_urls": ["https://baseline-replay.example.com/evidence"], "usage": {}, "observations": [{"url": "https://baseline-replay.example.com/evidence", "kind": "feature", "name": "Deep research", "passage": "Presented as a ChatGPT capability for “complex questions.”", "name_key": "deep research", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "slogan", "name": "AI Platforms to Accelerate your Business", "passage": "Business-page headline positioning OpenAI’s business offerings.", "name_key": "ai platforms to accelerate your business", "context": "Saved benchmark candidate; replay only."}]}, {"source": "openai-observations-v1", "model": "gpt-6-luna", "domain": "baseline-replay.example.com", "coverage": "limited", "coverage_note": "Saved OpenAI benchmark replay; no API request", "consulted_urls": ["https://baseline-replay.example.com/evidence"], "usage": {}, "observations": [{"url": "https://baseline-replay.example.com/evidence", "kind": "feature", "name": "Intelligent UI", "passage": "GPT-6 and Intelligent UI for everyone.", "name_key": "intelligent ui", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "GPT-6", "passage": "GPT-6 and Intelligent UI for everyone.", "name_key": "gpt 6", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "GPT-6.1 Sol", "passage": "GPT-6.1 Sol", "name_key": "gpt 6 1 sol", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "GPT-6 Astra", "passage": "GPT-6 Astra", "name_key": "gpt 6 astra", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "GPT-5.6", "passage": "GPT-5.6", "name_key": "gpt 5 6", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "GPT-5.5", "passage": "GPT-5.5", "name_key": "gpt 5 5", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "sub_brand", "name": "OpenAI Academy", "passage": "OpenAI Academy", "name_key": "openai academy", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "sub_brand", "name": "Supply Co.", "passage": "Supply Co.", "name_key": "supply co", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "Apps SDK", "passage": "Apps SDK", "name_key": "apps sdk", "context": "Saved benchmark candidate; replay only."}, {"url": "https://baseline-replay.example.com/evidence", "kind": "product", "name": "Open Models", "passage": "Open Models", "name_key": "open models", "context": "Saved benchmark candidate; replay only."}]}]$saved$::jsonb;
+begin
+ select user_id into actor from vb_private.client_memberships where client_id=target and active limit 1;
+ if actor is null then raise exception 'Existing Test client required';end if;
+ select count(*) into before_count from public.vb_bcm_ai_observations;
+ update vb_private.bcm_ai_config set ready=true,pilot_client_id=target where singleton;
+ update vb_private.bcm_scheduler_config set ready=true where singleton;
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',actor,'role','authenticated','aal','aal2')::text,true);
+ select * into cfg from public.vb_bcm_settings where client_id=target;
+ perform public.vb_save_bcm_settings(target,cfg.version,jsonb_build_object('urls',jsonb_build_array('https://baseline-replay.example.com/'),'exclusions','[]'::jsonb,'access_mode','public','frequency','weekly','categories',jsonb_build_array('product_names','feature_names','slogans','sub_brands','renames','presentation'),'discovery_mode','site'),true);
+ select * into cfg from public.vb_bcm_settings where client_id=target;
+ if not vb_private.bcm_ai_valid(cfg) or not vb_private.bcm_actor_has_access(target,actor) then raise exception 'Fixture prerequisite failed before reservation';end if;
+ if (public.vb_bcm_ai_baseline_progress(target)->>'completed')::integer<>0 then raise exception 'New website did not reset baseline';end if;
+ begin
+  perform public.vb_bcm_ai_baseline_progress('ffffffff-ffff-ffff-ffff-ffffffffffff');raise exception 'Other-client progress exposed';
+ exception when insufficient_privilege then null;end;
+ for i in 0..2 loop
+  perform set_config('request.jwt.claims',jsonb_build_object('sub',actor,'role','authenticated','aal','aal2')::text,true);
+  if i=0 then
+   job:=public.vb_begin_bcm_ai_run(target,cfg.version);
+   perform set_config('request.jwt.claims','{"role":"service_role"}',true);
+   perform public.vb_finish_bcm_ai_run((job->>'ticket')::uuid,null,true);
+   perform set_config('request.jwt.claims',jsonb_build_object('sub',actor,'role','authenticated','aal','aal2')::text,true);
+   if (public.vb_bcm_ai_baseline_progress(target)->>'completed')::integer<>0 then raise exception 'Failed pass counted';end if;
+  end if;
+  job:=public.vb_begin_bcm_ai_run(target,cfg.version);
+  p:=payloads->i;
+  perform set_config('request.jwt.claims','{"role":"service_role"}',true);
+  if public.vb_finish_bcm_ai_run((job->>'ticket')::uuid,p,false)<>'completed' then raise exception 'Replay failed';end if;
+  perform public.vb_finish_bcm_ai_run((job->>'ticket')::uuid,p,false);
+  if exists(select 1 from public.vb_bcm_ai_observations where client_id=target and domain='baseline-replay.example.com' and state<>'known') then raise exception 'Baseline generated an alert';end if;
+  perform set_config('request.jwt.claims',jsonb_build_object('sub',actor,'role','authenticated','aal','aal2')::text,true);
+  if (public.vb_bcm_ai_baseline_progress(target)->>'completed')::integer<>i+1 then raise exception 'Progress/idempotence failed';end if;
+  if i<2 then
+   begin perform public.vb_set_bcm_ai_monitoring(target,cfg.version,(select revision from public.vb_bcm_schedules where client_id=target),true);raise exception 'Monitoring started before baseline';
+   exception when raise_exception then if sqlerrm<>'AI research unavailable for these settings' then raise;end if;end;
+  end if;
+ end loop;
+ select count(*) into total from public.vb_bcm_ai_observations where client_id=target and domain='baseline-replay.example.com';
+ if total<>22 then raise exception 'Expected 22 combined saved candidates';end if;
+ job:=public.vb_begin_bcm_ai_run(target,cfg.version);
+ p:=jsonb_set(payloads->0,'{observations}',jsonb_build_array((payloads->0->'observations'->3),jsonb_build_object('name','BCM Replay Fresh Offering','name_key','bcm replay fresh offering','kind','product','context','Synthetic later observation','passage','BCM Replay Fresh Offering','url','https://baseline-replay.example.com/evidence')));
+ perform set_config('request.jwt.claims','{"role":"service_role"}',true);
+ perform public.vb_finish_bcm_ai_run((job->>'ticket')::uuid,p,false);
+ if not exists(select 1 from public.vb_bcm_ai_observations where client_id=target and domain='baseline-replay.example.com' and name_key='bcm replay fresh offering' and state='needs_review') then raise exception 'Later unfamiliar name not queued';end if;
+ if (select count(*) from public.vb_bcm_ai_observations where client_id=target and domain='baseline-replay.example.com' and name_key='dots')<>1 or not exists(select 1 from public.vb_bcm_ai_observations where client_id=target and domain='baseline-replay.example.com' and name_key='dots' and state='known') then raise exception 'Repeated baseline name duplicated/alerted';end if;
+ if exists(select 1 from public.vb_bcm_ai_publications where client_id=target) then raise exception 'Expected no prior publications; inspect before this fixture';end if;
+ select user_id into reviewer from vb_private.staff_members where active limit 1;
+ if reviewer is null then raise exception 'Existing reviewer required';end if;
+ select id into finding from public.vb_bcm_ai_observations where client_id=target and domain='baseline-replay.example.com' and name_key='dots';
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',reviewer,'role','authenticated','aal','aal2')::text,true);
+ perform public.vb_review_bcm_ai_finding(finding,(select revision from public.vb_bcm_ai_observations where id=finding),'approve','ROLLBACK FIXTURE ONLY',null);
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',actor,'role','authenticated','aal','aal1')::text,true);
+end;$verify$;
+set local role authenticated;
+do $$ begin
+ if (select count(*) from public.vb_bcm_ai_publications where client_id='10000000-0000-0000-0000-000000000001' and name='Dots')<>1 then raise exception 'Approved snapshot not client-readable';end if;
+ if exists(select 1 from public.vb_bcm_ai_observations) then raise exception 'Raw findings exposed to client';end if;
+end;$$;
+reset role;
+do $$ declare reviewer uuid; actor uuid; finding uuid; rev integer; begin
+ select user_id into reviewer from vb_private.staff_members where active limit 1;
+ select user_id into actor from vb_private.client_memberships where client_id='10000000-0000-0000-0000-000000000001' and active limit 1;
+ select id,revision into finding,rev from public.vb_bcm_ai_observations where client_id='10000000-0000-0000-0000-000000000001' and domain='baseline-replay.example.com' and name_key='dots';
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',reviewer,'role','authenticated','aal','aal2')::text,true);
+ perform public.vb_review_bcm_ai_finding(finding,rev,'dismiss','WITHDRAW ROLLBACK FIXTURE ONLY',null);
+ perform set_config('request.jwt.claims',jsonb_build_object('sub',actor,'role','authenticated','aal','aal1')::text,true);
+end;$$;
+set local role authenticated;
+do $$ begin if exists(select 1 from public.vb_bcm_ai_publications where client_id='10000000-0000-0000-0000-000000000001') then raise exception 'Withdrawn snapshot still client-visible';end if;end;$$;
+reset role;
+rollback;
+select true as replay_passed,22 as baseline_candidates,true as failure_not_counted,true as duplicate_suppressed,true as later_discovery_queued,true as no_api_calls,true as approval_rls_checked,true as withdrawal_rls_checked;

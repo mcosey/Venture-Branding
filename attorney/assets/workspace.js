@@ -1,10 +1,10 @@
-import {aiBcmEnabled,renderAiBcm} from '../../portal/assets/bcm-ai.js?v=20261012-bcm-production';
+import {aiBcmEnabled,renderAiBcm} from '../../portal/assets/bcm-ai.js?v=20261012-baseline-map';
 import {renderEvidence} from '../../portal/assets/evidence.js?v=20261010-use-history';
 import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
 import {showRegionLoading} from '../../shared/loading.mjs';
 import {createMaintenanceRepository} from '../../auth/maintenance.mjs?v=20261010-maintenance-live';
 import {createMaintenanceEditor} from './maintenance-editor.js?v=20261010-maintenance-live';
-import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs?v=20261012-bcm-production';
+import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs?v=20261012-baseline-map';
 import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-preview';
 (async () => {
   'use strict';

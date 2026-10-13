@@ -10,9 +10,9 @@ export async function loadAiWorkspace(db,audience,clientId){
  const queries=[db.from('vb_bcm_settings').select('*').eq('client_id',id).maybeSingle(),db.from('vb_bcm_schedules').select('*').eq('client_id',id).maybeSingle(),db.rpc('vb_bcm_ai_ready'),
  db.from('vb_bcm_ai_publications').select('*').eq('client_id',id).is('withdrawn_at',null),
  audience==='staff'?db.from('vb_bcm_ai_observations').select('*').eq('client_id',id).order('last_seen',{ascending:false}):Promise.resolve({data:[]}),
- audience==='staff'?db.from('vb_bcm_ai_runs').select('*').eq('client_id',id).order('started_at',{ascending:false}).limit(20):db.rpc('vb_bcm_ai_client_history',{target_client:id})];
+ audience==='staff'?db.from('vb_bcm_ai_runs').select('*').eq('client_id',id).order('started_at',{ascending:false}).limit(20):db.rpc('vb_bcm_ai_client_history',{target_client:id}),db.rpc('vb_bcm_ai_baseline_progress',{target_client:id})];
  const results=await Promise.all(queries);if(results.some(r=>r.error))throw Error('BCM setup or account access is not ready. No changes were made.');
- return {clients:clients.data,clientId:id,settings:results[0].data,schedule:results[1].data,ready:results[2].data===true,publications:results[3].data||[],observations:results[4].data||[],runs:results[5].data||[]};
+ return {clients:clients.data,clientId:id,settings:results[0].data,schedule:results[1].data,ready:results[2].data===true,publications:results[3].data||[],observations:results[4].data||[],runs:results[5].data||[],baseline:results[6].data};
 }
 export async function runAiResearch(db,clientId,version){assertProduction(db);await requireAccess(db,'client');const r=await db.functions.invoke('bcm-ai-scan',{body:{clientId,version}});if(r.error||r.data?.status!=='completed')throw Error('Research did not complete. Refresh history before retrying; no client update was published.');return r.data;}
 export async function reviewAiFinding(db,row,decision,note,aliasTarget=null){

@@ -65,3 +65,15 @@ A controlled real website before/after change test has not been completed. Repea
 The frontend patch passed a clean-apply check against an isolated copy of committed 954f3db. JavaScript/Python syntax checks passed. No database scripts were executed, no hosted functions deployed, and no Production browser flow was tested in this preparation.
 
 **Recommended next step:** review this package, then approve only Step 2: install and verify while research stays off. Paid activation stays a separate decision. GPT-6.1 Sol with medium reasoning is appropriate for the installation checks; keep the existing lower-cost research model for the pilot unless testing gives a reason to change it.
+
+## October 12 integration update — installed, monitoring off
+
+The original review copies above remain historical materials pinned to 954f3db. The current branch contains the installed portal integration; do not overwrite it with those copies.
+
+Production now has the three-successful-pass baseline via sql/07-baseline-3-pass.sql. A client's first three successful passes for its saved domain accumulate known names without new-discovery alerts. Monitoring cannot start until this baseline is complete. The connected portal can build only the remaining baseline passes once research is separately authorized.
+
+The Brand Map reads only non-withdrawn attorney-approved publication snapshots. It shows these separately from registered trademarks, without inferring legal protection or ownership relationships. Private observations and attorney notes are not read by the map. Existing VB Agents and attorney review entrances remain in use.
+
+sql/08-verify-baseline-reviewed-map.sql completed in Production with all temporary writes rolled back. It checked 22 saved benchmark candidates as baseline, failed-pass exclusion, later-discovery review, duplicate suppression, approval and withdrawal visibility, and authenticated-client exclusion from raw observations. No OpenAI request was made. Final read-only checks: both readiness flags false, Production runs/publications zero, active BCM jobs zero, no pilot selected, anonymous progress-counter execution denied.
+
+81 focused local checks passed. Signed-in Production client display verification passed: Brand Map, VB Agents, baseline0/3 and reviewed Updates are connected, with paid/start controls disabled. The integration commit/push is the remaining save step. Paid activation remains a separate approval.

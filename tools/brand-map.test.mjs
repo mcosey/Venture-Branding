@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {brandMapModel,mapPage,recordLink} from '../portal/assets/brand-map-model.mjs';
 import {renderBrandMap} from '../portal/assets/brand-map.js';
 import {brandMapBcmModel,loadBrandMapBcm} from '../portal/assets/brand-map-bcm.mjs';
+import {reviewedMapModel,loadReviewedMap} from '../portal/assets/brand-map-reviewed.mjs';
 import {loadRecords} from '../auth/connection.mjs';
 import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
@@ -81,20 +82,20 @@ test('read-only loader scopes recent scans and older baselines to the client, an
 });
 test('findings are selectable plain text, keep legal counts, and retain record selection on load',()=>{
  const main=page();const update=renderBrandMap(main,client,[record('mark')]);main.querySelectorAll('button[data-mark-id]').find(n=>n.dataset.markId==='mark').click();
- const state=brandMapBcmModel(client.id,[scan('baseline'),comparison('new')]);state.findings[0].name='<img src=x onerror=alert(1)>';
+ const state=brandMapBcmModel(client.id,[scan('baseline'),comparison('new')]);state.findings=state.findings.map(f=>({...f,kind:'reviewed'}));state.findings[0].name='<img src=x onerror=alert(1)>';
  update(state);assert.equal(main.querySelector('#bm-detail-title').textContent,'Mark mark');assert.equal(main.querySelector('.bm-summary').textContent.includes('1 Trademark records'),true);
- const node=main.querySelectorAll('button[data-mark-id]').find(n=>n.dataset.markId===state.findings[0].id);node.click();assert.equal(main.querySelector('#bm-detail-title').textContent,state.findings[0].name);assert.equal(main.querySelectorAll('img').length,0);assert(main.querySelector('.bm-facts').textContent.includes('not a trademark record'));assert.equal(main.querySelector('.bm-detail').querySelector('a').href,'brand-monitor.html?client=client-one');
- update({...state,clientId:'foreign'});assert(!main.textContent.includes('Build With Purpose'));assert(main.textContent.includes('could not be loaded'));assert(main.textContent.includes('Mark mark'));
+ const node=main.querySelectorAll('button[data-mark-id]').find(n=>n.dataset.markId===state.findings[0].id);node.click();assert.equal(main.querySelector('#bm-detail-title').textContent,state.findings[0].name);assert.equal(main.querySelectorAll('img').length,0);assert(main.querySelector('.bm-facts').textContent.includes('not a trademark registration'));assert.equal(main.querySelector('.bm-detail').querySelector('a').href,'brand-monitor.html?client=client-one&view=updates');
+ update({...state,clientId:'foreign'});assert(!main.textContent.includes('Build With Purpose'));assert(main.textContent.includes('could not load'));assert(main.textContent.includes('Mark mark'));
 });
 
 test('portal entry renders through the existing access gate and handles client choice',async()=>{
  const source=(await readFile(new URL('../portal/assets/client.js',import.meta.url),'utf8')).replace(/^import .+;\n/gm,'');
- async function run({user=true,requested='client-one',loader=async(_db,id)=>brandMapBcmModel(id,[])}={}){
+ async function run({user=true,connected=false,requested='client-one',loader=async(_db,id)=>brandMapBcmModel(id,[])}={}){
   const main=page();main.dataset.page='portal';const choice=new Element('select');choice.parentElement={};const name=new Element('span');
   const events={};const authEvents={};const doc={...globalThis.document,hidden:false,querySelector:selector=>({'main':main,'#client-choice':choice,'#client-name':name}[selector]||null),addEventListener(type,callback){events[type]=callback;}};
   globalThis.document=doc;const queryTables=[];const gates=[];
   const db={auth:{getUser:async()=>({data:{user:user?{id:'signed-in'}:null}}),mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:'aal1',nextLevel:'aal1'}})},onAuthStateChange(callback){authEvents.callback=callback;}},rpc:async()=>({data:'client'}),from(table){queryTables.push(table);return {data:table==='vb_clients'?[client,{id:'client-two',name:'Other Studio'}]:table==='vb_marks'?[record('first'),record('second',{client_id:'client-two'})]:[],select(){return this;},order(){return this;},is(){return this;}};}};
-  const context={document:doc,window:{addEventListener(){}},location:{search:'?client='+requested},URLSearchParams,Option:function(text,value){const e=new Element('option');e.textContent=text;e.value=value;return e;},createConnection:()=>db,setupGate:()=>({lock:text=>gates.push(text||'locked'),unlock:()=>gates.push('unlocked'),current:()=>true}),loadRecords,renderBrandMap,loadBrandMapBcm:loader,clearMarkDrafts(){},clearBrandMonitorDrafts(){}};
+  const context={document:doc,window:{addEventListener(){}},location:{search:'?client='+requested},URLSearchParams,Option:function(text,value){const e=new Element('option');e.textContent=text;e.value=value;return e;},createConnection:()=>db,setupGate:()=>({lock:text=>gates.push(text||'locked'),unlock:()=>gates.push('unlocked'),current:()=>true}),loadRecords,renderBrandMap,aiBcmEnabled:()=>connected,loadReviewedMap:loader,loadBrandMapBcm:loader,clearMarkDrafts(){},clearBrandMonitorDrafts(){}};
   await vm.runInNewContext('(async()=>{'+source+'})()',context);return {main,choice,queryTables,gates,doc,events,authEvents};
  }
  const allowed=await run();assert(allowed.main.textContent.includes('Brand Map'));assert.equal(allowed.gates.at(-1),'unlocked');assert(allowed.main.textContent.includes('Mark first'));assert(!allowed.main.textContent.includes('Mark second'));
@@ -102,6 +103,15 @@ test('portal entry renders through the existing access gate and handles client c
  const retired=await run({loader:()=>{throw new Error('Retired monitor should not load');}});assert(retired.main.textContent.includes('Mark first'));assert(!retired.main.textContent.includes('monitor'));
  retired.choice.listeners.change({target:{value:'client-two'}});assert(retired.main.textContent.includes('Mark second'));assert(!retired.main.textContent.includes('Mark first'));
  retired.authEvents.callback('SIGNED_OUT');assert.equal(retired.main.children.length,0);
+ const resolvers={};const live=await run({connected:true,loader:(_db,id)=>new Promise(resolve=>resolvers[id]=resolve)});
+ live.choice.listeners.change({target:{value:'client-two'}});
+ resolvers['client-one'](reviewedMapModel('client-one',[{finding_id:'private',client_id:'client-one',approved_at:'2026-10-12',name:'STALE PRIVATE',source_url:'https://example.com'}]));
+ resolvers['client-two'](reviewedMapModel('client-two',[]));await new Promise(r=>setImmediate(r));assert(!live.main.textContent.includes('STALE PRIVATE'));
  const denied=await run({user:false});assert.equal(denied.main.children.length,0);assert.deepEqual(denied.queryTables,[]);assert.equal(denied.gates.at(-1),'Please sign in again.');
  const tampered=await run({requested:'unauthorized-client'});assert.equal(tampered.main.children.length,0);assert.equal(tampered.gates.at(-1),'This client is not available to your account.');
 });
+
+const pub=(extra={})=>({finding_id:'approved',client_id:client.id,name:'Reviewed offering',kind:'product',context:'Client-visible context',passage:'Supporting passage',source_url:'https://example.com/product',approved_at:'2026-10-12',withdrawn_at:null,...extra});
+test('reviewed map excludes foreign, withdrawn, invalid-source and private fields',()=>{const data=reviewedMapModel(client.id,[pub({note:'PRIVATE'}),pub(),pub({finding_id:'other',client_id:'other',name:'PRIVATE'}),pub({finding_id:'withdrawn',withdrawn_at:'2026-10-13',name:'PRIVATE'}),pub({finding_id:'unsafe',source_url:'javascript:alert(1)'})]);assert.equal(data.findings.length,1);assert(!JSON.stringify(data).includes('PRIVATE'));assert.equal(data.findings[0].status,'Attorney reviewed');});
+test('withdrawal removes reviewed cards while preserving legal counts and records',()=>{const main=page(),update=renderBrandMap(main,client,[record('legal')],reviewedMapModel(client.id,[pub()]));assert(main.textContent.includes('Reviewed offering'));assert(main.querySelector('.bm-summary').textContent.includes('1 Trademark records'));update(reviewedMapModel(client.id,[]));assert(!main.textContent.includes('Reviewed offering'));assert(main.textContent.includes('Mark legal'));update({status:'ready',clientId:client.id,findings:[{kind:'detected',name:'PRIVATE RAW'}],activity:[{label:'PRIVATE RAW'}]});assert(!main.textContent.includes('PRIVATE RAW'));});
+test('reviewed loader reads only scoped publications and rechecks access before display',async()=>{let signedIn=true,reads=0;const db={auth:{getUser:async()=>({data:{user:signedIn?{id:'a'}:null}}),mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:'aal1',nextLevel:'aal1'}})}},rpc:async()=>({data:'client'}),from(table){assert.equal(table,'vb_bcm_ai_publications');reads++;return {select(fields){assert(!fields.includes('note'));return this;},eq(k,v){assert.equal(k,'client_id');assert.equal(v,client.id);return this;},is(k,v){assert.equal(k,'withdrawn_at');assert.equal(v,null);return this;},order(){signedIn=false;return {data:[pub()]};}};}};await assert.rejects(loadReviewedMap(db,client.id),/sign in/);assert.equal(reads,1);await assert.rejects(loadReviewedMap(db,client.id),/sign in/);assert.equal(reads,1);});

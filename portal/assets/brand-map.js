@@ -11,7 +11,7 @@ export function renderBrandMap(main,client,records,bcmState={status:"retired"}){
  let bcm={status:"loading"},nodes=model.marks;
  const monitorUrl=`brand-monitor.html?client=${encodeURIComponent(model.clientId)}`;
  const root=el('div',undefined,'bm-home');
- const intro=el('section',undefined,'bm-intro');intro.append(el('h1','Brand Map'),el('p','Your saved trademark records, together.'));
+ const intro=el('section',undefined,'bm-intro');intro.append(el('h1','Brand Map'),el('p','Your trademark records and attorney-reviewed discoveries, together.'));
  const portfolioUrl=`portfolio.html?client=${encodeURIComponent(model.clientId)}`;
  intro.append(link('View Portfolio →',portfolioUrl));root.append(intro);
  const summary=el('section',undefined,'bm-summary');summary.setAttribute('aria-label','Saved trademark record counts');
@@ -24,9 +24,9 @@ export function renderBrandMap(main,client,records,bcmState={status:"retired"}){
  const zoomIn=button('+','Zoom in',()=>setZoom(zoom+.15)),zoomOut=button('−','Zoom out',()=>setZoom(zoom-.15));
  const reset=button('Reset','Reset map zoom and position',()=>{setZoom(1);viewport.scrollTop=0;viewport.scrollLeft=0;});controls.append(zoomValue,zoomIn,zoomOut,reset);toolbar.append(title,controls);ecosystem.append(toolbar);
  const viewport=el('div',undefined,'bm-viewport');viewport.tabIndex=0;viewport.setAttribute('aria-label','Portfolio map. Scroll to explore when zoomed.');
- const canvas=el('div',undefined,'bm-canvas');canvas.setAttribute('role','group');canvas.setAttribute('aria-label','Company workspace and saved trademark records');viewport.append(canvas);ecosystem.append(viewport);
+ const canvas=el('div',undefined,'bm-canvas');canvas.setAttribute('role','group');canvas.setAttribute('aria-label','Company workspace, trademark records and reviewed discoveries');viewport.append(canvas);ecosystem.append(viewport);
  const pager=el('div',undefined,'bm-pager');pager.setAttribute('aria-label','Record pages');const previous=button('← Previous',null,()=>showPage(page-1,true));const pageLabel=el('span');pageLabel.setAttribute('aria-live','polite');const next=button('Next →',null,()=>showPage(page+1,true));pager.append(previous,pageLabel,next);ecosystem.append(pager);
- const legend=el('p','Lines connect saved trademark records to your workspace. They do not establish ownership or parent-brand relationships.','bm-legend');ecosystem.append(legend);layout.append(ecosystem);
+ const legend=el('p','Lines connect items to your workspace. Reviewed discoveries are separate from trademark records; these connections do not establish ownership or legal status.','bm-legend');ecosystem.append(legend);layout.append(ecosystem);
  const right=el('div',undefined,'bm-right');const detail=el('section',undefined,'bm-detail');detail.setAttribute('aria-labelledby','bm-detail-title');
  const back=button('↑ Back to map',null,()=>{const node=[...canvas.querySelectorAll('button')].find(node=>node.dataset.markId===(selected||''));node?.focus();node?.scrollIntoView({block:'center'});});back.className='bm-back';detail.append(back,el('p','Selected record','bm-eyebrow'));
  const detailTitle=el('h2');detailTitle.id='bm-detail-title';detailTitle.tabIndex=-1;const subtitle=el('p',undefined,'bm-subtitle'),facts=el('dl',undefined,'bm-facts'),detailsLink=link('View trademark details →',portfolioUrl);detail.append(detailTitle,subtitle,facts,detailsLink);right.append(detail);
@@ -40,8 +40,9 @@ export function renderBrandMap(main,client,records,bcmState={status:"retired"}){
   const mark=nodes.find(mark=>mark.id===id);selected=mark?.id||null;
   for(const node of canvas.querySelectorAll('button[data-mark-id]'))node.setAttribute('aria-pressed',String(node.dataset.markId===(selected||'')));
   facts.replaceChildren();
-  detail.querySelector('.bm-eyebrow').textContent=mark?(mark.kind==='detected'?'Possible monitor finding':'Selected record'):'Company workspace';
-  if(mark?.kind==='detected'){detailTitle.textContent=mark.name;subtitle.textContent=mark.type;field('Review status','Unconfirmed · not a trademark record');field('Detected',dateLabel(mark.detectedAt));field('Source page',mark.sourceUrl);field('Observed text',mark.excerpt);field('Why shown',mark.reason);detailsLink.href=monitorUrl;detailsLink.textContent='Review in Brand Change Monitor →';}
+  detail.querySelector('.bm-eyebrow').textContent=mark?(mark.kind==='reviewed'?'Reviewed brand discovery':mark.kind==='detected'?'Possible monitor finding':'Selected record'):'Company workspace';
+  if(mark?.kind==='reviewed'){detailTitle.textContent=mark.name;subtitle.textContent=mark.type;field('Review status','Attorney reviewed · not a trademark registration');field('Reviewed',dateLabel(mark.detectedAt));field('Source page',mark.sourceUrl);field('Supporting passage',mark.excerpt);field('Context',mark.reason);detailsLink.href=monitorUrl+'&view=updates';detailsLink.textContent='View reviewed update →';}
+  else if(mark?.kind==='detected'){detailTitle.textContent=mark.name;subtitle.textContent=mark.type;field('Review status','Unconfirmed · not a trademark record');field('Detected',dateLabel(mark.detectedAt));field('Source page',mark.sourceUrl);field('Observed text',mark.excerpt);field('Why shown',mark.reason);detailsLink.href=monitorUrl;detailsLink.textContent='Review in Brand Change Monitor →';}
   else if(mark){detailTitle.textContent=mark.name;subtitle.textContent=`${mark.type} · legal record`;field('Record status',mark.status);field('USPTO status',mark.usptoStatus);field('Owner',mark.owner);field('Source',mark.source);field('Last retrieved',dateLabel(mark.sourceCheckedAt));detailsLink.href=recordLink(model.clientId,mark.id);detailsLink.textContent='View trademark details →';}
   else{detailTitle.textContent=model.company;subtitle.textContent='Company workspace · not a master-brand designation';field('Saved records',String(model.counts.total));field('Relationships','Not recorded');detailsLink.href=portfolioUrl;detailsLink.textContent='View Portfolio →';}
   if(moveFocus){detailTitle.focus({preventScroll:true});if(window.matchMedia('(max-width:1439px)').matches)detail.scrollIntoView({block:'start'});}
@@ -53,9 +54,9 @@ export function renderBrandMap(main,client,records,bcmState={status:"retired"}){
   canvas.append(orbits);
   const company=button(model.company,'Company workspace: '+model.company,()=>select(null,true));company.className='bm-node bm-company';company.dataset.markId='';company.setAttribute('aria-controls',detail.id='bm-detail');company.setAttribute('aria-pressed','true');company.append(el('small','Company workspace'));canvas.append(company);
   for(const {mark,x,y} of view.items){
-   const line=document.createElementNS('http://www.w3.org/2000/svg','line');for(const [key,value] of Object.entries({x1:400,y1:320,x2:x*8,y2:y*6.4}))line.setAttribute(key,String(value));line.setAttribute('class',mark.kind==='detected'?'bm-edge bm-detected-edge':'bm-edge');orbits.append(line);
-   const node=button(undefined,null,()=>select(mark.id,true));node.className=mark.kind==='detected'?'bm-node bm-detected':'bm-node';node.dataset.markId=mark.id;node.style.left=`${x}%`;node.style.top=`${y}%`;node.setAttribute('aria-pressed','false');node.setAttribute('aria-controls',detail.id);
-   node.append(el('span',mark.kind==='detected'?'Possible monitor finding':mark.type+' mark','bm-type'),el('strong',mark.name),el('span',mark.status,'bm-record-status'));canvas.append(node);
+   const line=document.createElementNS('http://www.w3.org/2000/svg','line');for(const [key,value] of Object.entries({x1:400,y1:320,x2:x*8,y2:y*6.4}))line.setAttribute(key,String(value));line.setAttribute('class',(mark.kind==='detected'||mark.kind==='reviewed')?'bm-edge bm-detected-edge':'bm-edge');orbits.append(line);
+   const node=button(undefined,null,()=>select(mark.id,true));node.className=(mark.kind==='detected'||mark.kind==='reviewed')?'bm-node bm-detected':'bm-node';node.dataset.markId=mark.id;node.style.left=`${x}%`;node.style.top=`${y}%`;node.setAttribute('aria-pressed','false');node.setAttribute('aria-controls',detail.id);
+   node.append(el('span',mark.kind==='reviewed'?'Reviewed discovery':mark.kind==='detected'?'Possible monitor finding':mark.type+' mark','bm-type'),el('strong',mark.name),el('span',mark.status,'bm-record-status'));canvas.append(node);
   }
   if(!view.items.length){canvas.classList.add('bm-empty-canvas');const empty=el('p','No saved trademark records are available in this workspace yet.','bm-empty');canvas.append(empty);}else canvas.classList.remove('bm-empty-canvas');
   pager.hidden=view.pages===1;previous.disabled=page===0;next.disabled=page===view.pages-1;pageLabel.textContent=`${page+1} of ${view.pages} · ${view.items.length} of ${nodes.length} items`;
@@ -65,25 +66,25 @@ export function renderBrandMap(main,client,records,bcmState={status:"retired"}){
   if(state?.status==='retired'){nodes=model.marks;activity.hidden=true;attention.hidden=true;activity.replaceChildren();attention.replaceChildren();showPage(page);return;}
   // Ignore mismatched workspace data even if a caller supplies it accidentally.
   bcm=state?.status==='ready'&&state.clientId!==model.clientId?{status:'error'}:state||{status:'error'};
+  if(bcm.status==='ready'){bcm={...bcm,findings:(bcm.findings||[]).filter(f=>f.kind==='reviewed')};bcm.activity=bcm.findings.slice(0,3).map(f=>({date:f.detectedAt,label:'Discovery reviewed: '+f.name}));}
+  activity.hidden=false;attention.hidden=false;
   const previousSelection=selected,previousPage=page,previousZoom=zoom;
   nodes=[...model.marks,...(bcm.status==='ready'?bcm.findings:[])];
-  activity.replaceChildren(el('h2','Recent brand activity','bm-eyebrow'));
-  attention.replaceChildren(el('h2','Detected branding','bm-eyebrow'));
+  activity.replaceChildren(el('h2','Reviewed brand activity','bm-eyebrow'));
+  attention.replaceChildren(el('h2','Reviewed discoveries','bm-eyebrow'));
   if(bcm.status==='loading'){
-   activity.append(el('p','Loading saved monitor activity…'));attention.append(el('p','Loading possible branding changes…'));
+   activity.append(el('p','Loading reviewed discoveries…'));attention.append(el('p','Loading attorney-approved updates…'));
   }else if(bcm.status==='error'){
-   activity.append(el('p','Saved monitor results could not be loaded. Your trademark records are still available.'));
-   attention.append(el('p','Detected branding is unavailable. Open the monitor or reload this page to try again.'));
+   activity.append(el('p','Reviewed discoveries could not load. Your trademark records remain available.'));
+   attention.append(el('p','Reload this page or open reviewed updates to try again.'));
   }else{
-   if(!bcm.activity.length)activity.append(el('p','No saved monitor scans yet.'));
+   if(!bcm.activity.length)activity.append(el('p','No reviewed discoveries yet.'));
    for(const item of bcm.activity){const row=el('p',undefined,'bm-activity-item');row.append(el('strong',item.label),el('span',dateLabel(item.date)));activity.append(row);}
-   attention.append(el('h3',`${bcm.findings.length} possible change${bcm.findings.length===1?'':'s'}`));
-   attention.append(el('p',bcm.findings.length?'Select a dashed-line card to see the observed text and source. Findings need review; they are not confirmed assets.':bcm.compared?'No specific branding cue was found in the available comparisons.':'A completed comparison with its baseline is needed to identify changes.'));
-   if(bcm.missingBaselines)attention.append(el('p','Some saved comparisons could not be matched to their baseline; those findings are unavailable.'));
-   attention.append(el('p','Based on the 10 most recent saved scans. Text detections are not a complete asset inventory and do not identify logo images.'));
+   attention.append(el('h3',`${bcm.findings.length} reviewed discover${bcm.findings.length===1?'y':'ies'}`));
+   attention.append(el('p',bcm.findings.length?'Select a dashed-line card for its reviewed context and source. These are not trademark registrations.':'Only attorney-reviewed discoveries appear here. Unreviewed findings stay in the private attorney queue.'));
   }
   activity.append(link('Open Brand Change Monitor →',monitorUrl));
-  attention.append(link('Review monitor findings →',monitorUrl));
+  attention.append(link('View reviewed updates →',monitorUrl+'&view=updates'));
   showPage(previousPage);setZoom(previousZoom);select(previousSelection);
  }
  updateBcm(bcmState);

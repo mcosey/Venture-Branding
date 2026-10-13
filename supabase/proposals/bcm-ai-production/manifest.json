@@ -2,13 +2,13 @@
   "source_commit": "954f3db0f3de3990de7894888a020f53e73f96de",
   "production_project": "omvkwiosonatswocbdgx",
   "production_system_id": "7690937621030482216",
-  "status": "LOCAL REVIEW ONLY / NOT APPLIED",
+  "status": "INSTALLED / MONITORING OFF; OCTOBER 12 BASELINE AND REVIEWED MAP INTEGRATION",
   "pilot_max_runs": 20,
   "pilot_client": "UNSELECTED",
   "activation_defaults": "worker switch absent/off, DB ready false, no job, no client enabled",
   "files": {
     "frontend.patch": "0b5e9b5b192bfdc8373e8652d18a207b4c6aa0f2263c2ce3155772bc1ced685f",
-    "README.md": "3ed054f3fb986f7b2cc93f488961071fcd0e4654f58021543c6b427d2c69c5b6",
+    "README.md": "128f9008c6caefac998244e0e873c1655c01f4d709b3e4d7b7019b44ed58b636",
     "frontend/config.review.js": "793657c5395b69b97fb02bc7772c7a7a0a2922620bda10cc30ea72d10dbd82ae",
     "frontend/new-mark.html": "a2048fc2d6b15e4cfb823f981420d2dff17b6d1cad0458c1ee9cc066c277c08f",
     "frontend/digest.html": "45cd89cee83c75f66652a0dc2f4e4d4ef87871b26ad76e2cc641f13927d76ec0",
@@ -40,6 +40,9 @@
     "sql/03-check-disabled.sql": "cecd53c829ec13cc3c05c7b787977937515264a834c918f9a7433c160fd9700b",
     "sql/05-create-job-NOT-APPROVED.sql": "c1bf2e87312506713b3490f74e9fd56977b203791ddf650a578a9f0afc3f7263",
     "sql/06-pause-preserve.sql": "ad5651250cc8d412684f85b82d023d4f947aadbec7393eb4a6a11f90bf76dde4",
-    "sql/02-setup-disabled.sql": "2de197d3986b0567183add1110e36abd0864087805b8e33fe626912c8133366f"
-  }
+    "sql/02-setup-disabled.sql": "2de197d3986b0567183add1110e36abd0864087805b8e33fe626912c8133366f",
+    "sql/07-baseline-3-pass.sql": "f03b44ee1fdff5b8b40c01c02f19c112533f2df376ffc9be9419ea837c3b5ee7",
+    "sql/08-verify-baseline-reviewed-map.sql": "531d40e65eccd69a0aa9f1ef354c904f1677c6182c0cc7898607886b10a84161"
+  },
+  "integration_source": "Current codex/attorney-workspace branch; original review copies remain pinned to source_commit"
 }
