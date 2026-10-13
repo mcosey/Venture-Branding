@@ -2,13 +2,13 @@
   "source_commit": "954f3db0f3de3990de7894888a020f53e73f96de",
   "production_project": "omvkwiosonatswocbdgx",
   "production_system_id": "7690937621030482216",
-  "status": "INSTALLED / MONITORING OFF; OCTOBER 12 BASELINE AND REVIEWED MAP INTEGRATION",
-  "pilot_max_runs": 20,
-  "pilot_client": "UNSELECTED",
+  "status": "INSTALLED / SINGLE-CLIENT OPENAI WEEKLY PILOT ACTIVE; TOTAL ATTEMPT CAP7",
+  "pilot_max_runs": 7,
+  "pilot_client": "10000000-0000-0000-0000-000000000001",
   "activation_defaults": "worker switch absent/off, DB ready false, no job, no client enabled",
   "files": {
     "frontend.patch": "0b5e9b5b192bfdc8373e8652d18a207b4c6aa0f2263c2ce3155772bc1ced685f",
-    "README.md": "128f9008c6caefac998244e0e873c1655c01f4d709b3e4d7b7019b44ed58b636",
+    "README.md": "279903112be942ebeb156639fc4343ded566b3c96438ebc2eca03bdba0ad8281",
     "frontend/config.review.js": "793657c5395b69b97fb02bc7772c7a7a0a2922620bda10cc30ea72d10dbd82ae",
     "frontend/new-mark.html": "a2048fc2d6b15e4cfb823f981420d2dff17b6d1cad0458c1ee9cc066c277c08f",
     "frontend/digest.html": "45cd89cee83c75f66652a0dc2f4e4d4ef87871b26ad76e2cc641f13927d76ec0",
@@ -42,7 +42,9 @@
     "sql/06-pause-preserve.sql": "ad5651250cc8d412684f85b82d023d4f947aadbec7393eb4a6a11f90bf76dde4",
     "sql/02-setup-disabled.sql": "2de197d3986b0567183add1110e36abd0864087805b8e33fe626912c8133366f",
     "sql/07-baseline-3-pass.sql": "f03b44ee1fdff5b8b40c01c02f19c112533f2df376ffc9be9419ea837c3b5ee7",
-    "sql/08-verify-baseline-reviewed-map.sql": "531d40e65eccd69a0aa9f1ef354c904f1677c6182c0cc7898607886b10a84161"
+    "sql/08-verify-baseline-reviewed-map.sql": "531d40e65eccd69a0aa9f1ef354c904f1677c6182c0cc7898607886b10a84161",
+    "sql/09-weekly-pilot-dispatcher.sql": "62d40a647b6f01ff44740ae0c7b02ca54cda5b39a110efb974dbb9f01b871945"
   },
-  "integration_source": "Current codex/attorney-workspace branch; original review copies remain pinned to source_commit"
+  "integration_source": "Current codex/attorney-workspace branch; original review copies remain pinned to source_commit",
+  "current_pilot_state": "4 runs used,3 remaining; next October19,2026; key renewal required"
 }

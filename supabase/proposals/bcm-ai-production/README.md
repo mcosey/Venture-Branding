@@ -77,3 +77,9 @@ The Brand Map reads only non-withdrawn attorney-approved publication snapshots. 
 sql/08-verify-baseline-reviewed-map.sql completed in Production with all temporary writes rolled back. It checked 22 saved benchmark candidates as baseline, failed-pass exclusion, later-discovery review, duplicate suppression, approval and withdrawal visibility, and authenticated-client exclusion from raw observations. No OpenAI request was made. Final read-only checks: both readiness flags false, Production runs/publications zero, active BCM jobs zero, no pilot selected, anonymous progress-counter execution denied.
 
 81 focused local checks passed. Signed-in Production client display verification passed: Brand Map, VB Agents, baseline0/3 and reviewed Updates are connected, with paid/start controls disabled. The integration commit/push is the remaining save step. Paid activation remains a separate approval.
+
+## October12 weekly pilot update — active, bounded
+
+One actual cron-triggered Production check succeeded and saved11 observations against the existing25-name baseline, with zero new alerts/publications. Estimated usage USD0.0225104. OpenAI weekly pilot now active only for the existing Cotivate workspace, total attempt cap7 with4 used and3 remaining. Next check October19,2026 at9:22p.m. Central. Renew the short-lived API key before expiration.
+
+SQL09 records the installed dispatcher using existing bcm_scheduler_secret_v2 and initial inactive job creation. Its source is not an idempotent rerun/activation script. Final job active, five-minute due checks; actual research weekly. Legacy crawler stays off. Read handoff36 for exact live state and saved evidence. Original review copies remain historical; current branch is the portal source.
