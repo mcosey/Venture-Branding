@@ -1,6 +1,7 @@
 """Public USPTO feed processor. No client data, third-party packages or secret logging."""
-import argparse, datetime as dt, hashlib, json, os, re, tempfile, urllib.request, zipfile
+import argparse, datetime as dt, hashlib, json, os, re, tempfile, urllib.error, urllib.request, zipfile
 import xml.etree.ElementTree as ET
+from contextlib import contextmanager
 
 API = 'https://api.uspto.gov/api/v1/datasets/products'
 ENDPOINTS = {'production': 'https://omvkwiosonatswocbdgx.supabase.co/functions/v1/watch-ingest',
@@ -9,7 +10,38 @@ MAX_ZIP = 100 * 1024 * 1024
 MAX_XML = 2 * 1024 * 1024 * 1024
 MAX_RECORDS = 20000
 
-class FeedError(Exception): pass
+class FeedError(Exception):
+    def __init__(self, message, http_status=None):
+        super().__init__(message)
+        self.http_status = http_status
+
+STAGES = frozenset(('credentials', 'catalog-request', 'catalog-validation', 'inventory-request',
+                    'inventory-validation', 'source-metadata', 'archive-download',
+                    'archive-validation', 'file-ingestion', 'client-checks', 'sample-validation'))
+
+@contextmanager
+def diagnostic(stage, filename=None):
+    # Only fixed labels, validated public filenames and numeric HTTP status reach logs.
+    # Never serialize exceptions, response bodies, headers, URLs or source field values.
+    if stage not in STAGES: raise ValueError('Unknown diagnostic stage')
+    label = stage
+    if isinstance(filename, str) and re.fullmatch(r'apc[0-9]{6}\.zip', filename):
+        label += ' file=' + filename
+    print('Watch step: ' + label, flush=True)
+    try:
+        yield
+    except Exception as error:
+        status = error.code if isinstance(error, urllib.error.HTTPError) else (
+            error.http_status if isinstance(error, FeedError) else None)
+        if type(status) is int and 100 <= status <= 599:
+            reason = 'http-status=' + str(status)
+        elif isinstance(error, FeedError): reason = 'validation-or-request-failed'
+        elif isinstance(error, zipfile.BadZipFile): reason = 'invalid-archive'
+        elif isinstance(error, ET.ParseError): reason = 'invalid-xml'
+        elif isinstance(error, (TimeoutError, OSError)): reason = 'connection-or-file-error'
+        else: reason = 'unexpected-error'
+        print('Watch failed: ' + label + ' reason=' + reason, flush=True)
+        raise
 
 def date(value):
     if not re.fullmatch(r'\d{8}', value or ''): raise FeedError('Invalid filing date')
@@ -125,6 +157,8 @@ def request(url, key, body=None, limit=8*1024*1024):
             if len(raw) > limit: raise FeedError('Response limit exceeded')
             return json.loads(raw)
     except FeedError: raise
+    except urllib.error.HTTPError as error:
+        raise FeedError('Remote request failed; no successful check claimed', error.code) from None
     except Exception: raise FeedError('Remote request failed; no successful check claimed') from None
 
 def manifest(payload, today):
@@ -168,42 +202,53 @@ def ingest(endpoint, key, filename, revision, records, call=request, manifest_re
     if result.get('complete') is not True: raise FeedError('File completion not acknowledged')
 
 def run(environment):
-    odp_key = os.environ.get('ODP_API_KEY'); ingest_key = os.environ.get('WATCH_INGEST_KEY')
-    if not odp_key or not ingest_key: raise FeedError('Required credentials unavailable')
-    endpoint = ENDPOINTS[environment]
+    with diagnostic('credentials'):
+        odp_key = os.environ.get('ODP_API_KEY'); ingest_key = os.environ.get('WATCH_INGEST_KEY')
+        if not odp_key or not ingest_key: raise FeedError('Required credentials unavailable')
+        endpoint = ENDPOINTS[environment]
     today = dt.datetime.now(dt.timezone.utc).date()
     # USPTO's product lookup requires lowercase; returned download URLs use uppercase.
-    payload = request(API + '/trtdxfap?fileDataFromDate=' + (today-dt.timedelta(days=35)).isoformat() + '&fileDataToDate=' + today.isoformat() + '&includeFiles=true', odp_key)
-    files = manifest(payload, today)
-    inventory = request(endpoint, ingest_key, {'action': 'inventory'})
-    completed = {(f['filename'], f['manifest_revision']) for f in inventory['files']}
+    with diagnostic('catalog-request'):
+        payload = request(API + '/trtdxfap?fileDataFromDate=' + (today-dt.timedelta(days=35)).isoformat() + '&fileDataToDate=' + today.isoformat() + '&includeFiles=true', odp_key)
+    with diagnostic('catalog-validation'):
+        files = manifest(payload, today)
+    with diagnostic('inventory-request'):
+        inventory = request(endpoint, ingest_key, {'action': 'inventory'})
+    with diagnostic('inventory-validation'):
+        completed = {(f['filename'], f['manifest_revision']) for f in inventory['files']}
     # Replay window deliberately includes revised source files. Completed content hashes skip DB writes.
     with tempfile.TemporaryDirectory(prefix='vb-watch-') as folder:
         for item in files:
             filename = item['fileName']; path = os.path.join(folder, filename)
-            marker = item.get('fileLastModifiedDateTime')
-            if not isinstance(marker, str) or not marker: raise FeedError('Missing file revision metadata')
-            manifest_revision = hashlib.sha256(json.dumps([filename, item['fileSize'], marker]).encode()).hexdigest()
+            with diagnostic('source-metadata', filename):
+                marker = item.get('fileLastModifiedDateTime')
+                if not isinstance(marker, str) or not marker: raise FeedError('Missing file revision metadata')
+                manifest_revision = hashlib.sha256(json.dumps([filename, item['fileSize'], marker]).encode()).hexdigest()
             if (filename, manifest_revision) in completed: continue
             try:
-                req = urllib.request.Request(item['fileDownloadURI'], headers={'X-API-KEY': odp_key})
-                size = 0; digest = hashlib.sha256()
-                with ARCHIVE_OPENER.open(req, timeout=120) as response, open(path, 'wb') as output:
-                    while True:
-                        chunk = response.read(65536)
-                        if not chunk: break
-                        size += len(chunk)
-                        if size > MAX_ZIP: raise FeedError('Download limit exceeded')
-                        digest.update(chunk); output.write(chunk)
-                if size != item['fileSize']: raise FeedError('Download size mismatch')
-                records, counts = extract(path, filename)
-                ingest(endpoint, ingest_key, filename, digest.hexdigest(), records, manifest_revision=manifest_revision)
+                with diagnostic('archive-download', filename):
+                    req = urllib.request.Request(item['fileDownloadURI'], headers={'X-API-KEY': odp_key})
+                    size = 0; digest = hashlib.sha256()
+                    with ARCHIVE_OPENER.open(req, timeout=120) as response, open(path, 'wb') as output:
+                        while True:
+                            chunk = response.read(65536)
+                            if not chunk: break
+                            size += len(chunk)
+                            if size > MAX_ZIP: raise FeedError('Download limit exceeded')
+                            digest.update(chunk); output.write(chunk)
+                    if size != item['fileSize']: raise FeedError('Download size mismatch')
+                with diagnostic('archive-validation', filename):
+                    records, counts = extract(path, filename)
+                with diagnostic('file-ingestion', filename):
+                    ingest(endpoint, ingest_key, filename, digest.hexdigest(), records, manifest_revision=manifest_revision)
                 print(filename, 'processed', len(records), 'word records;', counts['total'], 'total records')
             except FeedError: raise
             except Exception: raise FeedError('Source processing failed; coverage remains incomplete') from None
             finally:
                 if os.path.exists(path): os.remove(path)
-    run_checks(endpoint, ingest_key)
+    with diagnostic('client-checks'):
+        run_checks(endpoint, ingest_key)
+
 
 def run_checks(endpoint, key, call=request):
     for _ in range(10):
@@ -217,7 +262,8 @@ if __name__ == '__main__':
     parser.add_argument('--sample'); args = parser.parse_args()
     try:
         if args.sample:
-            records, counts = extract(args.sample, os.path.basename(args.sample))
+            with diagnostic('sample-validation', os.path.basename(args.sample)):
+                records, counts = extract(args.sample, os.path.basename(args.sample))
             print(json.dumps({'counts': counts, 'word_candidates': len(records)}, sort_keys=True))
         else: run(args.environment)
     except Exception:
