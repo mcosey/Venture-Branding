@@ -1,3 +1,5 @@
+import {watchEnabled} from '../../auth/watch.mjs';
+import {renderConnectedWatch} from '../../portal/assets/watch-connected.js?v=20261013-watch-mvp';
 import {aiBcmEnabled,renderAiBcm} from '../../portal/assets/bcm-ai.js?v=20261013-client-rollout';
 import {renderEvidence} from '../../portal/assets/evidence.js?v=20261010-use-history';
 import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
@@ -16,6 +18,7 @@ const  gate=setupGate(db,'staff');
   const aiTest=aiBcmEnabled(db);
   const bcmScreen=document.createElement('section');bcmScreen.dataset.screen='bcm';bcmScreen.hidden=true;
   if(aiTest)document.querySelector('#main').insertBefore(bcmScreen,document.querySelector('#main footer'));
+  const watchScreen=document.createElement('section');watchScreen.dataset.screen='watch';watchScreen.hidden=true;document.querySelector('#main').insertBefore(watchScreen,document.querySelector('#main footer'));
   const clients=[];
   let accessRecords=[], accessReady=false;
   async function reloadRecords(ticket){
@@ -105,6 +108,7 @@ const  gate=setupGate(db,'staff');
       entry.append(controls);markList.append(entry);
     });
     if(!selected.marks.length)markList.append(node('p','No trademarks yet.','empty-client'));
+    const watchLink=detail.querySelector('[data-watch-link]');if(watchLink)watchLink.remove();if(watchEnabled()&&!selected.archived){const a=node('a','Review Trademark Watch','text-link');a.dataset.watchLink='';a.href='#watch-'+selected.id;detail.querySelector('.service-list').before(a);}
     const configured=selected.portal?serviceNames:[];
     detail.querySelector('.service-list').replaceChildren(...(configured.length?configured:['No portal add-on.']).map(text=>node('li',text)));
     const evidenceHost=detail.querySelector('[data-use-history]');if(evidenceHost){evidenceHost.replaceChildren();evidenceDispose=renderEvidence(evidenceHost,selected,selected.marks,db,{audience:'staff'});}
@@ -116,7 +120,10 @@ const  gate=setupGate(db,'staff');
   function route(){
     evidenceDispose();evidenceDispose=()=>{};
     let requested=location.hash.slice(1)||'overview'; if(requested==='client-cotivate-llc')requested='client-10000000-0000-0000-0000-000000000001'; let view=requested;
-    if(aiTest&&requested.startsWith('bcm-')){
+    if(watchEnabled()&&requested.startsWith('watch-')){
+      selected=clients.find(c=>c.id===requested.slice(6)&&!c.archived);view=selected?'watch':'missing';watchScreen.replaceChildren();
+      if(selected){const back=node('a','← Back to client','text-link');back.href='#client-'+selected.id;watchScreen.append(back,node('h1','Trademark Watch review'),node('p',selected.name));evidenceDispose=renderConnectedWatch(watchScreen,selected,[],db,{audience:'staff'});}
+    }else if(aiTest&&requested.startsWith('bcm-')){
       selected=clients.find(c=>c.id===requested.slice(4)&&!c.archived);view=selected?'bcm':'missing';
       bcmScreen.replaceChildren();if(selected){const heading=node('div',undefined,'page-heading'),back=node('a','← Back to client','text-link');back.href='#client-'+selected.id;heading.append(back,node('h1','Brand discoveries'),node('p',selected.name));bcmScreen.append(heading);evidenceDispose=renderAiBcm(bcmScreen,selected,db,{audience:'staff'});}
     }else if(requested.startsWith('client-')){
@@ -124,10 +131,10 @@ const  gate=setupGate(db,'staff');
       if(selected)renderDetail();else selected=clients[0];
     } else if(!['overview','clients','calendar','requests','archived'].includes(view))view='overview';
     document.querySelectorAll('[data-screen]').forEach(screen=>screen.hidden=screen.dataset.screen!==view);
-    const section=view==='bcm'?'clients':view==='client'?(selected.archived?'archived':'clients'):view;
+    const section=['bcm','watch'].includes(view)?'clients':view==='client'?(selected.archived?'archived':'clients'):view;
     nav.querySelectorAll('a').forEach(link=>{if(link.dataset.view===section)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
     const labels={requests:'Client requests',archived:'Archived Clients',missing:'Client not found'};
-    $('#location-label').textContent=['client','bcm'].includes(view)?'Clients / '+selected.name:labels[view]||view[0].toUpperCase()+view.slice(1);
+    $('#location-label').textContent=['client','bcm','watch'].includes(view)?'Clients / '+selected.name:labels[view]||view[0].toUpperCase()+view.slice(1);
     renderLists();closeMenu();
   }
   window.addEventListener('hashchange',()=>{route();const heading=$('[data-screen]:not([hidden]) h1');heading.tabIndex=-1;heading.focus();window.scrollTo(0,0);});

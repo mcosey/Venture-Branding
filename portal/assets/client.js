@@ -1,3 +1,5 @@
+import {watchEnabled} from '../../auth/watch.mjs';
+import {renderConnectedWatch} from './watch-connected.js?v=20261013-watch-mvp';
 import {loadReviewedMap} from './brand-map-reviewed.mjs?v=20261012-reviewed-map';
 import {aiBcmEnabled,renderAiBcm} from './bcm-ai.js?v=20261013-client-rollout';
 import {renderDigest} from './digest.js?v=20261011-bcm-retired';
@@ -27,6 +29,14 @@ function render(){
  if(!records)return;
  const client=records.clients.find(c=>c.id===selectedId);if(!client)throw new Error('This client is not available to your account.');
  const marks=records.marks.filter(m=>m.client_id===client.id);
+ // Watch-only navigation keeps the selected workspace; other service routes are unchanged.
+ if(watchEnabled()){
+  const watchLink=document.querySelector('#portal-nav a[href^="watch.html"]');
+  if(watchLink)watchLink.href='watch.html?client='+encodeURIComponent(client.id);
+  if(['watch','watch-setup','watch-detail'].includes(page)){
+   const current=new URL(location.href);current.searchParams.set('client',client.id);history.replaceState(null,'',current);
+  }
+ }
  document.querySelector('#client-name').textContent=client.name;
  const choice=document.querySelector('#client-choice');choice.replaceChildren(...records.clients.map(c=>new Option(c.name,c.id)));choice.value=selectedId;choice.parentElement.hidden=records.clients.length<2;
  if(page==='portal'){
@@ -47,9 +57,9 @@ function render(){
  }else if(page==='maintenance'){renderMaintenance(main,client,marks,db);
  }else if(page==='automations'){renderAgentCards(main,client,{includeBcm:aiBcmEnabled(db)});
  }else if(page==='brand-monitor'){if(aiBcmEnabled(db)){evidenceDispose=renderAiBcm(main,client,db,{initialView:new URLSearchParams(location.search).get('view')});return;}main.append(panel('Brand Change Monitor retired','Website monitoring is no longer available. Existing monitoring records have been preserved.'),link('Return to Brand Map →',`portal.html?client=${encodeURIComponent(client.id)}`));
- }else if(page==='watch-setup'){renderWatchSetup(main,client,marks);
- }else if(page==='watch-detail'){renderWatchDetail(main,client,marks);
- }else if(page==='watch'){renderWatchResults(main,client);}
+ }else if(page==='watch-setup'){if(watchEnabled()){evidenceDispose=renderConnectedWatch(main,client,marks,db,{view:'setup'});}else {renderWatchSetup(main,client,marks);}
+ }else if(page==='watch-detail'){if(watchEnabled()){evidenceDispose=renderConnectedWatch(main,client,marks,db,{view:'detail'});}else {renderWatchDetail(main,client,marks);}
+ }else if(page==='watch'){if(watchEnabled()){evidenceDispose=renderConnectedWatch(main,client,marks,db,{view:'results'});}else {renderWatchResults(main,client);}}
  else if(page==='digest'||page==='inbox')evidenceDispose=renderDigest(main,client,db,{view:page==='inbox'?'inbox':'settings'});
  else if(page==='use-history')evidenceDispose=renderEvidence(main,client,marks,db);
 }
