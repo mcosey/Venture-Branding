@@ -83,4 +83,107 @@ class RunnerTests(unittest.TestCase):
    calls=[]
    with self.assertRaises(FeedError):run_checks('endpoint','secret',lambda e,k,p:(calls.append(p) or response))
    self.assertLessEqual(len(calls),10)
+class DiagnosticTests(unittest.TestCase):
+ def capture(self, action):
+  from contextlib import redirect_stdout
+  output=io.StringIO()
+  with redirect_stdout(output):
+   with self.assertRaises(Exception): action()
+  result=output.getvalue()
+  for secret in ['ODP-PRIVATE', 'INGEST-PRIVATE', 'signed-private', 'body-private', 'header-private', 'https://']:
+   self.assertNotIn(secret,result)
+  return result
+ def test_untrusted_error_text_and_filename_never_reach_log(self):
+  from runner import diagnostic
+  def action():
+   with diagnostic('archive-download','apc261011.zip?signature=signed-private'):
+    raise FeedError('ODP-PRIVATE INGEST-PRIVATE body-private header-private https://private')
+  result=self.capture(action)
+  self.assertIn('archive-download reason=validation-or-request-failed',result)
+  self.assertNotIn('file=',result)
+ def test_http_status_survives_request_sanitizing(self):
+  import runner, urllib.error
+  from unittest.mock import patch
+  error=urllib.error.HTTPError('https://private?signature=signed-private',403,'body-private',{'secret':'header-private'},io.BytesIO(b'body-private'))
+  def action():
+   with runner.diagnostic('catalog-request'):
+    with patch.object(runner.OPENER,'open',side_effect=error):
+     runner.request(runner.API+'/trtdxfap','ODP-PRIVATE')
+  self.assertIn('catalog-request reason=http-status=403',self.capture(action))
+ def run_failure(self, failure):
+  import runner, urllib.error
+  from unittest.mock import patch
+  today=dt.datetime.now(dt.timezone.utc).date();filename='apc'+today.strftime('%y%m%d')+'.zip'
+  item={'fileName':filename,'fileSize':3,'fileLastModifiedDateTime':'public-revision','fileDownloadURI':runner.API+'/files/TRTDXFAP/'+filename}
+  catalog={'bulkDataProductBag':[{'productIdentifier':'TRTDXFAP','productFileBag':{'count':1,'fileDataBag':[item]}}]}
+  if failure=='metadata':item.pop('fileLastModifiedDateTime')
+  inventory={'files':[]} if failure!='inventory' else {'body-private':'signed-private'}
+  responses=[catalog,inventory]
+  if failure=='catalog':responses=[FeedError('ODP-PRIVATE',503)]
+  error=urllib.error.HTTPError('https://private?signature=signed-private',403,'body-private',{},None)
+  def action():
+   with patch.dict(runner.os.environ,{'ODP_API_KEY':'ODP-PRIVATE','WATCH_INGEST_KEY':'INGEST-PRIVATE'}),patch.object(runner,'request',side_effect=responses),patch.object(runner.ARCHIVE_OPENER,'open',side_effect=error) as download,patch.object(runner,'ingest') as upload,patch.object(runner,'run_checks') as checks:
+    try:runner.run('test')
+    finally:
+     upload.assert_not_called();checks.assert_not_called()
+     if failure!='download':download.assert_not_called()
+  return self.capture(action),filename
+ def test_catalog_failure_identified_without_remote_body(self):
+  self.assertIn('catalog-request reason=http-status=503',self.run_failure('catalog')[0])
+ def test_inventory_structure_failure_identified(self):
+  self.assertIn('inventory-validation reason=unexpected-error',self.run_failure('inventory')[0])
+ def test_missing_revision_identifies_public_filename_before_download(self):
+  output,filename=self.run_failure('metadata')
+  self.assertIn('source-metadata file='+filename+' reason=validation-or-request-failed',output)
+ def test_download_denial_identifies_file_and_http_status(self):
+  output,filename=self.run_failure('download')
+  self.assertIn('archive-download file='+filename+' reason=http-status=403',output)
+ def test_unsafe_http_status_is_not_printed(self):
+  from runner import diagnostic
+  def action():
+   with diagnostic('file-ingestion','apc261011.zip'):
+    raise FeedError('body-private',http_status='INGEST-PRIVATE')
+  self.assertIn('file=apc261011.zip reason=validation-or-request-failed',self.capture(action))
+ def test_valid_archive_ingestion_and_queue_stages_preserve_order(self):
+  self.full_pipeline(None)
+ def test_archive_ingestion_and_queue_failures_are_distinguishable(self):
+  for failure in ['archive-validation','file-ingestion','client-checks']:
+   with self.subTest(stage=failure):self.full_pipeline(failure)
+ def full_pipeline(self,failure):
+  import runner
+  from contextlib import redirect_stdout
+  from unittest.mock import patch
+  today=dt.datetime.now(dt.timezone.utc).date();filename='apc'+today.strftime('%y%m%d')+'.zip'
+  archive=io.BytesIO()
+  with zipfile.ZipFile(archive,'w') as z:z.writestr(filename[:-4]+'.xml','<root>'+case(filing=today.strftime('%Y%m%d'))+'</root>')
+  payload=archive.getvalue() if failure!='archive-validation' else b'body-private signed-private'
+  item={'fileName':filename,'fileSize':len(payload),'fileLastModifiedDateTime':'public-revision','fileDownloadURI':runner.API+'/files/TRTDXFAP/'+filename}
+  catalog={'bulkDataProductBag':[{'productIdentifier':'TRTDXFAP','productFileBag':{'count':1,'fileDataBag':[item]}}]}
+  output=io.StringIO()
+  with redirect_stdout(output),patch.dict(runner.os.environ,{'ODP_API_KEY':'ODP-PRIVATE','WATCH_INGEST_KEY':'INGEST-PRIVATE'}),patch.object(runner,'request',side_effect=[catalog,{'files':[]}]),patch.object(runner.ARCHIVE_OPENER,'open',return_value=io.BytesIO(payload)),patch.object(runner,'ingest',side_effect=FeedError('INGEST-PRIVATE body-private',409) if failure=='file-ingestion' else None) as upload,patch.object(runner,'run_checks',side_effect=FeedError('INGEST-PRIVATE body-private') if failure=='client-checks' else None) as checks:
+   if failure:
+    with self.assertRaises(FeedError):runner.run('test')
+   else:runner.run('test')
+  result=output.getvalue()
+  for secret in ['ODP-PRIVATE','INGEST-PRIVATE','body-private','signed-private','https://']:self.assertNotIn(secret,result)
+  if failure:
+   self.assertIn('Watch failed: '+failure,result)
+   if failure=='file-ingestion':self.assertIn('http-status=409',result)
+   if failure!='client-checks':checks.assert_not_called()
+   if failure=='archive-validation':upload.assert_not_called()
+  else:
+   self.assertNotIn('Watch failed:',result);upload.assert_called_once();checks.assert_called_once()
+   self.assertEqual(upload.call_args.args[0],runner.ENDPOINTS['test'])
+   self.assertEqual(upload.call_args.args[2],filename)
+   self.assertEqual(upload.call_args.args[4][0]['name'],'EXAMPLE')
+   self.assertLess(result.index('archive-validation'),result.index('file-ingestion'))
+   self.assertLess(result.index('file-ingestion'),result.index('client-checks'))
+ def test_sample_cli_never_prints_untrusted_path_or_traceback(self):
+  import subprocess
+  process=subprocess.run(['python3',str(Path(__file__).with_name('runner.py')),'--sample','/missing/ODP-PRIVATE-signed-private.zip'],capture_output=True,text=True)
+  self.assertEqual(process.returncode,1)
+  self.assertIn('Watch failed: sample-validation reason=validation-or-request-failed',process.stdout)
+  self.assertIn('No completed check is claimed.',process.stdout)
+  self.assertNotIn('ODP-PRIVATE',process.stdout);self.assertEqual(process.stderr,'')
+
 if __name__=='__main__':unittest.main()
