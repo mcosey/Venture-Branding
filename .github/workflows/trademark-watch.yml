@@ -1,0 +1,25 @@
+name: Trademark Watch manual Test
+# Test-only release check. No schedule, push, or pull-request trigger.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: trademark-watch-test
+  cancel-in-progress: false
+jobs:
+  source:
+    # Repository variable: environment variables are not used to decide job creation.
+    if: vars.WATCH_TEST_RUNNER_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: watch-test
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Process public USPTO data into Test
+        env:
+          ODP_API_KEY: ${{ secrets.ODP_API_KEY }}
+          WATCH_INGEST_KEY: ${{ secrets.WATCH_INGEST_KEY }}
+        run: python3 tools/watch/runner.py --environment test
