@@ -28,6 +28,27 @@ class RunnerTests(unittest.TestCase):
    xml=('<root>'+case()+'</root>').replace('GS0411','GS'+code+'  1').replace('<international-code>041</international-code>','<international-code>'+code+'</international-code>')
    records,_=extract(self.sample(xml),'apc261011.zip')
    self.assertEqual(records[0]['classes'],[code]);self.assertEqual(records[0]['goods'],[{'class':code,'text':'Education services'}])
+ def test_statement_limit_boundary_preserves_full_text(self):
+  for length in [65537,333315,524288]:
+   with self.subTest(length=length):
+    text='x'*length
+    records,_=extract(self.sample('<root>'+case().replace('Education services',text)+'</root>'),'apc261011.zip')
+    self.assertEqual(records[0]['goods'][0]['text'],text)
+  with self.assertRaises(FeedError):
+   extract(self.sample('<root>'+case().replace('Education services','x'*524289)+'</root>'),'apc261011.zip')
+ def test_large_evidence_splits_batches_without_changing_record_limit(self):
+  records=[{'name':'x','goods':[{'class':'041','text':'x'*524288}]} for _ in range(2)]
+  calls=[]
+  def call(endpoint,key,p):calls.append(p);return {'id':'file','complete':p['action']=='complete'}
+  ingest('endpoint','secret','apc261011.zip','a'*64,records,call)
+  batches=[p for p in calls if p['action']=='batch']
+  self.assertEqual([len(p['records']) for p in batches],[1,1])
+  self.assertEqual([p['records'][0]['goods'][0]['text'] for p in batches],['x'*524288]*2)
+  self.assertTrue(all(len(json.dumps(p,ensure_ascii=False).encode())<1048576 for p in batches))
+  calls.clear()
+  with self.assertRaises(FeedError):
+   ingest('endpoint','secret','apc261011.zip','a'*64,[{'goods':[{'text':'x'*500000},{'text':'y'*500000}]}],call)
+  self.assertNotIn('batch',[p['action'] for p in calls]);self.assertNotIn('complete',[p['action'] for p in calls])
  def test_stylized_word_is_text_only(self):self.assertEqual(len(extract(self.sample('<root>'+case(drawing='5')+'</root>'),'apc261011.zip')[0]),1)
  def test_entities_malformed_future_dates_duplicate_fail_file(self):
   for xml in ['<!DOCTYPE root [<!ENTITY x "bomb">]><root>'+case()+'</root>','<root>'+case(),'<root>'+case(filing='20261012')+'</root>','<root>'+case(filing='20260230')+'</root>','<root>'+case()+case()+'</root>','<root/>']:
