@@ -22,7 +22,7 @@ create table vb_private.watch_applications (
  serial text primary key check(serial ~ '^[0-9]{8}$'), name text not null, filing_date date not null,
  goods jsonb not null, classes jsonb not null, owners jsonb not null, status_code text not null,
  file_id uuid not null references vb_private.watch_files(id), updated_at timestamptz not null default now(),
- check(length(name) between 1 and 2000)
+ check(length(name) between 1 and 4096)
 );
 create table vb_private.watch_runs (
  id uuid primary key default gen_random_uuid(), client_id uuid not null references public.vb_clients(id),
