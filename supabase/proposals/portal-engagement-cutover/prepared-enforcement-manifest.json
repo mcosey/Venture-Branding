@@ -1,0 +1,11 @@
+{
+  "status": "prepared-not-applied",
+  "testProject": "imvkhicfmidzbzsbhkzs",
+  "sources": {
+    "05-test-scope-core.sql": "1853007895670ee8584ae8eb1d353901c7927f2fb1f965f1508ef796abc4c649",
+    "06-test-service-enforcement.sql": "9b512f74fd79dcdc18690c0ffae57f0cce228a3c01c553a0f58832aecc86f0ee",
+    "07-test-enforcement-checks.sql": "9ad13524a8d8448c033130a73d22e9bf81a1641b7244869e8e06a47f03761d0f"
+  },
+  "apply_sha256": "b08ab790643c8ee6d8d1ac1f80b9b687b9c44a1fb4a3a42b04e8fb4b1ca80645",
+  "rehearsal_sha256": "337eb3fdd1741e1698e3faf7cb2611cec5e9e6d1f1da85001840e89f232af497"
+}

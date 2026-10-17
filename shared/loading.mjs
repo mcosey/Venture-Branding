@@ -51,15 +51,31 @@ export function showRegionLoading(target,label,kind='rows'){
  target.before(status);target.append(shapes);
  return ()=>{target.setAttribute('aria-busy','false');status.remove();shapes.remove();};
 }
-export const attorneyLoadingLabels=Object.freeze({'staff-overview':'attorney overview','staff-clients':'client directory','staff-client':'client details','staff-calendar':'calendar','staff-requests':'client requests','staff-archived':'archived clients'});
+export const attorneyLoadingLabels=Object.freeze({'staff-overview':'attorney overview','staff-clients':'client directory','staff-client':'client details','staff-calendar':'calendar','staff-requests':'client requests','staff-archived':'archived clients','staff-engagement':'engagement details'});
 export function attorneySkeleton(layout='staff-overview'){
  const heading=`<div class="vb-loading-page-heading">${bar('title')}</div>`;
  let content;
  switch(layout){
   case 'staff-clients':case 'staff-archived':content=bar('search')+panel(repeat(4,row));break;
   case 'staff-client':content=panel(repeat(3,field))+columns(panel(repeat(3,row)),card()+card());break;
+  case 'staff-engagement':content=columns(formCard(3)+panel(bar()+bar('short')),panel(repeat(2,row)));break;
   case 'staff-calendar':case 'staff-requests':content=card();break;
   default:content=`<div class="vb-loading-agents">${repeat(3,card)}</div>`+columns(panel(repeat(3,row)),card()+card());
  }
  return `<div class="vb-loading-shell" aria-hidden="true"><aside class="vb-loading-sidebar">${bar('heading')}${repeat(5,()=>bar())}</aside><div class="vb-loading-workspace"><div class="vb-loading-topbar">${bar('short')}</div><div class="vb-loading-page">${heading}${content}</div></div></div>`;
+}
+
+// Small account-flow placeholders. Static shapes only; no identity/record values.
+export function flowSkeleton(layout='action'){
+ const content=layout==='invitation'?bar('heading')+bar()+bar('short')+repeat(2,field)+bar('button')
+  :layout==='account'?repeat(3,field)+bar('button')
+  :bar('short')+bar();
+ return `<div class="vb-flow-skeleton vb-flow-skeleton-${['invitation','account'].includes(layout)?layout:'action'}" aria-hidden="true">${content}</div>`;
+}
+const flowRequests=new WeakMap();
+export function showFlowLoading(host,label,layout='action'){
+ const ticket={};flowRequests.set(host,ticket);host.hidden=false;host.setAttribute('aria-busy','true');
+ const status=document.createElement('span');status.className='vb-loading-status';status.setAttribute('role','status');status.textContent=label;
+ const template=document.createElement('template');template.innerHTML=flowSkeleton(layout);host.replaceChildren(status,template.content);
+ return ()=>{if(flowRequests.get(host)!==ticket)return;flowRequests.delete(host);host.setAttribute('aria-busy','false');host.replaceChildren();host.hidden=true;};
 }

@@ -30,8 +30,8 @@ test('verified identity and required MFA precede server routing',async()=>{
 });
 test('signup controller sends credentials only to Auth, clears them, and does not persist passwords or final acceptance',async()=>{
  const previous={window:globalThis.window,location:globalThis.location,document:globalThis.document,sessionStorage:globalThis.sessionStorage};
- const nodes=new Map();const create=()=>({value:'',checked:false,children:[],events:{},append(n){this.children.push(n);},addEventListener(name,fn){this.events[name]=fn;},setAttribute(){},focus(){},reportValidity(){return true;}});
- const ids=['acknowledgments','acknowledgment-confirmation','continue','acknowledgment-form','acknowledgment-step','account-step','account-heading','back','registration-form','full-name','company-name','industry','launch-date','signup-email','signup-password','confirm-signup-password','create-account','signup-status'];
+ const nodes=new Map();const create=()=>({value:'',checked:false,children:[],content:{},events:{},replaceChildren(...items){this.children=items;},append(n){this.children.push(n);},addEventListener(name,fn){this.events[name]=fn;},setAttribute(){},focus(){},reportValidity(){return true;}});
+ const ids=['signup-loading','acknowledgments','acknowledgment-confirmation','continue','acknowledgment-form','acknowledgment-step','account-step','account-heading','back','registration-form','full-name','company-name','industry','launch-date','signup-email','signup-password','confirm-signup-password','create-account','signup-status'];
  for(const id of ids)nodes.set(id,create());nodes.get('signup-status').dataset={};
  const memory=new Map(),requests=[];
  const db={auth:{getSession:async()=>({data:{session:null}}),signUp:async input=>{requests.push(input);return {data:{session:null}};}}};
@@ -52,8 +52,8 @@ test('signup controller sends credentials only to Auth, clears them, and does no
 
 test('verified email return resumes a matching signup across tabs and skips repeated acknowledgments',async()=>{
  const previous={window:globalThis.window,location:globalThis.location,document:globalThis.document,sessionStorage:globalThis.sessionStorage,localStorage:globalThis.localStorage};
- const nodes=new Map();const create=()=>({value:'',checked:false,children:[],events:{},append(n){this.children.push(n);},addEventListener(name,fn){this.events[name]=fn;},setAttribute(){},focus(){},reportValidity(){return true;}});
- for(const id of ['acknowledgments','acknowledgment-confirmation','continue','acknowledgment-form','acknowledgment-step','account-step','account-heading','back','registration-form','full-name','company-name','industry','signup-email','signup-password','confirm-signup-password','create-account','signup-status','password-fields'])nodes.set(id,create());
+ const nodes=new Map();const create=()=>({value:'',checked:false,children:[],content:{},events:{},replaceChildren(...items){this.children=items;},append(n){this.children.push(n);},addEventListener(name,fn){this.events[name]=fn;},setAttribute(){},focus(){},reportValidity(){return true;}});
+ for(const id of ['signup-loading','acknowledgments','acknowledgment-confirmation','continue','acknowledgment-form','acknowledgment-step','account-step','account-heading','back','registration-form','full-name','company-name','industry','signup-email','signup-password','confirm-signup-password','create-account','signup-status','password-fields'])nodes.set(id,create());
  nodes.get('signup-status').dataset={};
  const session=new Map(),persistent=new Map([['vb-member-test-pending-signup-v1',JSON.stringify({notice:SIGNUP_NOTICE,email:'one@example.test',profile:{full_name:'Member',name:'Company',industry:''}})]]);
  const store=memory=>({getItem:key=>memory.get(key),removeItem:key=>memory.delete(key),setItem:(key,value)=>memory.set(key,value)});

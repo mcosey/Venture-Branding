@@ -1,3 +1,6 @@
+import {createEngagementAdmin} from '../../auth/engagement-admin.mjs';
+import {createEngagementClosure} from './engagement-closure.mjs';
+import {memberAccountsEnabled} from '../../auth/member-account.mjs';
 import {aiBcmEnabled,renderAiBcm} from '../../portal/assets/bcm-ai.js?v=20261013-client-rollout';
 import {renderEvidence} from '../../portal/assets/evidence.js?v=20261010-use-history';
 import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
@@ -16,13 +19,17 @@ const  gate=setupGate(db,'staff');
   const aiTest=aiBcmEnabled(db);
   const bcmScreen=document.createElement('section');bcmScreen.dataset.screen='bcm';bcmScreen.hidden=true;
   if(aiTest)document.querySelector('#main').insertBefore(bcmScreen,document.querySelector('#main footer'));
+  const engagementSetup=memberAccountsEnabled(window.VB_AUTH_CONFIG,location.hostname);
+  const engagementClosure=engagementSetup?createEngagementClosure(createEngagementAdmin(db,window.VB_AUTH_CONFIG,location.hostname),async()=>{await reloadRecords();route();}):null;
+  db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT')engagementClosure?.clear();});
+
   const clients=[];
-  let accessRecords=[], accessReady=false;
+  let accessRecords=[], accessReady=false, engagementRecords=null;
   async function reloadRecords(ticket){
     const saved=await loadRecords(db,'staff');
-    const access=await db.rpc('vb_portal_access_status');
+    const [access,engagements]=await Promise.all([db.rpc('vb_portal_access_status'),engagementSetup?db.rpc('vb_test_engagement_admin'):Promise.resolve(null)]);
     if(ticket!==undefined&&!gate.current(ticket))return false;
-    accessReady=!access.error;accessRecords=access.data||[];
+    accessReady=!access.error;accessRecords=access.data||[];engagementRecords=engagements&&!engagements.error?engagements.data:null;
     clients.splice(0,clients.length,...saved.clients.map(c=>{
       const r=saved.references.find(r=>r.client_id===c.id)||{};
       return {id:c.id,type:c.client_type==='business'?'Business':'Individual',name:c.name,contact:c.contact_name,email:c.contact_email||'',clioContact:r.clio_contact_reference||'',clioMatter:r.clio_matter_reference||'',quickbooks:r.quickbooks_customer_reference||'',portal:c.portal_enabled,archived:Boolean(c.archived_at),updatedAt:c.updated_at,sample:false,marks:saved.marks.filter(m=>m.client_id===c.id).map(m=>({id:m.id,updatedAt:m.updated_at,linkedIdentifier:m.application_number||'',name:m.name,type:typeLabel(m.mark_type),status:statusLabel(m.status),application:m.application_number||'',registration:m.registration_number||'',source:m.source==='uspto'?'USPTO':'Manual entry',services:[]}))};
@@ -81,12 +88,13 @@ const  gate=setupGate(db,'staff');
     actions.append(node('span',selected.archived?'Archived':selected.portal?'Portal enabled':'Portal disabled','badge'));
     if(selected.sample){const link=node('a','Preview client portal ↗','outline-button');link.href='portal.html';actions.append(link);}
     if(aiTest&&!selected.archived){const review=node('a','Review brand discoveries','outline-button');review.href='#bcm-'+selected.id;actions.append(review);}
-    const settings=node('button','Client Settings','outline-button'); settings.dataset.action='settings';actions.append(settings);
+    const clientControls=node('div',undefined,'client-primary-actions');
+    if(engagementSetup&&!selected.archived){const add=node('a','＋ Add engagement','coral-button');add.href='attorney-engagements.html?client='+encodeURIComponent(selected.id);clientControls.append(add);}
+    const settings=node('button','Client Settings','outline-button'); settings.dataset.action='settings';clientControls.append(settings);actions.append(clientControls);
     const metadata=node('p',[selected.contact,selected.email].filter(Boolean).join(' · '),'client-details');detail.querySelector('.page-heading').append(metadata);
     renderAccessPanel();
     if(!selected.sample){
       detail.querySelector('.mark-list').replaceChildren(node('p','No trademarks yet.','empty-client'));
-      detail.querySelector('.service-list').replaceChildren(node('li','No services configured.'));
       const useCard=detail.querySelector('[data-use-history]');if(useCard)useCard.replaceChildren(node('h2','Use history'),node('p','No use history.','empty-client'));
     }
     const markList = detail.querySelector('.mark-list'); markList.replaceChildren();
@@ -105,8 +113,8 @@ const  gate=setupGate(db,'staff');
       entry.append(controls);markList.append(entry);
     });
     if(!selected.marks.length)markList.append(node('p','No trademarks yet.','empty-client'));
-    const configured=selected.portal?serviceNames:[];
-    detail.querySelector('.service-list').replaceChildren(...(configured.length?configured:['No portal add-on.']).map(text=>node('li',text)));
+    detail.querySelector('.service-list')?.closest('section').remove();
+    detail.querySelector('.hub-grid').classList.add('client-records-grid');
     const evidenceHost=detail.querySelector('[data-use-history]');if(evidenceHost){evidenceHost.replaceChildren();evidenceDispose=renderEvidence(evidenceHost,selected,selected.marks,db,{audience:'staff'});}
     if(selected.archived) detail.querySelector('[data-preview="mark"]').hidden=true;
   }
@@ -161,6 +169,18 @@ const  gate=setupGate(db,'staff');
   const accessLabels={active:'Active',pending:'Invitation pending',not_invited:'Not invited',disabled:'Disabled',archived:'Archived',sending:'Sending invitation',failed:'Invitation needs attention'};
   function renderAccessPanel(){
     const card=node('section',undefined,'panel card');card.append(node('h2','Portal access'));
+    if(engagementSetup){
+      card.replaceChildren();const heading=node('div',undefined,'section-heading');heading.append(node('h2','Engagements'));
+      card.append(heading,node('p','All Client features are included. Each engagement keeps its own scope and status.','muted'));
+      if(!engagementRecords)card.append(node('p','Engagements could not be loaded. Refresh to try again.','muted'));
+      else{
+        const engagements=engagementRecords.engagements.filter(e=>e.client_id===selected.id),drafts=engagementRecords.drafts.filter(d=>d.client_id===selected.id);
+        if(!engagements.length&&!drafts.length)card.append(node('p','No engagements yet.','empty-client'));
+        for(const e of engagements){const row=node('article',undefined,'client-engagement-row');row.append(node('h3',e.title),node('span',e.status[0].toUpperCase()+e.status.slice(1),'badge'));if(e.status==='active'){const close=node('button','Close engagement','text-link');close.type='button';close.onclick=()=>engagementClosure.open(e,selected.name);row.append(close);}card.append(row);}
+        for(const d of drafts){const row=node('article',undefined,'client-engagement-row');const label=node('div');const invitation=engagementRecords.invitations?.find(i=>i.draft_id===d.id);label.append(node('h3',d.engagement_title),node('p',invitation?'Invitation '+invitation.state:'Draft · invitation not sent','muted'));const edit=node('a','Edit draft →','text-link');edit.href='attorney-engagements.html?client='+encodeURIComponent(selected.id)+'&draft='+encodeURIComponent(d.id);row.append(label,edit);card.append(row);}
+      }
+      detail.querySelector('.hub-grid').before(card);return;
+    }
     const record=accessRecords.find(r=>r.client_id===selected.id);
     card.append(node('p',accessReady?(accessLabels[record?.access_status]||'Unavailable'):'Access controls awaiting setup.','client-details'));
     if(record?.login_email)card.append(node('p','Sign-in email: '+record.login_email));

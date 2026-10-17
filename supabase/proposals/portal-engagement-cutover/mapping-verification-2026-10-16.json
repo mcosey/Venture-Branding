@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-16",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "applied": true,
+  "checks": {
+    "passed": 66,
+    "all_passed": true,
+    "rehearsal_rolled_back": true,
+    "after_application_rolled_back": true
+  },
+  "migration_preservation_snapshots_unchanged": 27,
+  "engagements": 4,
+  "matters": 4,
+  "migrated_existing_user_grants": 4,
+  "tool_entitlements": 32,
+  "postcheck": {
+    "mappings": 4,
+    "mapped_marks": 5,
+    "mapped_records": 111,
+    "system_identifier": "7692130048193495360",
+    "legacy_cutover_enabled": false,
+    "active_test_engagements": 4,
+    "mapping_tables_have_rls": true,
+    "retained_rollback_matters": 0,
+    "original_clients_unchanged": true,
+    "retained_rollback_engagements": 0,
+    "free_member_received_no_grants": true,
+    "original_memberships_unchanged": true
+  },
+  "production_changed": false,
+  "legacy_access_cutover_complete": false,
+  "worker_deployments": false,
+  "files": {
+    "00-test-inventory.sql": "a9f5608791a4c805639748c2f9294ac3c3d0bf77fa9dd80855f51bf27f6b4118",
+    "01-stage-test-mapping.sql": "79a09a91886a6ec9a18122dee026b1e5adba420c0f276959f2c180099f3086e5",
+    "02-test-mapping-checks.sql": "974a672a468a70001a7d87352faecd03918aedac3949b36a9af279473617be68",
+    "03-mapping-postcheck.sql": "597dd76b9428830dc550ef9702d86c330916d67255f00e337116cdf8586c609b",
+    "04-disable-staged-test-grants.sql": "d4b93a5a42a4a8c1b34e220e2c88f0e2e7dfd81f59b1a27ae3edee2ee0f02e0a"
+  }
+}

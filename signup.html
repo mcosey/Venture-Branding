@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
 <title>Sign up — Venture Branding Law Portal</title>
-<link rel="icon" href="images/09.png"><link rel="stylesheet" href="auth/auth.css">
+<link rel="icon" href="images/09.png"><link rel="stylesheet" href="auth/auth.css"><link rel="stylesheet" href="shared/loading.css">
 <style>
 main{width:min(100%,720px)}.steps{font-size:13px;color:var(--muted);margin:0 0 20px}.acknowledgments{padding-left:24px;color:var(--muted)}.acknowledgments li{padding-left:6px;margin:0 0 18px}.confirmation{display:flex;gap:12px;align-items:flex-start;margin-top:24px;font-size:15px}.confirmation input{width:19px;height:19px;flex:none;margin:4px 0 0;accent-color:var(--coral)}.draft-notice{padding:14px 16px;border:1px solid var(--line);border-radius:8px;font-size:14px}.signin-link{text-align:center;margin:24px 0 0;font-size:14px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}.fields .wide{grid-column:1/-1}h2{font-size:20px;margin-top:30px}.back-step{display:block}button:disabled{cursor:not-allowed}.registration-note{font-size:14px;margin-bottom:0}@media(max-width:560px){.fields{grid-template-columns:1fr}}
 </style>
@@ -13,7 +13,8 @@ main{width:min(100%,720px)}.steps{font-size:13px;color:var(--muted);margin:0 0 2
 <a class="brand" href="v8.html"><img src="images/02.png" alt="Venture Branding home"></a>
 <div class="card"><span class="eyebrow">Venture Branding Law Portal</span>
 <h1 id="heading" tabindex="-1">Create your account</h1>
-<section id="acknowledgment-step" aria-labelledby="acknowledgment-heading">
+<div id="signup-loading" aria-busy="true"><span class="vb-loading-status" role="status">Checking account setup…</span><div class="vb-flow-skeleton vb-flow-skeleton-account" aria-hidden="true"><div class="vb-loading-field"><span class="vb-skeleton vb-skeleton-short"></span><span class="vb-skeleton vb-skeleton-rectangle"></span></div><div class="vb-loading-field"><span class="vb-skeleton vb-skeleton-short"></span><span class="vb-skeleton vb-skeleton-rectangle"></span></div><div class="vb-loading-field"><span class="vb-skeleton vb-skeleton-short"></span><span class="vb-skeleton vb-skeleton-rectangle"></span></div><span class="vb-skeleton vb-skeleton-button"></span></div></div>
+<section id="acknowledgment-step" hidden aria-labelledby="acknowledgment-heading">
 <p class="steps">Step 1 of 2 · Acknowledgments</p>
 <h2 id="acknowledgment-heading">Before you begin</h2>
 <p>Read the acknowledgments below, then confirm once to continue.</p>

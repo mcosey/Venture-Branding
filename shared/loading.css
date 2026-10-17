@@ -22,3 +22,5 @@
 
 .vb-loading-workspace{background:radial-gradient(ellipse 460px 320px at 92% 0,#5b263c75,transparent),radial-gradient(ellipse 300px 400px at 0 60%,#36233135,transparent)}
 @media(min-width:1600px){.vb-loading-page{max-width:1440px;margin-inline:auto}}
+
+.vb-flow-skeleton{padding:10px 0;min-width:0}.vb-flow-skeleton .vb-loading-field{margin:16px 0}.vb-flow-skeleton-action{max-width:420px;min-height:68px}.vb-flow-skeleton-action .vb-skeleton{height:10px}.vb-flow-skeleton-account .vb-skeleton-rectangle,.vb-flow-skeleton-invitation .vb-skeleton-rectangle{width:100%;height:46px}.vb-flow-skeleton .vb-skeleton-button{max-width:100%;width:100%;height:44px}.vb-flow-skeleton .vb-skeleton-heading{height:26px}.vb-flow-skeleton-account{min-height:250px}.vb-flow-skeleton-invitation{min-height:330px}

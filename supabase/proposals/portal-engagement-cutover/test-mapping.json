@@ -1,0 +1,73 @@
+{
+  "environment": "imvkhicfmidzbzsbhkzs",
+  "system_identifier": "7692130048193495360",
+  "approval": "Owner approved all four fictional clients on October 16, 2026.",
+  "enforcement_enabled": false,
+  "clients": [
+    {
+      "id": "7126efcc-9034-4cfc-964f-c2694d315526",
+      "name": "WATCH TEST \u2014 Fictional Match Client",
+      "marks": 2,
+      "archived": false,
+      "engagements": 0,
+      "memberships": 1,
+      "portal_enabled": true,
+      "engagement_id": "f1700000-0000-0000-0000-000000000001",
+      "matter_id": "f1710000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "b8566912-9e75-45c0-a85c-a7e2a3075f85",
+      "name": "WATCH TEST \u2014 Fictional Isolation Client",
+      "marks": 1,
+      "archived": false,
+      "engagements": 0,
+      "memberships": 1,
+      "portal_enabled": true,
+      "engagement_id": "f1700000-0000-0000-0000-000000000002",
+      "matter_id": "f1710000-0000-0000-0000-000000000002"
+    },
+    {
+      "id": "b9100000-0000-0000-0000-000000000001",
+      "name": "Cotivate \u2014 FICTIONAL FILING TEST",
+      "marks": 1,
+      "archived": false,
+      "engagements": 0,
+      "memberships": 1,
+      "portal_enabled": true,
+      "engagement_id": "f1700000-0000-0000-0000-000000000003",
+      "matter_id": "f1710000-0000-0000-0000-000000000003"
+    },
+    {
+      "id": "b9100000-0000-0000-0000-000000000002",
+      "name": "Mithril Zeppelin \u2014 FICTIONAL FILING TEST",
+      "marks": 1,
+      "archived": false,
+      "engagements": 0,
+      "memberships": 1,
+      "portal_enabled": true,
+      "engagement_id": "f1700000-0000-0000-0000-000000000004",
+      "matter_id": "f1710000-0000-0000-0000-000000000004"
+    }
+  ],
+  "resources": [
+    "public.vb_bcm_ai_observations",
+    "public.vb_bcm_ai_publications",
+    "public.vb_bcm_ai_reviews",
+    "public.vb_bcm_ai_runs",
+    "public.vb_bcm_scans",
+    "public.vb_bcm_schedules",
+    "public.vb_bcm_settings",
+    "public.vb_client_references",
+    "public.vb_digest_preferences",
+    "public.vb_evidence",
+    "public.vb_filing_drafts",
+    "public.vb_inbox",
+    "public.vb_maintenance_publications",
+    "public.vb_marks",
+    "public.vb_service_preferences",
+    "vb_private.maintenance_drafts",
+    "vb_private.watch_findings",
+    "vb_private.watch_runs",
+    "vb_private.watch_settings"
+  ]
+}

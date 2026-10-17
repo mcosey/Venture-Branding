@@ -57,3 +57,19 @@ test('startup connection failures remove skeletons and offer recovery',async()=>
  const {showConnectionError}=await import('../auth/gate.mjs');const {gate,area}=fixture('portfolio');
  showConnectionError('client');assert.equal(gate.dataset.loadingLayout,undefined);assert.equal(gate.attributes['aria-busy'],'false');assert.equal(area.hidden,true);assert.equal(gate.children[1].href,'login.html');assert.equal(gate.children[2].textContent,'Retry');
 });
+
+
+test('invitation and account entries ship matching decorative placeholders',async()=>{
+ const {flowSkeleton,attorneySkeleton}=await import('../shared/loading.mjs');
+ for(const [file,layout]of [['invitation','invitation'],['signup','account'],['login','account']]){
+  const html=readFileSync(new URL('../'+file+'.html',import.meta.url),'utf8');assert(html.includes(flowSkeleton(layout)),file);
+  assert(!/<(?:input|button|a)[\s>]/.test(flowSkeleton(layout)));
+ }
+ const html=readFileSync(new URL('../attorney-engagements.html',import.meta.url),'utf8');assert(html.includes(attorneySkeleton('staff-engagement')));
+ const {gate}=fixture('staff-engagement');globalThis.location={hash:''};const api=setupGate({auth:{onAuthStateChange(){}}},'staff');api.lock();assert.equal(gate.dataset.loadingLayout,'staff-engagement');
+});
+test('flow cleanup cannot hide a newer request and clears after completion',async()=>{
+ const {showFlowLoading}=await import('../shared/loading.mjs');const {gate}=fixture();
+ const first=showFlowLoading(gate,'Checking invitation…','invitation');const last=showFlowLoading(gate,'Accepting invitation…');
+ first();assert.equal(gate.hidden,false);assert.equal(gate.attributes['aria-busy'],'true');last();assert.equal(gate.hidden,true);assert.equal(gate.attributes['aria-busy'],'false');assert.equal(gate.children.length,0);
+});

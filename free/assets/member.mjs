@@ -2,6 +2,7 @@ import {memberContext} from '../../auth/member-session.mjs?v=1';
 import {BUSINESS_KEY, decodeBusiness} from './llk-business-state.mjs';
 
 // Presentation only. Never load client records or infer authorization from local data.
+if(memberContext?.entry==='client'&&location.pathname.endsWith('/member.html'))location.replace('portal.html');
 if(memberContext){
  const label=document.getElementById('member-company');if(label&&memberContext.company)label.textContent=memberContext.company.name;
  const topbar=document.querySelector('.member-topbar');

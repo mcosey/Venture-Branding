@@ -1,0 +1,290 @@
+{
+  "source": "PostgreSQL md5(pg_get_functiondef(oid)), read-only Test query before application",
+  "note": "Dashboard accessibility extraction normalizes definition whitespace; use server fingerprints for guards, not hashes of copied definitions. All reviewed functions matched after whitespace normalization.",
+  "functions": [
+    {
+      "signature": "vb_account_access()",
+      "fingerprint": "c1bff57f6fa95b4a04cb8cfe24270fa0"
+    },
+    {
+      "signature": "vb_bcm_ai_baseline_progress(uuid)",
+      "fingerprint": "6b98682096f7cda551564ec5b20859a6"
+    },
+    {
+      "signature": "vb_bcm_ai_client_history(uuid)",
+      "fingerprint": "19ea113e34def1873e95d159f12bd3a2"
+    },
+    {
+      "signature": "vb_bcm_ai_ready()",
+      "fingerprint": "ddf422468858bb829905abba27c48db3"
+    },
+    {
+      "signature": "vb_bcm_ai_run_is_current(uuid)",
+      "fingerprint": "91a7b038cc0e4ffcdc5ec1ff9642abff"
+    },
+    {
+      "signature": "vb_bcm_job_is_current(uuid)",
+      "fingerprint": "eb465ab58aadeacba097c5713b2b5478"
+    },
+    {
+      "signature": "vb_bcm_scheduler_ready()",
+      "fingerprint": "840af9f57f0c3897c2332179a18c3b99"
+    },
+    {
+      "signature": "vb_begin_bcm_ai_run(uuid,integer)",
+      "fingerprint": "11c586de024a04afdfcebdf997b4b2f4"
+    },
+    {
+      "signature": "vb_begin_bcm_baseline(uuid,integer)",
+      "fingerprint": "90da20a412774aec7f552255e2a2d04a"
+    },
+    {
+      "signature": "vb_begin_bcm_comparison(uuid,integer)",
+      "fingerprint": "e60d94fdfd99f5e6c2e034f12ac7ba6c"
+    },
+    {
+      "signature": "vb_claim_bcm_ai_due_run()",
+      "fingerprint": "7ec6ec73410efa538557980bf9196a48"
+    },
+    {
+      "signature": "vb_claim_bcm_due_scan()",
+      "fingerprint": "5ad9a6f3e71260dc047cf8a6ef45c15f"
+    },
+    {
+      "signature": "vb_finish_bcm_ai_run(uuid,jsonb,boolean)",
+      "fingerprint": "8c0be3c6ecad768425e0bab3277bbe8d"
+    },
+    {
+      "signature": "vb_finish_bcm_baseline(uuid,jsonb,boolean)",
+      "fingerprint": "b949ba513d20d8a7ba581f0ab56ed0c1"
+    },
+    {
+      "signature": "vb_finish_evidence(uuid,uuid)",
+      "fingerprint": "28b351c35723665f2324d0b9f4122ed5"
+    },
+    {
+      "signature": "vb_generate_digest_sample(uuid,integer)",
+      "fingerprint": "9e1f18db2bc36a3215fc1ae37ddaa67a"
+    },
+    {
+      "signature": "vb_list_maintenance_drafts(uuid,uuid)",
+      "fingerprint": "7f886c05c08f635e34caed95b6c7d607"
+    },
+    {
+      "signature": "vb_onboard_test_member(jsonb,text,boolean)",
+      "fingerprint": "155a8efa42b826f6f2c217fe486f13a1"
+    },
+    {
+      "signature": "vb_open_inbox(uuid,uuid)",
+      "fingerprint": "5ac1d772c9eaa5e613dc12c5f35632fa"
+    },
+    {
+      "signature": "vb_portal_entry()",
+      "fingerprint": "c5293673376c0dd567670c36f42c622f"
+    },
+    {
+      "signature": "vb_private.audit_portal_lifecycle()",
+      "fingerprint": "861f8c29f29172817119e5baa9f855e8"
+    },
+    {
+      "signature": "vb_private.audit_record()",
+      "fingerprint": "6a6ef22d5d1320aef48bf76a577f6a04"
+    },
+    {
+      "signature": "vb_private.bcm_actor_has_access(uuid,uuid)",
+      "fingerprint": "3c8092c321319234b0fc26dbd3ee407c"
+    },
+    {
+      "signature": "vb_private.bcm_ai_domain(text)",
+      "fingerprint": "247a5355bde7e2cb6b665f436979fc23"
+    },
+    {
+      "signature": "vb_private.bcm_ai_name(text)",
+      "fingerprint": "223386bd55d5a94938c64f0c58e97fb7"
+    },
+    {
+      "signature": "vb_private.bcm_ai_valid(vb_bcm_settings)",
+      "fingerprint": "e3ca0973a15a904d96a98c19e3dedd4b"
+    },
+    {
+      "signature": "vb_private.can_access_engagement(uuid)",
+      "fingerprint": "75dc9733d688811e28fa0eddf2198572"
+    },
+    {
+      "signature": "vb_private.can_read_evidence_object(text)",
+      "fingerprint": "7e55e89ecc9e392b07f154a0a390d757"
+    },
+    {
+      "signature": "vb_private.can_use_engagement_service(uuid,text)",
+      "fingerprint": "4f09a613ad376be6453de30ea4f51ca6"
+    },
+    {
+      "signature": "vb_private.check_bcm_discovery_snapshot(vb_bcm_settings,jsonb)",
+      "fingerprint": "eba4b5c0a406c6ac5fe5258cb361bae6"
+    },
+    {
+      "signature": "vb_private.deliver_due_digests()",
+      "fingerprint": "c1653caa0fa52723b43410642b6e2c24"
+    },
+    {
+      "signature": "vb_private.digest_items(uuid,text[],timestamp with time zone)",
+      "fingerprint": "18182202ea37a153458fc80af59543a6"
+    },
+    {
+      "signature": "vb_private.digest_next_due(timestamp with time zone,text)",
+      "fingerprint": "a5705062de54e752c8a9d9d7639abf9b"
+    },
+    {
+      "signature": "vb_private.digest_schedule_changed()",
+      "fingerprint": "ba596649656f55540a0c93ff909c3c22"
+    },
+    {
+      "signature": "vb_private.digest_scope(uuid)",
+      "fingerprint": "32dd2bf88c4fa9bf71ef15d74244c5fc"
+    },
+    {
+      "signature": "vb_private.dispatch_bcm_ai_tick()",
+      "fingerprint": "997962b92f171fdaea159c7a857d51ac"
+    },
+    {
+      "signature": "vb_private.dispatch_bcm_tick()",
+      "fingerprint": "ebc422e2866b08306fa975a1cb82e8b0"
+    },
+    {
+      "signature": "vb_private.finish_bcm_snapshot(uuid,jsonb,boolean)",
+      "fingerprint": "2f0c48d46666049345f74c75cdbbb649"
+    },
+    {
+      "signature": "vb_private.initialize_preferences()",
+      "fingerprint": "f665cbe8f2a844e06985cb8cafaea120"
+    },
+    {
+      "signature": "vb_private.is_client_member(uuid)",
+      "fingerprint": "b2434a5fd62808c4938f5e2d22b18125"
+    },
+    {
+      "signature": "vb_private.is_staff()",
+      "fingerprint": "0bf4cbf88c9352a3afc642ddd2a82f89"
+    },
+    {
+      "signature": "vb_private.maintenance_identity()",
+      "fingerprint": "f4055d16b0d52f348047a7eea394d5cc"
+    },
+    {
+      "signature": "vb_private.maintenance_record(uuid)",
+      "fingerprint": "2d33a356a7c0f2725fa3b65b0d86f112"
+    },
+    {
+      "signature": "vb_private.maintenance_scope(uuid,uuid)",
+      "fingerprint": "172062f6389ded22227535a0e2ba3d5e"
+    },
+    {
+      "signature": "vb_private.owns_member_company(uuid)",
+      "fingerprint": "055b66d3b5f54cc24247da0b871d0340"
+    },
+    {
+      "signature": "vb_private.pause_bcm_after_save()",
+      "fingerprint": "7a0dd688f8a721996112bf2978f2e72d"
+    },
+    {
+      "signature": "vb_private.portal_member_active()",
+      "fingerprint": "3ba323ebfc2013617bd67552a3c5b670"
+    },
+    {
+      "signature": "vb_private.reserve_bcm_ai(uuid,uuid,integer)",
+      "fingerprint": "5e4961c7d78474ac3e4f52740c0f1b97"
+    },
+    {
+      "signature": "vb_private.touch_record()",
+      "fingerprint": "a04ae62d712fd0a56e88c018f7c6f57e"
+    },
+    {
+      "signature": "vb_private.watch_access(uuid)",
+      "fingerprint": "c4af935c4cf22787868019aae24d719b"
+    },
+    {
+      "signature": "vb_private.watch_normalize(text)",
+      "fingerprint": "5252660e7bae7bc0ce44f60d9a4db336"
+    },
+    {
+      "signature": "vb_private.watch_reason(text,text)",
+      "fingerprint": "9ba48b5d8417b1ef7e15ced144ec43c1"
+    },
+    {
+      "signature": "vb_publish_maintenance(uuid,uuid,uuid,integer,boolean)",
+      "fingerprint": "9c13723b46a2932e778069c202d31d3c"
+    },
+    {
+      "signature": "vb_record_filing_review(uuid,integer,text,jsonb)",
+      "fingerprint": "5a4bd67431d2608e98ca0875ef8c26d2"
+    },
+    {
+      "signature": "vb_remove_evidence(uuid,uuid)",
+      "fingerprint": "865855abc00625495bd7399155478c60"
+    },
+    {
+      "signature": "vb_reserve_evidence(uuid,uuid,uuid,jsonb)",
+      "fingerprint": "8c45098b305e7e2f731995112083ef1e"
+    },
+    {
+      "signature": "vb_review_bcm_ai_finding(uuid,integer,text,text,uuid)",
+      "fingerprint": "8bdf463b9c3ebb64fafc96601066757d"
+    },
+    {
+      "signature": "vb_save_bcm_settings(uuid,integer,jsonb,boolean)",
+      "fingerprint": "cd69f65ad763542173ad4bb363633170"
+    },
+    {
+      "signature": "vb_save_digest_preferences(uuid,integer,jsonb)",
+      "fingerprint": "ad98deee2d560d2e5b81f35dec9ccd1b"
+    },
+    {
+      "signature": "vb_save_filing_draft(uuid,uuid,uuid,integer,jsonb)",
+      "fingerprint": "d8db9b7152621e326ff36d462a160f7d"
+    },
+    {
+      "signature": "vb_save_maintenance_draft(uuid,uuid,uuid,integer,jsonb)",
+      "fingerprint": "9cc3c3c4db4f0493de292beebce93667"
+    },
+    {
+      "signature": "vb_save_member_progress(uuid,text,jsonb,timestamp with time zone)",
+      "fingerprint": "92cf5c7e56193506422659a0bd8393fb"
+    },
+    {
+      "signature": "vb_session_role()",
+      "fingerprint": "24571728ae819f33e9709012e27158b4"
+    },
+    {
+      "signature": "vb_set_bcm_ai_monitoring(uuid,integer,integer,boolean)",
+      "fingerprint": "7943b9b88ccdcae274e6af17084c87a2"
+    },
+    {
+      "signature": "vb_set_bcm_monitoring(uuid,integer,integer,boolean)",
+      "fingerprint": "e3c78d691ee665fac72234832c4cc038"
+    },
+    {
+      "signature": "vb_watch_ingest(jsonb)",
+      "fingerprint": "d57f5791dc9ed6b5e8f9d8cd95f4ffba"
+    },
+    {
+      "signature": "vb_watch_review(uuid,uuid,integer,text,text,text)",
+      "fingerprint": "88f4e43f332792bccd295ce4ef87de8d"
+    },
+    {
+      "signature": "vb_watch_run_due()",
+      "fingerprint": "324c639084784d8a73c3218823dd6e34"
+    },
+    {
+      "signature": "vb_watch_save(uuid,integer,uuid[],boolean)",
+      "fingerprint": "74b053cd52dcee9b32b7840c61049a9c"
+    },
+    {
+      "signature": "vb_watch_snapshot(uuid)",
+      "fingerprint": "bfdbb7423e0bb172190402852eb1a51d"
+    },
+    {
+      "signature": "vb_withdraw_maintenance(uuid,uuid,uuid,integer)",
+      "fingerprint": "47db881b44e47985c616288a3b46427d"
+    }
+  ]
+}

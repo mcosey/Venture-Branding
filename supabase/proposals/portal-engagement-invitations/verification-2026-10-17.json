@@ -1,0 +1,115 @@
+{
+  "status": "existing-member-and-new-user-walkthroughs-confirmed",
+  "date": "2026-10-17",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "local_checks": 36,
+  "rehearsal_checks": 44,
+  "installed_checks": 44,
+  "previous_scope_regression_checks": 54,
+  "contact_save_dependency_checks": 4,
+  "endpoint_checks": [
+    {
+      "method": "POST",
+      "origin": "http://127.0.0.1:8893",
+      "status": 401,
+      "expected": 401,
+      "passed": true
+    },
+    {
+      "method": "OPTIONS",
+      "origin": "http://127.0.0.1:8893",
+      "status": 204,
+      "expected": 204,
+      "passed": true
+    },
+    {
+      "method": "POST",
+      "origin": "https://other.test",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    }
+  ],
+  "pre_contact_edit_postcheck": {
+    "ai_config": {
+      "ready": false,
+      "max_runs": 8,
+      "singleton": true
+    },
+    "watch_config": {
+      "enabled": true,
+      "singleton": true
+    },
+    "invitation_count": 0,
+    "scheduler_config": {
+      "ready": false,
+      "singleton": true
+    },
+    "service_bindings": 32,
+    "anon_cannot_close": true,
+    "clients_unchanged": true,
+    "converted_clients": 4,
+    "system_identifier": "7692130048193495360",
+    "anon_cannot_accept": true,
+    "retained_test_runs": 0,
+    "retained_test_marks": 0,
+    "memberships_unchanged": true,
+    "retained_test_matters": 0,
+    "private_invitation_rls": true,
+    "retained_test_evidence": 0,
+    "retained_test_messages": 0,
+    "runtime_scope_triggers": 19,
+    "restrictive_read_policies": 15,
+    "retained_test_engagements": 0,
+    "retained_test_publications": 0,
+    "active_original_engagements": 4,
+    "retained_invitation_fixtures": 0,
+    "free_member_received_no_grants": true,
+    "member_cannot_list_invitations": true,
+    "retained_test_storage_metadata": 0,
+    "retained_invitation_auth_fixture": 0,
+    "retained_invitation_client_fixture": 0,
+    "retained_invitation_draft_fixtures": 0
+  },
+  "actual_email_state_before_acceptance": {
+    "state": "sent",
+    "sent_at": "2026-10-17T15:14:18.419817+00:00",
+    "engagement_id": null,
+    "recipient_email": "mithrilzeppelin117@gmail.com",
+    "client_saved_email": "mithrilzeppelin117@gmail.com",
+    "member_has_client_grant": false
+  },
+  "worker": "engagement-invite",
+  "worker_legacy_jwt_verification": false,
+  "worker_authorization": "Auth getUser plus staff/MFA server RPC; Test project/origin/readiness guards",
+  "test_readiness_flag": "VB_ENGAGEMENT_INVITES_ENABLED=true",
+  "callback_added": "http://127.0.0.1:8893/login.html?invitation=*",
+  "site_url_unchanged": "http://localhost:3000",
+  "approved_contact_email_change": "Fictional Cotivate contact -> mithrilzeppelin117@gmail.com",
+  "production_changed": false,
+  "research_settings_changed": false,
+  "emails_sent": 2,
+  "real_existing_member_acceptance_verified": true,
+  "real_new_user_roundtrip_verified": true,
+  "committed": false,
+  "source_sha256": {
+    "03-test-postcheck.sql": "bab02f6388f833683076d86a8d85a8e4e8f336a99142ba8a36d739b8a264dde3",
+    "prepared-rehearsal.sql": "22fe2af923f3355c2202a4d0265edb0123a2c8cda55641bd9cba54e71f40ebf5",
+    "prepared-contact-rehearsal.sql": "6afc92221eee303c8e690a4ac7ade2ac7ea3ef4fa1d070ebc7b948cc7ed95372",
+    "02-test-invitations-checks.sql": "7571721c26a5daa6ca6bf4b718b3b941103c97db477e492dbcd284811ba17098",
+    "01-test-invitations.sql": "5342bb28ad30ad6fa0ecdaf70d6fafa2ae47628fa522c04df733542f9b843ccf",
+    "04-test-client-save.sql": "2987a7ad7221afbad4ca71c25c32875a9964cc92ce2d8484c9832a846b5f77e3"
+  },
+  "existing_member_acceptance_evidence": "Owner confirmed success and supplied Client Brand Map screenshot; attorney client detail visibly lists the former draft as an Active engagement. No additional backend acceptance query performed.",
+  "loading_pass_local_checks": 47,
+  "new_user_test": {
+    "recipient": "mithrilzeppelin117+newclient@gmail.com",
+    "client_id": "b9100000-0000-0000-0000-000000000001",
+    "engagement_title": "FICTIONAL TEST \u2014 new-user invitation",
+    "matter_title": "FICTIONAL TEST \u2014 new-user onboarding",
+    "status": "Owner confirmed email/account setup/invitation flow worked; supplied Client Brand Map screenshot at 10:58:59 AM showing fictional Cotivate workspace and Client navigation.",
+    "contact_edit": "Approved alias saved as fictional Cotivate contact; earlier accepted engagement and original account preserved",
+    "evidence": "outputs/new-user-invitation-sent.jpg",
+    "acceptance_evidence": "Owner-operated walkthrough and supplied screenshot; no additional backend acceptance query performed."
+  }
+}
