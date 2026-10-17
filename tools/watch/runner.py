@@ -104,7 +104,7 @@ def extract(path, filename):
                             counts['missing_word_name'] += 1
                             if len(stack) > 1: stack[-2].remove(element)
                             element.clear(); stack.pop(); continue
-                        if len(name) > 2000 or serial in seen:
+                        if len(name) > 4096 or serial in seen:
                             raise FeedError('Invalid or duplicate application identity')
                         statements = element.findall('./case-file-statements/case-file-statement')
                         goods = [{'class': n.findtext('type-code', '')[2:5].strip(), 'text': n.findtext('text', '').strip()}
