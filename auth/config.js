@@ -13,3 +13,6 @@ window.VB_EVIDENCE_ENABLED = true;
 // Private account inbox and automatic digest delivery are activated.
 window.VB_DIGEST_ENABLED = true;
 window.VB_DIGEST_SCHEDULED = true;
+
+// Connected Trademark Watch; clients explicitly choose marks and start monitoring.
+window.VB_WATCH_ENABLED = true;
