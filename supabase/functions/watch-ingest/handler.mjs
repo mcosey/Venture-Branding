@@ -8,8 +8,8 @@ export function validateInput(p){
  if(p.action==='batch'){
   if(!Number.isInteger(p.number)||p.number<0||p.number>1999||!Array.isArray(p.records)||!p.records.length||p.records.length>100)throw Error('Invalid batch');
   for(const r of p.records){
-   if(!r||Object.keys(r).sort().join(',')!=='classes,filing_date,goods,name,owners,serial,status_code'||!/^\d{8}$/.test(r.serial)||typeof r.name!=='string'||!r.name.trim()||r.name.length>2000||!/^[\d]{4}-\d{2}-\d{2}$/.test(r.filing_date)||!Number.isFinite(Date.parse(r.filing_date))||new Date(r.filing_date).toISOString().slice(0,10)!==r.filing_date||!/^\d{3}$/.test(r.status_code))throw Error('Invalid application');
-   if(!Array.isArray(r.classes)||r.classes.length>45||r.classes.some(c=>typeof c!=='string'||!/^([1-9]|[1-3][0-9]|4[0-5]|A|B|200)$/.test(c))||!Array.isArray(r.owners)||r.owners.length>50||r.owners.some(o=>typeof o!=='string'||o.length>500)||!Array.isArray(r.goods)||r.goods.length>45||r.goods.some(g=>!g||Object.keys(g).sort().join(',')!=='class,text'||!/^(?:\d{3}|A|B)$/.test(g.class)||typeof g.text!=='string'||g.text.length>65536))throw Error('Invalid evidence');
+   if(!r||Object.keys(r).sort().join(',')!=='classes,filing_date,goods,name,owners,serial,status_code'||!/^\d{8}$/.test(r.serial)||typeof r.name!=='string'||!r.name.trim()||r.name.length>4096||!/^[\d]{4}-\d{2}-\d{2}$/.test(r.filing_date)||!Number.isFinite(Date.parse(r.filing_date))||new Date(r.filing_date).toISOString().slice(0,10)!==r.filing_date||!/^\d{3}$/.test(r.status_code))throw Error('Invalid application');
+   if(!Array.isArray(r.classes)||r.classes.length>45||r.classes.some(c=>typeof c!=='string'||!/^([1-9]|[1-3][0-9]|4[0-5]|A|B|200)$/.test(c))||!Array.isArray(r.owners)||r.owners.length>50||r.owners.some(o=>typeof o!=='string'||o.length>4096)||!Array.isArray(r.goods)||r.goods.length>45||r.goods.some(g=>!g||Object.keys(g).sort().join(',')!=='class,text'||!/^(?:\d{3}|A|B)$/.test(g.class)||typeof g.text!=='string'||g.text.length>524288))throw Error('Invalid evidence');
   }
  }
  return p;
