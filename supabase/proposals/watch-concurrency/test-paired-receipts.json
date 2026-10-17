@@ -1,0 +1,106 @@
+[
+  {
+    "a": {
+      "session_a_pid": 734660,
+      "action_completed_before_commit_at": "2026-10-17T21:33:37.558409+00:00"
+    },
+    "b": {
+      "case": 1,
+      "a_pid": 734660,
+      "b_pid": 734662,
+      "passed": true,
+      "elapsed_seconds": 17.195372
+    }
+  },
+  {
+    "a": {
+      "session_a_pid": 734692,
+      "action_completed_before_commit_at": "2026-10-17T21:34:42.026103+00:00"
+    },
+    "b": {
+      "case": 2,
+      "a_pid": 734692,
+      "b_pid": 734693,
+      "passed": true,
+      "elapsed_seconds": 17.533989
+    }
+  },
+  {
+    "a": {
+      "session_a_pid": 734741,
+      "action_completed_before_commit_at": "2026-10-17T21:35:30.842295+00:00"
+    },
+    "b": {
+      "case": 3,
+      "a_pid": 734741,
+      "b_pid": 734746,
+      "passed": true,
+      "elapsed_seconds": 17.314413
+    }
+  },
+  {
+    "a": {
+      "session_a_pid": 734778,
+      "action_completed_before_commit_at": "2026-10-17T21:36:12.352947+00:00"
+    },
+    "b": {
+      "case": 4,
+      "a_pid": 734778,
+      "b_pid": 734779,
+      "passed": true,
+      "elapsed_seconds": 17.550764
+    }
+  },
+  {
+    "a": {
+      "session_a_pid": 734807,
+      "action_completed_before_commit_at": "2026-10-17T21:36:58.287676+00:00"
+    },
+    "b": {
+      "case": 5,
+      "a_pid": 734807,
+      "b_pid": 734808,
+      "passed": true,
+      "elapsed_seconds": 17.347057
+    }
+  },
+  {
+    "a": {
+      "session_a_pid": 734851,
+      "action_completed_before_commit_at": "2026-10-17T21:37:53.266018+00:00"
+    },
+    "b": {
+      "case": 6,
+      "a_pid": 734851,
+      "b_pid": 734852,
+      "passed": true,
+      "worker_commits": false
+    }
+  },
+  {
+    "a": {
+      "session_a_pid": 734879,
+      "action_completed_before_commit_at": "2026-10-17T21:38:39.497484+00:00"
+    },
+    "b": {
+      "case": 7,
+      "a_pid": 734879,
+      "b_pid": 734881,
+      "passed": true,
+      "elapsed_seconds": 21.246827
+    }
+  },
+  {
+    "a": {
+      "session_a_pid": 734924,
+      "action_completed_before_commit_at": "2026-10-17T21:39:23.244385+00:00"
+    },
+    "b": {
+      "case": 8,
+      "a_pid": 734924,
+      "b_pid": 734925,
+      "passed": true,
+      "elapsed_seconds": 17.355424
+    }
+  }
+]

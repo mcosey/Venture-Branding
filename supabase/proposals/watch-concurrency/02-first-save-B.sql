@@ -1,0 +1,40 @@
+begin;
+set local statement_timeout='45s';
+set local lock_timeout='30s';
+set local idle_in_transaction_session_timeout='45s';
+-- BEGIN HOSTED GUARDS
+do $$ begin
+ if (select system_identifier::text from pg_control_system())<>'7692130048193495360' then raise exception 'BCM Test only'; end if;
+ if to_regclass('vb_private.watch_scope_settings') is null then raise exception 'Installed scoped Watch required'; end if;
+ if md5(pg_get_functiondef('public.vb_watch_run_due()'::regprocedure))<>'c72725f3f7c9459fb7d5f64ab4b9f818' then raise exception 'Installed Watch definition changed'; end if;
+ if md5(pg_get_functiondef('public.vb_watch_snapshot(uuid)'::regprocedure))<>'f4e2544500812010d4369071af28c071' then raise exception 'Installed Watch definition changed'; end if;
+ if md5(pg_get_functiondef('public.vb_watch_save(uuid,integer,uuid[],boolean)'::regprocedure))<>'2b1683e4347a2923fdc789804e35a2a1' then raise exception 'Installed Watch definition changed'; end if;
+ if md5(pg_get_functiondef('public.vb_watch_save_scoped(uuid,uuid,uuid,integer,uuid[],boolean)'::regprocedure))<>'c47bcca98513ed06c6441b6c511e2c00' then raise exception 'Installed Watch definition changed'; end if;
+end $$;
+-- END HOSTED GUARDS
+
+select set_config('request.jwt.claims','{}',true);
+create or replace function pg_temp.race_assert(ok boolean,label text) returns void language plpgsql as $$ begin if ok is distinct from true then raise exception 'FAIL: %',label; end if; end $$;
+create temporary table race_actors on commit drop as select
+ (select id from auth.users where lower(email)='mithrilzeppelin117@gmail.com') a,
+ (select id from auth.users where lower(email)='mithrilzeppelin117+newclient@gmail.com') b,
+ (select user_id from vb_private.staff_members where active order by user_id limit 1) staff;
+select pg_temp.race_assert((select a is not null and b is not null and staff is not null and a<>b and a<>staff and b<>staff from race_actors),'Three distinct existing Test identities');
+create or replace function pg_temp.race_actor(who text) returns void language sql as $$ select set_config('request.jwt.claims',jsonb_build_object('sub',case who when 'a' then a when 'b' then b else staff end,'role','authenticated','aal',case when who='staff' then 'aal2' else 'aal1' end)::text,true)::text::void from race_actors $$;
+grant select on race_actors to authenticated,service_role;
+do $$ begin execute format('grant usage on schema %I to authenticated,service_role',(select nspname from pg_namespace where oid=pg_my_temp_schema())); end $$;
+select pg_temp.race_assert(exists(select 1 from public.vb_clients where id='f2c00000-0000-0000-0000-000000000001' and name='DISPOSABLE WATCH RACE — first-save'),'Expected disposable fixture');
+select pg_temp.race_assert(not pg_try_advisory_xact_lock(73772132,1),'Session A must still hold the overlap gate');
+create temporary table race_overlap on commit drop as select clock_timestamp() started,pg_backend_pid() b_pid,(select pid from pg_locks where locktype='advisory' and classid=73772132 and objid=1 and objsubid=2 and granted limit 1) a_pid;
+select pg_temp.race_assert((select a_pid is not null and a_pid<>b_pid from race_overlap),'Two independent PostgreSQL sessions');
+create temporary table race_request on commit drop as select 'f2c00000-0000-0000-0000-000000000001'::uuid cid,'f2c10000-0000-0000-0000-000000000011'::uuid eid,s.id cfg,coalesce(s.version,0) ver,array['f2c30000-0000-0000-0000-000000000111']::uuid[] marks from (select 1) x left join vb_private.watch_scope_settings s on s.client_id='f2c00000-0000-0000-0000-000000000001' and s.engagement_id='f2c10000-0000-0000-0000-000000000011';
+grant select on race_request to authenticated;
+set local role authenticated;
+select pg_temp.race_actor('a');
+create temporary table race_error(actual text) on commit drop;
+do $$ declare code text:='00000'; begin begin perform public.vb_watch_save_scoped(cid,eid,cfg,ver,marks,false) from race_request; exception when others then get stacked diagnostics code=returned_sqlstate; end; insert into race_error values(code); end $$;
+select pg_temp.race_assert((select actual='40001' from race_error),'Expected SQLSTATE 40001');
+reset role;
+select pg_temp.race_assert(clock_timestamp()-started>interval '1 second','Competing operation actually waited') from race_overlap;
+select jsonb_build_object('case',1,'a_pid',a_pid,'b_pid',b_pid,'elapsed_seconds',extract(epoch from clock_timestamp()-started),'passed',true) as session_b_receipt from race_overlap;
+commit;

@@ -1,0 +1,33 @@
+{
+  "result": {
+    "grants": "d28407132b23b3cc3cc7bec0584b57d4",
+    "clients": "d2106a4368181bc711a593b184cc0f6f",
+    "is_test": true,
+    "bindings": "202abdae6cc6b400e189635a233a80f3",
+    "findings": "156ce9134607f9cc32bfb2d446798d8e",
+    "ai_config": {
+      "ready": false,
+      "max_runs": 8,
+      "singleton": true
+    },
+    "auth_users": 5,
+    "engagements": "71da5cc2ec6afd224585cb1ad551f72a",
+    "kit_profiles": "42cfcab4f7eb110bb7de3027964aabca",
+    "kit_progress": "2896ed74a83eefeb00b331339e688731",
+    "scope_ledger": "e16616451bc4269bc3d37b8ddd30fb57",
+    "source_files": "9c944eb971852c9c3e4386c39a4787b9",
+    "watch_config": {
+      "enabled": true,
+      "singleton": true
+    },
+    "kit_companies": "f3f7dd742284fc07c984e0499f9bbe1e",
+    "legacy_settings": "7d97a0422d87c13d254c9188b9549886",
+    "scheduler_config": {
+      "ready": false,
+      "singleton": true
+    },
+    "original_run_values": "0179251b99ed5de3f25727241519b1a1",
+    "source_application_count": 50795
+  },
+  "matches_baseline": true
+}

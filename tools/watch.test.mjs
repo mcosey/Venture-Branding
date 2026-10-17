@@ -1,0 +1,39 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateInput,createWatchHandler} from '../supabase/functions/watch-ingest/handler.mjs';
+import {createWatchRepository} from '../auth/watch.mjs';
+const secret='x'.repeat(40),file='11111111-1111-4111-8111-111111111111';
+const record={serial:'01234567',name:'EXAMPLE',filing_date:'2026-10-11',status_code:'630',goods:[{class:'041',text:'Education'}],classes:['41'],owners:['Example LLC']};
+function handler({enabled='true',rpcError=false}={}){const calls=[];return {calls,run:createWatchHandler({env:k=>({WATCH_RELEASE_ENABLED:enabled,WATCH_INGEST_KEY:secret,SUPABASE_URL:'https://imvkhicfmidzbzsbhkzs.supabase.co'}[k]||'mock'),createClient:()=>({rpc:async(name,args)=>{calls.push({name,args});return rpcError?{error:{message:'PRIVATE'}}:{data:{complete:true}};}})})};}
+function request(body,key=secret){return new Request('https://example.test',{method:'POST',headers:{'x-watch-ingest-key':key},body:JSON.stringify(body)});}
+test('release switch and secret gate prevent database calls',async()=>{for(const [opts,key,status] of [[{enabled:'false'},secret,503],[{},'wrong',401]]){const h=handler(opts);assert.equal((await h.run(request({action:'run'},key))).status,status);assert.equal(h.calls.length,0);}});
+test('unsigned, arbitrary fields and malformed batches are rejected',async()=>{for(const p of [{action:'batch',file_id:file,number:0,records:[{...record,client_id:file}]},{action:'begin',filename:'../file.zip',revision:'a'.repeat(64),expected:1},{action:'batch',file_id:file,number:0,records:[{...record,filing_date:'2026-02-30'}]},{action:'batch',file_id:file,number:0,records:[{...record,classes:['99']}]},{action:'run',service_role:'secret'}]){const h=handler();assert.equal((await h.run(request(p))).status,400);assert.equal(h.calls.length,0);}});
+test('streamed request cap applies without Content-Length',async()=>{const h=handler();assert.equal((await h.run(new Request('https://example.test',{method:'POST',headers:{'x-watch-ingest-key':secret},body:'x'.repeat(1048577)}))).status,413);assert.equal(h.calls.length,0);});
+test('ingestion and check RPCs accept only validated public payloads',async()=>{const h=handler();assert.equal((await h.run(request({action:'batch',file_id:file,number:0,records:[record]}))).status,200);assert.equal(h.calls[0].name,'vb_watch_ingest');assert.deepEqual(h.calls[0].args.details.records,[record]);await h.run(request({action:'run'}));assert.equal(h.calls[1].name,'vb_watch_run_due');});
+test('long official goods statements are preserved within the request cap',async()=>{const h=handler(),long={...record,goods:[{class:'041',text:'x'.repeat(42149)}]};assert.equal((await h.run(request({action:'batch',file_id:file,number:0,records:[long]}))).status,200);assert.equal(h.calls[0].args.details.records[0].goods[0].text.length,42149);const over={...long,goods:[{class:'041',text:'x'.repeat(524289)}]};assert.equal((await h.run(request({action:'batch',file_id:file,number:0,records:[over]}))).status,400);});
+test('official certification and membership classes survive validation',()=>{for(const c of ['A','B','200']){const r={...record,classes:[c],goods:[{class:c==='200'?'200':c,text:'Official description'}]};assert.deepEqual(validateInput({action:'batch',file_id:file,number:0,records:[r]}).records,[r]);}});
+test('SQL failures never expose raw errors or credentials',async()=>{const h=handler({rpcError:true}),response=await h.run(request({action:'run'}));assert.equal(response.status,409);assert(!JSON.stringify(await response.json()).includes('PRIVATE'));});
+function database(role='client',aal='aal1',reply=()=>({data:{settings:{version:4}}})){const calls=[];return {calls,auth:{getUser:async()=>({data:{user:{id:'actor'}}}),mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:aal,nextLevel:role==='staff'?'aal2':aal}})}},rpc:async(name,args)=>{calls.push({name,args});return name==='vb_session_role'?{data:role}:reply(name,args);}};}
+test('disabled UI repository does not query absent Watch schema',async()=>{const db=database(),repo=createWatchRepository(db,'client',{enabled:false});await assert.rejects(()=>repo.load('client'),/activation/);assert.equal(db.calls.length,0);});
+test('saved settings use current version and staff review is denied to client',async()=>{const db=database(),repo=createWatchRepository(db,'client',{enabled:true});const state=await repo.load('c');await repo.save('c',state,['m'],false);assert.equal(db.calls.at(-1).args.expected_version,4);assert.throws(()=>repo.review('c',{},'approved','','public'),/Attorney/);});
+test('staff MFA is checked before Watch data is requested',async()=>{const db=database('staff','aal1'),repo=createWatchRepository(db,'staff',{enabled:true});await assert.rejects(()=>repo.load('c'));assert.equal(db.calls.length,0);});
+test('late reply after session clear is discarded',async()=>{let finish;const db=database('client','aal1',()=>new Promise(resolve=>finish=resolve)),repo=createWatchRepository(db,'client',{enabled:true}),pending=repo.load('c');await new Promise(setImmediate);repo.clear();finish({data:{private_note:'late'}});await assert.rejects(()=>pending,/ended/);});
+test('stale version is reported without replacing reviewed state',async()=>{const db=database('staff','aal2',()=>({error:{code:'40001'}})),repo=createWatchRepository(db,'staff',{enabled:true});await assert.rejects(()=>repo.review('c',{id:'f',version:7},'approved','note','summary'),/changed/);assert.equal(db.calls.at(-1).args.expected_version,7);});
+
+test('a different project cannot run the ingestion worker',async()=>{const run=createWatchHandler({env:k=>k==='SUPABASE_URL'?'https://separate-project.supabase.co':k==='WATCH_INGEST_KEY'?secret:'true',createClient:()=>{throw Error('Must not connect')}});assert.equal((await run(request({action:'run'}))).status,503);});
+test('scoped save sends explicit configuration identity and version without using the singleton endpoint',async()=>{
+ const db=database(),repo=createWatchRepository(db,'client',{enabled:true}),configuration={scope_id:'engagement-b',settings:{id:'configuration-b',version:9}},state={scoped:true,configurations:[configuration]};
+ await repo.save('client',state,['word-b'],false,configuration);
+ assert.deepEqual(db.calls.at(-1),{name:'vb_watch_save_scoped',args:{target_client:'client',target_engagement:'engagement-b',expected_configuration:'configuration-b',expected_version:9,selected_marks:['word-b'],monitoring:false}});
+});
+test('missing or stale configuration selection cannot send a scoped save',async()=>{
+ const db=database(),repo=createWatchRepository(db,'client',{enabled:true}),state={scoped:true,configurations:[]};
+ for(const configuration of [undefined,{scope_id:'forged',settings:{id:'forged',version:0}}])assert.throws(()=>repo.save('client',state,[],false,configuration),/Choose a Watch/);
+ assert.equal(db.calls.length,0);
+});
+test('scoped save errors distinguish access and invalid selection without exposing raw database text',async()=>{
+ for(const [code,message] of [['42501',/access is unavailable/],['22023',/selection cannot be saved/]]){
+  const db=database('client','aal1',()=>({error:{code,message:'PRIVATE SQL'}})),repo=createWatchRepository(db,'client',{enabled:true});
+  await assert.rejects(()=>repo.load('c'),error=>message.test(error.message)&&!error.message.includes('PRIVATE'));
+ }
+});

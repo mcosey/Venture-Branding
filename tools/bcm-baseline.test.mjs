@@ -1,0 +1,10 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {collectBaseline} from './bcm-ai-test-review/baseline.mjs';
+const state=(remaining=3)=>({ready:true,clientId:'a',settings:{version:1,urls:['https://openai.com/']},baseline:{completed:3-remaining,remaining}});
+test('initial collection runs serially three times and stops when complete',async()=>{let calls=0,active=0;const result=await collectBaseline(state(),{run:async()=>{assert.equal(active,0);active++;calls++;await Promise.resolve();active--;},load:async()=>state(3-calls)});assert.equal(calls,3);assert.equal(result.baseline.remaining,0);});
+test('resuming an interrupted baseline runs only remaining successful checks',async()=>{let calls=0;await collectBaseline(state(2),{run:async()=>calls++,load:async()=>state(2-calls)});assert.equal(calls,2);});
+test('provider failure stops without retrying or completing remaining passes',async()=>{let calls=0;await assert.rejects(collectBaseline(state(),{run:async()=>{if(++calls===2)throw Error('Failed');},load:async()=>state(2)}),/Failed/);assert.equal(calls,2);});
+test('paused state never calls research',async()=>{let calls=0;await assert.rejects(collectBaseline({...state(),ready:false},{run:async()=>calls++,load:async()=>state()}),/paused/);assert.equal(calls,0);});
+test('completed baseline uses one ordinary research check',async()=>{let calls=0;await collectBaseline(state(0),{run:async()=>calls++,load:async()=>state(0)});assert.equal(calls,1);});
+test('scope or version changes stop the remaining passes',async()=>{for(const change of [{clientId:'b'},{settings:{version:2,urls:['https://openai.com/']}},{settings:{version:1,urls:['https://harvey.ai/']}}]){let calls=0;await assert.rejects(collectBaseline(state(),{run:async()=>calls++,load:async()=>({...state(2),...change})}),/changed/);assert.equal(calls,1);}});
+test('pause after a pass stops without a further paid request',async()=>{let calls=0;await collectBaseline(state(),{run:async()=>calls++,load:async()=>({...state(2),ready:false})});assert.equal(calls,1);});

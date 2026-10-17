@@ -1,0 +1,88 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
+import {validConfiguration} from '../auth/flow.mjs';
+import {createConnection} from '../auth/connection.mjs';
+const url='https://imvkhicfmidzbzsbhkzs.supabase.co';
+const config={environment:'bcm-test',url,publishableKey:'sb_publishable_dummy',allowBcmResearch:false};
+test('Test configuration requires explicit environment; Production stays accepted',()=>{
+ assert.equal(validConfiguration({url,publishableKey:'sb_publishable_dummy'}),false);
+ assert.equal(validConfiguration(config),true);
+ assert.equal(validConfiguration({...config,url:'https://other.supabase.co'}),false);
+ assert.equal(validConfiguration({url:'https://omvkwiosonatswocbdgx.supabase.co',publishableKey:'sb_publishable_dummy'}),true);
+});
+test('Test connection cannot run off localhost or use the Production session key',()=>{
+ let args;globalThis.window={VB_AUTH_CONFIG:config,location:{hostname:'public.example'},supabase:{createClient(...value){args=value;return {};}}};globalThis.sessionStorage={};
+ assert.throws(()=>createConnection('client'),/local only/);assert.equal(args,undefined);
+ window.location.hostname='127.0.0.1';createConnection('client');assert.equal(args[2].auth.storageKey,'vb-bcm-ai-test-client');
+ window.VB_AUTH_CONFIG={url:'https://omvkwiosonatswocbdgx.supabase.co',publishableKey:'sb_publishable_dummy'};createConnection('client');assert.equal(args[2].auth.storageKey,'vb-auth-client');
+ delete globalThis.window;delete globalThis.sessionStorage;
+});
+
+// The shared portal renderer now targets the installed Production workflow.
+{
+const url='https://omvkwiosonatswocbdgx.supabase.co';
+const config={environment:'bcm-production',bcmEnabled:true,url,allowBcmResearch:false};
+class Element{
+ constructor(tag,text=''){this.tag=tag;this._text=text;this.children=[];this.attributes={};this.listeners={};this.isConnected=true;this.classList={toggle(){}};}
+ append(...n){this.children.push(...n);}
+ replaceChildren(...n){this._text='';this.children=n;}
+ setAttribute(k,v){this.attributes[k]=String(v);}
+ addEventListener(k,fn){this.listeners[k]=fn;}
+ add(n){this.append(n);}
+ get textContent(){return this._text+' '+this.children.map(n=>n.textContent).join(' ');}
+ set textContent(v){this._text=String(v);this.children=[];}
+ all(){return this.children.flatMap(n=>[n,...n.all()]);}
+ querySelectorAll(selector){return this.all().filter(n=>selector.split(',').map(s=>s.trim()).includes(n.tag));}
+}
+const data=()=>({clients:[{id:'a',name:'Client A'}],clientId:'a',ready:true,settings:{version:1,urls:['https://example.com/'],categories:['product_names'],frequency:'weekly',exclusions:[]},schedule:{enabled:false,revision:1},publications:[{name:'Reviewed name',state:'approved',context:'Reviewed context',passage:'Reviewed passage',source_url:'https://example.com/'}],observations:[{name:'Private unreviewed name'}],runs:[]});
+const tick=()=>new Promise(r=>setImmediate(r));
+function harness(load){
+ const document={createElement:tag=>new Element(tag)};
+ const source=readFileSync(new URL('../portal/assets/bcm-ai.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'').replace(/export /g,'');
+ const ctx={document,window:{VB_AUTH_CONFIG:config},Option:function(text,value){const n=new Element('option',text);n.value=value;return n;},URL,bcmCategories:{product_names:'Product names'},assertProduction:db=>{if(db.supabaseUrl!==url)throw Error('Test only');},loadAiWorkspace:load,reviewAiFinding:async()=>{throw Error('Staff access expired');},showRegionLoading(target,label){target.replaceChildren(new Element('p',label));return ()=>{};}};
+ return vm.runInNewContext(source+';({renderAiBcm,aiBcmEnabled,aiResearchControls,aiAllowanceMessage})',ctx);
+}
+test('Wrong project cannot mount the new renderer or query AI records',()=>{
+ let calls=0;const api=harness(async()=>{calls++;return data();});assert.throws(()=>api.renderAiBcm(new Element('main'),{id:'a'},{supabaseUrl:'https://imvkhicfmidzbzsbhkzs.supabase.co'}),/Test only/);assert.equal(calls,0);
+});
+test('late fetch cannot reinsert findings after disposal/client switch',async()=>{
+ let resolve;const api=harness(()=>new Promise(r=>resolve=r)),main=new Element('main');const dispose=api.renderAiBcm(main,{id:'a'},{supabaseUrl:url});assert.match(main.textContent,/Loading Brand Change Monitor/);dispose();resolve(data());await tick();assert.doesNotMatch(main.textContent,/Reviewed name|Private unreviewed/);
+});
+test('client renderer exposes reviewed publications only, with research disabled even if backend ready',async()=>{
+ const api=harness(async()=>data()),main=new Element('main');api.renderAiBcm(main,{id:'a'},{supabaseUrl:url});await tick();
+ const run=main.all().find(n=>n.tag==='button'&&n.textContent.trim()==='Run research now');assert.equal(run.disabled,true);
+ main.all().find(n=>n.tag==='button'&&n.textContent.trim()==='Reviewed updates').onclick();assert.match(main.textContent,/Reviewed name/);assert.doesNotMatch(main.textContent,/Private unreviewed name|Review note \(private\)/);
+});
+test('failed loading shows retry without partial client records',async()=>{
+ const api=harness(async()=>{throw Error('Access unavailable');}),main=new Element('main');api.renderAiBcm(main,{id:'a'},{supabaseUrl:url});await tick();assert.match(main.textContent,/Access unavailable|Retry loading/);assert.doesNotMatch(main.textContent,/Reviewed name/);
+});
+
+test('failed staff action clears private records until protected reload succeeds',async()=>{
+ const api=harness(async()=>data()),main=new Element('main');api.renderAiBcm(main,{id:'a'},{supabaseUrl:url},{audience:'staff'});await tick();
+ const status=main.all().find(n=>n.tag==='select'&&n.attributes['aria-label']==='Finding status');status.value='all';status.onchange();
+ const note=main.all().find(n=>n.tag==='textarea');note.value='Test';const form=main.all().find(n=>n.tag==='form');form.onsubmit({preventDefault(){},submitter:{value:'approve'}});await tick();
+ assert.match(main.textContent,/Staff access expired|Reload saved records/);assert.doesNotMatch(main.textContent,/Private unreviewed name/);
+});
+
+test('monthly caps disable paid actions while pause remains available',()=>{
+ const api=harness(async()=>data()),state={...data(),baseline:{remaining:0},allowance:{available:true,reason:'available'}};
+ assert.deepEqual(JSON.parse(JSON.stringify(api.aiResearchControls(state,true))),{run:true,start:true,pause:false});
+ for(const reason of ['client_limit','global_limit','paused']){
+  const blocked={...state,ready:false,allowance:{available:false,reason},schedule:{enabled:true}};
+  const buttons=api.aiResearchControls(blocked,true);assert.equal(buttons.run,false);assert.equal(buttons.start,false);assert.equal(buttons.pause,true);assert.match(api.aiAllowanceMessage(blocked.allowance),/allowance|paused/);
+ }
+ assert.equal(api.aiResearchControls({...state,allowance:undefined},true).run,false);
+ assert.equal(api.aiResearchControls({...state,baseline:{remaining:2}},true).start,false);
+});
+test('client limit is rendered without private findings or shared usage counts',async()=>{
+ const state={...data(),ready:false,baseline:{remaining:0},schedule:{enabled:true,revision:1},allowance:{available:false,reason:'client_limit',used:8,limit:8,remaining:0,resets_at:'2026-11-01T00:00:00Z'}};
+ const api=harness(async()=>state),main=new Element('main');api.renderAiBcm(main,{id:'a'},{supabaseUrl:url});await tick();
+ assert.match(main.textContent,/8 of 8 monthly checks used/);assert.match(main.textContent,/Allowance resets/);
+ assert.equal(main.all().find(n=>n.tag==='button'&&n.textContent.trim()==='Pause monitoring').disabled,false);
+ assert.equal(main.all().find(n=>n.tag==='button'&&n.textContent.trim()==='Run research now').disabled,true);
+ assert.doesNotMatch(main.textContent,/Private unreviewed name/);
+});
+
+}

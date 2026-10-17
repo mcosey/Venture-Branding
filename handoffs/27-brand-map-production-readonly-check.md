@@ -1,0 +1,17 @@
+# Brand Map Production read-only check completed
+
+2026-10-10. User explicitly approved a local read-only check of Cotivate's existing Production records and saved monitor history. The user entered existing credentials privately. Branch remains codex/attorney-workspace; application files, pending changes and parallel work preserved.
+
+The actual map renderer, model and saved BCM loader were copied unchanged into a separate local review folder. Its normal client access gate remained in place. A Production-only transport guard permitted normal existing-account authentication, session-role lookup and GET reads of client, mark, service-preference and saved-scan tables. It blocked scans, application data writes, account administration and unrelated destinations. Other feature navigation was inert in this review copy.
+
+The authenticated page loaded the expected Cotivate workspace and one saved trademark record. Selecting the record showed its saved inactive status and USPTO source, with an appropriately scoped detail link. The map showed three retained monitor scans: one completed baseline and two completed comparisons. Both comparisons matched the retained baseline, with no missing comparison in the map. Existing saved text produced zero specific branding findings, and the map displayed that honestly. Recent activity showed the saved baseline and comparison dates. Portfolio and monitor links retained the same client scope.
+
+Normal local sign-out returned to login. Reopening the portal without signing in required client login and left the main content empty. The Production check did not start any scan or save client records. Normal Auth sign-in/sign-out logs are implicit in the approved existing-account login. No new accounts, permissions, database changes, installations, commits, pushes or deployments.
+
+Private evidence is outside the served review directory: /Users/mcosey/Documents/Codex/2026-10-09/living-brand-map-users-mcosey-documents-2/work/private-brand-map-production-review/results.md, cotivate-map-verified.png and signed-out-denied.png. The directory has owner-only access. No passwords, tokens, raw session data or raw saved scan text were inspected or logged.
+
+Cleanup completed: own browser tab 8 closed; own loopback server on port 8880 (session 13576) stopped successfully. Original Supabase tab and parallel servers on ports 8000 and 8011 left untouched.
+
+This completes the approved final saved-data check. Prior two-existing-account BCM Test checks are documented in handoff 26, including their empty-scan isolation limitation. Actual nonempty branding detections were verified with fictional data locally, not positive Production findings. This version displays existing trademarks and possible text-based monitor findings; it is not a complete IP inventory or logo-image analysis. The larger editable shared-asset backend remains parked.
+
+The Brand Map display is implemented and verified locally against Production data; the frontend is not published online. Publishing/hosting and coordination with pending parallel features require a separate user-approved phase. Do not restart backend work or make another scan merely to create a positive finding. Keep approval requirements for commit, push, deployment, installation and access changes. Recommended next step: user review of the completed map, then a separate portal publishing decision shared with parallel features. GPT-6 Luna / low is sufficient for a brief review or status explanation.

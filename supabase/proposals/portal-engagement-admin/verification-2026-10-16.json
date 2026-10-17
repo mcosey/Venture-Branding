@@ -1,0 +1,70 @@
+{
+  "status": "applied-and-verified-in-test",
+  "date": "2026-10-16",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "rehearsal_checks": 22,
+  "installed_checks": 22,
+  "existing_engagement_isolation_checks": 54,
+  "local_regression_checks": 28,
+  "postcheck": {
+    "ai_config": {
+      "ready": false,
+      "max_runs": 8,
+      "singleton": true
+    },
+    "watch_config": {
+      "enabled": true,
+      "singleton": true
+    },
+    "scheduler_config": {
+      "ready": false,
+      "singleton": true
+    },
+    "service_bindings": 32,
+    "anon_cannot_close": true,
+    "clients_unchanged": true,
+    "converted_clients": 4,
+    "system_identifier": "7692130048193495360",
+    "retained_test_runs": 0,
+    "retained_test_marks": 0,
+    "memberships_unchanged": true,
+    "retained_test_matters": 0,
+    "retained_test_evidence": 0,
+    "retained_test_messages": 0,
+    "runtime_scope_triggers": 19,
+    "restrictive_read_policies": 15,
+    "retained_test_engagements": 0,
+    "retained_test_publications": 0,
+    "active_original_engagements": 4,
+    "free_member_received_no_grants": true,
+    "retained_test_storage_metadata": 0
+  },
+  "draft_postcheck": {
+    "draft_rls": true,
+    "draft_count": 1,
+    "engagements_all_features": true,
+    "member_direct_draft_read": false,
+    "rollback_drafts_remaining": 0,
+    "rollback_engagements_remaining": 0
+  },
+  "browser_observations": [
+    "Existing Test attorney signed in privately with MFA",
+    "Fictional Cotivate engagement draft reviewed and saved",
+    "Saved draft survived full reload and could be reopened for editing"
+  ],
+  "retained_ui_test_draft": "FICTIONAL TEST \u2014 engagement draft review; engagement-review@example.test; no invitation sent",
+  "limitations": [
+    "Invitation email delivery and acceptance/activation are not connected in this bounded draft-screen step",
+    "Independent-session worker/closure race remains untested"
+  ],
+  "production_changed": false,
+  "emails_sent": false,
+  "accounts_created": false,
+  "access_grants_created": false,
+  "committed": false,
+  "source_sha256": {
+    "01-test-admin.sql": "9baee58e8adf96f1a765ebbd14fd94609084ab6481c1827d2e0f4cd11dae16d3",
+    "02-test-checks.sql": "a22cca324ad51799b3402b9ed039be0109f260807ed7f69cdfd0ca48276ffcdc",
+    "prepared-rehearsal.sql": "a57d5ddf1516df527185588cb947584c62746784a632c76a2ccbe99c66c2a6d2"
+  }
+}

@@ -1,0 +1,11 @@
+-- Read-only inventory. Does not infer engagements from client memberships.
+begin read only;
+select jsonb_build_object(
+ 'system_identifier',(select system_identifier::text from pg_control_system()),
+ 'clients',(select coalesce(jsonb_agg(jsonb_build_object('id',c.id,'name',c.name,'portal_enabled',c.portal_enabled,'archived',c.archived_at is not null,'memberships',(select count(*) from vb_private.client_memberships m where m.client_id=c.id and m.active),'marks',(select count(*) from public.vb_marks m where m.client_id=c.id),'engagements',(select count(*) from public.vb_engagements e where e.client_id=c.id)) order by c.id),'[]') from public.vb_clients c),
+ 'engagements',(select coalesce(jsonb_agg(jsonb_build_object('id',e.id,'client_id',e.client_id,'title',e.title,'status',e.status,'matters',(select count(*) from public.vb_matters m where m.engagement_id=e.id),'grants',(select count(*) from vb_private.engagement_grants g where g.engagement_id=e.id)) order by e.id),'[]') from public.vb_engagements e),
+ 'tables',(select jsonb_agg(jsonb_build_object('schema',n.nspname,'table',c.relname,'rls',c.relrowsecurity,'columns',(select jsonb_agg(a.attname order by a.attnum) from pg_attribute a where a.attrelid=c.oid and a.attnum>0 and not a.attisdropped)) order by n.nspname,c.relname) from pg_class c join pg_namespace n on n.oid=c.relnamespace where c.relkind='r' and n.nspname in ('public','vb_private') and (c.relname like 'vb_%' or n.nspname='vb_private')),
+ 'policies',(select jsonb_agg(jsonb_build_object('schema',schemaname,'table',tablename,'policy',policyname,'command',cmd,'using',qual,'check',with_check) order by schemaname,tablename,policyname) from pg_policies where schemaname in ('public','vb_private','storage')),
+ 'authorization_functions',(select jsonb_agg(jsonb_build_object('signature',p.oid::regprocedure::text,'definition',pg_get_functiondef(p.oid)) order by p.oid::regprocedure::text) from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname in ('public','vb_private') and p.prokind='f' and (p.prosrc ilike '%client_memberships%' or p.prosrc ilike '%is_client_member%' or p.prosrc ilike '%can_access_engagement%' or p.prosrc ilike '%can_use_engagement_service%'))
+) as inventory;
+rollback;

@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-17",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "status": "returning-client-walkthrough-passed",
+  "recipient": "mithrilzeppelin117+newclient@gmail.com",
+  "engagement_title": "FICTIONAL TEST \u2014 returning-client engagement",
+  "matter_title": "FICTIONAL TEST \u2014 returning-client matter",
+  "emails_sent_this_walkthrough": 1,
+  "baseline": {
+    "ai_ready": false,
+    "engagements": [
+      {
+        "id": "79f4529c-7e06-45e8-8877-353a417562c1",
+        "title": "FICTIONAL TEST \u2014 new-user invitation",
+        "status": "closed"
+      },
+      {
+        "id": "f1950000-0000-0000-0000-000000000001",
+        "title": "FICTIONAL TEST \u2014 lifecycle companion",
+        "status": "closed"
+      }
+    ],
+    "progress_rows": 1,
+    "test_database": true,
+    "watch_enabled": true,
+    "scheduler_ready": false,
+    "company_fingerprint": "1d3b64f58415ce7f871158e075dce534",
+    "profile_fingerprint": "2c2c14281a2cb7c546ccbf68fc67b465",
+    "original_engagements": [
+      {
+        "id": "138e10f0-5e28-4db7-bec3-f33e1c5035ba",
+        "status": "active"
+      },
+      {
+        "id": "f1700000-0000-0000-0000-000000000003",
+        "status": "active"
+      }
+    ],
+    "progress_fingerprint": "6b7ac196a42b14e821db0859a2ea8252",
+    "retained_fixture_marks": 2
+  },
+  "verified_so_far": [
+    "Actual account has two closed engagements before invitation and no active engagement",
+    "Kit task-0 remains unchecked and saved",
+    "Attorney UI saved a separate new engagement draft and confirms Invitation sent"
+  ],
+  "pending": [],
+  "production_changed": false,
+  "research_changed": false,
+  "schema_or_permission_migration": false,
+  "after_acceptance": {
+    "state": {
+      "ai_ready": false,
+      "engagements": [
+        {
+          "id": "63dfa7ef-095e-4004-b62b-65cf8f3a79d7",
+          "title": "FICTIONAL TEST \u2014 returning-client engagement",
+          "status": "active"
+        },
+        {
+          "id": "79f4529c-7e06-45e8-8877-353a417562c1",
+          "title": "FICTIONAL TEST \u2014 new-user invitation",
+          "status": "closed"
+        },
+        {
+          "id": "f1950000-0000-0000-0000-000000000001",
+          "title": "FICTIONAL TEST \u2014 lifecycle companion",
+          "status": "closed"
+        }
+      ],
+      "progress_rows": 1,
+      "test_database": true,
+      "watch_enabled": true,
+      "scheduler_ready": false,
+      "company_fingerprint": "1d3b64f58415ce7f871158e075dce534",
+      "profile_fingerprint": "2c2c14281a2cb7c546ccbf68fc67b465",
+      "original_engagements": [
+        {
+          "id": "138e10f0-5e28-4db7-bec3-f33e1c5035ba",
+          "status": "active"
+        },
+        {
+          "id": "63dfa7ef-095e-4004-b62b-65cf8f3a79d7",
+          "status": "active"
+        },
+        {
+          "id": "f1700000-0000-0000-0000-000000000003",
+          "status": "active"
+        }
+      ],
+      "progress_fingerprint": "6b7ac196a42b14e821db0859a2ea8252",
+      "retained_fixture_marks": 2
+    },
+    "checks": {
+      "one_new_active_engagement": true,
+      "old_engagements_still_closed": true,
+      "company_preserved": true,
+      "profile_preserved": true,
+      "kit_progress_preserved": true,
+      "other_original_engagements_unchanged": true,
+      "fixture_records_retained": true,
+      "research_unchanged": true
+    }
+  },
+  "browser_results": {
+    "owner_confirmed_email_acceptance_and_client_landing": true,
+    "existing_signed_in_user_portal_loaded": true,
+    "closed_fixture_records_hidden_zero_marks": true,
+    "attorney_shows_new_active_and_prior_closed_engagements": true
+  },
+  "evidence": [
+    "returning-client-invitation-sent.jpg",
+    "returning-client-access-restored.jpg",
+    "returning-client-engagements.jpg"
+  ]
+}

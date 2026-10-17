@@ -1,0 +1,18 @@
+{
+  "observed_on": "2026-10-17",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "mode": "read-only; rolled back",
+  "result": {
+    "is_test": true,
+    "dependencies": {
+      "vb_private.portal_scope_new_record()": "75b0ffa0820772cf472bffb680a24712",
+      "vb_private.portal_actor_scope(uuid,uuid,text)": "cbdeaf66a2009f9d07193e76e0c502d0",
+      "vb_private.portal_row_read(uuid,text,jsonb,text)": "789e3a51f913c78ed421c788743edd89"
+    },
+    "source_bodies": {
+      "public.vb_watch_run_due()": "be989e380c27af7fb234a24355ab4b27",
+      "public.vb_watch_snapshot(uuid)": "f4ab863a6fd5e4a2193c13ecf7fab496",
+      "public.vb_watch_save(uuid,integer,uuid[],boolean)": "d5d8a2f28234273117ff587a58a9d40a"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-17",
+  "status": "applied-and-verified-in-BCM-Test",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "system_identifier": "7692130048193495360",
+  "authorization": "Owner approved rollback rehearsal and conditional Test application after both suites and preservation checks passed.",
+  "apply_sha256": "b720c5b959d64f2ca1dcae0b21747638bcb1e06ae18c88ff744799079da58aba",
+  "rehearsal_sha256": "cb6da364eaa1677e59bbe6bd4385d85f038a0ec63e59e205c89c09369650b69d",
+  "installed_checks_sha256": "9f0f3391b9fc9ec4c495cfa9c4a3e0c0edc10b08b3a8c2146387216af743c05c",
+  "rehearsal": {
+    "watch_checks": 66,
+    "enforcement_checks": 55,
+    "all_passed": true,
+    "schema_rolled_back": true,
+    "preservation_matches_baseline": true
+  },
+  "installed_checks": {
+    "watch_checks": 66,
+    "enforcement_checks": 55,
+    "all_passed": true,
+    "fixtures_rolled_back": true,
+    "preservation_matches_baseline": true
+  },
+  "postcheck": "All boolean assertions true; see test-postcheck.json.",
+  "browser": {
+    "client_results": "Actual returning Client opens only its own authorized configuration; Not configured, no history or approved findings.",
+    "client_setup": "Actual returning Client empty setup opens; Save selection and Start weekly monitoring disabled because this engagement has no marks.",
+    "attorney_review": "Actual MFA attorney session displays the three active authorized Cotivate configurations and empty retained history.",
+    "stale_tab": "An attorney SPA tab opened before the source update still ran the old renderer and threw next_run_at undefined; a full reload loaded the new imports and resolved it.",
+    "save_limit": "No existing user settings were changed through the browser. Save/version isolation is verified by SQL scenarios and local controller tests, not a new persisted browser fixture."
+  },
+  "unchanged": [
+    "Production",
+    "research readiness and budget",
+    "scheduler readiness",
+    "Watch enabled flag",
+    "existing accounts/grants/engagements",
+    "original settings/findings/run values",
+    "private Legal Launch Kit hashes",
+    "original scope ledger and service bindings",
+    "source files and 50795 source applications"
+  ],
+  "not_performed": [
+    "real monitoring or ingestion",
+    "email or invitations",
+    "Edge Function or authentication configuration changes",
+    "commit/push/default-branch merge",
+    "independent-session concurrency tests"
+  ],
+  "evidence_directory": "../outputs (parent task workspace)",
+  "remaining": [
+    "Independent-session save/update/cap/closure/worker and old-writer race checks with separately approved disposable Test fixtures.",
+    "Review/commit/push/default-branch merge decision after those checks.",
+    "Production rollout and later database audit are separate."
+  ]
+}
