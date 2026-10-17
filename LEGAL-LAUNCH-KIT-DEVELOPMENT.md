@@ -1,5 +1,11 @@
 # Legal Launch Kit development — persistent branch note
 
+## Current work — account-backed progress in Test, October 16, 2026
+
+Owner approved connecting Legal Launch Kit checklists/planning notes to the Member account and committing this checkpoint. Implemented and applied only in Test. Read `supabase/proposals/portal-membership/PROGRESS.md` first for this phase. Account data now loads from `vb_member_progress`; checked-revision writes use `vb_save_member_progress`. Existing browser progress is not automatically imported. The design is preserved.
+
+Validation: 34 focused local tests and 15 hosted database checks passed. Real signed-in MZP117 LLC checkmark and temporary note survived a full reload; both were restored to their original empty state and verified after a second reload. Existing client/membership fingerprints match; synthetic fixtures rolled back. User left signed in with roadmap open. Cross-device access is supported through account rows, but a second-device sign-in was not exercised. No Production changes, client-tool activation, commits, pushes, or merges in this phase. Historical browser-only progress notes below are superseded for signed-in Test accounts.
+
 ## Current saved milestone — Member registration in Test, October 16, 2026
 
 Owner approved committing this checkpoint on `codex/legal-launch-kit`; no push or merge authorized for this checkpoint. The feature branch must eventually be merged into its originating VB branch with approval. Homepage entry is `v8.html` (not the legacy `index.html` design chooser).

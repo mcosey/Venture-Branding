@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-16",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "system_identifier": "7692130048193495360",
+  "applied": true,
+  "local_tests_passed": 34,
+  "hosted_tests_passed": 15,
+  "hosted_all_passed": true,
+  "live_checkbox_reload_passed": true,
+  "live_note_reload_passed": true,
+  "temporary_edits_restored": true,
+  "second_device_login_tested": false,
+  "existing_clients_unchanged": true,
+  "existing_memberships_unchanged": true,
+  "retained_synthetic_users": 0,
+  "retained_synthetic_companies": 0,
+  "production_changed": false,
+  "source_sha256": {
+    "07-test-progress.sql": "0bbe78b4c07126bcc79ef45f7325d2204ddfae818fe41fb5f7665fee3e1d4b53",
+    "08-test-progress-access.sql": "118d7ef99b0633280c84cb4324bef07d3cc4a7026873f46b2d17abb51a1ff6d1"
+  }
+}
