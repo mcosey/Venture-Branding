@@ -1,6 +1,6 @@
 import datetime as dt, io, json, tempfile, unittest, zipfile
 from pathlib import Path
-from runner import extract, manifest, ingest, run_checks, FeedError
+from runner import extract, manifest, ingest, run_checks, validate_record, FeedError
 
 CASE='''<case-file><serial-number>{serial}</serial-number><case-file-header><filing-date>{filing}</filing-date><mark-identification>EXAMPLE</mark-identification><mark-drawing-code>{drawing}</mark-drawing-code><status-code>630</status-code></case-file-header><case-file-statements><case-file-statement><type-code>GS0411</type-code><text>Education services</text></case-file-statement></case-file-statements><classifications><classification><international-code>041</international-code></classification></classifications><case-file-owners><case-file-owner><party-name>Example LLC</party-name></case-file-owner></case-file-owners></case-file>'''
 def case(serial='01234567',filing='20261011',drawing='4'): return CASE.format(**locals())
@@ -59,6 +59,33 @@ class RunnerTests(unittest.TestCase):
  def test_name_above_boundary_still_rejects_entire_file(self):
   with self.assertRaises(FeedError):
    extract(self.sample('<root>'+case()+case('12345678').replace('EXAMPLE','N'*4097)+'</root>'),'apc261011.zip')
+ def test_full_owner_names_survive_source_preflight(self):
+  for length in [501,590,4096]:
+   owner='O'*length
+   records,_=extract(self.sample('<root>'+case().replace('Example LLC',owner)+'</root>'),'apc261011.zip')
+   self.assertEqual(records[0]['owners'],[owner])
+  with self.assertRaises(FeedError):
+   extract(self.sample('<root>'+case().replace('Example LLC','O'*4097)+'</root>'),'apc261011.zip')
+ def record(self):return extract(self.sample('<root>'+case()+'</root>'),'apc261011.zip')[0][0]
+ def test_worker_field_contract_rejects_malformed_evidence(self):
+  changes=[{'serial':'١٢٣٤٥٦٧٨'},{'status_code':'63'},{'status_code':630},{'classes':['99']},{'classes':[41]},{'classes':['41']*46},{'owners':['O']*51},{'owners':[None]},{'goods':[{'class':'41','text':'x'}]},{'goods':[{'class':'041','text':'x','extra':'x'}]},{'goods':[{'class':'041','text':None}]},{'goods':[{'class':'041','text':'x'}]*46},{'filing_date':'2026-02-30'},{'filing_date':'2026-1-01'},{'extra':'x'},{'name':'\ufeff \t'}]
+  for change in changes:
+   with self.subTest(fields=list(change)),self.assertRaises(FeedError):validate_record({**self.record(),**change})
+ def test_worker_field_contract_accepts_special_classes_and_empty_evidence(self):
+  r=self.record();self.assertIs(validate_record(r),r)
+  self.assertEqual(validate_record({**r,'classes':['A','B','200'],'owners':[],'goods':[{'class':'A','text':'x'},{'class':'B','text':''}]})['classes'],['A','B','200'])
+ def test_preflight_counts_utf16_units_like_the_worker(self):
+  r=self.record()
+  for field,limit in [('name',4096),('owners',4096),('goods',524288)]:
+   for units,accepted in [(limit,True),(limit+2,False)]:
+    value='😀'*(units//2)
+    update={field:value if field=='name' else [value] if field=='owners' else [{'class':'041','text':value}]}
+    if accepted:self.assertEqual(validate_record({**r,**update})[field],update[field])
+    else:
+     with self.assertRaises(FeedError):validate_record({**r,**update})
+ def test_source_preflight_rejects_worker_invalid_status_and_classes(self):
+  for xml in [case().replace('<status-code>630</status-code>','<status-code>63</status-code>'),case().replace('<international-code>041</international-code>','<international-code>099</international-code>')]:
+   with self.assertRaises(FeedError):extract(self.sample('<root>'+xml+'</root>'),'apc261011.zip')
  def test_entities_malformed_future_dates_duplicate_fail_file(self):
   for xml in ['<!DOCTYPE root [<!ENTITY x "bomb">]><root>'+case()+'</root>','<root>'+case(),'<root>'+case(filing='20261012')+'</root>','<root>'+case(filing='20260230')+'</root>','<root>'+case()+case()+'</root>','<root/>']:
    with self.subTest(xml=xml[:40]),self.assertRaises(Exception):extract(self.sample(xml),'apc261011.zip')
