@@ -1,0 +1,33 @@
+name: Trademark Watch Production
+# Prepared locally only. Gates must be explicitly enabled after release approval.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 9 * * *'
+      timezone: America/Chicago
+permissions:
+  contents: read
+concurrency:
+  group: trademark-watch-production
+  cancel-in-progress: false
+jobs:
+  source:
+    if: >-
+      github.ref == 'refs/heads/tg' &&
+      vars.WATCH_PRODUCTION_RUNNER_ENABLED == 'true' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'schedule' && vars.WATCH_PRODUCTION_SCHEDULE_ENABLED == 'true'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: watch-production
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2, same as verified Test workflow
+        with:
+          # Run the published, reviewed source, independently of website branch history.
+          ref: eaa97cb793e12adb5345df3de93a250dbd131cb6
+          persist-credentials: false
+      - name: Process public USPTO data into Production
+        env:
+          ODP_API_KEY: ${{ secrets.ODP_API_KEY }}
+          WATCH_INGEST_KEY: ${{ secrets.WATCH_INGEST_KEY }}
+        run: python3 tools/watch/runner.py --environment production
