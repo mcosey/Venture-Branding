@@ -21,13 +21,13 @@ A venture financing often begins with a term sheet outlining the principal econo
 
 The five core documents divide the transaction into separate legal components.
 
-| Document | Primary function |
+| **Document** | **Primary function** |
 | --- | --- |
-| Stock Purchase Agreement (SPA) | Governs the purchase and issuance of preferred stock, representations and warranties, and closing conditions |
-| Amended and Restated Certificate of Incorporation | Establishes the preferred stock's rights, preferences, and limitations |
-| Investors' Rights Agreement (IRA) | Provides contractual information, registration, and future financing participation rights |
-| Voting Agreement | Establishes voting commitments, including board composition arrangements and drag-along provisions |
-| Right of First Refusal and Co-Sale Agreement (ROFR) | Regulates certain transfers of existing shares by specified stockholders |
+| **Stock Purchase Agreement (SPA)** | Governs the purchase and issuance of preferred stock, representations and warranties, and closing conditions |
+| **Amended and Restated Certificate of Incorporation** | Establishes the preferred stock's rights, preferences, and limitations |
+| **Investors' Rights Agreement (IRA)** | Provides contractual information, registration, and future financing participation rights |
+| **Voting Agreement** | Establishes voting commitments, including board composition arrangements and drag-along provisions |
+| **Right of First Refusal and Co-Sale Agreement (ROFR)** | Regulates certain transfers of existing shares by specified stockholders |
 
 The SPA governs the investment transaction. The certificate of incorporation establishes rights attached to the corporation's stock. The remaining agreements create contractual rights and obligations among their parties.
 
@@ -57,7 +57,9 @@ Common subjects include corporate organization, authority, capitalization, intel
 
 Investors also generally make representations regarding their authority, investment intent, and matters relevant to the securities offering.
 
-Company representations may be qualified by a disclosure schedule, sometimes called a schedule of exceptions. For example, the company might represent that its capitalization is accurately described in the agreement, subject to disclosed outstanding options, SAFEs, or convertible notes.
+Company representations may be qualified by a disclosure schedule, sometimes called a schedule of exceptions.
+
+For example, the company might represent that its capitalization is accurately described in the agreement, subject to disclosed outstanding options, SAFEs, or convertible notes.
 
 The disclosure schedule must be reviewed alongside the representations it qualifies. An issue identified during due diligence should not be assumed to have been adequately disclosed merely because the parties discussed it.
 
@@ -85,7 +87,7 @@ Amending the charter generally requires compliance with DGCL Section 242 and app
 
 The certificate commonly establishes several important preferred stock rights.
 
-**Liquidation preferences.** These provisions determine the preferred stockholders' priority in distributions upon specified liquidation or other covered events. Under a conventional 1x nonparticipating preference, an investor generally receives its applicable preference before common stockholders receive distributions, or may elect to convert into common stock when doing so produces a better result.
+**Liquidation preferences.** These provisions determine the preferred stockholders' priority in distributions upon specified liquidation or other covered events. Under a conventional 1x nonparticipating preference, an investor generally receives its applicable preference before common stockholders receive distributions, or may elect to convert into common stock when doing so produces a better result. When multiple series of preferred stock are outstanding, the charter determines whether they rank senior or junior to one another or *pari passu* (on equal footing). Series ranking *pari passu* have equal priority and generally share insufficient proceeds proportionately according to their respective liquidation entitlements.
 
 **Dividend rights.** The certificate may establish dividend preferences, including whether dividends are cumulative or noncumulative.
 
@@ -95,7 +97,7 @@ The certificate commonly establishes several important preferred stock rights.
 
 **Redemption rights.** Some preferred stock includes redemption provisions exercisable under specified circumstances, subject to applicable law.
 
-These provisions often rely on defined terms such as *Original Issue Price* , which may affect liquidation preferences, dividends, and conversion calculations.
+These provisions often rely on defined terms such as *Original Issue Price*, which may affect liquidation preferences, dividends, and conversion calculations.
 
 ### Voting Rights and Protective Provisions
 
@@ -123,7 +125,7 @@ Investors may negotiate rights to receive periodic financial statements, annual 
 
 The IRA may also provide contractual rights to inspect records or meet with management, subject to specified conditions and limitations.
 
-These rights are frequently limited to investors satisfying a defined ownership threshold, often described by the term *Major Investor* .
+These rights are frequently limited to investors satisfying a defined ownership threshold, often described by the term *Major Investor*.
 
 Consequently, two investors holding the same series of preferred stock may have different contractual reporting rights.
 
@@ -147,7 +149,9 @@ The IRA also commonly addresses registration expenses, underwriting limitations,
 
 The IRA may give qualifying investors the right to purchase a portion of securities issued in future financings.
 
-These rights are commonly called *pro rata participation rights* or *rights of first offer* . Suppose an investor owns 10% of the company on the contractual basis used to calculate participation rights. The IRA might give that investor an opportunity to purchase a corresponding portion of a future qualifying issuance.
+These rights are commonly called *pro rata participation rights* or *rights of first offer*.
+
+Suppose an investor owns 10% of the company on the contractual basis used to calculate participation rights. The IRA might give that investor an opportunity to purchase a corresponding portion of a future qualifying issuance.
 
 The right depends on the agreement's definition of covered securities, investor eligibility, exceptions, notice procedures, and exercise requirements.
 
@@ -205,7 +209,9 @@ Under a common structure, the company receives an initial purchase right, follow
 
 Suppose a founder proposes to sell 100,000 common shares to a third party.
 
-The agreement may require the founder to deliver a transfer notice identifying the proposed purchaser, price, number of shares, and other material terms. The company then has an opportunity to purchase the shares under the agreement. If it does not exercise its right in full, eligible investors may have an opportunity to purchase the remaining covered shares.
+The agreement may require the founder to deliver a transfer notice identifying the proposed purchaser, price, number of shares, and other material terms.
+
+The company then has an opportunity to purchase the shares under the agreement. If it does not exercise its right in full, eligible investors may have an opportunity to purchase the remaining covered shares.
 
 Any subsequent third-party transfer remains subject to the agreement's procedures and restrictions.
 
@@ -213,7 +219,7 @@ The applicable exercise periods, allocations, and permitted transfer conditions 
 
 ### Co-Sale Rights
 
-Co-sale rights, also called *tag-along rights* , may allow eligible investors to sell their own shares alongside a covered stockholder.
+Co-sale rights, also called *tag-along rights*, may allow eligible investors to sell their own shares alongside a covered stockholder.
 
 Continuing the example, suppose the company and investors decline to purchase the founder's shares through the ROFR process.
 
@@ -233,9 +239,11 @@ Separate transfer restrictions may also appear in founder stock purchase agreeme
 
 Consider Atlas Labs, Inc., a Delaware corporation completing a $5 million Series A financing.
 
-Assume the company will issue new Series A Preferred Stock, convert several outstanding SAFEs, grant its lead investor board representation, and provide certain investors with information and participation rights. The founders will also become subject to negotiated transfer restrictions. Each element implicates different documents.
+Assume the company will issue new Series A Preferred Stock, convert several outstanding SAFEs, grant its lead investor board representation, and provide certain investors with information and participation rights. The founders will also become subject to negotiated transfer restrictions.
 
-| Transaction issue | Principal document or documents |
+Each element implicates different documents.
+
+| **Transaction issue** | **Principal document or documents** |
 | --- | --- |
 | Purchase of the new Series A shares | SPA |
 | Authorization and rights of Series A Preferred Stock | Certificate of Incorporation |
@@ -252,7 +260,7 @@ Three aspects of this transaction illustrate why the documents must be reviewed 
 
 Suppose one SAFE converts at a lower price than the Series A purchase price.
 
-Depending on its terms, the SAFE may convert into a separate series of preferred stock with adjusted economic rights, sometimes called *shadow preferred stock* .
+Depending on its terms, the SAFE may convert into a separate series of preferred stock with adjusted economic rights, sometimes called *shadow preferred stock*.
 
 The company's charter must provide for the securities being issued, and the capitalization records must correctly reflect their number and terms.
 
@@ -264,7 +272,9 @@ A share-count discrepancy can therefore affect several documents simultaneously.
 
 Suppose a SAFE holder receives preferred stock at closing.
 
-That holder does not necessarily receive every contractual right granted to new investors. The IRA might limit information and participation rights to Major Investors, while the Voting Agreement and ROFR Agreement use different eligibility definitions.
+That holder does not necessarily receive every contractual right granted to new investors.
+
+The IRA might limit information and participation rights to Major Investors, while the Voting Agreement and ROFR Agreement use different eligibility definitions.
 
 The relevant agreements must identify which investors receive each right and which holders must sign the agreements or applicable joinders.
 
@@ -290,7 +300,9 @@ The five principal documents establish much of the financing's legal structure, 
 
 **Closing deliverables.** Common examples include officer or secretary certificates, executed signature pages, capitalization schedules, evidence of required filings, payment instructions, and legal opinions when negotiated.
 
-**Existing agreements.** Earlier investor agreements may need to be amended, replaced, terminated, or waived. Outstanding participation rights and other contractual protections must be addressed where applicable. **Post-closing records and filings.** The company should update its stock ledger and capitalization table, document the issuances, and complete applicable securities notices and other regulatory filings.
+**Existing agreements.** Earlier investor agreements may need to be amended, replaced, terminated, or waived. Outstanding participation rights and other contractual protections must be addressed where applicable.
+
+**Post-closing records and filings.** The company should update its stock ledger and capitalization table, document the issuances, and complete applicable securities notices and other regulatory filings.
 
 The precise documentation depends on the transaction. The NVCA model collection includes several ancillary forms in addition to the five principal agreements.
 
@@ -298,7 +310,7 @@ The precise documentation depends on the transaction. The NVCA model collection 
 
 Even when each agreement is individually well drafted, problems can arise from inconsistencies among them.
 
-**Defined terms.** Terms such as *Major Investor* , *Registrable Securities* , and *Preferred Stock* may have different meanings across agreements. Counsel must determine whether those differences are intentional.
+**Defined terms.** Terms such as *Major Investor*, *Registrable Securities*, and *Preferred Stock* may have different meanings across agreements. Counsel must determine whether those differences are intentional.
 
 **Capitalization.** The SPA, charter, conversion calculations, and closing capitalization table must reconcile to the intended securities issuance.
 
@@ -316,6 +328,8 @@ A financing review therefore requires more than identifying the meaning of each 
 
 The five core venture financing documents allocate different parts of a priced equity financing among distinct corporate and contractual instruments.
 
-The Stock Purchase Agreement governs the investment. The certificate of incorporation establishes preferred stock rights. The Investors' Rights Agreement provides ongoing contractual protections. The Voting Agreement governs specified voting commitments, and the ROFR and Co-Sale Agreement regulates certain share transfers. Their effectiveness depends on how well they operate together. Understanding each document's function is the starting point; understanding their interaction is what makes a financing review complete.
+The Stock Purchase Agreement governs the investment. The certificate of incorporation establishes preferred stock rights. The Investors' Rights Agreement provides ongoing contractual protections. The Voting Agreement governs specified voting commitments, and the ROFR and Co-Sale Agreement regulates certain share transfers.
+
+Their effectiveness depends on how well they operate together. Understanding each document's function is the starting point; understanding their interaction is what makes a financing review complete.
 
 *This article is intended for general educational purposes and does not constitute legal advice.*
