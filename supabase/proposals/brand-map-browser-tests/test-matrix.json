@@ -1,0 +1,307 @@
+{
+  "prepared_only": true,
+  "execution_approved": false,
+  "project": "imvkhicfmidzbzsbhkzs",
+  "prohibited_projects": [
+    "omvkwiosonatswocbdgx",
+    "yjhzhflyuxcxugfgspby"
+  ],
+  "transport": "Supabase Dashboard full SQL batches; simultaneous read-only backends verified, write-race coordination unverified",
+  "probe_cases": 3,
+  "concurrency_cases": [
+    {
+      "id": "read-committed/cycle",
+      "isolation": "read committed",
+      "scenario": "cycle",
+      "expected_loser_sqlstates": [
+        "22023"
+      ],
+      "postcondition": "Exactly one edge remains; no cycle.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "read-committed/stale-edit",
+      "isolation": "read committed",
+      "scenario": "stale-edit",
+      "expected_loser_sqlstates": [
+        "40001"
+      ],
+      "postcondition": "Winning name retained; losing edit absent.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "read-committed/membership-revocation",
+      "isolation": "read committed",
+      "scenario": "membership-revocation",
+      "expected_loser_sqlstates": [
+        "42501"
+      ],
+      "postcondition": "No asset edit; version stays 1.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "read-committed/direct-mark-update",
+      "isolation": "read committed",
+      "scenario": "direct-mark-update",
+      "expected_loser_sqlstates": [
+        "40001"
+      ],
+      "postcondition": "Changed owner retained; stale legal link not approved.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "read-committed/uspto-import",
+      "isolation": "read committed",
+      "scenario": "uspto-import",
+      "expected_loser_sqlstates": [
+        "40001"
+      ],
+      "postcondition": "Changed owner retained; stale legal link not approved.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "read-committed/review-and-status-refresh",
+      "isolation": "read committed",
+      "scenario": "review-and-status-refresh",
+      "expected_loser_sqlstates": null,
+      "postcondition": "Both operations succeed; review current and legal status pending.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "repeatable-read/cycle",
+      "isolation": "repeatable read",
+      "scenario": "cycle",
+      "expected_loser_sqlstates": [
+        "40001"
+      ],
+      "postcondition": "Exactly one edge remains; no cycle.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "repeatable-read/stale-edit",
+      "isolation": "repeatable read",
+      "scenario": "stale-edit",
+      "expected_loser_sqlstates": [
+        "40001"
+      ],
+      "postcondition": "Winning name retained; losing edit absent.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "repeatable-read/membership-revocation",
+      "isolation": "repeatable read",
+      "scenario": "membership-revocation",
+      "expected_loser_sqlstates": [
+        "40001"
+      ],
+      "postcondition": "No asset edit; version stays 1.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "repeatable-read/direct-mark-update",
+      "isolation": "repeatable read",
+      "scenario": "direct-mark-update",
+      "expected_loser_sqlstates": [
+        "40001"
+      ],
+      "postcondition": "Changed owner retained; stale legal link not approved.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "repeatable-read/uspto-import",
+      "isolation": "repeatable read",
+      "scenario": "uspto-import",
+      "expected_loser_sqlstates": [
+        "40001"
+      ],
+      "postcondition": "Changed owner retained; stale legal link not approved.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    },
+    {
+      "id": "repeatable-read/review-and-status-refresh",
+      "isolation": "repeatable read",
+      "scenario": "review-and-status-refresh",
+      "expected_loser_sqlstates": null,
+      "postcondition": "Both operations succeed; review current and legal status pending.",
+      "requires_distinct_backend_pids": true,
+      "requires_observed_lock_wait": true,
+      "executed": false
+    }
+  ],
+  "signin_api_cases": [
+    {
+      "id": "A-own-read",
+      "actor": "A",
+      "expected": "Read A map: only A assets/marks; counts match fixture manifest.",
+      "executed": false
+    },
+    {
+      "id": "B-own-read",
+      "actor": "B",
+      "expected": "Read B map: only B assets/marks; counts match fixture manifest.",
+      "executed": false
+    },
+    {
+      "id": "A-empty-read",
+      "actor": "A",
+      "expected": "Read assigned empty C map: zero counts and empty arrays.",
+      "executed": false
+    },
+    {
+      "id": "A-foreign-read",
+      "actor": "A",
+      "expected": "Read B and random workspace IDs: same 42501 denial; no payload/count/name leakage.",
+      "executed": false
+    },
+    {
+      "id": "B-foreign-read",
+      "actor": "B",
+      "expected": "Read A map: same denial; no A data.",
+      "executed": false
+    },
+    {
+      "id": "A-own-create",
+      "actor": "A",
+      "expected": "Create A asset; reload in a fresh login; same saved asset, server provenance/version.",
+      "executed": false
+    },
+    {
+      "id": "B-own-create",
+      "actor": "B",
+      "expected": "Create B asset; visible after fresh login only to B.",
+      "executed": false
+    },
+    {
+      "id": "A-foreign-create",
+      "actor": "A",
+      "expected": "Create in B rejected with 42501; B row count unchanged.",
+      "executed": false
+    },
+    {
+      "id": "A-foreign-save",
+      "actor": "A",
+      "expected": "Save B asset using A workspace or B workspace rejected with 42501; B unchanged.",
+      "executed": false
+    },
+    {
+      "id": "A-foreign-parent",
+      "actor": "A",
+      "expected": "Set A child to B parent rejected; no edge created.",
+      "executed": false
+    },
+    {
+      "id": "A-foreign-confirm",
+      "actor": "A",
+      "expected": "Confirm B edge rejected; B unchanged.",
+      "executed": false
+    },
+    {
+      "id": "B-foreign-write",
+      "actor": "B",
+      "expected": "Attempt save/parent/confirm against A rejected; A unchanged.",
+      "executed": false
+    },
+    {
+      "id": "A-legal-review",
+      "actor": "A",
+      "expected": "Client cannot call legal-link review, including clear and cross-client variants.",
+      "executed": false
+    },
+    {
+      "id": "A-forged-fields",
+      "actor": "A",
+      "expected": "Forged owner/source/reviewer/version fields rejected with 22023; no change.",
+      "executed": false
+    },
+    {
+      "id": "A-stale-save",
+      "actor": "A",
+      "expected": "Reuse old version rejected with 40001; first saved name retained.",
+      "executed": false
+    },
+    {
+      "id": "raw-table-denials",
+      "actor": "A,B",
+      "expected": "Direct select/insert/update/delete requests on all three Brand Map tables denied; no mutations.",
+      "executed": false
+    },
+    {
+      "id": "private-helper-denials",
+      "actor": "A,B",
+      "expected": "Private helper unavailable through public API; audit contents never returned.",
+      "executed": false
+    },
+    {
+      "id": "anonymous-denials",
+      "actor": "none",
+      "expected": "All five map RPCs and raw table requests denied without an authenticated token.",
+      "executed": false
+    },
+    {
+      "id": "A-revoked-session",
+      "actor": "A",
+      "expected": "With same still-valid token, revoke only A fixture membership; subsequent read/write denied.",
+      "executed": false
+    },
+    {
+      "id": "B-disabled-portal",
+      "actor": "B",
+      "expected": "Disable only B fixture portal; same-token read/write denied.",
+      "executed": false
+    },
+    {
+      "id": "signout-clears-test-view",
+      "actor": "A,B",
+      "expected": "Signing out clears rendered data and in-memory token; no authenticated map request afterward.",
+      "executed": false
+    },
+    {
+      "id": "payload-safe-rendering",
+      "actor": "A",
+      "expected": "Script-like fixture text renders as text; no script execution or secret/history fields.",
+      "executed": false
+    }
+  ],
+  "account_inventory": {
+    "sql_only_concurrency_identities": 2,
+    "real_client_logins": 2,
+    "real_staff_logins": 0,
+    "synthetic_workspaces_total_across_stages": 4
+  },
+  "credentials_in_package": false,
+  "mac_installations_required": 0,
+  "cloud_runner_provisioned": false,
+  "transport_probe_result": {
+    "status": "PASS",
+    "participant_pids": [
+      74976,
+      74977
+    ],
+    "observer_pid": 74978,
+    "remaining_probe_connections": 0,
+    "schema_unchanged": true,
+    "establishes_write_race_success": false
+  }
+}

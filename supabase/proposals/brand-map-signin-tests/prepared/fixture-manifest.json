@@ -1,0 +1,40 @@
+{
+  "prepared_only": true,
+  "project": "imvkhicfmidzbzsbhkzs",
+  "run_id": "48f4a9e1-f24f-47a3-83b6-7b8a3830180b",
+  "label": "bm-login-48f4a9e1-f24f-47a3-83b6-7b8a3830180b",
+  "users": {
+    "A": {
+      "id": null,
+      "email": "bm-login-48f4a9e1-f24f-47a3-83b6-7b8a3830180b-a@example.invalid"
+    },
+    "B": {
+      "id": null,
+      "email": "bm-login-48f4a9e1-f24f-47a3-83b6-7b8a3830180b-b@example.invalid"
+    }
+  },
+  "clients": {
+    "A": "f48f02ef-462c-45b8-8be1-42e73e61fcea",
+    "B": "f8705f4f-4414-4cec-9f00-66afb50e52c5",
+    "C": "d56bf0ab-92c2-4295-99f6-ea7147b6fda8"
+  },
+  "assets": {
+    "A": [
+      "26c8f326-1726-48a8-a199-2b1053cf9c5c",
+      "f548d5be-2ce3-4da9-9ef9-75d71d01a8a4"
+    ],
+    "B": [
+      "7296daed-a666-4248-922b-a496571d1939"
+    ]
+  },
+  "marks": {
+    "A": [
+      "55838fe8-b3cc-45c6-a16a-0ad6dc3bea36",
+      "b97f6481-1cd7-47ff-b865-050db0648347"
+    ],
+    "B": [
+      "c65f08c8-a7fc-40e6-9bf2-04a5f784a8d4"
+    ]
+  },
+  "unknown_client": "e40bc983-9710-4fb0-8eeb-376ab48b6c2f"
+}

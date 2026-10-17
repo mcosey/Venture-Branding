@@ -1,0 +1,25 @@
+# Trademark Activity Digest and personal inbox — Phase 1
+
+User approved local implementation and Test setup on October 10, 2026. Endpoint: choose available result categories, persist daily/weekly/monthly preference, manually generate a sample, and open the saved sample in a private account inbox with read status. No scheduling, email sending, attorney-client chat, appointment reminders, Production activation, commit or push is authorized in this phase.
+
+`001-digest-inbox.sql` installed only in Test `imvkhicfmidzbzsbhkzs`. Dependencies: existing VB client access foundation, BCM scans, private Use History evidence and published maintenance records. Requires Test-only `window.VB_DIGEST_ENABLED = true`; absent in regular Production config. No new accounts, memberships, worker credentials or external services. SQL is one-time creation, not an idempotent rerun.
+
+Preferences and inbox rows belong to the authenticated client user plus client workspace. Same-client colleagues and attorneys cannot read another recipient's inbox. Client membership is rechecked under a shared client lock on every write/open. Browser writes are denied; protected RPCs create authoritative source references and mark read. Optimistic version checking prevents stale preferences overwriting current choices. Generation uses saved preferences, with a five-second duplicate guard. No untrusted browser-supplied result bodies accepted.
+
+Sources: completed BCM comparison scan links (not extracted finding text or legal conclusions), nonremoved Use History upload links, and nonwithdrawn published maintenance dates due in the next 30 days. Daily/weekly/monthly samples select BCM/upload activity from the preceding 1/7/30 days. Trademark Watch's fixture results are not included. Source limit is 100 per sample; inbox shows newest 50 messages. Sources are resolved again when opened so removed uploads/withdrawn publications no longer appear in historical digests. No image contents or filenames are copied into messages. Empty periods create an explicitly empty sample. This is a manual sample workflow, not an automatic digest service.
+
+UI: `digest.html` preferences, `messages.html` inbox, existing Messages buttons route there. Use History page/heading/navigation use the same name. Former Specimen Capture/Evidence of Use card removed from VB Agents; uploads and attorney access retained. Styling uses open sections and separators, without nested cards.
+
+Validation: 6 repository/validation tests; 28 hosted rollback source/privacy checks; 20 Evidence regressions and 9 loading checks pass. Browser verified category/frequency selection, saving, sample generation, inbox open/read status and persistence after reload; selected categories had no available current Test results, shown accurately. Original Test counts 3 accounts / 2 clients / 2 marks unchanged; one fictional Test user's preference and one read sample retained for review. Temporary fixture users and sources rolled back. Production DB/services unchanged. Other concurrent maintenance changes/staging remain untouched.
+
+Test preview is local at http://127.0.0.1:8012/digest.html. It is not a public site. Sample screenshot and check status in the active chat's `outputs/digest-phase1`. Phase 1 is complete; review before authorizing another phase.
+
+## Phase 2 — Test scheduling
+
+Approved October 10, 2026, including a separate approval for Test pg_cron activation. `002-digest-scheduling.sql` extends preferences with period/next due, adds scheduled message kind and duplicate key, and installs a private database worker. `003-enable-test-scheduler.sql` enables pg_cron and a five-minute due check, with no HTTP/email services. Apply only in the approved Test project, after `scheduling.native.sql` passes. Main Production config remains disabled; Test preview uses `VB_DIGEST_SCHEDULED=true`.
+
+Daily/weekly/monthly mean one UTC day/seven UTC days/one UTC calendar month from setup or latest delivery. Category saves preserve due; frequency changes set a new due while retaining unsent activity. Overdue periods combine into one message. Delivery and advance are atomic. Recipients are filtered and rechecked against active client/membership and staff exclusion under locks. Worker execution denied to all browser/API roles. See handoff 28 for verification and exact stopping point. Official scheduling reference: https://supabase.com/docs/guides/cron/quickstart
+
+## Regular workspace activation — October 10, 2026
+
+User approved account-only inbox and scheduling activation. Applied `004-regular-workspace.sql` to Production omvkwiosonatswocbdgx; both rollback suites passed (28 source/privacy and 24 scheduling checks). Applied `005-enable-regular-scheduler.sql`: active pg_cron job `vb-inbox-digests`, every five minutes. Main config now enables digest and scheduling. No recipients auto-enrolled; preferences/messages initially zero. All original account/client/mark/membership/staff/evidence/maintenance/BCM row fingerprints match before activation. Email, appointment reminders, and Trademark Watch sources remain unconnected. No public site deployment, commit, or push performed.

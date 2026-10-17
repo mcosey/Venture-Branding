@@ -1,0 +1,46 @@
+# Local development template only. Does not configure a hosted project.
+project_id = "venture-branding-development"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:8000/login.html"
+additional_redirect_urls = ["http://127.0.0.1:8000/login.html", "http://127.0.0.1:8000/attorney-login.html"]
+enable_signup = false
+enable_anonymous_sign_ins = false
+
+[auth.email]
+enable_signup = false
+enable_confirmations = true
+double_confirm_changes = true
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+# Handler validates Auth identity and the server-derived MFA staff role itself.
+[functions.uspto-lookup]
+verify_jwt = false
+
+# Validates caller identity and staff MFA before admin invitation delivery.
+[functions.client-invite]
+verify_jwt = false
+
+# Checks client identity and scoped settings before a bounded Cotivate-only fetch.
+[functions.bcm-scan]
+verify_jwt = false
