@@ -1,17 +1,21 @@
+import {memberContext} from '../../auth/member-session.mjs?v=1';
+import {renderAccountBusiness} from './member-business.mjs?v=1';
 import {BUSINESS_KEY,NOTICE_VERSION,acknowledgments,fields,emptyBusiness,decodeBusiness,hasAcknowledged,createAcknowledgment,normalizeProfile} from './llk-business-state.mjs';
+const businessStorageKey=BUSINESS_KEY+(memberContext?':'+memberContext.user.id:'');
 let state=emptyBusiness(),canSave=true;
-try{state=decodeBusiness(localStorage.getItem(BUSINESS_KEY));}catch{canSave=false;}
-let savedName=state.profile?.name||'';
+try{state=decodeBusiness(localStorage.getItem(businessStorageKey));}catch{canSave=false;}
+let savedName=memberContext?memberContext.company?.name||'':state.profile?.name||'';
 export function savedBusinessName(){return savedName;}
 
 export function renderBusiness(main,{e,link,panel,heading,refresh}){
+ if(memberContext)return renderAccountBusiness(main,{e,link,panel,heading},memberContext,name=>{savedName=name;});
  heading('Your business','A few basics to help organize your planning. No confidential legal details are needed.');
  main.append(link('← Back to the map','#'));
  const notice=panel('Local prototype · draft legal wording','business-notice');
  notice.append(e('p','Terms of Service and Privacy Policy have not been finalized. This is a test of the acknowledgment flow, not acceptance of final policies. Legal wording must be approved before public release.'));
  main.append(notice);
  const result=e('p',undefined,'business-save-status');result.setAttribute('role','status');result.setAttribute('aria-live','polite');
- function persist(){try{localStorage.setItem(BUSINESS_KEY,JSON.stringify(state));canSave=true;return true;}catch{canSave=false;return false;}}
+ function persist(){try{localStorage.setItem(businessStorageKey,JSON.stringify(state));canSave=true;return true;}catch{canSave=false;return false;}}
  if(!hasAcknowledged(state)){
   const card=panel('Before you continue');card.append(e('p','Please read the draft acknowledgments below, then confirm once to continue.','muted'));
   const form=e('form');const text=e('ol',undefined,'business-ack-text');text.id='business-ack-text';

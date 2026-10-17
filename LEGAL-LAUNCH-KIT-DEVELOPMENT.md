@@ -1,5 +1,21 @@
 # Legal Launch Kit development — persistent branch note
 
+## Current saved milestone — Member registration in Test, October 16, 2026
+
+Owner approved committing this checkpoint on `codex/legal-launch-kit`; no push or merge authorized for this checkpoint. The feature branch must eventually be merged into its originating VB branch with approval. Homepage entry is `v8.html` (not the legacy `index.html` design chooser).
+
+Includes Member portal shell, signup and sign-in integration gated to the named Test project, hosted Member/engagement foundation, tested onboarding, and lorem ipsum policy documents for the authorized dry run. Real Test signup, verified Member landing, account-backed MZP117 LLC profile, reload persistence, and locked client-tool explanation were observed. Final checkpoint validation: **39 local tests passed**; previously applied hosted packages passed **39 foundation checks and 19 onboarding checks**. Existing client access and Production were preserved.
+
+The Test preview uses port 8893; the general visual preview uses 8891. No final legal documents are represented as accepted by the Test backend. Legal Launch Kit checklist/planning progress is still browser-local and separated by verified user; cross-device account storage is the next proposed implementation step, not yet approved. Legacy client tools/workers have not been cut over to engagement permissions. No existing client records were automatically mapped to fictional engagements.
+
+Read `supabase/proposals/portal-membership/REGISTRATION.md` for application evidence, the email-confirmation resume correction, limits and the private signup walkthrough. Some historical entries below describe earlier work; this section is the current checkpoint summary.
+
+## Correct public homepage — avoid the legacy design chooser
+
+The current public VB homepage is `v8.html`, not `index.html`. HANDOFF.md identifies this entry, and the current blog navigation links to it. Local LLK-branch homepage: `http://127.0.0.1:8891/v8.html`; its Login link opens `login.html`. The headline is “You focus on building. I focus on protecting your brand.”
+
+`index.html` is a retained legacy design-version chooser that defaults to V2 Brutalist. Do not open it when the user asks for the current VB homepage. Changing the root entry or retiring the design archive is separate from opening the correct page; no such source change has been made here.
+
 ## Current checkpoint — October 15, 2026
 
 The owner approved saving this LLK prototype on `codex/legal-launch-kit` and pushing that feature branch. This approval does not authorize merging, deploying, enabling signup, or changing accounts, access rules, or databases. This branch must eventually be merged into its originating `codex/attorney-workspace` branch with approval.
@@ -148,3 +164,43 @@ A successful local profile save changes the button to “✓ Saved.” Editing a
 ## Saved company name on map
 
 After a successful local profile save, the saved company name replaces “Your business” in the SVG center and list-view profile entry. It remains linked to the profile. Long names wrap to a compact label with the full name available through its accessible name/tooltip. No name means the original “Your business” label. Unsaved edits do not change the map; reset restores the fallback.
+
+## Signup preview — October 15, 2026
+
+Owner requested starting integration visually from the public homepage and sign-in. `v8.html` now has plain Login navigation and no header consultation CTA. `login.html` uses Venture Branding Law Portal / Sign in and links to `signup.html`. Signup renders the existing LLK numbered acknowledgment array with one required unchecked confirmation, then a basic account/company form. Create account is explicitly disabled; no authentication, policy records, uploads, browser persistence, password collection, or database changes occur. Existing LLK company/acknowledgment flow is preserved until account integration replaces it. Public signup stays disabled. This is local uncommitted UI work, not completion of the Test account foundation.
+
+## Member portal shell — October 16, 2026
+
+Owner approved a local visual Member shell. `member.html` reuses existing portal CSS/sidebar conventions, links to the Legal Launch Kit and existing company profile, and displays client tools as locked buttons opening an engagement explanation. It never imports the client controller, Supabase configuration, or client records. A saved browser-local company name may appear as a display label only; this is not identity or authorization. No auth/session changes, account creation, schema, permissions, deployment, or inferred client access. The existing client portal remains unchanged. Legal Launch Kit now has a Member home return link. Signup remains unconnected and Create account disabled; do not claim a completed signup-to-account journey. Current company profile still uses the original local acknowledgment flow until later approved onboarding integration. Pending UI source changes are not yet committed.
+
+## Member visual integration — October 16, 2026
+
+Owner requested matching the Legal Launch Kit to the portal aesthetic. Its entry now reuses the full Member sidebar, locked-feature dialog, Member header, portal base styles, and scoped shell overrides. Master atlas renderer, neon effects, motion and storage are unchanged. Home/profile/kit navigation is connected with active-state updates and a mobile menu. Removed top-level prototype/free-working-name banners for the production-style walkthrough. Current Member access wording says authorized by Venture Branding Law. All 18 existing Legal Launch Kit checks passed; account/database integration remains pending.
+
+## Account/engagement foundation prepared — October 16, 2026
+
+Owner approved preparing and implementing the bounded Test foundation. Read `supabase/proposals/portal-membership/README.md` for exact target, package, baseline and limits. Read-only Test inspection completed; additive schema and rollback-based role/RLS checks prepared. Application is awaiting the browser-required action-time confirmation for database permissions. No Test mutations have been executed; no new checks claimed passed. Legacy client access and Production remain untouched. This package intentionally does not cut over existing client records or workers.
+
+## Account/engagement foundation applied and verified — October 16, 2026
+
+User gave explicit action-time approval. Applied the saved package only to Venture Branding BCM Test (imvkhicfmidzbzsbhkzs). All 39 hosted PostgreSQL role/RLS checks passed and fixtures rolled back. All 11 new tables have RLS; four existing client rows and four memberships have identical before/after fingerprints; both legacy access helper definitions unchanged. Zero retained new accounts/engagements/policy versions or synthetic Auth users. See `supabase/proposals/portal-membership/README.md` and verification JSON for exact evidence and source hashes. The new structures coexist with existing access; they are not yet used by signup, sign-in, client records or background workers. No Production changes, invitations, public signup enabling, source commit, push, merge or deployments. Next bounded phase is Test-only registration/sign-in integration, with final policy publication still pending.
+
+## Test registration/sign-in connection prepared — October 16, 2026
+
+Read `supabase/proposals/portal-membership/REGISTRATION.md` for current source, exact Test callback, 30 passed local checks, 19 prepared hosted checks, and actual observed Auth settings. SQL package 05 and callback allowlist entry await browser action-time approval; do not claim applied or end-to-end signup verified. The owner must privately enter any real credential. LLK design unchanged; Test progress is isolated per user but remains browser-local. Recovered this branch and pending files from Desktop stash after an external branch switch; stash retained. Nothing committed or merged.
+
+## Test registration setup applied — October 16, 2026
+
+User explicitly approved package 05 and exact Test callback. Applied successfully; all 19 hosted onboarding checks passed, fixtures rolled back, original client/membership fingerprints unchanged. The sole saved Test callback is http://127.0.0.1:8893/login.html. Local Test signup returned HTTP 200. Real signup/email/password completion awaits user-operated private entry; do not claim that roundtrip verified. Read REGISTRATION.md and registration-verification JSON. Production unchanged; no commit or push.
+
+## Dummy policy documents for the dry run — October 16, 2026
+
+Owner explicitly requested Terms and Privacy pages filled with lorem ipsum, so dry-run flow can proceed without repeated policy caveats. Added `terms.html` and `privacy.html` and linked both from the single signup acknowledgment. Removed the special unfinished-policy wording from Test signup; links open separately so registration details are retained. These are plainly placeholder lorem ipsum documents, not substantive legal drafting. Existing Test-only consent storage remains as implemented; no production publication or backend policy-version change. Do not treat unfinished policies as a blocker to this authorized dry run.
+
+## Email confirmation resume correction — October 16, 2026
+
+Owner reported verification returning to acknowledgments. Signup initialization previously reset the checkbox and never resumed onboarding after the verified session returned. It now validates the pending draft against the verified email/current notice, resumes the existing Test onboarding RPC, clears that draft on success, and routes directly to Member home. New submissions retain the non-password pending draft across tabs as well as in the current tab; no existing browser profile/planning notes are imported. Mismatched drafts cannot resume another email. Eight focused account tests passed, including the actual controller returning from verification in another tab. No backend or Auth settings changed. Real user signup completion still awaits confirmation.
+
+## Real Member account check passed — October 16, 2026
+
+User reached Member home after private registration/verification. MZP117 LLC is read from the database and survives reload; account profile opens without repeated acknowledgments; client-tool lock explanation works. SQL confirms active verified Member, one profile/company/onboarding record, zero legacy client memberships or engagement grants. Left user signed in on Member home. See REGISTRATION.md for scope and evidence. No commit/push yet.

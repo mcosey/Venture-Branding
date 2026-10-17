@@ -1,3 +1,4 @@
+import {memberAccountsEnabled,verifiedEntry,workspaceFor} from './member-account.mjs?v=1';
 import {nextStep, validConfiguration} from './flow.mjs?v=20261011-test-portal';
 import {requireAccess} from './connection.mjs?v=20261011-test-portal';
 const $ = id => document.getElementById(id);
@@ -66,6 +67,9 @@ async function refresh() {
   } else if (step === 'set-password') {
     show('set-password','Set your password','Choose a password for your Venture Branding account.');
   } else {
+    if(audience==='client'&&memberAccountsEnabled(window.VB_AUTH_CONFIG,location.hostname)){
+      const access=await verifiedEntry(client);clearSecrets();show('signed-in','Opening your workspace…','');location.replace(workspaceFor(access.entry));return;
+    }
     await requireAccess(client,audience);
     clearSecrets();
     show('signed-in','Opening your workspace…','');

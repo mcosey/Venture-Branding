@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-16",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "system_identifier": "7692130048193495360",
+  "onboarding_sql_applied": true,
+  "hosted_checks": 19,
+  "hosted_all_passed": true,
+  "local_checks": 30,
+  "legacy_clients_unchanged": true,
+  "legacy_memberships_unchanged": true,
+  "retained_synthetic_auth_users": 0,
+  "retained_test_onboarding_records": 0,
+  "final_policy_acceptances": 0,
+  "callback": "http://127.0.0.1:8893/login.html",
+  "callback_saved": true,
+  "production_changed": false,
+  "real_email_signup_verified": true,
+  "source_sha256": {
+    "05-test-onboarding.sql": "9fca66936ba41c683d6b3363c0ff4e236d6e0b349a8c6c2192aa3628c587520f",
+    "06-test-onboarding-access.sql": "1f698fc739fc3667e5b67f630832cfe464eb0e35395718b23a51794d6a827d5c"
+  },
+  "member_home_observed": true,
+  "company_survives_refresh": true,
+  "company_profile_without_repeat_ack": true,
+  "locked_tool_explanation_verified": true,
+  "member_client_memberships": 0,
+  "member_engagement_grants": 0,
+  "signout_relogin_independently_verified": false
+}

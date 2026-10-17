@@ -1,8 +1,9 @@
-import {renderBusiness,savedBusinessName} from './llk-business.mjs?v=company-label-1';
+import {memberContext} from '../../auth/member-session.mjs?v=1';
+import {renderBusiness,savedBusinessName} from './llk-business.mjs?v=member-account-1';
 import {icon} from './llk-icons.mjs';
 import {createMasterAtlas} from './llk-atlas.mjs?v=company-label-1';
 import {categories,categoryTasks,milestones,emptyProgress,decodeProgress,milestoneStatus} from './llk-data.mjs';
-const key='vb-llk-prototype-v1';let progress=emptyProgress(), storageAvailable=true, listView=false, diagramObserver;
+const key='vb-llk-prototype-v1'+(memberContext?':'+memberContext.user.id:'');let progress=emptyProgress(), storageAvailable=true, listView=false, diagramObserver;
 try{progress=decodeProgress(localStorage.getItem(key));}catch{storageAvailable=false;}
 const main=document.querySelector('#llk-main'), status=document.querySelector('#save-status');
 const e=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
