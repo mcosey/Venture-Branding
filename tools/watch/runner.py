@@ -112,7 +112,7 @@ def extract(path, filename):
                         classes = sorted({n.text.strip().lstrip('0') or '0' for n in element.findall('./classifications/classification/international-code') if n.text})
                         # All listed owner names are retained, with no inference about historical/current ownership.
                         owners = sorted({n.text.strip() for n in element.findall('./case-file-owners/case-file-owner/party-name') if n.text})
-                        if len(goods) > 45 or any(len(g['text']) > 65536 for g in goods) or len(owners) > 50:
+                        if len(goods) > 45 or any(len(g['text']) > 524288 for g in goods) or len(owners) > 50:
                             raise FeedError('Record exceeds supported fields')
                         records.append({'serial': serial, 'name': name, 'filing_date': filing.isoformat(),
                                         'goods': goods, 'classes': classes, 'owners': owners,
