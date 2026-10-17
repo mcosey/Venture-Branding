@@ -50,6 +50,15 @@ class RunnerTests(unittest.TestCase):
    ingest('endpoint','secret','apc261011.zip','a'*64,[{'goods':[{'text':'x'*500000},{'text':'y'*500000}]}],call)
   self.assertNotIn('batch',[p['action'] for p in calls]);self.assertNotIn('complete',[p['action'] for p in calls])
  def test_stylized_word_is_text_only(self):self.assertEqual(len(extract(self.sample('<root>'+case(drawing='5')+'</root>'),'apc261011.zip')[0]),1)
+ def test_long_mark_wording_is_preserved_through_name_boundary(self):
+  for length in [2001,2026,4096]:
+   with self.subTest(length=length):
+    name='N'*length
+    records,_=extract(self.sample('<root>'+case().replace('EXAMPLE',name)+'</root>'),'apc261011.zip')
+    self.assertEqual(records[0]['name'],name)
+ def test_name_above_boundary_still_rejects_entire_file(self):
+  with self.assertRaises(FeedError):
+   extract(self.sample('<root>'+case()+case('12345678').replace('EXAMPLE','N'*4097)+'</root>'),'apc261011.zip')
  def test_entities_malformed_future_dates_duplicate_fail_file(self):
   for xml in ['<!DOCTYPE root [<!ENTITY x "bomb">]><root>'+case()+'</root>','<root>'+case(),'<root>'+case(filing='20261012')+'</root>','<root>'+case(filing='20260230')+'</root>','<root>'+case()+case()+'</root>','<root/>']:
    with self.subTest(xml=xml[:40]),self.assertRaises(Exception):extract(self.sample(xml),'apc261011.zip')
