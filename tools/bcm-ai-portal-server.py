@@ -5,7 +5,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 TEST_CONFIG = b"""// Browser-safe Test configuration; no secret keys.
-window.VB_AUTH_CONFIG=Object.freeze({environment:'bcm-test',url:'https://imvkhicfmidzbzsbhkzs.supabase.co',publishableKey:'sb_publishable_QsbJJKAKHHC8M3Zt9cCgAA_PM3jbAfC',allowBcmResearch:false});
+window.VB_AUTH_CONFIG=Object.freeze({environment:'bcm-test',memberAccountsEnabled:true,url:'https://imvkhicfmidzbzsbhkzs.supabase.co',publishableKey:'sb_publishable_QsbJJKAKHHC8M3Zt9cCgAA_PM3jbAfC',allowBcmResearch:false});
 window.VB_EVIDENCE_ENABLED=false;window.VB_DIGEST_ENABLED=false;window.VB_DIGEST_SCHEDULED=false;
 """
 LANDING = b"""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Venture Branding - Test portal</title><link rel="stylesheet" href="/auth/auth.css"><body><main><div class="card"><h1>Venture Branding Test portal</h1><p>Existing portal screens connected only to fictional Test records. Paid research is disabled. Production is unchanged.</p><p><a href="/brand-monitor.html">Open client BCM</a></p><p><a href="/login.html">Client sign in</a></p><p><a href="/attorney.html">Open attorney workspace</a></p><p><a href="/attorney-login.html">Attorney sign in</a></p></div></main></body></html>"""
@@ -51,4 +51,8 @@ class TestPortalHandler(SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     # Same origin as the prior Test review, so its existing private client session can resume.
-    ThreadingHTTPServer(('127.0.0.1', 8885), TestPortalHandler).serve_forever()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--port', type=int, default=8885)
+    args = parser.parse_args()
+    ThreadingHTTPServer(('127.0.0.1', args.port), TestPortalHandler).serve_forever()

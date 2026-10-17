@@ -13,7 +13,14 @@ export async function requireAccess(db,audience){
  if(assurance.error)throw new Error('Unable to verify sign-in.');
  if((audience==='staff'||assurance.data.nextLevel==='aal2')&&assurance.data.currentLevel!=='aal2')throw new Error('Please verify your authenticator at sign-in.');
  const role=await db.rpc('vb_session_role');
- if(role.error||role.data!==audience)throw new Error('This account does not have access to this workspace.');
+ if(role.error||role.data!==audience){
+  if(audience==='client'&&typeof window!=='undefined'&&window.VB_AUTH_CONFIG?.memberAccountsEnabled===true&&window.VB_AUTH_CONFIG.environment==='bcm-test'){
+   const {clientFallback}=await import('./client-fallback.mjs?v=1');
+   const fallback=await clientFallback(db,window.VB_AUTH_CONFIG,window.location.hostname);
+   if(fallback)window.location.replace(fallback);
+  }
+  throw new Error('This account does not have access to this workspace.');
+ }
  return data.user;
 }
 export async function loadRecords(db,audience){

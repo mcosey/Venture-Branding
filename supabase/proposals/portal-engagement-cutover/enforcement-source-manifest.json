@@ -1,0 +1,182 @@
+{
+  "status": "prepared-not-applied",
+  "modified_function_count": 31,
+  "modified_functions": [
+    {
+      "name": "vb_bcm_ai_baseline_progress",
+      "signature": "vb_bcm_ai_baseline_progress(uuid)",
+      "before_sha256": "19e27bbbb99d3f690ec23acc26c5e36205a1f29d0a8c83c23ded74e2ba273dbd"
+    },
+    {
+      "name": "vb_bcm_ai_client_history",
+      "signature": "vb_bcm_ai_client_history(uuid)",
+      "before_sha256": "f96164c5b7413619a1c40ad1ebf99abeaad0fd5cb79067aba899311b24b094ad"
+    },
+    {
+      "name": "vb_begin_bcm_ai_run",
+      "signature": "vb_begin_bcm_ai_run(uuid,integer)",
+      "before_sha256": "a9c72044fc32de6141449a548f0411344491c61bdcc994210c40fee3d57728fc"
+    },
+    {
+      "name": "vb_begin_bcm_baseline",
+      "signature": "vb_begin_bcm_baseline(uuid,integer)",
+      "before_sha256": "39fe60696a278d33663a53d69f0b33e9c5f8c804995d5598dd41dd41761f617d"
+    },
+    {
+      "name": "vb_begin_bcm_comparison",
+      "signature": "vb_begin_bcm_comparison(uuid,integer)",
+      "before_sha256": "1a5f257fab6ead02da6ed000595d2c9b2fb5e425b54bf3e04769f59bd0c1051a"
+    },
+    {
+      "name": "vb_save_bcm_settings",
+      "signature": "vb_save_bcm_settings(uuid,integer,jsonb,boolean)",
+      "before_sha256": "cc9dccfa0c7f7a028062d59e5c40dd20a3ef5793ff826747c609d18b30be9aab"
+    },
+    {
+      "name": "vb_set_bcm_ai_monitoring",
+      "signature": "vb_set_bcm_ai_monitoring(uuid,integer,integer,boolean)",
+      "before_sha256": "61a1f2768c0ce550c0e0cf185eec2e9fe49368c1beec9201e0a5e76aea237fcf"
+    },
+    {
+      "name": "vb_set_bcm_monitoring",
+      "signature": "vb_set_bcm_monitoring(uuid,integer,integer,boolean)",
+      "before_sha256": "58d674248b7e1667cbc32646fffb45243e0576068d7b09bfd338d6b49c24e81e"
+    },
+    {
+      "name": "vb_save_digest_preferences",
+      "signature": "vb_save_digest_preferences(uuid,integer,jsonb)",
+      "before_sha256": "d95d8eddb3e3a429b9fbff90b21d072affbcaf1c5f95d398cd6e4dd6f630c1e1"
+    },
+    {
+      "name": "vb_generate_digest_sample",
+      "signature": "vb_generate_digest_sample(uuid,integer)",
+      "before_sha256": "9f9442b3fcb79bb14fff8bd6140da112ebcaf3ed27d6446ffd2103b531093dbf"
+    },
+    {
+      "name": "vb_open_inbox",
+      "signature": "vb_open_inbox(uuid,uuid)",
+      "before_sha256": "8b4b034b912990b0587b2c7be8fff34e7be89f348424407c066bdc8782d1feef"
+    },
+    {
+      "name": "vb_reserve_evidence",
+      "signature": "vb_reserve_evidence(uuid,uuid,uuid,jsonb)",
+      "before_sha256": "107a208185ec7fa95c48fca73607b219de8ec13380665ab5a00aed21a0d2e283"
+    },
+    {
+      "name": "vb_remove_evidence",
+      "signature": "vb_remove_evidence(uuid,uuid)",
+      "before_sha256": "060b3ade2eaf019591dd834a7faa8b0899caaf1c61825d35154c2174a503d7e2"
+    },
+    {
+      "name": "watch_access",
+      "signature": "vb_private.watch_access(uuid)",
+      "before_sha256": "36b25109deb21e3013be48a21f5e8888d08f2194ff84c9b9ceb1538f1050c5b2"
+    },
+    {
+      "name": "bcm_actor_has_access",
+      "signature": "vb_private.bcm_actor_has_access(uuid,uuid)",
+      "before_sha256": "1785e7833b51b63cffff0855ea50b02c05ff8c4d53d3c48c79595600e61df5bb"
+    },
+    {
+      "name": "vb_bcm_ai_run_is_current",
+      "signature": "vb_bcm_ai_run_is_current(uuid)",
+      "before_sha256": "66e63474b21e2cbe42db9ff01acb60b1b7e350fc2aa3acdae420fdcb6e069848"
+    },
+    {
+      "name": "vb_bcm_job_is_current",
+      "signature": "vb_bcm_job_is_current(uuid)",
+      "before_sha256": "48aa2b860ae26f1b013650883c13b4771a88c2b6371476f8a0b660f57039649a"
+    },
+    {
+      "name": "vb_claim_bcm_ai_due_run",
+      "signature": "vb_claim_bcm_ai_due_run()",
+      "before_sha256": "40b987ba0e1bc542eda4fd8660582fc02d25747c6cc41948ff486ec0b60f24f5"
+    },
+    {
+      "name": "vb_claim_bcm_due_scan",
+      "signature": "vb_claim_bcm_due_scan()",
+      "before_sha256": "4920cd8b60d272f9c0dc5de4b911496f9d63103b6f91b08617d7358d58cbc328"
+    },
+    {
+      "name": "reserve_bcm_ai",
+      "signature": "vb_private.reserve_bcm_ai(uuid,uuid,integer)",
+      "before_sha256": "c3969da1d2a06a9ec54f24ba010809ecd8d98f57c565410bedd4058e675afcbe"
+    },
+    {
+      "name": "dispatch_bcm_ai_tick",
+      "signature": "vb_private.dispatch_bcm_ai_tick()",
+      "before_sha256": "e1194f1eaa402e389361caef0964c21c5f1655d7874640f3e3c1b98b48a3fb2e"
+    },
+    {
+      "name": "dispatch_bcm_tick",
+      "signature": "vb_private.dispatch_bcm_tick()",
+      "before_sha256": "0e018854b1afac34ec6901d82bee8fabbf87091ff073af0260abb26f839a7c0f"
+    },
+    {
+      "name": "finish_bcm_snapshot",
+      "signature": "vb_private.finish_bcm_snapshot(uuid,jsonb,boolean)",
+      "before_sha256": "c244f1689ffa3f8d76e5f2616fe8cc6892ab44e7f5d4345abb03539988868dde"
+    },
+    {
+      "name": "vb_finish_evidence",
+      "signature": "vb_finish_evidence(uuid,uuid)",
+      "before_sha256": "68fb894dc561d7c17e4b0fd238841ccb68e436a2d70fbb6e8e9abf4643b4fb96"
+    },
+    {
+      "name": "can_read_evidence_object",
+      "signature": "vb_private.can_read_evidence_object(text)",
+      "before_sha256": "ad1926ae78ddfdedd2035254c6cd92766c76d3258eb8038402e85e4dca9d4069"
+    },
+    {
+      "name": "vb_watch_snapshot",
+      "signature": "vb_watch_snapshot(uuid)",
+      "before_sha256": "5fac63b7472ea2b6d8708126d51667e555c3f1717e42696425e83cfd678abb9a"
+    },
+    {
+      "name": "vb_watch_save",
+      "signature": "vb_watch_save(uuid,integer,uuid[],boolean)",
+      "before_sha256": "1f3c161ba83a1a4ceac63b4cd3ea8ed1bc597f1c576d2f7f9f7fcd3d76a52194"
+    },
+    {
+      "name": "vb_watch_run_due",
+      "signature": "vb_watch_run_due()",
+      "before_sha256": "7b1968bc6b740c84f945f16c56cab57f17067e055a654a5cceefcfbf0316643f"
+    },
+    {
+      "name": "deliver_due_digests",
+      "signature": "vb_private.deliver_due_digests()",
+      "before_sha256": "af8d12c52a06c81ed2947fd5b6c403bcf4404e92b7e1be37937d2f500c80b0d7"
+    },
+    {
+      "name": "digest_items",
+      "signature": "vb_private.digest_items(uuid,text[],timestamp with time zone)",
+      "before_sha256": "48235e8d3604ee003ef0fbb52ccf2c1b2ba791efc28ca20e1417069d7526c196"
+    },
+    {
+      "name": "vb_finish_bcm_ai_run",
+      "signature": "vb_finish_bcm_ai_run(uuid,jsonb,boolean)",
+      "before_sha256": "bc26a55ea9d7cd2687b6f092e4df828295ae56bec5a30093fd42ce43f8c535ae"
+    }
+  ],
+  "resources": [
+    "public.vb_bcm_ai_observations",
+    "public.vb_bcm_ai_publications",
+    "public.vb_bcm_ai_reviews",
+    "public.vb_bcm_ai_runs",
+    "public.vb_bcm_scans",
+    "public.vb_bcm_schedules",
+    "public.vb_bcm_settings",
+    "public.vb_client_references",
+    "public.vb_digest_preferences",
+    "public.vb_evidence",
+    "public.vb_filing_drafts",
+    "public.vb_inbox",
+    "public.vb_maintenance_publications",
+    "public.vb_marks",
+    "public.vb_service_preferences",
+    "vb_private.maintenance_drafts",
+    "vb_private.watch_findings",
+    "vb_private.watch_runs",
+    "vb_private.watch_settings"
+  ]
+}

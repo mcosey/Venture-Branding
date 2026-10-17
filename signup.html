@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+<title>Sign up — Venture Branding Law Portal</title>
+<link rel="icon" href="images/09.png"><link rel="stylesheet" href="auth/auth.css"><link rel="stylesheet" href="shared/loading.css">
+<style>
+main{width:min(100%,720px)}.steps{font-size:13px;color:var(--muted);margin:0 0 20px}.acknowledgments{padding-left:24px;color:var(--muted)}.acknowledgments li{padding-left:6px;margin:0 0 18px}.confirmation{display:flex;gap:12px;align-items:flex-start;margin-top:24px;font-size:15px}.confirmation input{width:19px;height:19px;flex:none;margin:4px 0 0;accent-color:var(--coral)}.draft-notice{padding:14px 16px;border:1px solid var(--line);border-radius:8px;font-size:14px}.signin-link{text-align:center;margin:24px 0 0;font-size:14px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}.fields .wide{grid-column:1/-1}h2{font-size:20px;margin-top:30px}.back-step{display:block}button:disabled{cursor:not-allowed}.registration-note{font-size:14px;margin-bottom:0}@media(max-width:560px){.fields{grid-template-columns:1fr}}
+</style>
+<script src="auth/config.js" defer></script><script src="auth/vendor/supabase.js" defer></script><script type="module" src="auth/signup-preview.mjs?v=7"></script>
+</head>
+<body><main>
+<a class="brand" href="v8.html"><img src="images/02.png" alt="Venture Branding home"></a>
+<div class="card"><span class="eyebrow">Venture Branding Law Portal</span>
+<h1 id="heading" tabindex="-1">Create your account</h1>
+<div id="signup-loading" aria-busy="true"><span class="vb-loading-status" role="status">Checking account setup…</span><div class="vb-flow-skeleton vb-flow-skeleton-account" aria-hidden="true"><div class="vb-loading-field"><span class="vb-skeleton vb-skeleton-short"></span><span class="vb-skeleton vb-skeleton-rectangle"></span></div><div class="vb-loading-field"><span class="vb-skeleton vb-skeleton-short"></span><span class="vb-skeleton vb-skeleton-rectangle"></span></div><div class="vb-loading-field"><span class="vb-skeleton vb-skeleton-short"></span><span class="vb-skeleton vb-skeleton-rectangle"></span></div><span class="vb-skeleton vb-skeleton-button"></span></div></div>
+<section id="acknowledgment-step" hidden aria-labelledby="acknowledgment-heading">
+<p class="steps">Step 1 of 2 · Acknowledgments</p>
+<h2 id="acknowledgment-heading">Before you begin</h2>
+<p>Read the acknowledgments below, then confirm once to continue.</p>
+<form id="acknowledgment-form">
+<ol id="acknowledgments" class="acknowledgments"></ol>
+<label class="confirmation"><input id="acknowledgment-confirmation" type="checkbox" required aria-describedby="acknowledgments"><span>I have read and understood the acknowledgments above.</span></label>
+<button type="submit" id="continue" disabled>Continue</button>
+</form>
+</section>
+<section id="account-step" hidden aria-labelledby="account-heading">
+<p class="steps">Step 2 of 2 · Account and company</p>
+<h2 id="account-heading" tabindex="-1">A few basics to get started</h2>
+<p>Your account will let you save your Legal Launch Kit progress. Access to legal matters and client tools requires a separate active engagement authorized by Venture Branding Law.</p>
+<form id="registration-form">
+<div class="fields">
+<div><label for="full-name">Full name</label><input id="full-name" name="fullName" autocomplete="name" maxlength="120" required></div>
+<div><label for="signup-email">Email address</label><input id="signup-email" name="email" type="email" autocomplete="email" maxlength="254" required></div>
+<div class="wide"><label for="company-name">Company or working name</label><input id="company-name" name="companyName" autocomplete="organization" maxlength="120" required></div>
+<div class="wide"><label for="industry">Industry (optional)</label><input id="industry" name="industry" maxlength="100"></div>
+</div>
+<div id="password-fields" class="fields"><div><label for="signup-password">Password</label><input id="signup-password" type="password" autocomplete="new-password" minlength="12" required><small>Use at least 12 characters.</small></div><div><label for="confirm-signup-password">Confirm password</label><input id="confirm-signup-password" type="password" autocomplete="new-password" minlength="12" required></div></div>
+<p class="registration-note">Please keep this brief and avoid confidential legal details.</p>
+<button type="submit" id="create-account" disabled>Create account</button><p id="signup-status" role="status" aria-live="polite"></p>
+
+<button class="text-button back-step" id="back" type="button">← Back to acknowledgments</button>
+</form>
+</section>
+<p class="signin-link">Already have an account? <a href="login.html">Sign in</a></p>
+</div>
+<a class="footer" href="v8.html">← Back to Venture Branding Law</a>
+</main></body></html>

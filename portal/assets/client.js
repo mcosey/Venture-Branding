@@ -1,5 +1,6 @@
 import {watchEnabled} from '../../auth/watch.mjs';
 import {renderConnectedWatch} from './watch-connected.js?v=20261013-watch-mvp';
+import {memberAccountsEnabled} from '../../auth/member-account.mjs?v=1';
 import {loadReviewedMap} from './brand-map-reviewed.mjs?v=20261012-reviewed-map';
 import {aiBcmEnabled,renderAiBcm} from './bcm-ai.js?v=20261013-client-rollout';
 import {renderDigest} from './digest.js?v=20261011-bcm-retired';
@@ -65,6 +66,11 @@ function render(){
 }
 async function refresh(){mapRevision++;const ticket=gate.lock();try{const loaded=await loadRecords(db,'client');if(!gate.current(ticket))return;records=loaded;if(!records.clients.length)throw new Error('No active client workspace is assigned to this account.');const requested=new URLSearchParams(location.search).get('client');selectedId=selectedId||requested||records.clients[0].id;render();gate.unlock(ticket);}catch(error){if(!gate.current(ticket))return;main.replaceChildren();gate.lock(error.message);}}
 document.querySelector('#client-choice').addEventListener('change',event=>{selectedId=event.target.value;render();});
+if(memberAccountsEnabled(window.VB_AUTH_CONFIG,location.hostname)){
+ const nav=document.querySelector('#portal-nav'),kit=el('a','Legal Launch Kit');kit.href='free/legal-launch-kit.html';
+ const icon=nav.querySelector('a[href="portfolio.html"] svg');if(icon)kit.prepend(icon.cloneNode(true));
+ nav.insertBefore(kit,nav.querySelector('a[href="account.html"]'));
+}
 const menu=document.querySelector('.menu-toggle'),nav=document.querySelector('#portal-nav');menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});
 document.querySelector('#messages-button')?.addEventListener('click',()=>{location.href='messages.html?client='+encodeURIComponent(selectedId);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){evidenceDispose();mapRevision++;gate.lock();main.replaceChildren();}else refresh();});

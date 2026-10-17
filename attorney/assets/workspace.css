@@ -16,3 +16,11 @@
 
 .mark-entry{border-top:1px solid var(--line)}.mark-entry>a{display:flex;align-items:center;gap:15px;padding:18px 0 10px;font-size:13px}.mark-entry>a>span:first-child{flex:1}.mark-entry small{display:block;font-size:10px;color:var(--muted)}.mark-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:0 0 16px}.mark-controls button{font-size:11px}
 #access-editor{width:min(620px,calc(100% - 28px));padding:28px}#access-editor h2{font:400 27px Fraunces,serif}#access-editor label{display:grid;gap:8px;margin:20px 0;font-size:13px}#access-editor input[type=email]{width:100%;min-width:0;background:#101d2b;border:1px solid #3b4c5f;border-radius:7px;color:var(--text);padding:12px;font:inherit}#access-editor .check-label{display:flex;align-items:center}#access-editor input[type=checkbox]{flex-shrink:0}#access-close{font-size:20px}#access-client{overflow-wrap:anywhere}button:disabled{cursor:not-allowed;opacity:.55}
+
+.client-engagement-row{display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid var(--line);padding:18px 0}.client-engagement-row:first-of-type{margin-top:18px}.client-engagement-row h3{font-size:14px;font-weight:500;line-height:1.6;margin:0}.client-engagement-row .muted{margin:5px 0 0}.client-engagement-row a{white-space:nowrap}@media(max-width:520px){.client-engagement-row{align-items:flex-start;flex-wrap:wrap}}
+
+.client-primary-actions{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin-left:auto}.client-primary-actions .coral-button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.client-primary-actions .coral-button,.client-primary-actions .outline-button{width:132px;height:39px;min-height:0;padding:9px 10px;border-radius:8px;font-size:12px;line-height:19px}
+
+.hub-grid.client-records-grid{grid-template-columns:1fr}
+.engagement-closure{width:min(620px,calc(100% - 28px));padding:28px;background:var(--panel,#101d28);color:var(--text,#e9edf1);border:1px solid var(--line,#304657);border-radius:14px}.engagement-closure h2{font:400 27px Fraunces,serif}.engagement-closure p{line-height:1.7;margin:16px 0}.engagement-closure::backdrop{background:#030b13b8}.client-engagement-row>.text-link{margin-left:16px;white-space:nowrap}

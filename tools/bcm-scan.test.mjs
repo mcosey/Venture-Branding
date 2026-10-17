@@ -74,11 +74,11 @@ function harness({role='client',reserveError=false,finish='completed',scanFails=
  return {calls,handler,get scans(){return scans;}};
 }
 const req=(body={clientId:'10000000-0000-0000-0000-000000000001',version:1})=>new Request('https://test.invalid',{method:'POST',headers:{Authorization:'Bearer test'},body:JSON.stringify(body)});
-test('auth and client isolation gates run before network fetch',async()=>{for(const options of [{role:'staff'},{settingsError:true},{reserveError:true}]){const h=harness(options);assert.notEqual((await h.handler(req())).status,200);assert.equal(h.scans,0);}});
-test('browser cannot submit invented snapshots or arbitrary URL destinations',async()=>{const h=harness();assert.equal((await h.handler(req({clientId:'10000000-0000-0000-0000-000000000001',version:1,snapshot:{text:'invented'}}))).status,400);assert.equal(h.scans,0);});
-test('server captures then finalizes reserved baseline',async()=>{const h=harness();assert.equal((await h.handler(req())).status,200);assert.equal(h.scans,1);const final=h.calls.find(c=>c[0]==='vb_finish_bcm_baseline');assert.equal(final[1].ticket,'ticket');assert.equal(final[1].snapshot.url,BASELINE_URL);});
-test('scan failure records failure without exposing internal error',async()=>{const h=harness({scanFails:true});const response=await h.handler(req());assert.equal(response.status,400);assert.ok(!(await response.text()).includes('private internal'));assert.equal(h.calls.at(-1)[1].failure,true);});
-test('settings/access changed during fetch cannot be presented as success',async()=>{const h=harness({finish:'failed'});assert.equal((await h.handler(req())).status,409);});
+test('retired scanner refuses work even before client access checks',async()=>{for(const options of [{role:'staff'},{settingsError:true},{reserveError:true}]){const h=harness(options);assert.equal((await h.handler(req())).status,410);assert.equal(h.scans,0);assert.equal(h.calls.length,0);}});
+test('retired scanner refuses invented browser snapshots without database work',async()=>{const h=harness();assert.equal((await h.handler(req({clientId:'10000000-0000-0000-0000-000000000001',version:1,snapshot:{text:'invented'}}))).status,410);assert.equal(h.scans,0);assert.equal(h.calls.length,0);});
+test('retired scanner never reserves or finalizes a formerly valid baseline request',async()=>{const h=harness();assert.equal((await h.handler(req())).status,410);assert.equal(h.scans,0);assert.equal(h.calls.length,0);});
+test('retired scanner never invokes the provider or exposes its error',async()=>{const h=harness({scanFails:true});const response=await h.handler(req());assert.equal(response.status,410);assert.match(await response.text(),/retired/);assert.equal(h.scans,0);assert.equal(h.calls.length,0);});
+test('retired scanner never finalizes a changed-access request',async()=>{const h=harness({finish:'failed'});assert.equal((await h.handler(req())).status,410);assert.equal(h.scans,0);assert.equal(h.calls.length,0);});
 import {compareBcmSnapshots} from '../auth/bcm.mjs';
 test('legacy and new snapshots with identical source text compare without formatting-only changes',()=>{
  const legacy={url:BASELINE_URL,title:'Cotivate',headings:['Cotivate'],text:'Cotivate helps teams plan their day. Move forward together.',extractor:'source-text-v1'};

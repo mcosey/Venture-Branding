@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-16",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "system_identifier": "7692130048193495360",
+  "applied": true,
+  "checks": 39,
+  "all_passed": true,
+  "all_new_tables_rls": 11,
+  "existing_clients": {
+    "count": 4,
+    "hash": "910249c562ca27860858146771e2fa6d"
+  },
+  "existing_memberships": {
+    "count": 4,
+    "hash": "fa3747007aff32f9e9f7558cff515963"
+  },
+  "remaining_synthetic_auth_users": 0,
+  "new_accounts": 0,
+  "new_engagements": 0,
+  "new_policy_versions": 0,
+  "legacy_access_helpers_unchanged": true,
+  "browser_submitted_source_matches": true,
+  "production_changed": false,
+  "signup_enabled": false,
+  "source_sha256": {
+    "01-test-foundation.sql": "50d2448cee059b5f760cef869008cc476fa951214128dfd38e3558e13952c7e2",
+    "02-test-access.sql": "30f1c02a7c6edacfad9caaa5f03d7ff04b78a8adbbd9044c458b862088f1373a"
+  },
+  "limits": [
+    "No frontend account connection",
+    "No legacy record/worker cutover",
+    "No HTTP/session/signup verification"
+  ]
+}

@@ -1,0 +1,11 @@
+# Live Test engagement lifecycle walkthrough
+
+Applied October 17, 2026 after explicit owner action-time approval for the additional Test grant and both closures. Live browser walkthrough passed. Only BCM Test system 7692130048193495360. Existing new-user invitation accepted as engagement 79f4529c-7e06-45e8-8877-353a417562c1, recipient mithrilzeppelin117+newclient@gmail.com. Existing original Member/legacy relationships are separate and preserved.
+
+01 creates one explicitly fictional companion engagement/matter/all-features grant and two fictional word-mark records, each attached to a different engagement. No email, Auth identity, policy, deployment, service binding, scheduler, paid research or Production change. Atomic Test and expected-state guards; no idempotent reapply after partial guessing. These records remain retained after closure, rather than being deleted.
+
+Walkthrough: verify 2 marks in signed-in Client browser; close A through MFA attorney review dialog; verify only B visible with Client access; close B; verify Client entry returns to Member home and Legal Launch Kit progress remains. Record counts/fingerprints only for private Member data; do not expose private planning text to attorney. Confirm original relationships unchanged and staff can retain closed records. UI closure calls installed vb_close_test_engagement with expected active status; no permission migration needed. No reopening helper is introduced.
+
+Opening-workspace heading flash removed from login controller; existing skeleton covers identity checks and navigation goes directly to destination.
+
+Results: 2 records visible with both active; only B visible after A closed; after B closed, portal and direct Portfolio navigation returned the new user to Member home. Company/profile/progress fingerprints identical before/after closure. Kit checked task persisted after reload, then the temporary checkbox was restored to unchecked (empty progress row retained). Both fictional mark records and closed engagements remain visible to staff. Two other Cotivate engagements remain active. AI/scheduler readiness remain false; Watch remains enabled as before. 50 focused local checks passed. No emails/Production/deployment/permission migration. See verification JSON.

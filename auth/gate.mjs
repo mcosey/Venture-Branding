@@ -8,7 +8,7 @@ export function setupGate(db,audience) {
  const initialLayout=gate.dataset.loadingLayout;
  const labels={...loadingLabels,...attorneyLoadingLabels};
  function loadingLayout(){
-  if(audience!=='staff'||!initialLayout?.startsWith('staff-'))return initialLayout;
+  if(audience!=='staff'||!initialLayout?.startsWith('staff-')||initialLayout==='staff-engagement')return initialLayout;
   const view=location.hash.slice(1)||'overview';
   return view.startsWith('client-')?'staff-client':Object.hasOwn(attorneyLoadingLabels,'staff-'+view)?'staff-'+view:'staff-overview';
  }

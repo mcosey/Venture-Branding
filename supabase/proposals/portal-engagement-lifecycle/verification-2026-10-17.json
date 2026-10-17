@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-17",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "status": "live-browser-walkthrough-passed",
+  "local_checks": 50,
+  "baseline": {
+    "ai_ready": false,
+    "engagements": [
+      {
+        "id": "79f4529c-7e06-45e8-8877-353a417562c1",
+        "title": "FICTIONAL TEST \u2014 new-user invitation",
+        "status": "active"
+      },
+      {
+        "id": "f1950000-0000-0000-0000-000000000001",
+        "title": "FICTIONAL TEST \u2014 lifecycle companion",
+        "status": "active"
+      }
+    ],
+    "progress_rows": 1,
+    "test_database": true,
+    "watch_enabled": true,
+    "scheduler_ready": false,
+    "company_fingerprint": "1d3b64f58415ce7f871158e075dce534",
+    "profile_fingerprint": "2c2c14281a2cb7c546ccbf68fc67b465",
+    "original_engagements": [
+      {
+        "id": "138e10f0-5e28-4db7-bec3-f33e1c5035ba",
+        "status": "active"
+      },
+      {
+        "id": "f1700000-0000-0000-0000-000000000003",
+        "status": "active"
+      }
+    ],
+    "progress_fingerprint": "a55dace0a381d3fa2c3a900194fd3240",
+    "retained_fixture_marks": 2
+  },
+  "after_closure": {
+    "state": {
+      "ai_ready": false,
+      "engagements": [
+        {
+          "id": "79f4529c-7e06-45e8-8877-353a417562c1",
+          "title": "FICTIONAL TEST \u2014 new-user invitation",
+          "status": "closed"
+        },
+        {
+          "id": "f1950000-0000-0000-0000-000000000001",
+          "title": "FICTIONAL TEST \u2014 lifecycle companion",
+          "status": "closed"
+        }
+      ],
+      "progress_rows": 1,
+      "test_database": true,
+      "watch_enabled": true,
+      "scheduler_ready": false,
+      "company_fingerprint": "1d3b64f58415ce7f871158e075dce534",
+      "profile_fingerprint": "2c2c14281a2cb7c546ccbf68fc67b465",
+      "original_engagements": [
+        {
+          "id": "138e10f0-5e28-4db7-bec3-f33e1c5035ba",
+          "status": "active"
+        },
+        {
+          "id": "f1700000-0000-0000-0000-000000000003",
+          "status": "active"
+        }
+      ],
+      "progress_fingerprint": "a55dace0a381d3fa2c3a900194fd3240",
+      "retained_fixture_marks": 2
+    },
+    "checks": {
+      "both_closed": true,
+      "progress_preserved": true,
+      "profile_preserved": true,
+      "company_preserved": true,
+      "other_engagements_unchanged": true,
+      "records_retained": true,
+      "research_unchanged": true
+    }
+  },
+  "browser_results": {
+    "two_engagements_two_marks": true,
+    "first_closed_client_retained_only_B_visible": true,
+    "last_closed_member_home": true,
+    "direct_portfolio_returns_member_home": true,
+    "kit_checked_task_retained_after_reload": true,
+    "staff_retains_both_marks_and_closed_engagements": true
+  },
+  "cleanup": "Temporary task-0 checkbox restored to unchecked; fictional engagements/marks retained as closed legal records. Progress row remains with empty checklist. No planning text entered.",
+  "production_changed": false,
+  "emails_sent": 0,
+  "permission_migration": false,
+  "limitations": [
+    "No new live scheduled/research jobs were run; prior rollback-based worker checks remain separate evidence.",
+    "Visibility changes observed after refresh/navigation; no real-time removal of already-rendered content is claimed.",
+    "New engagement after these closures has not yet been tested in this walkthrough."
+  ],
+  "evidence": [
+    "engagement-lifecycle-two-active.jpg",
+    "engagement-lifecycle-one-active.jpg",
+    "engagement-lifecycle-member-return.jpg",
+    "engagement-lifecycle-progress-preserved.jpg",
+    "engagement-lifecycle-attorney-retained.jpg"
+  ]
+}

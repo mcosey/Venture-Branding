@@ -1,0 +1,54 @@
+{
+  "status": "applied-and-verified-in-test",
+  "date": "2026-10-16",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "rehearsal_checks": 54,
+  "installed_checks": 54,
+  "all_passed": true,
+  "postcheck": {
+    "ai_config": {
+      "ready": false,
+      "max_runs": 8,
+      "singleton": true
+    },
+    "watch_config": {
+      "enabled": true,
+      "singleton": true
+    },
+    "scheduler_config": {
+      "ready": false,
+      "singleton": true
+    },
+    "service_bindings": 32,
+    "anon_cannot_close": true,
+    "clients_unchanged": true,
+    "converted_clients": 4,
+    "system_identifier": "7692130048193495360",
+    "retained_test_runs": 0,
+    "retained_test_marks": 0,
+    "memberships_unchanged": true,
+    "retained_test_matters": 0,
+    "retained_test_evidence": 0,
+    "retained_test_messages": 0,
+    "runtime_scope_triggers": 19,
+    "restrictive_read_policies": 15,
+    "retained_test_engagements": 0,
+    "retained_test_publications": 0,
+    "active_original_engagements": 4,
+    "free_member_received_no_grants": true,
+    "retained_test_storage_metadata": 0
+  },
+  "browser_observations": [
+    "Verified Member was returned from portal.html to member.html",
+    "MZP117 LLC profile remains visible",
+    "Legal Launch Kit remains available after reload"
+  ],
+  "limitations": [
+    "Independent-session closure-versus-worker race not exercised",
+    "Private Client/attorney browser walkthrough not repeated; roles/MFA/RLS/RPC checks exercised in rollback SQL",
+    "Invitation/acceptance and attorney engagement setup UI remain future work"
+  ],
+  "production_changed": false,
+  "external_research_invoked": false,
+  "commit_authorized": false
+}

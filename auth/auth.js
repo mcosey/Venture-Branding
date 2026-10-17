@@ -1,3 +1,6 @@
+import {showFlowLoading} from '../shared/loading.mjs';
+import {pendingInvitation,invitationDestination} from './invitation-route.mjs';
+import {memberAccountsEnabled,verifiedEntry,workspaceFor} from './member-account.mjs?v=1';
 import {nextStep, validConfiguration} from './flow.mjs?v=20261011-test-portal';
 import {requireAccess} from './connection.mjs?v=20261011-test-portal';
 const $ = id => document.getElementById(id);
@@ -5,9 +8,11 @@ const audience = document.body.dataset.audience;
 const initialTitle = $('heading').textContent;
 const initialIntro = $('intro').textContent;
 const callback = new URLSearchParams(location.hash.slice(1));
+const engagementInvitation=audience==='client'&&memberAccountsEnabled(window.VB_AUTH_CONFIG,location.hostname)?pendingInvitation(sessionStorage,location.search):null;
 let passwordSetup = ['invite','recovery'].includes(callback.get('type'));
 let client;
 let busy = false;
+let firstLoad = true;
 let pendingFactor = null;
 function message(text = '', error = false) {
   $('message').textContent = text;
@@ -27,11 +32,13 @@ function clearSecrets() {
 async function perform(action) {
   if (busy) return;
   busy = true;
+  const host=$('auth-flow-loading');
+  const finish=host?showFlowLoading(host,firstLoad?'Checking sign-in…':'Please wait…',firstLoad?'account':'action'):()=>{};
   document.querySelectorAll('button').forEach(button => button.disabled = true);
   message();
   try { await action(); }
-  catch { message('Unable to complete this step. Please try again or contact Venture Branding.', true); }
-  finally { busy = false; document.querySelectorAll('button').forEach(button => button.disabled = false); }
+  catch { if(firstLoad)show('signin');message('Unable to complete this step. Please try again or contact Venture Branding.', true); }
+  finally { finish();firstLoad=false;busy = false; document.querySelectorAll('button').forEach(button => button.disabled = false); }
 }
 async function refresh() {
   const {data: sessionData, error: sessionError} = await client.auth.getSession();
@@ -66,9 +73,11 @@ async function refresh() {
   } else if (step === 'set-password') {
     show('set-password','Set your password','Choose a password for your Venture Branding account.');
   } else {
+    if(audience==='client'&&memberAccountsEnabled(window.VB_AUTH_CONFIG,location.hostname)){
+      const access=await verifiedEntry(client);clearSecrets();location.replace(invitationDestination(workspaceFor(access.entry),engagementInvitation));return;
+    }
     await requireAccess(client,audience);
     clearSecrets();
-    show('signed-in','Opening your workspace…','');
     location.replace(audience === 'staff' ? 'attorney.html' : 'portal.html');
   }
 }
@@ -116,6 +125,8 @@ $('signout').addEventListener('click',()=>perform(async()=>{
 }));
 async function initialize() {
   if(!validConfiguration(window.VB_AUTH_CONFIG)||!window.supabase){
+    if($('auth-flow-loading')){$('auth-flow-loading').hidden=true;$('auth-flow-loading').setAttribute('aria-busy','false');}
+    show('signin');
     document.querySelectorAll('form button,#forgot').forEach(button=>button.disabled=true);
     message('Sign-in setup is not available yet. Please contact Venture Branding.',true);return;
   }
