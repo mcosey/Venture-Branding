@@ -52,6 +52,40 @@ def file_date(filename):
     if not re.fullmatch(r'apc\d{6}\.zip', filename or ''): raise FeedError('Unexpected source filename')
     return date('20' + filename[3:9])
 
+def utf16_length(value):
+    # The worker measures JavaScript string length, which counts UTF-16 code units.
+    return len(value.encode('utf-16-le', errors='surrogatepass')) // 2
+
+def validate_record(record):
+    """Apply the ingestion worker's record contract before a file can be uploaded."""
+    fields = {'serial', 'name', 'filing_date', 'goods', 'classes', 'owners', 'status_code'}
+    whitespace = '\t\n\v\f\r \u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000\ufeff'
+    if not isinstance(record, dict) or set(record) != fields:
+        raise FeedError('Invalid application fields')
+    if (not isinstance(record['serial'], str) or not re.fullmatch(r'[0-9]{8}', record['serial']) or
+        not isinstance(record['name'], str) or not record['name'].strip(whitespace) or
+        utf16_length(record['name']) > 4096 or not isinstance(record['status_code'], str) or
+        not re.fullmatch(r'[0-9]{3}', record['status_code'])):
+        raise FeedError('Invalid application identity or status')
+    value = record['filing_date']
+    if not isinstance(value, str) or not re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}', value):
+        raise FeedError('Invalid application date')
+    try: dt.date.fromisoformat(value)
+    except ValueError: raise FeedError('Invalid application date') from None
+    classes, owners, goods = record['classes'], record['owners'], record['goods']
+    if (not isinstance(classes, list) or len(classes) > 45 or
+        any(not isinstance(c, str) or not re.fullmatch(r'(?:[1-9]|[1-3][0-9]|4[0-5]|A|B|200)', c) for c in classes)):
+        raise FeedError('Invalid application classes')
+    if (not isinstance(owners, list) or len(owners) > 50 or
+        any(not isinstance(o, str) or utf16_length(o) > 4096 for o in owners)):
+        raise FeedError('Invalid application owners')
+    if (not isinstance(goods, list) or len(goods) > 45 or
+        any(not isinstance(g, dict) or set(g) != {'class', 'text'} or
+            not isinstance(g['class'], str) or not re.fullmatch(r'(?:[0-9]{3}|A|B)', g['class']) or
+            not isinstance(g['text'], str) or utf16_length(g['text']) > 524288 for g in goods)):
+        raise FeedError('Invalid application goods')
+    return record
+
 class SafeXML:
     def __init__(self, stream): self.stream, self.tail, self.total, self.without_boundary = stream, b'', 0, 0
     def read(self, size=-1):
@@ -114,9 +148,10 @@ def extract(path, filename):
                         owners = sorted({n.text.strip() for n in element.findall('./case-file-owners/case-file-owner/party-name') if n.text})
                         if len(goods) > 45 or any(len(g['text']) > 524288 for g in goods) or len(owners) > 50:
                             raise FeedError('Record exceeds supported fields')
-                        records.append({'serial': serial, 'name': name, 'filing_date': filing.isoformat(),
+                        record = {'serial': serial, 'name': name, 'filing_date': filing.isoformat(),
                                         'goods': goods, 'classes': classes, 'owners': owners,
-                                        'status_code': header.findtext('status-code', '')})
+                                        'status_code': header.findtext('status-code', '')}
+                        records.append(validate_record(record))
                         seen.add(serial)
                         if len(records) > MAX_RECORDS: raise FeedError('Candidate limit exceeded')
                     if len(stack) > 1: stack[-2].remove(element)
