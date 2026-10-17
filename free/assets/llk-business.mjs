@@ -1,5 +1,5 @@
 import {memberContext} from '../../auth/member-session.mjs?v=1';
-import {renderAccountBusiness} from './member-business.mjs?v=1';
+import {renderAccountBusiness} from './member-business.mjs?v=2';
 import {BUSINESS_KEY,NOTICE_VERSION,acknowledgments,fields,emptyBusiness,decodeBusiness,hasAcknowledged,createAcknowledgment,normalizeProfile} from './llk-business-state.mjs';
 const businessStorageKey=BUSINESS_KEY+(memberContext?':'+memberContext.user.id:'');
 let state=emptyBusiness(),canSave=true;

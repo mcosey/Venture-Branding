@@ -1,3 +1,4 @@
+import {selectedClientId,setupClientNavigation} from '../portal/assets/client-navigation.mjs';
 import {showRegionLoading} from '../shared/loading.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -38,7 +39,8 @@ test('actual controller uses existing gate, blocks unauthorized clients and rese
  async function run({user=true,requested='client&one'}={}){
   const main=page();main.dataset.page='maintenance';const choice=new Element('select');choice.parentElement={};const name=new Element('span');const doc={...document,querySelector:s=>({'main':main,'#client-choice':choice,'#client-name':name}[s]||null),addEventListener(){}};globalThis.document=doc;const queried=[],gates=[];
   const db={auth:{getUser:async()=>({data:{user:user?{id:'signed-in'}:null}}),mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:'aal1',nextLevel:'aal1'}})},onAuthStateChange(){}},rpc:async()=>({data:'client'}),from(table){queried.push(table);return {data:table==='vb_clients'?[client,{id:'client-two',name:'Second'}]:[],select(){return this},order(){return this},is(){return this}}}};
-  const context={memberAccountsEnabled:()=>false,watchEnabled:()=>false,document:doc,window:{addEventListener(){}},location:{search:'?client='+encodeURIComponent(requested)},URLSearchParams,Option:function(t,v){const n=new Element('option');n.textContent=t;n.value=v;return n},createConnection:()=>db,setupGate:()=>({lock:t=>gates.push(t||'locked'),current:()=>true,unlock:()=>gates.push('unlocked')}),loadRecords,renderMaintenance:(main,client)=>renderMaintenance(main,client,[],null,false)};
+  doc.querySelectorAll=()=>[];
+  const context={selectedClientId,setupClientNavigation,history:{replaceState(){}},memberAccountsEnabled:()=>false,watchEnabled:()=>false,document:doc,window:{addEventListener(){}},location:{href:'http://localhost/maintenance.html',search:'?client='+encodeURIComponent(requested)},URLSearchParams,Option:function(t,v){const n=new Element('option');n.textContent=t;n.value=v;return n},createConnection:()=>db,setupGate:()=>({lock:t=>gates.push(t||'locked'),current:()=>true,unlock:()=>gates.push('unlocked')}),loadRecords,renderMaintenance:(main,client)=>renderMaintenance(main,client,[],null,false)};
   await vm.runInNewContext('(async()=>{'+source+'})()',context);return {main,choice,queried,gates};
  }
  const allowed=await run();assert(allowed.main.textContent.includes('Maintenance Reminder'));assert.equal(allowed.gates.at(-1),'unlocked');allowed.main.querySelector('button').click();allowed.choice.listeners.change({target:{value:'client-two'}});assert(!allowed.main.textContent.includes('BRIGHT TRAIL'));assert(allowed.main.querySelectorAll('a').every(l=>l.href.includes('client-two')));

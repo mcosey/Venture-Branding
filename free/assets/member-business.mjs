@@ -7,13 +7,17 @@ export function renderAccountBusiness(main,{e,link,panel,heading},context,onName
  }
  const save=e('button','Save company profile','primary');save.type='submit';const status=e('p',undefined,'business-save-status');status.setAttribute('role','status');
  form.append(grid,e('p','Please avoid confidential legal details. Your launch date is for planning, not calculating legal deadlines.','muted'),save,status);
- form.addEventListener('input',()=>{save.textContent='Save company profile';status.textContent='';});
+ let editRevision=0;
+ form.addEventListener('input',()=>{editRevision++;save.textContent='Save company profile';status.textContent='';});
  form.addEventListener('submit',async event=>{
   event.preventDefault();if(save.disabled||!form.reportValidity())return;save.disabled=true;
+  const submittedRevision=editRevision;
   const values=Object.fromEntries(Object.entries(inputs).map(([key,input])=>[key,input.value.trim()]));values.launch_date=values.launch_date||null;
   try{
    const result=await context.db.from('vb_member_companies').update(values).eq('id',company.id).select('id').single();
-   if(result.error||!result.data)throw Error('Save failed');Object.assign(company,values);onNameSaved(company.name);save.textContent='✓ Saved';status.textContent='Company profile saved.';
+   if(result.error||!result.data)throw Error('Save failed');Object.assign(company,values);onNameSaved(company.name);
+   if(editRevision===submittedRevision){save.textContent='✓ Saved';status.textContent='Company profile saved.';}
+   else{save.textContent='Save company profile';status.textContent='You have unsaved changes.';}
   }catch{status.textContent='Unable to save your changes. Please try again.';}finally{save.disabled=false;}
  });card.append(form);main.append(card);
 }

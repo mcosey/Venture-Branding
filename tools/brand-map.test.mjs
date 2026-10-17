@@ -1,3 +1,4 @@
+import {selectedClientId,setupClientNavigation} from '../portal/assets/client-navigation.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {brandMapModel,mapPage,recordLink} from '../portal/assets/brand-map-model.mjs';
@@ -95,7 +96,8 @@ test('portal entry renders through the existing access gate and handles client c
   const events={};const authEvents={};const doc={...globalThis.document,hidden:false,querySelector:selector=>({'main':main,'#client-choice':choice,'#client-name':name}[selector]||null),addEventListener(type,callback){events[type]=callback;}};
   globalThis.document=doc;const queryTables=[];const gates=[];
   const db={auth:{getUser:async()=>({data:{user:user?{id:'signed-in'}:null}}),mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:'aal1',nextLevel:'aal1'}})},onAuthStateChange(callback){authEvents.callback=callback;}},rpc:async()=>({data:'client'}),from(table){queryTables.push(table);return {data:table==='vb_clients'?[client,{id:'client-two',name:'Other Studio'}]:table==='vb_marks'?[record('first'),record('second',{client_id:'client-two'})]:[],select(){return this;},order(){return this;},is(){return this;}};}};
-  const context={memberAccountsEnabled:()=>false,watchEnabled:()=>false,document:doc,window:{addEventListener(){}},location:{search:'?client='+requested},URLSearchParams,Option:function(text,value){const e=new Element('option');e.textContent=text;e.value=value;return e;},createConnection:()=>db,setupGate:()=>({lock:text=>gates.push(text||'locked'),unlock:()=>gates.push('unlocked'),current:()=>true}),loadRecords,renderBrandMap,aiBcmEnabled:()=>connected,loadReviewedMap:loader,loadBrandMapBcm:loader,clearMarkDrafts(){},clearBrandMonitorDrafts(){}};
+  doc.querySelectorAll=()=>[];
+  const context={selectedClientId,setupClientNavigation,history:{replaceState(){}},memberAccountsEnabled:()=>false,watchEnabled:()=>false,document:doc,window:{addEventListener(){}},location:{href:'http://localhost/portal.html',search:'?client='+requested},URLSearchParams,Option:function(text,value){const e=new Element('option');e.textContent=text;e.value=value;return e;},createConnection:()=>db,setupGate:()=>({lock:text=>gates.push(text||'locked'),unlock:()=>gates.push('unlocked'),current:()=>true}),loadRecords,renderBrandMap,aiBcmEnabled:()=>connected,loadReviewedMap:loader,loadBrandMapBcm:loader,clearMarkDrafts(){},clearBrandMonitorDrafts(){}};
   await vm.runInNewContext('(async()=>{'+source+'})()',context);return {main,choice,queryTables,gates,doc,events,authEvents};
  }
  const allowed=await run();assert(allowed.main.textContent.includes('Brand Map'));assert.equal(allowed.gates.at(-1),'unlocked');assert(allowed.main.textContent.includes('Mark first'));assert(!allowed.main.textContent.includes('Mark second'));

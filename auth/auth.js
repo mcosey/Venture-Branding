@@ -5,6 +5,8 @@ import {nextStep, validConfiguration} from './flow.mjs?v=20261011-test-portal';
 import {requireAccess} from './connection.mjs?v=20261011-test-portal';
 const $ = id => document.getElementById(id);
 const audience = document.body.dataset.audience;
+const signupPrompt=$('signup-prompt');
+if(signupPrompt)signupPrompt.hidden=!memberAccountsEnabled(window.VB_AUTH_CONFIG,location.hostname);
 const initialTitle = $('heading').textContent;
 const initialIntro = $('intro').textContent;
 const callback = new URLSearchParams(location.hash.slice(1));

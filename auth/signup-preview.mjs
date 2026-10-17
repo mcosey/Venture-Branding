@@ -23,16 +23,16 @@ const confirmation=$('acknowledgment-confirmation');confirmation.checked=false;
 function message(text,error=false){$('signup-status').textContent=text;$('signup-status').dataset.error=String(error);}
 function clearPending(){for(const storage of [sessionStorage,globalThis.localStorage]){try{if(matchingDraft(storage?.getItem(PENDING_SIGNUP),user?.email))storage.removeItem(PENDING_SIGNUP);}catch{}}}
 function accountButtons(){ $('create-account').disabled=!enabled||!initialized||busy; }
-confirmation.addEventListener('change',()=>{$('continue').disabled=!confirmation.checked;});
+confirmation.addEventListener('change',()=>{$('continue').disabled=!enabled||!confirmation.checked;});
 $('acknowledgment-form').addEventListener('submit',event=>{
- event.preventDefault();if(!confirmation.checked||!event.currentTarget.reportValidity())return;
+ event.preventDefault();if(!enabled||!confirmation.checked||!event.currentTarget.reportValidity())return;
  $('acknowledgment-step').hidden=true;$('account-step').hidden=false;$('account-heading').focus();
 });
 $('back').addEventListener('click',()=>{$('account-step').hidden=true;$('acknowledgment-step').hidden=false;$('acknowledgment-heading').setAttribute('tabindex','-1');$('acknowledgment-heading').focus();});
 async function initialize(){
  const finish=showFlowLoading($('signup-loading'),'Checking account setup…','account');
  try{
-  if(!enabled)return;
+  if(!enabled){$('signup-unavailable').hidden=false;return;}
   db=memberClient();const session=await db.auth.getSession();if(session.error)throw session.error;
   if(session.data.session){
    const access=await verifiedEntry(db);user=access.user;
@@ -51,7 +51,7 @@ async function initialize(){
   }
   initialized=true;accountButtons();
  }catch{if(user){initialized=true;accountButtons();message('Your email is verified, but setup could not finish. Please try Complete account setup again.',true);}else message('Unable to connect your account. Please sign in again.',true);}
- finally{finish();if($('account-step').hidden)$('acknowledgment-step').hidden=false;}
+ finally{finish();if(enabled&&$('account-step').hidden)$('acknowledgment-step').hidden=false;}
 }
 $('registration-form').addEventListener('submit',async event=>{
  event.preventDefault();if(!enabled||!initialized||busy||!confirmation.checked||!event.currentTarget.reportValidity())return;

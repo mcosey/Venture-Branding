@@ -1,4 +1,5 @@
 import {watchEnabled} from '../../auth/watch.mjs';
+import {selectedClientId,setupClientNavigation} from './client-navigation.mjs';
 import {renderConnectedWatch} from './watch-connected.js?v=20261017-scoped-watch';
 import {memberAccountsEnabled} from '../../auth/member-account.mjs?v=1';
 import {loadReviewedMap} from './brand-map-reviewed.mjs?v=20261012-reviewed-map';
@@ -19,25 +20,19 @@ const main=document.querySelector('main'),page=main.dataset.page;
 const homeLink=document.querySelector('#portal-nav a[href="portal.html"]');
 if(homeLink){for(const node of homeLink.childNodes)if(node.nodeType===3&&node.textContent.includes('Dashboard'))node.textContent='Brand Map';}
 let records,selectedId,mapRevision=0,evidenceDispose=()=>{};
+const syncNavigation=setupClientNavigation(document,location,history,()=>selectedId);
 db.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){evidenceDispose();mapRevision++;records=null;selectedId=null;main.replaceChildren();clearMarkDrafts();}});
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 function link(text,href,cls='text-link'){const n=el('a',text,cls);n.href=href;return n;}
 function panel(title,text){const n=el('section',undefined,'panel connected-card');n.append(el('h2',title));if(text)n.append(el('p',text,'muted'));return n;}
 function markList(marks){const wrap=el('div');if(!marks.length)wrap.append(el('p','No trademarks yet.','connected-empty'));for(const m of marks){const row=link('',`trademark.html?mark=${encodeURIComponent(m.id)}&client=${encodeURIComponent(selectedId)}`,'connected-row');const info=el('span',m.name);info.append(el('small',typeLabel(m.mark_type)));row.append(info,el('span',statusLabel(m.status),'badge'),el('span','View →'));wrap.append(row);}return wrap;}
-function render(){
+function render(){renderContent();syncNavigation();}
+function renderContent(){
  evidenceDispose();evidenceDispose=()=>{};
  const mapTicket=++mapRevision;
  if(!records)return;
  const client=records.clients.find(c=>c.id===selectedId);if(!client)throw new Error('This client is not available to your account.');
  const marks=records.marks.filter(m=>m.client_id===client.id);
- // Watch-only navigation keeps the selected workspace; other service routes are unchanged.
- if(watchEnabled()){
-  const watchLink=document.querySelector('#portal-nav a[href^="watch.html"]');
-  if(watchLink)watchLink.href='watch.html?client='+encodeURIComponent(client.id);
-  if(['watch','watch-setup','watch-detail'].includes(page)){
-   const current=new URL(location.href);current.searchParams.set('client',client.id);history.replaceState(null,'',current);
-  }
- }
  document.querySelector('#client-name').textContent=client.name;
  const choice=document.querySelector('#client-choice');choice.replaceChildren(...records.clients.map(c=>new Option(c.name,c.id)));choice.value=selectedId;choice.parentElement.hidden=records.clients.length<2;
  if(page==='portal'){
@@ -64,7 +59,7 @@ function render(){
  else if(page==='digest'||page==='inbox')evidenceDispose=renderDigest(main,client,db,{view:page==='inbox'?'inbox':'settings'});
  else if(page==='use-history')evidenceDispose=renderEvidence(main,client,marks,db);
 }
-async function refresh(){mapRevision++;const ticket=gate.lock();try{const loaded=await loadRecords(db,'client');if(!gate.current(ticket))return;records=loaded;if(!records.clients.length)throw new Error('No active client workspace is assigned to this account.');const requested=new URLSearchParams(location.search).get('client');selectedId=selectedId||requested||records.clients[0].id;render();gate.unlock(ticket);}catch(error){if(!gate.current(ticket))return;main.replaceChildren();gate.lock(error.message);}}
+async function refresh(){mapRevision++;const ticket=gate.lock();try{const loaded=await loadRecords(db,'client');if(!gate.current(ticket))return;records=loaded;if(!records.clients.length)throw new Error('No active client workspace is assigned to this account.');selectedId=selectedClientId(records.clients,selectedId,location.search);render();gate.unlock(ticket);}catch(error){if(!gate.current(ticket))return;main.replaceChildren();gate.lock(error.message);}}
 document.querySelector('#client-choice').addEventListener('change',event=>{selectedId=event.target.value;render();});
 if(memberAccountsEnabled(window.VB_AUTH_CONFIG,location.hostname)){
  const nav=document.querySelector('#portal-nav'),kit=el('a','Legal Launch Kit');kit.href='free/legal-launch-kit.html';
