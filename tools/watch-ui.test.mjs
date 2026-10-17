@@ -10,3 +10,46 @@ test('setup offers word marks only and preserves selected marks',async()=>{const
 test('staff review exposes note only in staff workspace',async()=>{const main=new E('main');render(main,{id:'c'},[],null,{audience:'staff',repository:repo()});await tick();assert(main.all().some(n=>n.tag==='textarea'&&n.value==='SECRET'));assert(main.textContent.includes('Approve for client'));});
 test('disposed client render does not insert a late finding',async()=>{let complete;const main=new E('main');const dispose=render(main,{id:'c'},[],null,{repository:{enabled:true,clear(){},load:()=>new Promise(r=>complete=r)}});dispose();complete(fixture);await tick();assert(!main.textContent.includes('POTENTIAL'));});
 test('missing files show incomplete and no approved findings is never a clearance result',async()=>{const main=new E('main');render(main,{id:'c'},[],null,{repository:repo({...fixture,findings:[],runs:[{status:'incomplete',checked_at:new Date().toISOString(),missing_dates:['2026-10-09']}]})});await tick();assert(main.textContent.includes('incomplete'));assert(main.textContent.includes('2026-10-09'));assert(main.textContent.includes('does not mean a clearance'));});
+const scoped={...fixture,scoped:true,settings:undefined,findings:[],runs:[],configurations:[
+ {scope_id:'a',label:'Brand protection',active:true,settings:{id:'cfg-a',version:4,mark_ids:['word-a'],enabled:false},available_mark_ids:['word-a']},
+ {scope_id:'b',label:'New brand launch',active:true,settings:{id:'cfg-b',version:2,mark_ids:['word-b'],enabled:false},available_mark_ids:['word-b']}
+]};
+const scopedMarks=[{id:'word-a',name:'ALPHA',mark_type:'word'},{id:'word-b',name:'BETA',mark_type:'word'},{id:'other',name:'UNRELATED',mark_type:'word'}];
+test('multiple authorized configurations require explicit selection and show no mark controls beforehand',async()=>{
+ const main=new E('main');render(main,{id:'c'},scopedMarks,null,{view:'setup',repository:repo(scoped)});await tick();
+ assert(main.textContent.includes('Choose a configuration'));assert(!main.all().some(n=>n.tag==='input'&&n.type==='checkbox'));
+ const select=main.all().find(n=>n.tag==='select');assert.equal(select.value,'');select.value='b';select.onchange();
+ assert(main.textContent.includes('BETA'));assert(!main.textContent.includes('ALPHA'));assert(!main.textContent.includes('UNRELATED'));
+});
+test('a single authorized configuration opens directly without a selector',async()=>{
+ const main=new E('main');render(main,{id:'c'},scopedMarks,null,{view:'setup',repository:repo({...scoped,configurations:[scoped.configurations[1]]})});await tick();
+ assert(!main.all().some(n=>n.tag==='select'));assert(main.textContent.includes('BETA'));assert(!main.textContent.includes('ALPHA'));
+});
+test('save captures the selected configuration and disables switching while pending',async()=>{
+ let complete,saved;const r=repo(scoped);r.save=(...args)=>{saved=args;return new Promise(resolve=>complete=resolve);};
+ const main=new E('main');render(main,{id:'c'},scopedMarks,null,{view:'setup',repository:r});await tick();
+ const select=main.all().find(n=>n.tag==='select');select.value='b';select.onchange();
+ const button=main.all().find(n=>n.tag==='button'&&n.textContent==='Save selection');const pending=button.onclick();
+ assert.equal(saved[4].scope_id,'b');assert.deepEqual([...saved[2]],['word-b']);assert(main.all().find(n=>n.tag==='select').disabled);
+ complete();await pending;assert.equal(main.all().find(n=>n.tag==='select').value,'b');assert(!main.all().find(n=>n.tag==='select').disabled);
+});
+test('empty authorized portfolio has no enabled save or start action',async()=>{
+ const main=new E('main');render(main,{id:'c'},[],null,{view:'setup',repository:repo({...scoped,configurations:[{...scoped.configurations[1],available_mark_ids:[]}]})});await tick();
+ assert(main.textContent.includes('Your attorney must add a word mark'));assert(main.all().filter(n=>n.tag==='button').every(n=>n.disabled));
+});
+test('loss of the chosen scope discards its controls and requires a fresh authorized choice',async()=>{
+ let state=structuredClone(scoped);const r=repo();r.load=async()=>structuredClone(state);r.save=async()=>{state={...scoped,configurations:[scoped.configurations[0]]};};
+ const main=new E('main');render(main,{id:'c'},scopedMarks,null,{view:'setup',repository:r});await tick();const select=main.all().find(n=>n.tag==='select');select.value='b';select.onchange();
+ await main.all().find(n=>n.tag==='button'&&n.textContent==='Save selection').onclick();
+ assert(!main.textContent.includes('BETA'));assert(main.textContent.includes('ALPHA'));
+});
+test('failed save restores controls without losing current edits',async()=>{
+ const r=repo({...scoped,configurations:[scoped.configurations[1]]});r.save=async()=>{throw Error('This record changed. Refresh and review again.');};
+ const main=new E('main');render(main,{id:'c'},scopedMarks,null,{view:'setup',repository:r});await tick();const input=main.all().find(n=>n.tag==='input');input.checked=false;
+ await main.all().find(n=>n.tag==='button'&&n.textContent==='Save selection').onclick();assert.equal(input.checked,false);assert(!input.disabled);assert(main.textContent.includes('record changed'));
+});
+
+test('an authorized unsaved configuration is identified as not configured',async()=>{
+ const main=new E('main'),configuration={...scoped.configurations[1],settings:{id:null,version:0,mark_ids:[],enabled:false}};
+ render(main,{id:'c'},[],null,{view:'setup',repository:repo({...scoped,configurations:[configuration]})});await tick();assert(main.textContent.includes('Not configured'));
+});

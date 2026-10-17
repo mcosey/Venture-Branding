@@ -1,5 +1,5 @@
 import {watchEnabled} from '../../auth/watch.mjs';
-import {renderConnectedWatch} from '../../portal/assets/watch-connected.js?v=20261013-watch-mvp';
+import {renderConnectedWatch} from '../../portal/assets/watch-connected.js?v=20261017-scoped-watch';
 import {createEngagementAdmin} from '../../auth/engagement-admin.mjs';
 import {createEngagementClosure} from './engagement-closure.mjs';
 import {memberAccountsEnabled} from '../../auth/member-account.mjs';

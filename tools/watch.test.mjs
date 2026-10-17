@@ -21,3 +21,19 @@ test('late reply after session clear is discarded',async()=>{let finish;const db
 test('stale version is reported without replacing reviewed state',async()=>{const db=database('staff','aal2',()=>({error:{code:'40001'}})),repo=createWatchRepository(db,'staff',{enabled:true});await assert.rejects(()=>repo.review('c',{id:'f',version:7},'approved','note','summary'),/changed/);assert.equal(db.calls.at(-1).args.expected_version,7);});
 
 test('a different project cannot run the ingestion worker',async()=>{const run=createWatchHandler({env:k=>k==='SUPABASE_URL'?'https://separate-project.supabase.co':k==='WATCH_INGEST_KEY'?secret:'true',createClient:()=>{throw Error('Must not connect')}});assert.equal((await run(request({action:'run'}))).status,503);});
+test('scoped save sends explicit configuration identity and version without using the singleton endpoint',async()=>{
+ const db=database(),repo=createWatchRepository(db,'client',{enabled:true}),configuration={scope_id:'engagement-b',settings:{id:'configuration-b',version:9}},state={scoped:true,configurations:[configuration]};
+ await repo.save('client',state,['word-b'],false,configuration);
+ assert.deepEqual(db.calls.at(-1),{name:'vb_watch_save_scoped',args:{target_client:'client',target_engagement:'engagement-b',expected_configuration:'configuration-b',expected_version:9,selected_marks:['word-b'],monitoring:false}});
+});
+test('missing or stale configuration selection cannot send a scoped save',async()=>{
+ const db=database(),repo=createWatchRepository(db,'client',{enabled:true}),state={scoped:true,configurations:[]};
+ for(const configuration of [undefined,{scope_id:'forged',settings:{id:'forged',version:0}}])assert.throws(()=>repo.save('client',state,[],false,configuration),/Choose a Watch/);
+ assert.equal(db.calls.length,0);
+});
+test('scoped save errors distinguish access and invalid selection without exposing raw database text',async()=>{
+ for(const [code,message] of [['42501',/access is unavailable/],['22023',/selection cannot be saved/]]){
+  const db=database('client','aal1',()=>({error:{code,message:'PRIVATE SQL'}})),repo=createWatchRepository(db,'client',{enabled:true});
+  await assert.rejects(()=>repo.load('c'),error=>message.test(error.message)&&!error.message.includes('PRIVATE'));
+ }
+});

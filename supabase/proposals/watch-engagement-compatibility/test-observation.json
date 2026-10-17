@@ -1,0 +1,26 @@
+{
+  "observed_on": "2026-10-17",
+  "mode": "read-only transaction; rolled back",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "client_id": "b9100000-0000-0000-0000-000000000001",
+  "result": {
+    "scopes": null,
+    "binding": {
+      "engagement_id": "f1700000-0000-0000-0000-000000000003",
+      "actor_has_access": false
+    },
+    "is_test": true,
+    "settings": null,
+    "active_grants": [
+      {
+        "engagement_id": "63dfa7ef-095e-4004-b62b-65cf8f3a79d7",
+        "service_access": true
+      }
+    ],
+    "definition_hashes": {
+      "vb_private.watch_access(uuid)": "7cd89c83d3cebb8b2533f697111dea3a",
+      "public.vb_watch_snapshot(uuid)": "e490907f92a9a783b3154fb69bf70724",
+      "public.vb_watch_save(uuid,integer,uuid[],boolean)": "b0d77e308ab93325ca98b764cbe081f7"
+    }
+  }
+}

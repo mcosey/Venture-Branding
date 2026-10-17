@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-17",
+  "status": "local-preparation-only; no hosted mutation",
+  "branch": "codex/portal-consolidation",
+  "pglite_version": "0.5.10",
+  "sql_scenarios": {
+    "passed": 66,
+    "execution": "isolated local PostgreSQL/WASM; real prepared SQL with local Auth helpers; rollback"
+  },
+  "migration_checks": [
+    "missing settings scope rejected",
+    "mismatched mark scope rejected",
+    "missing finding scope rejected",
+    "original settings and run scope preserved",
+    "unconverted legacy snapshot/save preserved"
+  ],
+  "javascript_main": {
+    "passed": 335,
+    "failed": 0
+  },
+  "preflight": {
+    "passed": 15,
+    "failed": 0
+  },
+  "watch_python_runner": {
+    "passed": 36,
+    "failed": 0
+  },
+  "browser_check": "synthetic in-memory Watch configuration preview; no database connection",
+  "hosted": [
+    "read-only definition, dependency, structure and preservation baseline queries only"
+  ],
+  "pending": [
+    "hosted rollback rehearsal including adapted broad access regression",
+    "Test application after owner approval",
+    "installed Test checks and connected browser walkthrough",
+    "independent-session concurrency checks before release/merge"
+  ],
+  "apply_sha256": "b720c5b959d64f2ca1dcae0b21747638bcb1e06ae18c88ff744799079da58aba",
+  "rehearsal_sha256": "82e915d8baa05a1a7fcd6479e02b3d514af9e09f5680f92045eb96bcc6b44a9f",
+  "frontend_sha256": {
+    "auth/watch.mjs": "c5cebf265ddf5cca267917f10be2411c825bade3ac98db41a3a2979ee6c4241a",
+    "portal/assets/watch-connected.js": "a1273326364d932e0a6db9e6ceae2972d5454acb7c70d08f5fa03affac01cd0e",
+    "portal/assets/watch-connected.css": "3cd6498d10539fcd49a68464f8e836ac9d3c664f0a01d7a578b1f64e9ea5acdc"
+  }
+}

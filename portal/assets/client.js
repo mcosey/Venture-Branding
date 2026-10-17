@@ -1,5 +1,5 @@
 import {watchEnabled} from '../../auth/watch.mjs';
-import {renderConnectedWatch} from './watch-connected.js?v=20261013-watch-mvp';
+import {renderConnectedWatch} from './watch-connected.js?v=20261017-scoped-watch';
 import {memberAccountsEnabled} from '../../auth/member-account.mjs?v=1';
 import {loadReviewedMap} from './brand-map-reviewed.mjs?v=20261012-reviewed-map';
 import {aiBcmEnabled,renderAiBcm} from './bcm-ai.js?v=20261013-client-rollout';

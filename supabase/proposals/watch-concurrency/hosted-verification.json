@@ -1,0 +1,163 @@
+{
+  "date": "2026-10-17",
+  "status": "executed-passed-and-cleaned-in-BCM-Test",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "owner_authorization": "Run prepared paired checks and remove explicitly disposable Test fixtures.",
+  "paired_checks_passed": 8,
+  "distinct_backends_verified": true,
+  "receipts": [
+    {
+      "a": {
+        "session_a_pid": 734660,
+        "action_completed_before_commit_at": "2026-10-17T21:33:37.558409+00:00"
+      },
+      "b": {
+        "case": 1,
+        "a_pid": 734660,
+        "b_pid": 734662,
+        "passed": true,
+        "elapsed_seconds": 17.195372
+      }
+    },
+    {
+      "a": {
+        "session_a_pid": 734692,
+        "action_completed_before_commit_at": "2026-10-17T21:34:42.026103+00:00"
+      },
+      "b": {
+        "case": 2,
+        "a_pid": 734692,
+        "b_pid": 734693,
+        "passed": true,
+        "elapsed_seconds": 17.533989
+      }
+    },
+    {
+      "a": {
+        "session_a_pid": 734741,
+        "action_completed_before_commit_at": "2026-10-17T21:35:30.842295+00:00"
+      },
+      "b": {
+        "case": 3,
+        "a_pid": 734741,
+        "b_pid": 734746,
+        "passed": true,
+        "elapsed_seconds": 17.314413
+      }
+    },
+    {
+      "a": {
+        "session_a_pid": 734778,
+        "action_completed_before_commit_at": "2026-10-17T21:36:12.352947+00:00"
+      },
+      "b": {
+        "case": 4,
+        "a_pid": 734778,
+        "b_pid": 734779,
+        "passed": true,
+        "elapsed_seconds": 17.550764
+      }
+    },
+    {
+      "a": {
+        "session_a_pid": 734807,
+        "action_completed_before_commit_at": "2026-10-17T21:36:58.287676+00:00"
+      },
+      "b": {
+        "case": 5,
+        "a_pid": 734807,
+        "b_pid": 734808,
+        "passed": true,
+        "elapsed_seconds": 17.347057
+      }
+    },
+    {
+      "a": {
+        "session_a_pid": 734851,
+        "action_completed_before_commit_at": "2026-10-17T21:37:53.266018+00:00"
+      },
+      "b": {
+        "case": 6,
+        "a_pid": 734851,
+        "b_pid": 734852,
+        "passed": true,
+        "worker_commits": false
+      }
+    },
+    {
+      "a": {
+        "session_a_pid": 734879,
+        "action_completed_before_commit_at": "2026-10-17T21:38:39.497484+00:00"
+      },
+      "b": {
+        "case": 7,
+        "a_pid": 734879,
+        "b_pid": 734881,
+        "passed": true,
+        "elapsed_seconds": 21.246827
+      }
+    },
+    {
+      "a": {
+        "session_a_pid": 734924,
+        "action_completed_before_commit_at": "2026-10-17T21:39:23.244385+00:00"
+      },
+      "b": {
+        "case": 8,
+        "a_pid": 734924,
+        "b_pid": 734925,
+        "passed": true,
+        "elapsed_seconds": 17.355424
+      }
+    }
+  ],
+  "final_fixture_assertions_passed": true,
+  "active_companion_rollback_check_passed": true,
+  "cleanup_committed": true,
+  "preservation_fields_compared": 28,
+  "preservation_exact_match": true,
+  "setup_repair": "Initial setup aborted on engagement_services duplicate because installed Test auto-populates all Client services. Rolled back; fixture insert now uses ON CONFLICT DO NOTHING. No installed function or permission weakened. Local preflight rerun passed before retry.",
+  "executed_sql_hashes": {
+    "00-preservation.sql": "d047d9657e34afbf7a31743582ad52cc04c1dccb148999eb835bc5bd3fbeed3e",
+    "01-setup.sql": "fb1a5273f15bfe7f169c1781abb87442af95dd815abc99b10fe87f813e4da0ab",
+    "02-first-save-A.sql": "735dccde60e97227fb3d109cbc6bddf604a88fa3613966550d38044ec989e0b0",
+    "02-first-save-B.sql": "a0d7f94095ed05908b943a20f1ce74d627aefc23cf00d8e891bb4c5ac9d521f1",
+    "03-stale-update-A.sql": "2715196054fdeb887c000e28f3b10f190322a14529c5a998072589c0e2e433e1",
+    "03-stale-update-B.sql": "04d08a5a3de26def1db3370ed000b40ca1fbe8b71d201954f01279c9a447f714",
+    "04-shared-cap-A.sql": "9b754cf417914d87c975ab230fb4aeb7a0dbcdf2f1e2b24f7d83a7402a7e28f0",
+    "04-shared-cap-B.sql": "ab2834656082df6d11403e3c3a52d38d161fab8563b5220889e0a58cecd53645",
+    "05-close-before-save-A.sql": "5eebbc675011dae530a8bc084ff1144360beb7b8c02bfab8d27376bf1dc10527",
+    "05-close-before-save-B.sql": "8541e11e75b0b8da51088450c10772811f24f436687e8e15f53de58359be7880",
+    "06-save-before-close-A.sql": "0ae9941eec9b16a84e7191059d81c5aaa0c5c24311d115b5d1f78f5c7f878ede",
+    "06-save-before-close-B.sql": "ab3ff4513116ee2845366f3ecc91830ff46a7fb164ab70247d1baa594e2259d7",
+    "07-close-before-worker-A.sql": "f6bc9b19085d8721c27ff578e07d0331008f522d2788236c663c0882c314a0f8",
+    "07-close-before-worker-B.sql": "c73783ea7555ca9b967d90d9ac9d532a200af3bf0e420cb966e2f152226a4ced",
+    "08-worker-before-close-A.sql": "ac58d89d3dd13066b5b364ab8ada8852d82aec707216039c7ed9f17c973c6328",
+    "08-worker-before-close-B.sql": "2cde1b136be316f33762f4f723410875f86e511ba69a33ddc60e5eed5fc5d14a",
+    "09-legacy-writer-A.sql": "9250d9b3c14e6f259db4c53a2c84e6f355277580855e131fc8eaf6c8142848b1",
+    "09-legacy-writer-B.sql": "318e3cb179f03d57af866a9779d9aa0d6316997ca322c050b2d0fcd850ebeb08",
+    "10-verify.sql": "78ff9ce1a0e9a5a9a4ed62ab810681e769942d6994c93511e31c17a267918b3a",
+    "11-companion-worker-rollback.sql": "dceaf0aed443e2a4973b29e17193910d261c5c5797d37a41a97f8edfd2a6429d",
+    "12-cleanup.sql": "0a3d153bcc7045754ee2738d235c6743f4943552482a294ec0bd349a03e19db3"
+  },
+  "remaining_limitations": [
+    "Case 8 verifies frozen legacy writes after an independent-session lock wait; a complete pre-cutover function/migration-DDL interleaving is not replayed on this already-migrated database.",
+    "No new persisted browser-save fixture was created; SQL race checks exercise the actual save/closure/worker functions."
+  ],
+  "unchanged": [
+    "Production",
+    "installed application functions and permission policies",
+    "accounts",
+    "existing engagement grants and records",
+    "research/scheduler readiness and budget",
+    "private Legal Launch Kit data",
+    "source-file/application values"
+  ],
+  "not_performed": [
+    "commit/push/default-branch merge",
+    "external monitoring/ingestion",
+    "email/invitations",
+    "account creation",
+    "schema refactoring"
+  ]
+}

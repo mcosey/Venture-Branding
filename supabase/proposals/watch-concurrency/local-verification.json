@@ -1,0 +1,15 @@
+{
+  "original_table_hashes_preserved": 19,
+  "status": "local-sequential-preflight-only",
+  "missing_overlap_rejected": 8,
+  "sequential_case_bodies": 8,
+  "fixture_assertions_passed": true,
+  "companion_rollback_passed": true,
+  "cleanup_passed": true,
+  "independent_session_races": "NOT RUN",
+  "limitations": [
+    "Hosted system/definition guard not emulated.",
+    "Timing/overlap removed only in local harness; B CAS values captured before sequential A.",
+    "No proof of independent-session locking or Supabase permissions."
+  ]
+}

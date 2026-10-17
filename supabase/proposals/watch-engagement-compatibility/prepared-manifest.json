@@ -1,0 +1,14 @@
+{
+  "status": "prepared-not-applied",
+  "project": "imvkhicfmidzbzsbhkzs",
+  "sources": {
+    "01-test-schema.sql": "c4f5b9b90a4baca0dcd689fd33ff826a05ff3c096a98c2e8d2015ff11cd80431",
+    "02-test-api.sql": "afde8d7889ed3ee13d168a2f691d767a9f389e67bc93a0e892f86a2161bd74fa",
+    "03-worker-helpers.sql": "cf38ed13b0c418366cbc312fb7f45b55a7e417ec3b216fd26fd19018038694a9",
+    "04-test-rpc-replacements.sql": "50ec246a9fbea65eb8ba2366871c4d4782ef15ee9b29adbd757212f879d7e08c"
+  },
+  "checks_sha256": "944a09edf79327e4c7eec225f6dbd93f08c9dbf310919d4322000cba5f2b9608",
+  "adapted_regression_sha256": "2111efdada036a343e93ede88bdb32dafe70b7bbdcfc89bda7e5a6694831a132",
+  "apply_sha256": "b720c5b959d64f2ca1dcae0b21747638bcb1e06ae18c88ff744799079da58aba",
+  "rehearsal_sha256": "cb6da364eaa1677e59bbe6bd4385d85f038a0ec63e59e205c89c09369650b69d"
+}

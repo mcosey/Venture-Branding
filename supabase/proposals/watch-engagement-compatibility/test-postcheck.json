@@ -1,0 +1,19 @@
+{
+  "result": {
+    "is_test": true,
+    "rpc_fingerprints": {
+      "public.vb_watch_run_due()": "c72725f3f7c9459fb7d5f64ab4b9f818",
+      "public.vb_watch_snapshot(uuid)": "f4e2544500812010d4369071af28c071",
+      "public.vb_watch_save(uuid,integer,uuid[],boolean)": "2b1683e4347a2923fdc789804e35a2a1",
+      "public.vb_watch_save_scoped(uuid,uuid,uuid,integer,uuid[],boolean)": "c47bcca98513ed06c6441b6c511e2c00"
+    },
+    "no_scenario_clients": true,
+    "anonymous_save_denied": true,
+    "copied_values_preserved": true,
+    "runs_have_configuration": true,
+    "no_scenario_applications": true,
+    "raw_configuration_denied": true,
+    "runs_preserve_original_scope": true,
+    "converted_legacy_settings_excluded_from_queue": true
+  }
+}
