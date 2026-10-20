@@ -1,4 +1,4 @@
-import {statusLabel,typeLabel} from '../../auth/connection.mjs';
+import {statusLabel,typeLabel} from '../../auth/connection.mjs?v=20261018-record-pages';
 
 // The existing loader checks the session and RLS restricts its response to
 // authorized workspaces. This projection also limits the map to one workspace

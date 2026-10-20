@@ -1,3 +1,4 @@
+import {supportMessage} from '../../shared/diagnostics.mjs';
 import {watchEnabled} from '../../auth/watch.mjs';
 import {renderConnectedWatch} from '../../portal/assets/watch-connected.js?v=20261017-scoped-watch';
 import {createEngagementAdmin} from '../../auth/engagement-admin.mjs';
@@ -9,7 +10,7 @@ import {setupFilingWorkspace} from '../preflight/connected-workspace.mjs';
 import {showRegionLoading} from '../../shared/loading.mjs';
 import {createMaintenanceRepository} from '../../auth/maintenance.mjs?v=20261010-maintenance-live';
 import {createMaintenanceEditor} from './maintenance-editor.js?v=20261010-maintenance-live';
-import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs?v=20261012-baseline-map';
+import {createConnection,loadRecords,typeLabel,statusLabel,requireAccess} from '../../auth/connection.mjs?v=20261018-record-pages';
 import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-preview';
 (async () => {
   'use strict';
@@ -223,7 +224,7 @@ const  gate=setupGate(db,'staff');
     save(async()=>{
       if(action==='invite'){
         const {data,error}=await db.functions.invoke('client-invite',{body:{clientId:client.id,email,expectedUpdatedAt:client.updatedAt,confirmSend:true}});
-        if(error||data?.error){let message=data?.error;try{if(!message&&error?.context)message=(await error.context.json()).error;}catch{}throw new Error(message||'Invitation not sent. Check access setup and try again.');}
+        if(error||data?.error){let message=data?.error?supportMessage(data.error,data.supportReference):null;try{if(!message&&error?.context){const body=await error.context.json();message=supportMessage(body.error||'Invitation not sent. Check access setup and try again.',body.supportReference);}}catch{}throw new Error(message||'Invitation not sent. Check access setup and try again.');}
       }else{
         const {error}=await db.rpc('vb_set_portal_access',{target_client:client.id,enabled:action==='enable',expected_updated_at:client.updatedAt});
         if(error)throw new Error('Access could not be changed. Reload and try again.');
@@ -256,8 +257,8 @@ const  gate=setupGate(db,'staff');
   async function usptoRequest(action){
     await requireAccess(db,'staff');
     const {data,error}=await db.functions.invoke('uspto-lookup',{body:{action,serial:markForm.elements.identifier.value.trim(),clientId:markOwner.id,markId:editingMark?.id||null,expectedUpdatedAt:editingMark?.updatedAt||null,fingerprint:lookupResult?.fingerprint,confirmOwner:markForm.elements.confirmOwner.checked}});
-    if(error){let message='USPTO connection unavailable. Nothing was saved.';try{const body=await error.context.json();if(typeof body.error==='string')message=body.error;}catch{}throw new Error(message);}
-    if(!data||data.error)throw new Error(data?.error||'USPTO returned no record.');return data;
+    if(error){let message='USPTO connection unavailable. Nothing was saved.';try{const body=await error.context.json();if(typeof body.error==='string')message=supportMessage(body.error,body.supportReference);}catch{}throw new Error(message);}
+    if(!data||data.error)throw new Error(supportMessage(data?.error||'USPTO returned no record.',data?.supportReference));return data;
   }
   let lookingUp=false;
   $('#lookup-mark').addEventListener('click',async()=>{

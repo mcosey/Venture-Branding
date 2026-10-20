@@ -35,10 +35,6 @@ class TestPortalHandler(SimpleHTTPRequestHandler):
             html = html.replace('src="portal/assets/client.js?', 'src="portal/assets/client.js?bcm-test=1&').replace('src="attorney/assets/workspace.js?', 'src="attorney/assets/workspace.js?bcm-test=1&')
             # These are presentation assets only; the normal Production pages stay unchanged.
             html = html.replace('</head>', '<link rel="stylesheet" href="/portal/assets/brand-monitor.css"><link rel="stylesheet" href="/portal/assets/bcm-ai.css"></head>')
-            # Fixed text only: no account identifiers or sessions go into HTML.
-            banner = '<div class="bcm-test-note">LOCAL TEST PORTAL · Fictional Test records · Paid research disabled · <a href="/tools/bcm-ai-portal-test/">Test entrances</a></div>'
-            import re
-            html = re.sub(r'(<body\b[^>]*>)', lambda match: match.group(1) + banner, html, count=1)
             return self.send_bytes(html.encode(), 'text/html; charset=utf-8')
         return super().do_GET()
 

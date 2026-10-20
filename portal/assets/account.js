@@ -1,4 +1,4 @@
-import {createConnection,loadRecords,requireAccess} from '../../auth/connection.mjs';
+import {createConnection,loadRecords,requireAccess} from '../../auth/connection.mjs?v=20261018-record-pages';
 import {setupGate,showConnectionError} from '../../auth/gate.mjs';
 import {saveContact,changeEmail,resetPassword} from '../../auth/account.mjs';
 import {selectedClientId,setupClientNavigation} from './client-navigation.mjs';

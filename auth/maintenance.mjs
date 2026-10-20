@@ -1,4 +1,4 @@
-import {requireAccess} from './connection.mjs';
+import {requireAccess} from './connection.mjs?v=20261018-record-pages';
 import {validateMaintenanceDraft} from '../attorney/assets/maintenance-preview-model.mjs';
 // Approved activation: schema and privacy/concurrency checks verified on 2026-10-10.
 // Setting false restores the local workflow preview without maintenance queries.

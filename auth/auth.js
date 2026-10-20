@@ -1,8 +1,9 @@
+import {createDiagnostics} from '../shared/diagnostics.mjs';
 import {showFlowLoading} from '../shared/loading.mjs';
 import {pendingInvitation,invitationDestination} from './invitation-route.mjs';
 import {memberAccountsEnabled,verifiedEntry,workspaceFor} from './member-account.mjs?v=1';
 import {nextStep, validConfiguration} from './flow.mjs?v=20261011-test-portal';
-import {requireAccess} from './connection.mjs?v=20261011-test-portal';
+import {requireAccess} from './connection.mjs?v=20261018-record-pages';
 const $ = id => document.getElementById(id);
 const audience = document.body.dataset.audience;
 const signupPrompt=$('signup-prompt');
@@ -31,7 +32,8 @@ function clearSecrets() {
   $('qr').removeAttribute('src'); $('qr').hidden = true;
   $('setup-key').textContent = ''; $('setup-key').hidden = true;
 }
-async function perform(action) {
+async function perform(action,stage='refresh') {
+  const diagnostic=createDiagnostics('auth');
   if (busy) return;
   busy = true;
   const host=$('auth-flow-loading');
@@ -39,7 +41,7 @@ async function perform(action) {
   document.querySelectorAll('button').forEach(button => button.disabled = true);
   message();
   try { await action(); }
-  catch { if(firstLoad)show('signin');message('Unable to complete this step. Please try again or contact Venture Branding.', true); }
+  catch { if(firstLoad)show('signin');message(diagnostic.error(stage,'Unable to complete this step. Please try again or contact Venture Branding.').message, true); }
   finally { finish();firstLoad=false;busy = false; document.querySelectorAll('button').forEach(button => button.disabled = false); }
 }
 async function refresh() {
@@ -126,6 +128,7 @@ $('signout').addEventListener('click',()=>perform(async()=>{
   passwordSetup=false;await refresh();
 }));
 async function initialize() {
+ try {
   if(!validConfiguration(window.VB_AUTH_CONFIG)||!window.supabase){
     if($('auth-flow-loading')){$('auth-flow-loading').hidden=true;$('auth-flow-loading').setAttribute('aria-busy','false');}
     show('signin');
@@ -143,9 +146,12 @@ async function initialize() {
   });
   await perform(async()=>{
     await refresh();
-    // Auth consumes fragments; remove errors/tokens from address bar even after failed callbacks.
-    history.replaceState(null,'',location.pathname);
     if(callback.has('error'))message('This link is invalid or has expired. Request a new invitation or reset link.',true);
-  });
+  },'initialize');
+ } finally {
+  // Wait for SDK initialization before removing callback state, including errors.
+  // The pending invitation was retained separately before initialization began.
+  history.replaceState(null,'',location.pathname);
+ }
 }
 initialize();

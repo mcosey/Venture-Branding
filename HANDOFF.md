@@ -1,5 +1,8 @@
 # Venture Branding — development handoff
 
+> Current correction (October 18, 2026): this project is **not on Cloudflare**. The active homepage source is `v8.html`; `index.html` is the historical design chooser. Hosting statements below are historical and superseded by [CURRENT-ENVIRONMENTS.md](CURRENT-ENVIRONMENTS.md). Do not configure or deploy a host from this older record.
+
+
 Updated October 3, 2026. Read this first; it summarizes the decisions already made. This file is project context, not authorization to implement everything described below. The user's next request determines the work.
 
 ## Latest verification — October 5, 2026
@@ -208,7 +211,7 @@ Read [LAUNCH-READINESS.md](LAUNCH-READINESS.md) for the approved planning object
 
 ## Confirmed platform choices / next proposal
 
-Cloudflare is the chosen host; hosting work is deferred. Supabase Free is chosen for development. Supabase Auth will manage invitation/recovery flows, with a separate email sender chosen before real onboarding. Never invite clients into the Supabase administrative project team to make the default email sender work. See LAUNCH-READINESS.md's first implementation phase for scope and acceptance criteria. This turn authorized plan updates and an outline only: no project, account, installation, database or auth changes were made. Next proposed action is repository schema/access-policy/configuration work with tests, subject to user approval.
+Superseded historical host note: see CURRENT-ENVIRONMENTS.md; this project is not on Cloudflare. Supabase Free is chosen for development. Supabase Auth will manage invitation/recovery flows, with a separate email sender chosen before real onboarding. Never invite clients into the Supabase administrative project team to make the default email sender work. See LAUNCH-READINESS.md's first implementation phase for scope and acceptance criteria. This turn authorized plan updates and an outline only: no project, account, installation, database or auth changes were made. Next proposed action is repository schema/access-policy/configuration work with tests, subject to user approval.
 
 ## Repository database foundation draft
 

@@ -1,3 +1,4 @@
+import {createDiagnostics} from '../../../shared/diagnostics.mjs';
 const uuid=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 export function validateInput(p){
  if(!p||typeof p!=='object'||Array.isArray(p))throw Error('Invalid request');
@@ -19,9 +20,10 @@ async function equalSecrets(a,b){
  const encode=new TextEncoder();const [x,y]=await Promise.all([a,b].map(v=>crypto.subtle.digest('SHA-256',encode.encode(v))));
  const left=new Uint8Array(x),right=new Uint8Array(y);let different=0;for(let i=0;i<left.length;i++)different|=left[i]^right[i];return different===0;
 }
-export function createWatchHandler({env,createClient}){
+export function createWatchHandler({env,createClient,diagnostics}){
  return async req=>{
-  const reply=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
+  const diagnostic=createDiagnostics('watch',diagnostics);let stage='input';
+  const reply=(data,status=200)=>{if(status>=400&&stage==='database'){const ref=diagnostic.failure(stage,'unavailable',status);if(ref)data={...data,supportReference:ref};}return new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});};
   if(req.method!=='POST')return reply({error:'POST required'},405);
   if(!['https://omvkwiosonatswocbdgx.supabase.co','https://imvkhicfmidzbzsbhkzs.supabase.co'].includes(env('SUPABASE_URL')))return reply({error:'Wrong Watch project'},503);
   if(env('WATCH_RELEASE_ENABLED')!=='true')return reply({error:'Watch ingestion disabled'},503);
@@ -33,7 +35,7 @@ export function createWatchHandler({env,createClient}){
    const bytes=new Uint8Array(size);let offset=0;for(const c of chunks){bytes.set(c,offset);offset+=c.length;}
    const p=validateInput(JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes)));
    const db=createClient(env('SUPABASE_URL'),env('SUPABASE_SERVICE_ROLE_KEY'),{auth:{persistSession:false,autoRefreshToken:false}});
-   const result=await db.rpc(p.action==='run'?'vb_watch_run_due':'vb_watch_ingest',p.action==='run'?{}:{details:p});
+   stage='database';const result=await db.rpc(p.action==='run'?'vb_watch_run_due':'vb_watch_ingest',p.action==='run'?{}:{details:p});
    // Don't return raw SQL errors, application records or secrets to the runner.
    if(result.error)return reply({error:'Watch operation failed'},409);
    return reply(result.data);

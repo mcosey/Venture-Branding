@@ -1,4 +1,5 @@
 import {milestones,emptyProgress,decodeProgress} from './llk-data.mjs';
+import {createDiagnostics,databaseCategory} from '../../shared/diagnostics.mjs';
 const known=new Set(milestones.map(m=>m.id));
 export function progressPayload(progress,id){
  if(!known.has(id))throw Error('Unknown milestone.');
@@ -21,10 +22,11 @@ export function mergeBrowserProgress(account,browser){
  for(const m of milestones){merged.tasks[m.id]=m.tasks.map((_,i)=>merged.tasks[m.id]?.[i]===true||source.tasks[m.id]?.[i]===true);if(!merged.notes[m.id])merged.notes[m.id]=source.notes[m.id]||'';}
  return merged;
 }
-export function createAccountProgressStore({db,companyId,onState=()=>{},delay=350}){
+export function createAccountProgressStore({db,companyId,onState=()=>{},delay=350,diagnostics}){
  let versions=new Map(),loaded=false,running=null,timer=null,state='loading';const pending=new Map();
  const notify=value=>{state=value;onState(value);};
  async function load(){
+  const diagnostic=createDiagnostics('member',diagnostics);
   if(running)await running;
   clearTimeout(timer);notify('loading');
   try{
@@ -34,7 +36,7 @@ export function createAccountProgressStore({db,companyId,onState=()=>{},delay=35
    const response=await db.from('vb_member_progress').select('company_id,milestone_id,progress,updated_at').eq('company_id',companyId);
    if(response.error)throw response.error;
    const parsed=readAccountProgress(response.data,companyId);versions=parsed.versions;pending.clear();loaded=true;notify('saved');return parsed.progress;
-  }catch(error){loaded=false;notify('load-error');throw error;}
+  }catch{loaded=false;notify('load-error');throw diagnostic.error('progress_load','Saved progress could not be loaded. Please retry.');}
  }
  function queue(id,progress){
   if(!loaded)throw Error('Load saved progress before making changes.');
@@ -43,11 +45,13 @@ export function createAccountProgressStore({db,companyId,onState=()=>{},delay=35
   notify('saving');clearTimeout(timer);timer=setTimeout(()=>{timer=null;void flush();},delay);
  }
  async function drain(){
+  const diagnostic=createDiagnostics('member',diagnostics);
   while(pending.size){
    const [id,payload]=pending.entries().next().value;pending.delete(id);
    let response;
    try{response=await db.rpc('vb_save_member_progress',{company:companyId,milestone:id,details:payload,expected_updated_at:versions.get(id)||null});}catch(error){response={error};}
    if(response.error||typeof response.data!=='string'){
+    diagnostic.failure('progress_save',databaseCategory(response.error?.code));
     if(!pending.has(id))pending.set(id,payload);
     notify(response.error?.code==='40001'?'conflict':'error');return false;
    }

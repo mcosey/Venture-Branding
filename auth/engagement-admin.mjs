@@ -1,4 +1,5 @@
-import {requireAccess} from './connection.mjs?v=20261012-baseline-map';
+import {supportMessage} from '../shared/diagnostics.mjs';
+import {requireAccess} from './connection.mjs?v=20261018-record-pages';
 import {memberAccountsEnabled} from './member-account.mjs';
 export function draftDetails(values){
  const text=(key)=>String(values[key]||'').trim();
@@ -16,7 +17,7 @@ export function createEngagementAdmin(db,config,hostname){
  return {
   async close(id,status){enabled();if(!/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(id)||status!=='active')throw Error('Choose a current active engagement.');await requireAccess(db,'staff');const result=await db.rpc('vb_close_test_engagement',{target_engagement:id,expected_status:status});if(result.error)throw Error(result.error.code==='40001'?'This engagement changed. Reload before closing it.':'The engagement could not be closed. Refresh its status before trying again.');},
   async read(){enabled();await requireAccess(db,'staff');const result=await db.rpc('vb_test_engagement_admin');if(result.error)throw Error('Engagement setup is unavailable. Refresh to try again.');return result.data;},
-  async send(id,revision,client){enabled();await requireAccess(db,'staff');const result=await db.functions.invoke('engagement-invite',{body:{draftId:id,revision,expectedEmail:client.contact_email,contactUpdatedAt:client.updated_at,confirmSend:true}});if(result.error||result.data?.sent!==true)throw Error(result.data?.error||'Invitation could not be sent. Refresh its status before retrying.');return result.data;},
+  async send(id,revision,client){enabled();await requireAccess(db,'staff');const result=await db.functions.invoke('engagement-invite',{body:{draftId:id,revision,expectedEmail:client.contact_email,contactUpdatedAt:client.updated_at,confirmSend:true}});if(result.error||result.data?.sent!==true){let body=result.data;try{if(!body&&result.error?.context)body=await result.error.context.json();}catch{}throw Error(supportMessage(body?.error||'Invitation could not be sent. Refresh its status before retrying.',body?.supportReference));}return result.data;},
   async revoke(invitationId){enabled();await requireAccess(db,'staff');const result=await db.rpc('vb_revoke_test_engagement_invite',{invitation_id:invitationId});if(result.error)throw Error('Invitation could not be revoked. Refresh its status.');},
   async save(id,revision,values){enabled();const details=draftDetails(values);await requireAccess(db,'staff');const result=await db.rpc('vb_save_test_engagement_draft',{draft_id:id,expected_revision:revision,details});if(result.error)throw Error(result.error.code==='40001'?'This draft changed. Reload it before saving again.':'The draft was not saved. Check the details and try again.');return result.data;}
  };

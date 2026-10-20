@@ -1,4 +1,5 @@
-import {createConnection} from './connection.mjs?v=20261011-test-portal';
+import {createConnection} from './connection.mjs?v=20261018-record-pages';
+import {createDiagnostics,isDiagnosticError,databaseCategory} from '../shared/diagnostics.mjs';
 export const SIGNUP_NOTICE = 'member-signup-test-2026-10-16';
 export const PENDING_SIGNUP = 'vb-member-test-pending-signup-v1';
 export function memberAccountsEnabled(config,hostname) {
@@ -28,11 +29,14 @@ export async function verifiedEntry(db) {
  return {user:identity.data.user,entry:entry.data};
 }
 
-export async function completePendingSignup(db,user,raw) {
+export async function completePendingSignup(db,user,raw,{diagnostics}={}) {
  const pending=matchingDraft(raw,user?.email);
  if(!pending?.profile)return false;
  const profile=signupProfile({fullName:pending.profile.full_name,companyName:pending.profile.name,industry:pending.profile.industry});
+ const diagnostic=createDiagnostics('member',diagnostics);
+ try{
  const result=await db.rpc('vb_onboard_test_member',{profile,notice:SIGNUP_NOTICE,confirmed:true});
- if(result.error)throw result.error;
+ if(result.error)throw diagnostic.error('onboarding','Account setup could not complete. Please try again.',databaseCategory(result.error.code));
  return true;
+ }catch(error){if(isDiagnosticError(error))throw error;throw diagnostic.error('onboarding','Account setup could not complete. Please try again.');}
 }

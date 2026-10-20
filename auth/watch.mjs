@@ -1,4 +1,4 @@
-import {requireAccess} from './connection.mjs';
+import {requireAccess} from './connection.mjs?v=20261018-record-pages';
 export const watchEnabled=()=>globalThis.window?.VB_WATCH_ENABLED===true;
 export function createWatchRepository(db,audience='client',{enabled=watchEnabled()}={}){
  let epoch=0;

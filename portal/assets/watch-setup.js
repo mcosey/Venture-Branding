@@ -1,4 +1,4 @@
-import {typeLabel,statusLabel} from '../../auth/connection.mjs';
+import {typeLabel,statusLabel} from '../../auth/connection.mjs?v=20261018-record-pages';
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 export function renderWatchSetup(main,client,marks){
  const crumb=el('nav',undefined,'watch-crumb');crumb.setAttribute('aria-label','Breadcrumb');const back=el('a','VB Agents');back.href='automations.html?client='+encodeURIComponent(client.id);crumb.append(back,el('span','›'),el('span','Trademark Watch'));main.prepend(crumb);

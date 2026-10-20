@@ -12,7 +12,7 @@ import {renderWatchDetail} from './watch-detail.js';
 import {renderWatchResults} from './watch-results.js';
 import {renderWatchSetup,renderAgentCards} from './watch-setup.js?v=20261013-agent-cards';
 import {renderNewMark,clearMarkDrafts} from './new-mark.js?v=20261008-bcm-candidates';
-import {createConnection,loadRecords,typeLabel,statusLabel} from '../../auth/connection.mjs?v=20261012-baseline-map';
+import {createConnection,loadRecords,typeLabel,statusLabel} from '../../auth/connection.mjs?v=20261018-record-pages';
 import {setupGate,showConnectionError} from '../../auth/gate.mjs?v=20261010-bcm-preview';
 let db;try{db=createConnection('client');}catch(error){showConnectionError('client');throw error;}
 const gate=setupGate(db,'client');

@@ -1,3 +1,4 @@
+import {createDiagnostics} from '../../../shared/diagnostics.mjs';
 export const MAX_IMAGE_BYTES=10*1024*1024;
 export function imageType(bytes){
  const b=bytes instanceof Uint8Array?bytes:new Uint8Array(bytes);
@@ -16,22 +17,23 @@ export function imageType(bytes){
  }
  return null;
 }
-export function createHandler({createClient,env}){
+export function createHandler({createClient,env,diagnostics}){
  const originAllowed=o=>/^http:\/\/127\.0\.0\.1:(8000|8011|8012)$/.test(o||'');
  return async request=>{
+  const diagnostic=createDiagnostics('evidence',diagnostics);let stage='input';
   const origin=request.headers.get('origin'),cors=originAllowed(origin)?{'Access-Control-Allow-Origin':origin,'Vary':'Origin','Access-Control-Allow-Headers':'authorization,apikey,content-type,x-client-info','Access-Control-Allow-Methods':'POST,OPTIONS'}:{};
-  const reply=(status,message)=>new Response(JSON.stringify(typeof message==='string'?{error:message}:message),{status,headers:{...cors,'Content-Type':'application/json','Cache-Control':'no-store'}});
+  const reply=(status,message)=>{let body=typeof message==='string'?{error:message}:message;if(status>=400&&!['input','identity','role'].includes(stage)){const ref=diagnostic.failure(stage,status===409?'conflict':status===403?'permission':'unavailable',status);if(ref)body={...body,supportReference:ref};}return new Response(JSON.stringify(body),{status,headers:{...cors,'Content-Type':'application/json','Cache-Control':'no-store'}});};
   if(origin&&!originAllowed(origin))return reply(403,'This upload origin is unavailable.');
   if(request.method==='OPTIONS')return new Response(null,{status:204,headers:cors});
   if(request.method!=='POST')return reply(405,'Use the upload form.');
   const token=request.headers.get('authorization');if(!token?.startsWith('Bearer '))return reply(401,'Please sign in again.');
   try{
-   const url=env('SUPABASE_URL'),key=env('SUPABASE_ANON_KEY'),secret=env('SUPABASE_SERVICE_ROLE_KEY');
+   stage='configuration';const url=env('SUPABASE_URL'),key=env('SUPABASE_ANON_KEY'),secret=env('SUPABASE_SERVICE_ROLE_KEY');
    if(!url||!key||!secret)return reply(503,'Evidence uploads are not connected.');
    const db=createClient(url,key,{global:{headers:{Authorization:token}},auth:{persistSession:false,autoRefreshToken:false}});
-   const identity=await db.auth.getUser(token.slice(7));if(identity.error||!identity.data.user)return reply(401,'Please sign in again.');
-   const role=await db.rpc('vb_session_role');if(role.error||role.data!=='client')return reply(403,'Client access required.');
-   const contentLength=Number(request.headers.get('content-length'));if(contentLength>MAX_IMAGE_BYTES+65536)return reply(413,'Choose an image no larger than 10 MB.');
+   stage='identity';const identity=await db.auth.getUser(token.slice(7));if(identity.error||!identity.data.user)return reply(401,'Please sign in again.');
+   stage='role';const role=await db.rpc('vb_session_role');if(role.error||role.data!=='client')return reply(403,'Client access required.');
+   stage='input';const contentLength=Number(request.headers.get('content-length'));if(contentLength>MAX_IMAGE_BYTES+65536)return reply(413,'Choose an image no larger than 10 MB.');
    // Bound the stream even when Content-Length is absent or inaccurate.
    const reader=request.body?.getReader();if(!reader)return reply(400,'Choose an image.');let length=0,chunks=[];
    for(;;){const part=await reader.read();if(part.done)break;length+=part.value.length;if(length>MAX_IMAGE_BYTES+65536){await reader.cancel();return reply(413,'Choose an image no larger than 10 MB.');}chunks.push(part.value);}
@@ -41,21 +43,21 @@ export function createHandler({createClient,env}){
    const bytes=new Uint8Array(await file.arrayBuffer()),mime=imageType(bytes);if(!mime||mime!==file.type)return reply(400,'Choose a valid PNG or JPEG image.');
    const digest=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');
    let details;try{details=JSON.parse(form.get('details'));}catch{return reply(400,'Check the evidence details.');}
-   const {data:reserved,error}=await db.rpc('vb_reserve_evidence',{target_id:form.get('id'),target_client:form.get('client'),target_mark:form.get('mark'),details:{...details,filename:file.name,mimeType:mime,byteSize:file.size,sha256:digest}});
+   stage='reserve';const {data:reserved,error}=await db.rpc('vb_reserve_evidence',{target_id:form.get('id'),target_client:form.get('client'),target_mark:form.get('mark'),details:{...details,filename:file.name,mimeType:mime,byteSize:file.size,sha256:digest}});
    if(error)return reply(error.code==='42501'?403:400,error.code==='42501'?'This trademark is unavailable to your account.':'Check the evidence details and try again.');
    if(reserved.uploaded_by!==identity.data.user.id)return reply(403,'Evidence unavailable.');
    const service=createClient(url,secret,{auth:{persistSession:false,autoRefreshToken:false}}),bucket=service.storage.from('vb-evidence');
    if(!reserved.uploaded_at){
-    const stored=await bucket.upload(reserved.object_path,bytes,{contentType:mime,upsert:false,cacheControl:'0'});
+    stage='store';const stored=await bucket.upload(reserved.object_path,bytes,{contentType:mime,upsert:false,cacheControl:'0'});
     if(stored.error){
      // An interrupted response may leave this same immutable object already saved.
-     const previous=await bucket.download(reserved.object_path);
+     stage='verify_store';const previous=await bucket.download(reserved.object_path);
      if(previous.error)return reply(503,'The image could not be saved. Your upload is not complete; try again.');
      const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',await previous.data.arrayBuffer()))].map(v=>v.toString(16).padStart(2,'0')).join('');
      if(hash!==digest)return reply(409,'This upload changed. Choose the image again.');
     }
    }
-   const finished=await service.rpc('vb_finish_evidence',{target_id:reserved.id,actor:identity.data.user.id});
+   stage='finalize';const finished=await service.rpc('vb_finish_evidence',{target_id:reserved.id,actor:identity.data.user.id});
    if(finished.error)return reply(finished.error.code==='42501'?403:503,'The upload could not be completed. Please retry.');
    return reply(200,{evidence:finished.data});
   }catch{return reply(503,'The upload could not be completed. Please retry.');}

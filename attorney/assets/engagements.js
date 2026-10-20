@@ -1,5 +1,5 @@
 import {showFlowLoading} from '../../shared/loading.mjs';
-import {createConnection} from '../../auth/connection.mjs?v=20261012-baseline-map';
+import {createConnection} from '../../auth/connection.mjs?v=20261018-record-pages';
 import {setupGate,showConnectionError} from '../../auth/gate.mjs';
 import {createEngagementAdmin,draftDetails} from '../../auth/engagement-admin.mjs';
 const $=s=>document.querySelector(s);

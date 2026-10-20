@@ -1,0 +1,494 @@
+{
+  "version": 1,
+  "purpose": "Required contracts for currently enabled features; no deployment or activation",
+  "features": {
+    "workspace": {
+      "tables": [
+        {
+          "name": "vb_clients",
+          "rls": true
+        },
+        {
+          "name": "vb_marks",
+          "rls": true
+        },
+        {
+          "name": "vb_service_preferences",
+          "rls": true
+        },
+        {
+          "name": "vb_client_references",
+          "rls": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "vb_session_role",
+          "arguments": "",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_save_client",
+          "arguments": "record_id uuid, details jsonb, expected_updated_at timestamp with time zone",
+          "definer": false,
+          "authenticated_execute": true
+        }
+      ]
+    },
+    "contact": {
+      "tables": [
+        {
+          "name": "vb_clients",
+          "rls": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "vb_update_my_contact",
+          "arguments": "target_client uuid, expected_updated_at timestamp with time zone, contact_name text, contact_email text",
+          "definer": true,
+          "authenticated_execute": true
+        }
+      ]
+    },
+    "uspto": {
+      "workers": [
+        "uspto-lookup"
+      ],
+      "tables": [
+        {
+          "name": "vb_marks",
+          "rls": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "vb_save_uspto_mark",
+          "arguments": "target_client uuid, target_mark uuid, expected_updated_at timestamp with time zone, details jsonb",
+          "definer": false,
+          "authenticated_execute": true
+        }
+      ]
+    },
+    "watch": {
+      "workers": [
+        "watch-ingest"
+      ],
+      "functions": [
+        {
+          "name": "vb_watch_snapshot",
+          "arguments": "target_client uuid",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_watch_save",
+          "arguments": "target_client uuid, expected_version integer, selected_marks uuid[], monitoring boolean",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_watch_review",
+          "arguments": "target_client uuid, target_finding uuid, expected_version integer, decision text, private_note text, client_summary text",
+          "definer": true,
+          "authenticated_execute": true
+        }
+      ],
+      "tables": []
+    },
+    "maintenance": {
+      "tables": [
+        {
+          "name": "vb_maintenance_publications",
+          "rls": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "vb_list_maintenance_drafts",
+          "arguments": "target_client uuid, target_mark uuid",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_save_maintenance_draft",
+          "arguments": "target_client uuid, target_mark uuid, target_entry uuid, expected_version integer, details jsonb",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_publish_maintenance",
+          "arguments": "target_client uuid, target_mark uuid, target_entry uuid, expected_version integer, verified boolean",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_withdraw_maintenance",
+          "arguments": "target_client uuid, target_mark uuid, target_entry uuid, expected_version integer",
+          "definer": true,
+          "authenticated_execute": true
+        }
+      ]
+    },
+    "filing": {
+      "tables": [
+        {
+          "name": "vb_filing_drafts",
+          "rls": true
+        },
+        {
+          "name": "vb_filing_revisions",
+          "rls": true
+        },
+        {
+          "name": "vb_filing_reviews",
+          "rls": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "vb_save_filing_draft",
+          "arguments": "target_client uuid, target_mark uuid, target_draft uuid, expected_revision integer, draft_input jsonb",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_record_filing_review",
+          "arguments": "target_draft uuid, expected_revision integer, review_action text, review_details jsonb",
+          "definer": true,
+          "authenticated_execute": true
+        }
+      ]
+    },
+    "member": {
+      "tables": [
+        {
+          "name": "vb_member_companies",
+          "rls": true
+        },
+        {
+          "name": "vb_member_profiles",
+          "rls": true
+        },
+        {
+          "name": "vb_member_progress",
+          "rls": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "vb_account_access",
+          "arguments": "",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_onboard_test_member",
+          "arguments": "profile jsonb, notice text, confirmed boolean",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_portal_entry",
+          "arguments": "",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_save_member_progress",
+          "arguments": "company uuid, milestone text, details jsonb, expected_updated_at timestamp with time zone",
+          "definer": true,
+          "authenticated_execute": true
+        }
+      ]
+    },
+    "engagementInvitations": {
+      "workers": [
+        "engagement-invite"
+      ],
+      "functions": [
+        {
+          "name": "vb_test_engagement_admin",
+          "arguments": "",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_save_test_engagement_draft",
+          "arguments": "draft_id uuid, expected_revision integer, details jsonb",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_close_test_engagement",
+          "arguments": "target_engagement uuid, expected_status text",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_prepare_test_engagement_invite",
+          "arguments": "target_draft uuid, expected_revision integer, expected_email text, expected_contact_updated_at timestamp with time zone, confirmed boolean",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_read_test_engagement_invite",
+          "arguments": "invitation_id uuid",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_accept_test_engagement_invite",
+          "arguments": "invitation_id uuid, confirmed boolean",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_revoke_test_engagement_invite",
+          "arguments": "invitation_id uuid",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_test_invite_delivery",
+          "arguments": "ticket uuid",
+          "definer": true,
+          "authenticated_execute": false
+        },
+        {
+          "name": "vb_complete_test_invite_delivery",
+          "arguments": "ticket uuid, succeeded boolean",
+          "definer": true,
+          "authenticated_execute": false
+        }
+      ],
+      "tables": []
+    },
+    "scopedWatch": {
+      "functions": [
+        {
+          "name": "vb_watch_save_scoped",
+          "arguments": "target_client uuid, target_engagement uuid, expected_configuration uuid, expected_version integer, selected_marks uuid[], monitoring boolean",
+          "definer": true,
+          "authenticated_execute": true
+        }
+      ],
+      "tables": []
+    },
+    "legacyInvitations": {
+      "workers": [
+        "client-invite"
+      ],
+      "functions": [
+        {
+          "name": "vb_portal_access_status",
+          "arguments": "",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_prepare_client_invite",
+          "arguments": "target_client uuid, recipient text, expected_updated_at timestamp with time zone",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_complete_client_invite",
+          "arguments": "ticket uuid, invited_user uuid, succeeded boolean",
+          "definer": true,
+          "authenticated_execute": false
+        },
+        {
+          "name": "vb_set_portal_access",
+          "arguments": "target_client uuid, enabled boolean, expected_updated_at timestamp with time zone",
+          "definer": false,
+          "authenticated_execute": true
+        }
+      ],
+      "tables": []
+    },
+    "bcm": {
+      "workers": [
+        "bcm-ai-scan",
+        "bcm-ai-schedule"
+      ],
+      "functions": [
+        {
+          "name": "vb_bcm_ai_ready",
+          "arguments": "",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_bcm_ai_client_history",
+          "arguments": "target_client uuid",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_bcm_ai_baseline_progress",
+          "arguments": "target_client uuid",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_bcm_ai_allowance",
+          "arguments": "target_client uuid",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_save_bcm_settings",
+          "arguments": "target_client uuid, expected_version integer, details jsonb, authorized boolean",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_set_bcm_ai_monitoring",
+          "arguments": "target_client uuid, expected_settings_version integer, expected_revision integer, enabled boolean",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_review_bcm_ai_finding",
+          "arguments": "finding uuid, expected_revision integer, decision text, note text, alias_target uuid",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_begin_bcm_ai_run",
+          "arguments": "target_client uuid, expected_version integer",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_finish_bcm_ai_run",
+          "arguments": "ticket uuid, payload jsonb, failure boolean",
+          "definer": true,
+          "authenticated_execute": false
+        },
+        {
+          "name": "vb_claim_bcm_ai_due_run",
+          "arguments": "",
+          "definer": true,
+          "authenticated_execute": false
+        },
+        {
+          "name": "vb_bcm_ai_run_is_current",
+          "arguments": "ticket uuid",
+          "definer": true,
+          "authenticated_execute": false
+        }
+      ],
+      "tables": []
+    },
+    "evidence": {
+      "workers": [
+        "evidence-upload"
+      ],
+      "tables": [
+        {
+          "name": "vb_evidence",
+          "rls": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "vb_reserve_evidence",
+          "arguments": "target_id uuid, target_client uuid, target_mark uuid, details jsonb",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_finish_evidence",
+          "arguments": "target_id uuid, actor uuid",
+          "definer": true,
+          "authenticated_execute": false
+        },
+        {
+          "name": "vb_remove_evidence",
+          "arguments": "target_id uuid, target_client uuid",
+          "definer": true,
+          "authenticated_execute": true
+        }
+      ]
+    },
+    "digest": {
+      "tables": [
+        {
+          "name": "vb_digest_preferences",
+          "rls": true
+        },
+        {
+          "name": "vb_inbox",
+          "rls": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "vb_save_digest_preferences",
+          "arguments": "target_client uuid, expected_version integer, details jsonb",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_generate_digest_sample",
+          "arguments": "target_client uuid, expected_version integer",
+          "definer": true,
+          "authenticated_execute": true
+        },
+        {
+          "name": "vb_open_inbox",
+          "arguments": "target_client uuid, target_message uuid",
+          "definer": true,
+          "authenticated_execute": true
+        }
+      ]
+    }
+  },
+  "environments": {
+    "bcm-test": {
+      "project_ref": "imvkhicfmidzbzsbhkzs",
+      "database_id": "7692130048193495360",
+      "enabled": [
+        "workspace",
+        "contact",
+        "uspto",
+        "watch",
+        "maintenance",
+        "filing",
+        "member",
+        "engagementInvitations",
+        "scopedWatch"
+      ],
+      "disabled": [
+        "legacyInvitations",
+        "bcm",
+        "evidence",
+        "digest"
+      ]
+    },
+    "bcm-production": {
+      "project_ref": "omvkwiosonatswocbdgx",
+      "database_id": "7690937621030482216",
+      "enabled": [
+        "workspace",
+        "contact",
+        "uspto",
+        "watch",
+        "maintenance",
+        "filing",
+        "legacyInvitations",
+        "bcm",
+        "evidence",
+        "digest"
+      ],
+      "disabled": [
+        "member",
+        "engagementInvitations",
+        "scopedWatch"
+      ]
+    }
+  }
+}

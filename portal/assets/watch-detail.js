@@ -1,5 +1,5 @@
 import {watchFixtures} from './watch-fixtures.js';
-import {typeLabel,statusLabel} from '../../auth/connection.mjs';
+import {typeLabel,statusLabel} from '../../auth/connection.mjs?v=20261018-record-pages';
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 export function renderWatchDetail(main,client,marks){
  const params=new URLSearchParams(location.search),finding=params.get('demo')==='1'?watchFixtures.find(f=>f.serial===params.get('finding')):null;

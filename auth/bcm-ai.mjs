@@ -1,4 +1,5 @@
-import {requireAccess} from './connection.mjs';
+import {supportMessage} from '../shared/diagnostics.mjs';
+import {requireAccess} from './connection.mjs?v=20261018-record-pages';
 const PRODUCTION_URL='https://omvkwiosonatswocbdgx.supabase.co';
 export function assertProduction(db){if(db.supabaseUrl!==PRODUCTION_URL||window.VB_AUTH_CONFIG?.environment!=='bcm-production'||window.VB_AUTH_CONFIG?.bcmEnabled!==true)throw Error('BCM is not enabled for this portal.');}
 export async function loadAiWorkspace(db,audience,clientId){
@@ -14,7 +15,7 @@ export async function loadAiWorkspace(db,audience,clientId){
  const results=await Promise.all(queries);if(results.some(r=>r.error))throw Error('BCM setup or account access is not ready. No changes were made.');
  return {clients:clients.data,clientId:id,settings:results[0].data,schedule:results[1].data,connected:results[2].data===true,ready:results[2].data===true&&results[7].data?.available===true,allowance:results[7].data,publications:results[3].data||[],observations:results[4].data||[],runs:results[5].data||[],baseline:results[6].data};
 }
-export async function runAiResearch(db,clientId,version){assertProduction(db);await requireAccess(db,'client');const r=await db.functions.invoke('bcm-ai-scan',{body:{clientId,version}});if(r.error||r.data?.status!=='completed')throw Error('Research did not complete. Refresh history before retrying; no client update was published.');return r.data;}
+export async function runAiResearch(db,clientId,version){assertProduction(db);await requireAccess(db,'client');const r=await db.functions.invoke('bcm-ai-scan',{body:{clientId,version}});if(r.error||r.data?.status!=='completed'){let body=r.data;try{if(!body&&r.error?.context)body=await r.error.context.json();}catch{}throw Error(supportMessage('Research did not complete. Refresh history before retrying; no client update was published.',body?.supportReference));}return r.data;}
 export async function reviewAiFinding(db,row,decision,note,aliasTarget=null){
  assertProduction(db);await requireAccess(db,'staff');
  const r=await db.rpc('vb_review_bcm_ai_finding',{finding:row.id,expected_revision:row.revision,decision,note,alias_target:aliasTarget});

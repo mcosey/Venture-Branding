@@ -1,5 +1,8 @@
 # Venture Branding launch-readiness plan
 
+> Current correction (October 18, 2026): this project is **not on Cloudflare**. The active homepage source is `v8.html`; `index.html` is the historical design chooser. Hosting statements below are historical and superseded by [CURRENT-ENVIRONMENTS.md](CURRENT-ENVIRONMENTS.md). Do not configure or deploy a host from this older record.
+
+
 Updated October 3, 2026. Planning only: this document does not authorize provisioning, installation, spending, publishing, or live client data processing.
 
 ## Objective
@@ -98,7 +101,7 @@ Review a plain-language backend scope and cost proposal, starting with durable c
 
 ## Confirmed platform choices and first implementation phase
 
-The owner confirmed Cloudflare for hosting (hosting work deferred) and Supabase Free for development. An email delivery provider will be selected later. Supabase Auth manages invitations and account recovery; its default sender currently only delivers to project-team addresses with a two-message-per-hour limit. Do not add clients to the Supabase administrative team to bypass that restriction. Custom email delivery must be configured and tested before real client invitations. Reference: https://supabase.com/docs/guides/auth/auth-smtp . Recheck limits before setup.
+Historical planning note, superseded: Cloudflare was discussed for hosting; it is not this project's current host. Supabase Free was chosen for development. An email delivery provider will be selected later. Supabase Auth manages invitations and account recovery; its default sender currently only delivers to project-team addresses with a two-message-per-hour limit. Do not add clients to the Supabase administrative team to bypass that restriction. Custom email delivery must be configured and tested before real client invitations. Reference: https://supabase.com/docs/guides/auth/auth-smtp . Recheck limits before setup.
 
 Phase 1 proposal — durable records and access boundaries:
 

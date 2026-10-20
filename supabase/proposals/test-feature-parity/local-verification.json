@@ -1,0 +1,13 @@
+{
+  "sql_assertions": 18,
+  "guard_checks": 6,
+  "prerequisite_preservation_checks": 2,
+  "assembled_rollback_preservation_passed": true,
+  "nonempty_baseline_retained": true,
+  "rollback_empty": true,
+  "hosted": false,
+  "atomic_install_rollback_verified": true,
+  "persistent_assembly_verified": true,
+  "installed_verification_verified": true,
+  "automatic_all_features_initializer_included": true
+}

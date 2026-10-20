@@ -1,4 +1,4 @@
-import {requireAccess} from '../../auth/connection.mjs';
+import {requireAccess} from '../../auth/connection.mjs?v=20261018-record-pages';
 import {findBcmCandidates} from '../../auth/bcm.mjs';
 
 const scanFields='id,client_id,status,scan_type,baseline_id,started_at,finished_at,snapshot';

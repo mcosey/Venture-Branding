@@ -1,15 +1,19 @@
-import {requireAccess} from './connection.mjs';
+import {requireAccess} from './connection.mjs?v=20261018-record-pages';
+import {createDiagnostics,isDiagnosticError,databaseCategory} from '../shared/diagnostics.mjs';
 export function contactValues(name,email){
  name=name.trim();email=email.trim();
  if(!name||name.length>200)throw new Error('Enter a contact name (up to 200 characters).');
  if(email&&(email.length>254||! /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)))throw new Error('Enter a valid contact email.');
  return {name,email:email||null};
 }
-export async function saveContact(db,client,name,email){
+export async function saveContact(db,client,name,email,{diagnostics}={}){
  const values=contactValues(name,email);await requireAccess(db,'client');
+ const diagnostic=createDiagnostics('account',diagnostics);
+ try{
  const {data,error}=await db.rpc('vb_update_my_contact',{target_client:client.id,expected_updated_at:client.updated_at,contact_name:values.name,contact_email:values.email});
- if(error)throw new Error(error.code==='40001'?'Details changed elsewhere. Reload this page and try again.':'Contact details could not be saved. Please try again later.');
+ if(error)throw diagnostic.error('contact_save',error.code==='40001'?'Details changed elsewhere. Reload this page and try again.':'Contact details could not be saved. Please try again later.',databaseCategory(error.code));
  return data;
+ }catch(error){if(isDiagnosticError(error))throw error;throw diagnostic.error('contact_save','Contact details could not be saved. Please try again later.');}
 }
 export async function changeEmail(db,email,origin){
  email=contactValues('Account',email).email;if(!email)throw new Error('Enter your new sign-in email.');

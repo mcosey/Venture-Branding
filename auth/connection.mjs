@@ -1,4 +1,5 @@
 import {validConfiguration} from './flow.mjs?v=20261011-test-portal';
+import {createDiagnostics,isDiagnosticError} from '../shared/diagnostics.mjs';
 export function createConnection(audience) {
  if(!['staff','client'].includes(audience))throw new Error('Workspace audience unavailable.');
  if(!validConfiguration(window.VB_AUTH_CONFIG))throw new Error('Connection configuration unavailable.');
@@ -23,16 +24,52 @@ export async function requireAccess(db,audience){
  }
  return data.user;
 }
-export async function loadRecords(db,audience){
+const recordTables={
+ vb_clients:['id'],vb_marks:['id'],vb_service_preferences:['client_id','service'],vb_client_references:['client_id']
+};
+const recordStages={vb_clients:'clients',vb_marks:'marks',vb_service_preferences:'preferences',vb_client_references:'references'};
+async function loadTable(db,table,diagnostic){
+ const loadError=()=>diagnostic.error(recordStages[table],'Unable to load all saved records. Please reload and try again.','invalid_response');
+ try{
+ const keys=recordTables[table],rows=[],seen=new Set();
+ let total;
+ // Count and stable primary-key ordering detect truncation and common concurrent
+ // changes. These REST pages are not an atomic database snapshot.
+ do{
+  let query=db.from(table).select('*',{count:'exact'});
+  if(table==='vb_marks')query=query.is('archived_at',null);
+  for(const key of keys)query=query.order(key,{ascending:true});
+  const result=await query.range(rows.length,rows.length+249);
+  if(result.error)throw diagnostic.error(recordStages[table],'Unable to load all saved records. Please reload and try again.');
+  if(!Array.isArray(result.data)||!Number.isSafeInteger(result.count)||result.count<0)throw loadError();
+  if(total===undefined)total=result.count;
+  if(result.count!==total||rows.length+result.data.length>total||total>50000)throw loadError();
+  for(const row of result.data){
+   if(keys.some(key=>typeof row[key]!=='string'||!row[key]))throw loadError();
+   const key=JSON.stringify(keys.map(key=>row[key]));
+   if(seen.has(key))throw loadError();
+   seen.add(key);rows.push(row);
+  }
+  if(rows.length<total&&!result.data.length)throw loadError();
+ }while(rows.length<total);
+ return rows;
+ }catch(error){
+  if(isDiagnosticError(error))throw error;
+  throw diagnostic.error(recordStages[table],'Unable to load all saved records. Please reload and try again.');
+ }
+}
+export async function loadRecords(db,audience,{diagnostics}={}){
  await requireAccess(db,audience);
+ const diagnostic=createDiagnostics('records',diagnostics);
  const [clients,marks,preferences,references]=await Promise.all([
-  db.from('vb_clients').select('*').order('name'),
-  db.from('vb_marks').select('*').is('archived_at',null).order('name'),
-  db.from('vb_service_preferences').select('*'),
-  audience==='staff'?db.from('vb_client_references').select('*'):Promise.resolve({data:[]})
+  loadTable(db,'vb_clients',diagnostic),loadTable(db,'vb_marks',diagnostic),loadTable(db,'vb_service_preferences',diagnostic),
+  audience==='staff'?loadTable(db,'vb_client_references',diagnostic):Promise.resolve([])
  ]);
- for(const result of [clients,marks,preferences,references])if(result.error)throw new Error('Unable to load saved records. Please retry.');
- return {clients:clients.data,marks:marks.data,preferences:preferences.data,references:references.data};
+ // Do not reveal a completed load if the caller lost workspace access meanwhile.
+ await requireAccess(db,audience);
+ const byName=(a,b)=>(a.name||'').localeCompare(b.name||'')||a.id.localeCompare(b.id);
+ clients.sort(byName);marks.sort(byName);
+ return {clients,marks,preferences,references};
 }
 export const typeLabel=value=>({word:'Word',logo:'Logo',other:'Other'}[value]||'Not specified');
 export const statusLabel=value=>({not_filed:'Not yet filed',pending:'Pending',registered:'Registered',inactive:'Inactive',other:'Other'}[value]||'Not provided');

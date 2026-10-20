@@ -1,4 +1,4 @@
-import {requireAccess} from '../../auth/connection.mjs';
+import {requireAccess} from '../../auth/connection.mjs?v=20261018-record-pages';
 // Read only client-approved snapshots; never fetch raw AI findings or private notes.
 const fields='finding_id,client_id,name,kind,context,passage,source_url,approved_at,withdrawn_at';
 export function reviewedMapModel(clientId,rows=[]){

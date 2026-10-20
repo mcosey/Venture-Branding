@@ -1,4 +1,4 @@
-import {requireAccess} from './connection.mjs';
+import {requireAccess} from './connection.mjs?v=20261018-record-pages';
 export const digestCategories={bcm:'BCM comparisons ready to review',use_history:'New Use History uploads',maintenance:'Published maintenance dates due in the next 30 days'};
 export function digestValues(input){
  const categories=input.categories;

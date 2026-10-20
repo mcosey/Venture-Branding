@@ -1,4 +1,4 @@
-import {requireAccess} from './connection.mjs';
+import {requireAccess} from './connection.mjs?v=20261018-record-pages';
 export const bcmCategories={product_names:'Product names',feature_names:'Feature names',slogans:'Slogans and taglines',logos:'Logos',sub_brands:'Sub-brands',renames:'Renamed products or features',presentation:'Changes to existing branding'};
 export function bcmValues(draft,authorized){
  if(authorized!==true)throw new Error('Confirm that you have permission to monitor these pages.');

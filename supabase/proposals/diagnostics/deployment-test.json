@@ -1,0 +1,87 @@
+{
+  "status": "approved-limited-diagnostic-deployment-verified-in-test",
+  "verification_date": "2026-10-20",
+  "timezone": "America/Chicago",
+  "project_ref": "imvkhicfmidzbzsbhkzs",
+  "release": "2026-10-19-diagnostics-1",
+  "deployment_window": "2026-10-19 / 2026-10-20 continuation; dashboard deployment confirmations preserved in screenshots",
+  "functions": {
+    "uspto-lookup": {
+      "installed_baseline_matched": true,
+      "rollback_sha256": "c3b8aea86348c5a04c42ad8d708d9cf4dfedb0637b296cf2894507c3ae18b365",
+      "reviewed_artifact": "uspto-lookup-test.ts",
+      "reviewed_artifact_sha256": "85d34a2303619baceb5ec5e4adcebe0b2aaaef050b62e69ea7493c3eaf3288b0",
+      "editor_source_compared_exactly_before_deploy": true,
+      "dashboard_deployment_confirmed": true,
+      "verify_jwt_before": true,
+      "verify_jwt_after": true
+    },
+    "engagement-invite": {
+      "installed_baseline_matched": true,
+      "rollback_sha256": "bef679adfe50072977567f59526370727dd901827a4ea0deb91a811a0c8d276e",
+      "reviewed_artifact": "engagement-invite-test.ts",
+      "reviewed_artifact_sha256": "d4aaa21729c190a7680c2f3c2a36a6bbc2af92734a911655e55143c3510f4529",
+      "editor_source_compared_exactly_before_deploy": true,
+      "dashboard_deployment_confirmed": true,
+      "verify_jwt_before": false,
+      "verify_jwt_after": false
+    },
+    "watch-ingest": {
+      "installed_baseline_matched": true,
+      "rollback_sha256": "1a2b04d9035c4137c4a0792aada2d5f0322fa22ae9bdf0866841b430781c6e16",
+      "reviewed_artifact": "watch-ingest-review.ts",
+      "reviewed_artifact_sha256": "73833ad87f58da66196ec310765109e479da0e2938e4c9121d764567c6afd7d2",
+      "editor_source_compared_exactly_before_deploy": true,
+      "dashboard_deployment_confirmed": true,
+      "verify_jwt_before": false,
+      "verify_jwt_after": false
+    }
+  },
+  "authentication_settings_changed": false,
+  "database_installation_or_permission_changes": false,
+  "application_record_writes": false,
+  "emails_sent": false,
+  "external_provider_lookups": false,
+  "monitoring_runs_started": false,
+  "production_changed": false,
+  "credential_values_inspected_or_copied": false,
+  "checks": {
+    "lookup": {
+      "status": 404,
+      "stage": "client_read",
+      "reference": "VB-fc037e75-3313-4e59-8d90-ec873bd13151",
+      "server_log_matches_response": true,
+      "nonexistent_client_checked_before_request": true,
+      "provider_fetch_or_save": false
+    },
+    "invitation": {
+      "status": 409,
+      "stage": "reserve",
+      "reference": "VB-93646d74-967d-43e8-a913-8539cfabd925",
+      "server_log_matches_response": true,
+      "invalid_timestamp_rejected_before_sql_function_body": true,
+      "email_or_invitation_reservation": false
+    },
+    "watch": {
+      "status": 401,
+      "response_error": "Unauthorized",
+      "method": "POST",
+      "body_action": "inventory",
+      "ingestion_secret_supplied": false,
+      "via": "Supabase Test dashboard form",
+      "database_or_monitoring_operation": false,
+      "custom_database_failure_log_live_tested": false,
+      "browser_sdk_attempt": "No readable response from the server-only/no-CORS endpoint; boundary retained, no protection relaxed."
+    }
+  },
+  "temporary_check_page_removed": true,
+  "attorney_route_restored": true,
+  "rollback_sources": "outputs/production-review/test-diagnostics-rollback",
+  "limitations": [
+    "Watch internal database failure logging is locally tested, not live-triggered with the private runner secret.",
+    "No live delivery/provider/storage failure was triggered.",
+    "Platform retention, operator access and alert routing remain unverified/unconfigured.",
+    "Prepared GitHub workflow not yet published/executed; local regressions remain 394 portal + 36 Watch.",
+    "Remaining maintenance/filing/messages/digest/Member-profile diagnostic gaps and trademark import-save acceptance remain open."
+  ]
+}
