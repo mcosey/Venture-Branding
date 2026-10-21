@@ -3,7 +3,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {brandMapModel,mapPage,recordLink} from '../portal/assets/brand-map-model.mjs';
 import {renderBrandMap} from '../portal/assets/brand-map.js';
-import {brandMapBcmModel,loadBrandMapBcm} from '../portal/assets/brand-map-bcm.mjs';
 import {reviewedMapModel,loadReviewedMap} from '../portal/assets/brand-map-reviewed.mjs';
 import {loadRecords} from '../auth/connection.mjs';
 import {readFile} from 'node:fs/promises';
@@ -68,22 +67,9 @@ test('zoom limits, reset, and page changes retain access to every record',()=>{
  const pager=main.querySelector('.bm-pager');pager.querySelectorAll('button')[1].click();assert.equal(main.querySelectorAll('button[data-mark-id]').length,3);assert(main.textContent.includes('2 of 2'));assert(main.querySelectorAll('button[data-mark-id]')[0].focused);assert.equal(main.querySelector('#bm-detail-title').textContent,client.name);
 });
 
-const scan=(id,extra={})=>({id,client_id:client.id,status:'completed',scan_type:'baseline',started_at:'2026-10-01',snapshot:{text:'Original website text.'},...extra});
-const comparison=(id,extra={})=>scan(id,{scan_type:'comparison',baseline_id:'baseline',started_at:'2026-10-09',snapshot:{text:'Introducing “Orbit Studio”. Our new tagline is “Build With Purpose”.',url:'https://example.org/products'},...extra});
-test('monitor projection isolates clients and deduplicates recent findings without granting legal status',()=>{
- const state=brandMapBcmModel(client.id,[scan('baseline'),comparison('old',{started_at:'2026-10-08'}),comparison('new'),comparison('foreign',{client_id:'other',snapshot:{text:'Introducing “PRIVATE”.'}}),scan('failed',{status:'failed',internal_notes:'PRIVATE'})]);
- assert.equal(state.findings.length,2);assert(state.findings.every(f=>f.id.startsWith('bcm:new:')));assert.equal(state.compared,2);assert.equal(state.activity.length,3);assert(!JSON.stringify(state).includes('PRIVATE'));assert(state.findings.every(f=>f.status.includes('needs review')));
- const missing=brandMapBcmModel(client.id,[comparison('new')],[scan('baseline',{client_id:'other'})]);assert.equal(missing.findings.length,0);assert.equal(missing.missingBaselines,1);
-});
-test('read-only loader scopes recent scans and older baselines to the client, and blocks signed-out reads',async()=>{
- const queries=[];
- const db={auth:{getUser:async()=>({data:{user:{id:'user'}}}),mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:'aal1',nextLevel:'aal1'}})}},rpc:async name=>{assert.equal(name,'vb_session_role');return {data:'client'};},from(table){assert.equal(table,'vb_bcm_scans');const q={table};queries.push(q);return {select(value){q.fields=value;return this;},eq(key,value){q[key]=value;return this;},order(){return this;},limit(value){q.limit=value;return Promise.resolve({data:[comparison('recent')]});},in(key,value){q[key]=value;return Promise.resolve({data:[scan('baseline'),scan('foreign',{client_id:'other'})]});}};}};
- const state=await loadBrandMapBcm(db,client.id);assert.equal(state.findings.length,2);assert.equal(queries.length,2);assert(queries.every(q=>q.client_id===client.id&&!q.fields.includes('internal')));assert.equal(queries[0].limit,10);assert.deepEqual(queries[1].id,['baseline']);
- db.auth.getUser=async()=>({data:{user:null}});await assert.rejects(loadBrandMapBcm(db,client.id),/sign in/);assert.equal(queries.length,2);
-});
 test('findings are selectable plain text, keep legal counts, and retain record selection on load',()=>{
  const main=page();const update=renderBrandMap(main,client,[record('mark')]);main.querySelectorAll('button[data-mark-id]').find(n=>n.dataset.markId==='mark').click();
- const state=brandMapBcmModel(client.id,[scan('baseline'),comparison('new')]);state.findings=state.findings.map(f=>({...f,kind:'reviewed'}));state.findings[0].name='<img src=x onerror=alert(1)>';
+ const state=reviewedMapModel(client.id,[pub({name:'<img src=x onerror=alert(1)>',passage:'Build With Purpose'})]);
  update(state);assert.equal(main.querySelector('#bm-detail-title').textContent,'Mark mark');assert.equal(main.querySelector('.bm-summary').textContent.includes('1 Trademark records'),true);
  const node=main.querySelectorAll('button[data-mark-id]').find(n=>n.dataset.markId===state.findings[0].id);node.click();assert.equal(main.querySelector('#bm-detail-title').textContent,state.findings[0].name);assert.equal(main.querySelectorAll('img').length,0);assert(main.querySelector('.bm-facts').textContent.includes('not a trademark registration'));assert.equal(main.querySelector('.bm-detail').querySelector('a').href,'brand-monitor.html?client=client-one&view=updates');
  update({...state,clientId:'foreign'});assert(!main.textContent.includes('Build With Purpose'));assert(main.textContent.includes('could not load'));assert(main.textContent.includes('Mark mark'));
@@ -91,13 +77,13 @@ test('findings are selectable plain text, keep legal counts, and retain record s
 
 test('portal entry renders through the existing access gate and handles client choice',async()=>{
  const source=(await readFile(new URL('../portal/assets/client.js',import.meta.url),'utf8')).replace(/^import .+;\n/gm,'');
- async function run({user=true,connected=false,requested='client-one',loader=async(_db,id)=>brandMapBcmModel(id,[])}={}){
+ async function run({user=true,connected=false,requested='client-one',loader=async(_db,id)=>reviewedMapModel(id,[])}={}){
   const main=page();main.dataset.page='portal';const choice=new Element('select');choice.parentElement={};const name=new Element('span');
   const events={};const authEvents={};const doc={...globalThis.document,hidden:false,querySelector:selector=>({'main':main,'#client-choice':choice,'#client-name':name}[selector]||null),addEventListener(type,callback){events[type]=callback;}};
   globalThis.document=doc;const queryTables=[];const gates=[];
   const db={auth:{getUser:async()=>({data:{user:user?{id:'signed-in'}:null}}),mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:'aal1',nextLevel:'aal1'}})},onAuthStateChange(callback){authEvents.callback=callback;}},rpc:async()=>({data:'client'}),from(table){queryTables.push(table);return {data:table==='vb_clients'?[client,{id:'client-two',name:'Other Studio'}]:table==='vb_marks'?[record('first'),record('second',{client_id:'client-two'})]:[],select(){return this;},order(){return this;},is(){return this;},range(from,to){return {data:this.data.slice(from,to+1),count:this.data.length};}};}};
   doc.querySelectorAll=()=>[];
-  const context={selectedClientId,setupClientNavigation,history:{replaceState(){}},memberAccountsEnabled:()=>false,watchEnabled:()=>false,document:doc,window:{addEventListener(){}},location:{href:'http://localhost/portal.html',search:'?client='+requested},URLSearchParams,Option:function(text,value){const e=new Element('option');e.textContent=text;e.value=value;return e;},createConnection:()=>db,setupGate:()=>({lock:text=>gates.push(text||'locked'),unlock:()=>gates.push('unlocked'),current:()=>true}),loadRecords,renderBrandMap,aiBcmEnabled:()=>connected,loadReviewedMap:loader,loadBrandMapBcm:loader,clearMarkDrafts(){},clearBrandMonitorDrafts(){}};
+  const context={selectedClientId,setupClientNavigation,history:{replaceState(){}},memberAccountsEnabled:()=>false,watchEnabled:()=>false,document:doc,window:{addEventListener(){}},location:{href:'http://localhost/portal.html',search:'?client='+requested},URLSearchParams,Option:function(text,value){const e=new Element('option');e.textContent=text;e.value=value;return e;},createConnection:()=>db,setupGate:()=>({lock:text=>gates.push(text||'locked'),unlock:()=>gates.push('unlocked'),current:()=>true}),loadRecords,renderBrandMap,aiBcmEnabled:()=>connected,loadReviewedMap:loader,clearMarkDrafts(){}};
   await vm.runInNewContext('(async()=>{'+source+'})()',context);return {main,choice,queryTables,gates,doc,events,authEvents};
  }
  const allowed=await run();assert(allowed.main.textContent.includes('Brand Map'));assert.equal(allowed.gates.at(-1),'unlocked');assert(allowed.main.textContent.includes('Mark first'));assert(!allowed.main.textContent.includes('Mark second'));

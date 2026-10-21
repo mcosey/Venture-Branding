@@ -1,6 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {nameKey,website,settingsValid,sourceAllowed,observationsValid,researchWebsite,PRODUCTION_URL} from '../supabase/proposals/bcm-ai-production/workers/research.mjs';
-import {createAiBcmHandler} from '../supabase/proposals/bcm-ai-production/workers/handler.mjs';
+import {nameKey,website,settingsValid,sourceAllowed,observationsValid,researchWebsite,PRODUCTION_URL,createAiBcmHandler} from '../supabase/functions/bcm-ai-production/handler.mjs';
 import {readFileSync} from 'node:fs';import vm from 'node:vm';
 const id='10000000-0000-0000-0000-000000000001',ticket='20000000-0000-0000-0000-000000000001';
 const cfg={urls:['https://www.harvey.ai/'],exclusions:['/careers'],access_mode:'public',frequency:'weekly',categories:['product_names','feature_names']};
