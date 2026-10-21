@@ -18,7 +18,7 @@ function entry(source,{bundled=false,envOverrides={}}={}){
  assert(source.startsWith(sdk));source=source.slice(sdk.length);
  if(bundled)source=source.replace(/^export /gm,'');
  else {assert(source.startsWith(sharedImport));source=source.slice(sharedImport.length);}
- vm.runInNewContext(source,{createClient,Response,...(bundled?{}:{createAiBcmHandler}),Deno:{env:{get:key=>env[key]},serve:value=>{assert.equal(handler,undefined);handler=value;}}});
+ vm.runInNewContext(source,{createClient,Response,performance:{now:()=>0},crypto:{randomUUID:()=>clientId},console:{error:()=>assert.fail('Idle research must log nothing')},...(bundled?{}:{createAiBcmHandler}),Deno:{env:{get:key=>env[key]},serve:value=>{assert.equal(handler,undefined);handler=value;}}});
  assert.equal(typeof handler,'function');
  return {handler,calls,get clients(){return clients;}};
 }
@@ -29,10 +29,12 @@ for(const mode of ['scan','schedule']){
  const credentials=mode==='scan'?{Authorization:'Bearer fixture-user'}:{'x-bcm-scheduler-secret':secret};
  test(`${mode} entrypoint and generated bundle select the original authorization path`,async()=>{
   const bundle=execFileSync(process.execPath,[script,mode],{encoding:'utf8'});
-  // The previous deployed-source snapshot also matched the pre-refactor entrypoints.
-  assert.equal(bundle,read(`supabase/proposals/bcm-ai-production/deployment/bcm-ai-${mode}.ts`));
+  // Frozen deployment predates diagnostics. Compare observable authorization/RPC
+  // behavior, while preserving that historical source untouched.
+  const previous=read(`supabase/proposals/bcm-ai-production/deployment/bcm-ai-${mode}.ts`);
+  assert.doesNotMatch(bundle,/^import .*from ['"]\.\.?\//m);
   execFileSync(process.execPath,['--input-type=module','--check'],{input:bundle});
-  for(const worker of [entry(read(path)),entry(bundle,{bundled:true})]){
+  for(const worker of [entry(previous,{bundled:true}),entry(read(path)),entry(bundle,{bundled:true})]){
    const response=await worker.handler(request(mode,credentials));assert.equal(response.status,200);assert.deepEqual(await response.json(),{status:'idle'});
    assert.deepEqual(worker.calls,mode==='scan'?['getUser','vb_session_role','vb_begin_bcm_ai_run']:['vb_claim_bcm_ai_due_run']);
    assert.equal(worker.clients,mode==='scan'?2:1);

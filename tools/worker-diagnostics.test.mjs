@@ -6,6 +6,7 @@ import {createEngagementInviteHandler as engagement} from '../supabase/functions
 import {createInviteHandler as invite} from '../supabase/functions/client-invite/handler.mjs';
 import {createWatchHandler as watch} from '../supabase/functions/watch-ingest/handler.mjs';
 import {createAiBcmHandler as research} from '../supabase/functions/bcm-ai/handler.mjs';
+import {createAiBcmHandler as productionResearch,PRODUCTION_URL} from '../supabase/functions/bcm-ai-production/handler.mjs';
 const id='10000000-0000-4000-8000-000000000001',ref='VB-'+id,project='https://imvkhicfmidzbzsbhkzs.supabase.co';
 const secret='PRIVATE-API-KEY-and-PRIVATE-token',privateData='PRIVATE client@example.test Company notes image/path';
 function context(){const events=[];return {events,diagnostics:{sink:e=>events.push(e),makeReference:()=>id,clock:()=>1},env:k=>({SUPABASE_URL:project,SUPABASE_ANON_KEY:'public',SUPABASE_SERVICE_ROLE_KEY:secret,USPTO_API_KEY:secret,OPENAI_API_KEY:secret,VB_ALLOWED_ORIGINS:'http://127.0.0.1:8000',VB_CLIENT_INVITE_REDIRECT:'http://127.0.0.1:8000/login.html',VB_ENGAGEMENT_INVITES_ENABLED:'true',WATCH_RELEASE_ENABLED:'true',WATCH_INGEST_KEY:secret+'xxxxxxxxxxxxxxxxxxxxxxxx'}[k])};}
@@ -65,4 +66,24 @@ test('denied requests do not log identities or create provider/email activity',a
 test('a broken log sink cannot turn a safe operational failure into an unhandled error',async()=>{
  const f=context(),handler=lookup({...f,diagnostics:{sink:()=>{throw Error(privateData);},makeReference:()=>id},createClient:sdk(),fetchRecord:async()=>{throw Error(privateData);}});
  const r=await handler(req({action:'preview',serial:'01234567',clientId:id}));assert.equal(r.status,400);assert.equal((await r.json()).supportReference,ref);
+});
+
+for(const scheduled of [false,true])test(`Production research ${scheduled?'scheduled':'manual'} failures stay private and preserve cleanup`,async()=>{
+ for(const cleanupFailure of ['returned','thrown']){
+  const f=context(),base=f.env;f.env=k=>({SUPABASE_URL:PRODUCTION_URL,BCM_AI_RELEASE_ENABLED:'true',BCM_SCHEDULER_SECRET:secret+'xxxxxxxxxxxxxxxxxxxxxxxx'}[k]??base(k));let providerCalls=0;const calls=[];
+  const handler=productionResearch({...f,scheduled,createClient:sdk({role:'client',rpc:async(name,args)=>{calls.push({name,args});if(['vb_begin_bcm_ai_run','vb_claim_bcm_ai_due_run'].includes(name))return {data:{ticket:id,settings:{urls:['https://www.harvey.ai/'],exclusions:[],access_mode:'public',frequency:'weekly',categories:['product_names']},known_names:[privateData]}};if(name==='vb_bcm_ai_run_is_current')return {data:true};if(cleanupFailure==='thrown')throw Error(privateData);return {error:{message:privateData}};}}),research:async()=>{providerCalls++;throw Error(privateData);}});
+  const request=scheduled?new Request('https://worker.test',{method:'POST',headers:{'x-bcm-scheduler-secret':f.env('BCM_SCHEDULER_SECRET')},body:'{}'}):req({clientId:id,version:1});
+  const response=await handler(request),body=await response.json();assert.equal(response.status,500);assert.equal(body.supportReference,ref);assert.equal(providerCalls,1);
+  assert.deepEqual(f.events.map(e=>e.stage),['cleanup','provider']);assert(f.events.every(e=>e.reference===ref));clean(f);assert(!JSON.stringify(body).includes('PRIVATE'));
+  assert.deepEqual(calls.at(-1),{name:'vb_finish_bcm_ai_run',args:{ticket:id,payload:null,failure:true}});
+ }
+});
+
+test('Production research keeps invalid input, disabled gates and initial identity/role denial quiet',async()=>{
+ for(const denied of ['project','release','role','input']){
+  const f=context(),base=f.env;let providerCalls=0;
+  f.env=k=>({SUPABASE_URL:denied==='project'?project:PRODUCTION_URL,BCM_AI_RELEASE_ENABLED:denied==='release'?'false':'true'}[k]??base(k));
+  const handler=productionResearch({...f,createClient:sdk({role:'staff',rpc:async()=>assert.fail('No research RPC on denial')}),research:async()=>providerCalls++});
+  const response=await handler(req(denied==='input'?{clientId:privateData}:{clientId:id,version:1}));assert(response.status>=400);assert.equal(f.events.length,0);assert.equal(providerCalls,0);
+ }
 });

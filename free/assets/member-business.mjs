@@ -1,3 +1,5 @@
+import {saveMemberCompany} from '../../auth/member-account.mjs';
+import {isDiagnosticError} from '../../shared/diagnostics.mjs';
 export function renderAccountBusiness(main,{e,link,panel,heading},context,onNameSaved){
  heading('Company profile','A few basics to help organize your planning.');main.append(link('← Back to the map','#'));
  if(!context.company){main.append(panel('Your company profile is not set up yet.'));return;}
@@ -14,10 +16,9 @@ export function renderAccountBusiness(main,{e,link,panel,heading},context,onName
   const submittedRevision=editRevision;
   const values=Object.fromEntries(Object.entries(inputs).map(([key,input])=>[key,input.value.trim()]));values.launch_date=values.launch_date||null;
   try{
-   const result=await context.db.from('vb_member_companies').update(values).eq('id',company.id).select('id').single();
-   if(result.error||!result.data)throw Error('Save failed');Object.assign(company,values);onNameSaved(company.name);
+   await saveMemberCompany(context.db,company.id,values);Object.assign(company,values);onNameSaved(company.name);
    if(editRevision===submittedRevision){save.textContent='✓ Saved';status.textContent='Company profile saved.';}
    else{save.textContent='Save company profile';status.textContent='You have unsaved changes.';}
-  }catch{status.textContent='Unable to save your changes. Please try again.';}finally{save.disabled=false;}
+  }catch(error){status.textContent=isDiagnosticError(error)?error.message:'Unable to save your changes. Please try again.';}finally{save.disabled=false;}
  });card.append(form);main.append(card);
 }

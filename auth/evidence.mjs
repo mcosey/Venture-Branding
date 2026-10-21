@@ -1,4 +1,4 @@
-import {supportMessage} from '../shared/diagnostics.mjs';
+import {diagnosticRequest} from '../shared/diagnostics.mjs';
 import {requireAccess} from './connection.mjs?v=20261018-record-pages';
 export const EVIDENCE_BUCKET='vb-evidence',MAX_EVIDENCE_BYTES=10485760;
 export function validateEvidence(file,input,today=new Date().toISOString().slice(0,10)){
@@ -12,16 +12,17 @@ export function validateEvidence(file,input,today=new Date().toISOString().slice
  if(notes.length>1000)throw new Error('Keep notes to 1,000 characters or fewer.');
  return {kind:input.kind,capturedOn:date,sourceUrl:input.kind==='webpage'?source:null,notes};
 }
-export function createEvidenceRepository(db,audience,{enabled=globalThis.VB_EVIDENCE_ENABLED===true}={}){
+export function createEvidenceRepository(db,audience,{enabled=globalThis.VB_EVIDENCE_ENABLED===true,diagnostics}={}){
  if(!enabled)return null;
  let generation=0;
  async function access(){const epoch=generation;await requireAccess(db,audience);if(epoch!==generation)throw new Error('This evidence session has ended.');return epoch;}
  const check=e=>{if(e!==generation)throw new Error('This evidence session has ended.');};
+ async function request(stage,work,message,options={}){const epoch=await access();return diagnosticRequest('evidence',stage,work,{diagnostics,message,...options,check:()=>check(epoch)});}
  return {
-  async list(clientId,markId){const epoch=await access();let query=db.from('vb_evidence').select('id,client_id,mark_id,kind,captured_on,source_url,notes,filename,mime_type,byte_size,object_path,uploaded_at').eq('client_id',clientId);if(markId)query=query.eq('mark_id',markId);const result=await query.is('removed_at',null).not('uploaded_at','is',null).order('uploaded_at',{ascending:false});check(epoch);if(result.error)throw new Error('Evidence could not be loaded. Please try again.');return result.data.filter(r=>r.client_id===clientId&&(!markId||r.mark_id===markId));},
-  async upload(clientId,markId,file,input,id){if(audience!=='client')throw new Error('Only clients can upload evidence.');const details=validateEvidence(file,input),epoch=await access();const form=new FormData();form.append('file',file);form.append('client',clientId);form.append('mark',markId);form.append('id',id);form.append('details',JSON.stringify(details));const result=await db.functions.invoke('evidence-upload',{body:form});check(epoch);if(result.error||!result.data?.evidence?.uploaded_at){let message='Upload not completed. Check your connection and try again.';try{const body=await result.error.context.json();message=supportMessage(body.error||message,body.supportReference);}catch{}throw new Error(message);}return result.data.evidence;},
-  async remove(clientId,id){const epoch=await access();const result=await db.rpc('vb_remove_evidence',{target_id:id,target_client:clientId});check(epoch);if(result.error)throw new Error('This upload could not be removed. Please reload and try again.');},
-  async image(record){const epoch=await access();const result=await db.storage.from(EVIDENCE_BUCKET).download(record.object_path);check(epoch);if(result.error)throw new Error('This image is unavailable. Please reload or sign in again.');return result.data;},
+  async list(clientId,markId){const result=await request('list',()=>{let query=db.from('vb_evidence').select('id,client_id,mark_id,kind,captured_on,source_url,notes,filename,mime_type,byte_size,object_path,uploaded_at').eq('client_id',clientId);if(markId)query=query.eq('mark_id',markId);return query.is('removed_at',null).not('uploaded_at','is',null).order('uploaded_at',{ascending:false});},'Evidence could not be loaded. Please try again.',{valid:r=>Array.isArray(r?.data)});return result.data.filter(r=>r.client_id===clientId&&(!markId||r.mark_id===markId));},
+  async upload(clientId,markId,file,input,id){if(audience!=='client')throw new Error('Only clients can upload evidence.');const details=validateEvidence(file,input);const result=await request('upload',()=>{const form=new FormData();form.append('file',file);form.append('client',clientId);form.append('mark',markId);form.append('id',id);form.append('details',JSON.stringify(details));return db.functions.invoke('evidence-upload',{body:form});},'Upload not completed. Check your connection and try again.',{serverReference:true,valid:r=>Boolean(r?.data?.evidence?.uploaded_at)});return result.data.evidence;},
+  async remove(clientId,id){await request('remove',()=>db.rpc('vb_remove_evidence',{target_id:id,target_client:clientId}),'This upload could not be removed. Please reload and try again.');},
+  async image(record){const result=await request('image',()=>db.storage.from(EVIDENCE_BUCKET).download(record.object_path),'This image is unavailable. Please reload or sign in again.',{valid:r=>r?.data!=null});return result.data;},
   clear(){generation++;}
  };
 }

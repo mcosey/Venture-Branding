@@ -12,7 +12,7 @@ function capture(){const events=[];let now=100;return {events,options:{sink:even
 test('only allowlisted fields enter an immutable bounded diagnostic event',()=>{
  const f=capture(),d=createDiagnostics('uspto',f.options);
  assert.equal(d.failure('fetch','unavailable',503),reference);
- assert.deepEqual(f.events,[{schema:1,release:'2026-10-19-diagnostics-1',feature:'uspto',stage:'fetch',outcome:'failure',category:'unavailable',reference,elapsed_ms:7,http_status:503}]);
+ assert.deepEqual(f.events,[{schema:1,release:'2026-10-21-diagnostics-3',feature:'uspto',stage:'fetch',outcome:'failure',category:'unavailable',reference,elapsed_ms:7,http_status:503}]);
  assert(Object.isFrozen(f.events[0]));
  d.failure(privateText,'unavailable',503);d.failure('fetch',privateText,503);
  assert.equal(f.events.length,1);

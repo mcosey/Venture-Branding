@@ -1,3 +1,4 @@
+import {diagnosticRequest} from '../../shared/diagnostics.mjs';
 import {requireAccess} from '../../auth/connection.mjs?v=20261018-record-pages';
 // Read only client-approved snapshots; never fetch raw AI findings or private notes.
 const fields='finding_id,client_id,name,kind,context,passage,source_url,approved_at,withdrawn_at';
@@ -10,11 +11,10 @@ export function reviewedMapModel(clientId,rows=[]){
  }
  return {status:'ready',clientId,findings,activity:findings.slice(0,3).map(f=>({date:f.detectedAt,label:'Discovery reviewed: '+f.name})),reviewed:true};
 }
-export async function loadReviewedMap(db,clientId){
+export async function loadReviewedMap(db,clientId,{diagnostics}={}){
  if(!clientId)throw Error('A client workspace is required.');
  await requireAccess(db,'client');
- const result=await db.from('vb_bcm_ai_publications').select(fields).eq('client_id',clientId).is('withdrawn_at',null).order('approved_at',{ascending:false});
- if(result.error)throw Error('Reviewed discoveries could not load.');
+ const result=await diagnosticRequest('research','reviewed_load',()=>db.from('vb_bcm_ai_publications').select(fields).eq('client_id',clientId).is('withdrawn_at',null).order('approved_at',{ascending:false}),{diagnostics,message:'Reviewed discoveries could not load.',valid:r=>Array.isArray(r?.data)});
  await requireAccess(db,'client');
  return reviewedMapModel(clientId,result.data||[]);
 }

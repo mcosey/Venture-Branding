@@ -69,23 +69,50 @@ const diagnosticStages=Object.freeze({
  auth:['initialize','refresh','recovery','password','mfa_enroll','mfa_verify','signout'],
  records:['clients','marks','preferences','references'],
  account:['contact_save'],
- member:['onboarding','progress_load','progress_save'],
+ member:['onboarding','entry','profile_load','profile_save','progress_load','progress_save'],
+ maintenance:['drafts_load','draft_save','publish','withdraw','publications_load'],
+ filing:['list','load','history','revisions','save','review'],
+ digest:['preferences_load','preferences_save','sample','inbox_load','message_open'],
  uspto:['identity','role','input','client_read','mark_read','configuration','fetch','fingerprint','save'],
  engagement_invite:['identity','role','input','reserve','delivery_details','deliver','finalize','cleanup'],
+ engagement:['drafts_load','draft_save','close','revoke','send','invitation_load','invitation_accept'],
  client_invite:['identity','role','input','configuration','reserve','deliver','finalize','cleanup'],
- evidence:['configuration','identity','role','input','reserve','store','verify_store','finalize'],
- watch:['input','database'],
- research:['input','identity','role','reserve','settings','current','provider','finalize','cleanup']
+ evidence:['configuration','identity','role','input','reserve','store','verify_store','finalize','list','upload','remove','image'],
+ watch:['input','database','snapshot_load','configuration_save','review'],
+ research:['input','identity','role','reserve','settings','current','provider','finalize','cleanup','workspace_load','manual_run','review','monitoring_save','reviewed_load']
 });
 const diagnosticCategories=new Set(['unavailable','conflict','permission','invalid_response','invalid_request','unexpected','configuration']);
-const diagnosticRelease='2026-10-19-diagnostics-1';
+const diagnosticRelease='2026-10-21-diagnostics-3';
 const diagnosticErrors=new WeakSet();
 export const isDiagnosticError=error=>error instanceof Error&&diagnosticErrors.has(error);
+const validReference=value=>typeof value==='string'&&/^VB-[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(value);
 export function supportMessage(message,reference){
- return message+(typeof reference==='string'&&/^VB-[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(reference)?' Reference: '+reference+'.':'');
+ return message+(validReference(reference)?' Reference: '+reference+'.':'');
 }
 export function databaseCategory(code){
  return code==='40001'||code==='23505'?'conflict':code==='42501'?'permission':'unavailable';
+}
+// Call only after feature/identity/role validation. The caller retains its scope
+// and session checks; only fixed messages/categories reach errors or diagnostics.
+export async function diagnosticRequest(feature,stage,work,{message,diagnostics,check=()=>{},valid=result=>result&&typeof result==='object',serverReference=false,silentCodes=['22023']}={}){
+ const diagnostic=createDiagnostics(feature,diagnostics);
+ const text=code=>typeof message==='function'?message(code):message;
+ const failure=(code,category)=>silentCodes.includes(code)?new Error(text(code)):diagnostic.error(stage,text(code),category||databaseCategory(code));
+ check();let result;
+ try{result=await work();}catch(error){check();if(isDiagnosticError(error))throw error;throw failure(null);}
+ check();let invalid;
+ try{invalid=!valid(result);}catch{invalid=true;}
+ if(result?.error||invalid){
+  const code=result?.error?.code;
+  if(serverReference){
+   let reference=result?.data?.supportReference;
+   if(!validReference(reference)&&result?.error?.context?.json)try{reference=(await result.error.context.json())?.supportReference;}catch{}
+   check();
+   if(validReference(reference)){const error=new Error(supportMessage(text(code),reference));error.supportReference=reference;diagnosticErrors.add(error);throw error;}
+  }
+  throw failure(code,result?.error?null:'invalid_response');
+ }
+ return result;
 }
 export function createDiagnostics(feature,{sink=event=>console.error(JSON.stringify(event)),clock=()=>performance.now(),makeReference=()=>crypto.randomUUID()}={}){
  if(!Object.hasOwn(diagnosticStages,feature))throw Error('Unknown diagnostic feature.');

@@ -3,6 +3,7 @@ import './transfer.js';
 import {requireAccess} from '../../auth/connection.mjs';
 import {createDraftStore} from './draft-store.mjs';
 import {currentReview,canApprove,canRecordReadiness} from './review-state.mjs';
+import {supportMessage} from '../../shared/diagnostics.mjs';
 
 export function setupFilingWorkspace(db) {
  const dialog=document.querySelector('#filing-editor'),$=s=>dialog.querySelector(s),form=$('#filing-inputs');
@@ -15,8 +16,8 @@ export function setupFilingWorkspace(db) {
  function clearManualReview(){$('#filing-manual').checked=false;}
  function discard(){return !dirty||window.confirm('This draft has unsaved edits. Discard those edits?');}
  function unavailable(error){
-  if(['PT409','40001'].includes(error?.code))return 'Another saved version or review exists. Your edits are still here. Reopen the saved version before continuing.';
-  if(['42P01','42883','PGRST202','PGRST205'].includes(error?.code))return 'Draft saving is not connected yet. The prepared database update must be tested and activated before this feature can save.';
+  if(['PT409','40001'].includes(error?.code))return supportMessage('Another saved version or review exists. Your edits are still here. Reopen the saved version before continuing.',error.supportReference);
+  if(['42P01','42883','PGRST202','PGRST205'].includes(error?.code))return supportMessage('Draft saving is not connected yet. The prepared database update must be tested and activated before this feature can save.',error.supportReference);
   return error?.message||'Unable to finish. Your edits have not been discarded.';
  }
  async function operation(action){

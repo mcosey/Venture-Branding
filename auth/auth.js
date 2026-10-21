@@ -1,4 +1,4 @@
-import {createDiagnostics} from '../shared/diagnostics.mjs';
+import {createDiagnostics,isDiagnosticError} from '../shared/diagnostics.mjs';
 import {showFlowLoading} from '../shared/loading.mjs';
 import {pendingInvitation,invitationDestination} from './invitation-route.mjs';
 import {memberAccountsEnabled,verifiedEntry,workspaceFor} from './member-account.mjs?v=1';
@@ -41,7 +41,7 @@ async function perform(action,stage='refresh') {
   document.querySelectorAll('button').forEach(button => button.disabled = true);
   message();
   try { await action(); }
-  catch { if(firstLoad)show('signin');message(diagnostic.error(stage,'Unable to complete this step. Please try again or contact Venture Branding.').message, true); }
+  catch(error) { if(firstLoad)show('signin');message(isDiagnosticError(error)?error.message:diagnostic.error(stage,'Unable to complete this step. Please try again or contact Venture Branding.').message, true); }
   finally { finish();firstLoad=false;busy = false; document.querySelectorAll('button').forEach(button => button.disabled = false); }
 }
 async function refresh() {

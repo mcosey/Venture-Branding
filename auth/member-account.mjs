@@ -1,5 +1,5 @@
 import {createConnection} from './connection.mjs?v=20261018-record-pages';
-import {createDiagnostics,isDiagnosticError,databaseCategory} from '../shared/diagnostics.mjs';
+import {createDiagnostics,databaseCategory} from '../shared/diagnostics.mjs';
 export const SIGNUP_NOTICE = 'member-signup-test-2026-10-16';
 export const PENDING_SIGNUP = 'vb-member-test-pending-signup-v1';
 export function memberAccountsEnabled(config,hostname) {
@@ -21,22 +21,43 @@ export function signupProfile(values) {
  return profile;
 }
 export function memberClient(){return createConnection('client');}
-export async function verifiedEntry(db) {
+export async function verifiedEntry(db,{diagnostics}={}) {
  const identity=await db.auth.getUser();if(identity.error||!identity.data.user)throw Error('Please sign in to continue.');
  const assurance=await db.auth.mfa.getAuthenticatorAssuranceLevel();
  if(assurance.error||(assurance.data.nextLevel==='aal2'&&assurance.data.currentLevel!=='aal2'))throw Error('Please verify your sign-in.');
- const entry=await db.rpc('vb_portal_entry');if(entry.error||!workspaceFor(entry.data))throw Error('This account does not currently have portal access.');
+ const diagnostic=createDiagnostics('member',diagnostics);let entry;
+ try{entry=await db.rpc('vb_portal_entry');}catch{throw diagnostic.error('entry','This account does not currently have portal access.');}
+ if(entry.error){if(entry.error.code==='42501')throw Error('This account does not currently have portal access.');throw diagnostic.error('entry','This account does not currently have portal access.',databaseCategory(entry.error.code));}
+ if(!workspaceFor(entry.data))throw Error('This account does not currently have portal access.');
  return {user:identity.data.user,entry:entry.data};
 }
 
-export async function completePendingSignup(db,user,raw,{diagnostics}={}) {
+export async function onboardMember(db,profile,{diagnostics}={}) {
+ const diagnostic=createDiagnostics('member',diagnostics);let result;
+ try{result=await db.rpc('vb_onboard_test_member',{profile,notice:SIGNUP_NOTICE,confirmed:true});}catch{throw diagnostic.error('onboarding','Account setup could not complete. Please try again.');}
+ if(result.error){if(result.error.code==='22023')throw Error('Account setup could not complete. Please check your details and try again.');throw diagnostic.error('onboarding','Account setup could not complete. Please try again.',databaseCategory(result.error.code));}
+ return true;
+}
+
+export async function completePendingSignup(db,user,raw,options={}) {
  const pending=matchingDraft(raw,user?.email);
  if(!pending?.profile)return false;
  const profile=signupProfile({fullName:pending.profile.full_name,companyName:pending.profile.name,industry:pending.profile.industry});
- const diagnostic=createDiagnostics('member',diagnostics);
- try{
- const result=await db.rpc('vb_onboard_test_member',{profile,notice:SIGNUP_NOTICE,confirmed:true});
- if(result.error)throw diagnostic.error('onboarding','Account setup could not complete. Please try again.',databaseCategory(result.error.code));
- return true;
- }catch(error){if(isDiagnosticError(error))throw error;throw diagnostic.error('onboarding','Account setup could not complete. Please try again.');}
+ return onboardMember(db,profile,options);
+}
+
+export async function loadMemberCompanies(db,{diagnostics}={}) {
+ const diagnostic=createDiagnostics('member',diagnostics);let result;
+ try{result=await db.from('vb_member_companies').select('id,name,launch_date,industry,stage,entity_type,country,region').order('id');}catch{throw diagnostic.error('profile_load','Company profile could not be loaded. Please try again.');}
+ if(result.error)throw diagnostic.error('profile_load','Company profile could not be loaded. Please try again.',databaseCategory(result.error.code));
+ if(!Array.isArray(result.data))throw diagnostic.error('profile_load','Company profile could not be loaded. Please try again.','invalid_response');
+ return result.data;
+}
+
+export async function saveMemberCompany(db,companyId,values,{diagnostics}={}) {
+ const diagnostic=createDiagnostics('member',diagnostics);let result;
+ try{result=await db.from('vb_member_companies').update(values).eq('id',companyId).select('id').single();}catch{throw diagnostic.error('profile_save','Unable to save your changes. Please try again.');}
+ if(result.error)throw diagnostic.error('profile_save','Unable to save your changes. Please try again.',databaseCategory(result.error.code));
+ if(!result.data)throw diagnostic.error('profile_save','Unable to save your changes. Please try again.','invalid_response');
+ return result.data;
 }

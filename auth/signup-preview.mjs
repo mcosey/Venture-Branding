@@ -1,7 +1,8 @@
 import {showFlowLoading} from '../shared/loading.mjs';
+import {isDiagnosticError,supportMessage} from '../shared/diagnostics.mjs';
 import {pendingInvitation,invitationDestination} from './invitation-route.mjs';
 import {acknowledgments} from '../free/assets/llk-business-state.mjs';
-import {memberAccountsEnabled,memberClient,matchingDraft,signupProfile,SIGNUP_NOTICE,PENDING_SIGNUP,verifiedEntry,workspaceFor,completePendingSignup} from './member-account.mjs?v=2';
+import {memberAccountsEnabled,memberClient,matchingDraft,signupProfile,SIGNUP_NOTICE,PENDING_SIGNUP,verifiedEntry,workspaceFor,completePendingSignup,onboardMember} from './member-account.mjs?v=2';
 const $=id=>document.getElementById(id);
 const enabled=memberAccountsEnabled(window.VB_AUTH_CONFIG,location.hostname);
 const engagementInvitation=enabled?pendingInvitation(sessionStorage,location.search):null;
@@ -50,7 +51,7 @@ async function initialize(){
    }
   }
   initialized=true;accountButtons();
- }catch{if(user){initialized=true;accountButtons();message('Your email is verified, but setup could not finish. Please try Complete account setup again.',true);}else message('Unable to connect your account. Please sign in again.',true);}
+ }catch(error){const ref=isDiagnosticError(error)?error.supportReference:null;if(user){initialized=true;accountButtons();message(supportMessage('Your email is verified, but setup could not finish. Please try Complete account setup again.',ref),true);}else message(supportMessage('Unable to connect your account. Please sign in again.',ref),true);}
  finally{finish();if(enabled&&$('account-step').hidden)$('acknowledgment-step').hidden=false;}
 }
 $('registration-form').addEventListener('submit',async event=>{
@@ -60,8 +61,7 @@ $('registration-form').addEventListener('submit',async event=>{
  try{
   const profile=signupProfile({fullName:$('full-name').value,companyName:$('company-name').value,industry:$('industry').value});
   if(user){
-   const result=await db.rpc('vb_onboard_test_member',{profile,notice:SIGNUP_NOTICE,confirmed:true});
-   if(result.error)throw result.error;
+   await onboardMember(db,profile);
    clearPending();
    location.replace(afterSetup('member.html'));return;
   }
@@ -73,7 +73,7 @@ $('registration-form').addEventListener('submit',async event=>{
   for(const storage of [sessionStorage,globalThis.localStorage]){try{storage?.setItem(PENDING_SIGNUP,draft);}catch{}}
   if(result.data.session){message('Your account is ready to finish setup. Continue through Sign in.');}
   else message('Check your email to verify your account, then sign in to finish setup. If you already have an account, use Sign in.');
- }catch{message('Unable to complete registration. Please try again or sign in if you already have an account.',true);}
+ }catch(error){message(supportMessage('Unable to complete registration. Please try again or sign in if you already have an account.',isDiagnosticError(error)?error.supportReference:null),true);}
  finally{finish();$('signup-password').value='';$('confirm-signup-password').value='';busy=false;accountButtons();}
 });
 initialize();
