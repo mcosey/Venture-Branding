@@ -6,6 +6,17 @@ import {imageType,createHandler,MAX_IMAGE_BYTES} from '../supabase/functions/evi
 const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aN8sAAAAASUVORK5CYII=','base64');
 const file={name:'evidence.png',type:'image/png',size:png.length};
 const details={kind:'webpage',capturedOn:'2026-10-01',sourceUrl:'https://example.test/product',notes:'Fictional evidence'};
+test('upload entrypoint pins the same exact SDK release as the reviewed worker and import service',async()=>{
+ const read=path=>readFile(new URL('../'+path,import.meta.url),'utf8');
+ const [entry,review,config]=await Promise.all([
+  read('supabase/functions/evidence-upload/index.ts'),
+  read('supabase/proposals/diagnostics/evidence-upload-review.ts'),
+  read('supabase/functions/uspto-lookup/deno.json')]);
+ const sdk=source=>source.match(/^import \{createClient\} from '([^']+)';/m)?.[1];
+ assert.match(sdk(entry),/^npm:@supabase\/supabase-js@\d+\.\d+\.\d+$/);
+ assert.equal(sdk(entry),sdk(review));
+ assert.equal(sdk(entry),JSON.parse(config).imports['@supabase/supabase-js']);
+});
 function db({role='client',aal='aal1',user=true,list=[],invoke,image}={}){const calls=[];return {calls,auth:{getUser:async()=>({data:{user:user?{id:'u1'}:null}}),mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:aal,nextLevel:role==='staff'?'aal2':aal}})}},rpc:async name=>{calls.push(name);return {data:role}},from(){return {select(){return this},eq(){return this},is(){return this},not(){return this},order:async()=>({data:list})}},functions:{invoke:async(...args)=>{calls.push('upload');return invoke?invoke(...args):{data:{evidence:{uploaded_at:'now'}}}}},storage:{from:()=>({download:image|| (async()=>({data:new Blob([png])}))})}};}
 test('accepts dated webpage screenshots and photos without a webpage',()=>{assert.equal(validateEvidence(file,details,'2026-10-10').kind,'webpage');assert.equal(validateEvidence(file,{...details,kind:'photo',sourceUrl:''},'2026-10-10').sourceUrl,null);});
 test('rejects wrong file types, zero bytes and oversized images',()=>{for(const f of [{...file,type:'image/svg+xml'},{...file,size:0},{...file,size:MAX_IMAGE_BYTES+1}])assert.throws(()=>validateEvidence(f,details),/PNG or JPEG/);});
