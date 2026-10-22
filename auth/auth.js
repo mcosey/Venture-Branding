@@ -274,6 +274,9 @@ async function initialize() {
     await refresh();
     if(callback.has('error'))message('This link is invalid or has expired. Request a new invitation or reset link.',true);
   },'initialize');
+  // Native form controls stay locked until submit handlers and Auth are ready.
+  $('auth-controls').disabled=false;
+  $('auth-unavailable').hidden=true;
  } finally {
   // Wait for SDK initialization before removing callback state, including errors.
   // The pending invitation was retained separately before initialization began.

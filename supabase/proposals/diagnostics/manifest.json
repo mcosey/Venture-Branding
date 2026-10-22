@@ -21,7 +21,7 @@
     "tools/bundle-uspto-dashboard.mjs": "4369dddeee8e30c0eb19a24c393fbf51bfd55f4109b8b2ad363983f87dc092da",
     "tools/bundle-engagement-invite.mjs": "19ce58ccfcf7c84fabc09d50771808131f8cb6b7cf7945af121ae6aec2c84e63",
     "tools/bundle-bcm-ai-dashboard.mjs": "7b70e2c15688f6897250ede0877d495d2563df00b00c0811a291a26040b32d2b",
-    "auth/auth.js": "fd6b06b1f10a55d8e54f88b82459e4d665cd8faecc865c647827134ccf6967bc",
+    "auth/auth.js": "b78177352dbcf7349d302ba4fa4401505a465c0c7f9835256314242994334125",
     "auth/connection.mjs": "9b87b184ad15402de569b749cbbd77ce60ccc185a9f79dc8e22a5314ef9bc333",
     "auth/account.mjs": "8242f96b26b0e434a8121fcfccff040d8efaff6fd84db4b22eb249fa87ae9315",
     "auth/member-account.mjs": "95c860660ae8fa88275edcb35b3b6345b86c580977e6d9bbbf29c7b04eb8011f",
@@ -53,7 +53,7 @@
     "tools/diagnostics.test.mjs": "0041a49b0edcb0c5710840c1fdaa444b32013c6d9e84a8fef0f7130ff5197519",
     "tools/worker-diagnostics.test.mjs": "2e5e7b125e2025332f5ca2365502d6f0b85f3b2f0bd16f7b8d7aaa3d44f87cfd",
     "tools/uspto-test-bundle.test.mjs": "c546280ac168d35b745ca4031140d80fe16b2835cbd7e04b57edbf3696e0ab3b",
-    "tools/auth-callback.test.mjs": "93bcb4f71dfeb0ee28ca3785c058e5a1fcfca61924085996c6676a3eb202e435",
+    "tools/auth-callback.test.mjs": "0b73f1f15a15356808c68e9888138163f0847cb9116eb2dff3635bd173c64e7f",
     "tools/check-diagnostics-artifacts.mjs": "1902d9ca8677205126f540730bc5ce0f54b4b3167e418b85214fcd4c71ea556b"
   },
   "artifacts": {

@@ -218,6 +218,6 @@ test('both login documents expose the same accessible, initially disabled verifi
   assert.match(html,/<label for="current-password">Current password<\/label>/);
   assert.match(html,/<label for="password-nonce">Email verification code<\/label>/);
   assert.match(html,/<section id="password-saved" hidden>/);
-  assert.match(html,/auth\/auth.js\?v=20261021-password-verification/);
+  assert.match(html,/auth\/auth.js\?v=20261021-safe-forms/);
  }
 });
