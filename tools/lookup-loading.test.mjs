@@ -13,6 +13,7 @@ class Element{
  replaceChildren(...nodes){this._text='';this.children.forEach(n=>n.parent=null);this.children=[];this.append(...nodes);}
  remove(){if(this.parent)this.parent.children=this.parent.children.filter(n=>n!==this);this.parent=null;}
  setAttribute(key,value){this.attributes[key]=String(value);}
+ querySelector(selector){const match=selector.match(/^\[([a-z-]+)\]$/);if(!match)throw new Error('Unsupported fixture selector');for(const child of this.children){if(Object.hasOwn(child.attributes,match[1]))return child;const found=child.querySelector(selector);if(found)return found;}return null;}
  addEventListener(name,fn){this.listeners[name]=fn;}
  close(){this.open=false;this.listeners.close?.();}
 }
@@ -60,4 +61,14 @@ test('a failed lookup clears the loader and leaves an enabled retry control',asy
  const f=fixture(),work=f.start();f.pending[0].reject(new Error('Fictional lookup failed'));await work;
  assert.equal(f.announcements().length,0);assert.equal(f.nodes['lookup-result'].attributes['aria-busy'],'false');
  assert.equal(f.nodes['lookup-mark'].disabled,false);assert.equal(f.nodes['lookup-message'].textContent,'Fictional lookup failed');
+});
+
+test('closing or restarting a lookup removes an earlier save error without removing other notices',()=>{
+ for(const close of [false,true]){
+  const f=fixture(),error=new Element(),notice=new Element();error.setAttribute('data-save-error','');error.textContent='Earlier duplicate rejection';notice.textContent='Review the current record';
+  f.nodes['mark-editor'].append(error,notice);
+  if(close)f.nodes['mark-editor'].close();else f.reset();
+  assert.equal(error.parent,null);assert.equal(notice.parent,f.nodes['mark-editor']);
+  assert.equal(f.nodes['mark-editor'].textContent,'Review the current record');
+ }
 });

@@ -1,0 +1,106 @@
+{
+  "status": "approved-test-import-walkthrough-passed-with-local-ui-fix",
+  "verified_date": "2026-10-20",
+  "timezone": "America/Chicago",
+  "project_ref": "imvkhicfmidzbzsbhkzs",
+  "production_changed": false,
+  "sample_application": "78787878",
+  "approved_provider_requests_maximum": 6,
+  "provider_requests_used": 6,
+  "fixture": {
+    "client_id": "df200002-0000-0000-0000-000000000001",
+    "engagement_id": "df200003-0000-0000-0000-000000000001",
+    "matter_id": "df200004-0000-0000-0000-000000000001",
+    "client_name": "USPTO SAMPLE 78787878 \u2014 DISPOSABLE FICTIONAL CLIENT",
+    "no_real_representation_asserted": true,
+    "portal_enabled": false,
+    "user_grants_created": 0,
+    "accounts_created": 0,
+    "archived_after_checks": true,
+    "imported_mark_retained_archived": true
+  },
+  "checks": {
+    "empty_short_nonnumeric_serials_rejected_in_ui": true,
+    "cannot_skip_preview": true,
+    "unchecked_review_blocks_save": true,
+    "real_deployed_preview_and_confirmed_save": true,
+    "saved_record_survives_reload": true,
+    "duplicate_rejected_with_safe_support_reference": true,
+    "saved_active_mark_count_after_duplicate": 1,
+    "stale_update_rejected_before_provider_fetch": true,
+    "stale_check_repeated_after_local_fix": true,
+    "cross_client_mark_id_mismatch_rejected": {
+      "passed": true,
+      "case": "mismatch",
+      "status": 409,
+      "error": "Mark changed or unavailable. Reopen it and look up again.",
+      "supportReference": "VB-c0c648a9-f77b-4532-9d55-176fc03d7ab8"
+    },
+    "client_foreign_records_and_import_denied": {
+      "passed": true,
+      "case": "client",
+      "role": "client",
+      "foreign_client_visible": false,
+      "foreign_marks_visible": false,
+      "worker": {
+        "status": 403,
+        "error": "Attorney sign-in with authenticator required.",
+        "supportReference": null
+      },
+      "direct_rpc": {
+        "denied": true,
+        "code": "42501"
+      }
+    },
+    "anonymous_worker_and_rpc_denied": {
+      "passed": true,
+      "case": "anonymous",
+      "worker": {
+        "status": 401,
+        "error": "Please sign in again.",
+        "supportReference": null
+      },
+      "direct_rpc": {
+        "denied": true,
+        "code": "42501"
+      }
+    },
+    "import_preserved_explicit_engagement_and_matter_scope": true,
+    "form_reopened_after_failure_has_no_old_save_error": true,
+    "archive_and_preservation": {
+      "fixture_archived": true,
+      "no_accounts_or_access_grants_changed": true,
+      "existing_rows_schema_permissions_preserved": true,
+      "retained_archived_marks": 1,
+      "retained_correct_mark_scopes": 1
+    }
+  },
+  "local_fix": {
+    "trigger": "After an import save fails, close/reopen or restart lookup.",
+    "before": "Earlier save error/reference remained visible in the next attempt.",
+    "after": "Resetting the lookup removes only the previous save-error note.",
+    "files": [
+      "attorney/assets/workspace.js",
+      "attorney.html",
+      "tools/lookup-loading.test.mjs",
+      "supabase/proposals/diagnostics/manifest.json"
+    ],
+    "portal_tests_passed": 395,
+    "focused_lookup_loading_tests_passed": 4,
+    "diagnostic_artifacts_byte_changes": false,
+    "deployed_worker_or_database_function_changes": false,
+    "committed_or_pushed": false
+  },
+  "preservation_scope": "Before setup and before/after archival, all existing public/vb_private application rows outside the reserved fixture identifiers, plus schema/permissions and Auth user IDs, matched the captured hashes. Append-only audit tables were excluded and retain the expected fixture events; counters/statistics/Auth session timestamps are not certified unchanged. This is not a backup/restore test.",
+  "credential_values_read_or_copied": false,
+  "emails_sent": false,
+  "monitoring_enabled_or_run": false,
+  "temporary_check_page": "Removed after evidence collection; source retained only in the external review outputs.",
+  "limits": [
+    "The live record was an abandoned logo application with no registration number/date; registered and changed-provider-record cases remain covered by local parser/handler tests rather than new real USPTO lookups.",
+    "Staff-without-MFA and Member-specific identity cases retain the previous rollback SQL/local evidence; this walkthrough exercised existing MFA staff, an existing Client and unsigned HTTP contexts.",
+    "Gateway/handler denials and RLS reads were invoked by a temporary exact-Test guarded UI using the existing SDK sessions, without displaying tokens.",
+    "395 portal tests ran after the UI correction; the 36 unchanged Python Watch checks passed in the preceding GitHub run, not rerun for this UI-only change."
+  ],
+  "environment_coordination": "BCM Test may be paused temporarily during the next local-only diagnostic coverage/preparation work, at the owner\u2019s instruction. It is needed again for later hosted verification/rollout rehearsal. No project was paused or resumed here."
+}

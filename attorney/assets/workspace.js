@@ -250,7 +250,7 @@ const  gate=setupGate(db,'staff');
     markForm.elements.confirmOwner.required=isLookup();markForm.elements.confirmOwner.disabled=!isLookup();$('#owner-confirm-label').hidden=!isLookup();
     if(markStep===2)renderMarkSummary($('#mark-review'),markValues());
   }
-  function resetLookup(){lookupVersion++;finishLookupLoading?.();finishLookupLoading=null;$('#lookup-result').setAttribute('aria-busy','false');lookupResult=null;$('#lookup-result').replaceChildren();$('#lookup-message').textContent='';markForm.elements.confirmOwner.checked=false;}
+  function resetLookup(){markEditor.querySelector('[data-save-error]')?.remove();lookupVersion++;finishLookupLoading?.();finishLookupLoading=null;$('#lookup-result').setAttribute('aria-busy','false');lookupResult=null;$('#lookup-result').replaceChildren();$('#lookup-message').textContent='';markForm.elements.confirmOwner.checked=false;}
   function openMarkEditor(mark=null){if(selected.archived)return;editingMark=mark;markOwner=selected;markStep=mark?1:0;markForm.reset();resetLookup();$('#mark-editor-title').textContent=mark?(mark.linkedIdentifier?'Refresh USPTO Details':'Link USPTO Record'):'Add New Mark';$('#mark-save').textContent=mark?'Update mark':'Save mark';markForm.elements.identifier.value=mark?.linkedIdentifier||'';$('#mark-client').textContent=selected.name+(mark?' · '+mark.name:'');showMarkStep();markEditor.showModal();}
   markForm.elements.identifier.addEventListener('input',resetLookup);
   markForm.querySelectorAll('[name="path"]').forEach(input=>input.addEventListener('change',()=>{resetLookup();showMarkStep();}));
