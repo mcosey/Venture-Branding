@@ -69,13 +69,48 @@ dependency on PGlite; those source checks alone do not prove RLS behavior.
 ## Later hosted work — not authorized by this preparation
 
 Do not run `local-fixtures.sql` or the isolated setup against a hosted database.
-No hosted fixture/rehearsal script is included in this package. Before asking to
-apply the correction, prepare a target-specific rollback rehearsal and preservation
-checks from a fresh catalog snapshot, accounting for that target's installed
-engagement mapping/triggers and real Storage implementation. Review its exact
-contents and obtain the owner's approval before resuming Test, creating temporary
-grants/fixtures or applying database permissions. Rehearse and validate before
-separately approved persistent application, then verify catalog and access results.
+A main-Venture-Branding-only, **unexecuted** rehearsal was prepared October 22 as
+`02-main-rollback-rehearsal.sql`, from the same-day approved read-only metadata.
+It deliberately uses **no hosted fixtures, accounts, grants or Storage writes**.
+It does not exercise record-write triggers or Test's engagement engine. It must
+not be used on BCM Test or a different database. Its cluster guard, exact policy
+baseline, seven helper hashes, private bucket and Storage policy checks stop on
+drift. The exact reviewed correction body is reused without its outer transaction
+or commit; savepoint and final transaction rollbacks retain the installed rule.
+
+The rehearsal captures session-local catalog metadata and evidence/mark row
+fingerprints, asserts that only the policy predicate changes, then verifies
+savepoint rollback restores the baseline. It probes row denial with an unassigned
+UUID without creating an account or impersonating a real user. Anonymous metadata
+and browser-write/completion grants are checked as effective privileges. It reads
+real rows internally for fingerprints, but returns only success booleans, never
+record details, identities or file contents. A short exclusive evidence lock and
+shared mark lock can briefly delay evidence access and mark writes; initial lock
+acquisition gives up after one second. The unchanged correction body has its own
+reviewed timeouts; the tighter rehearsal timeouts are restored immediately after.
+Concurrent Storage metadata changes cause a preservation failure, not permission
+to overwrite or retry blindly. No managed Storage table is locked or modified.
+
+Preparation is not execution approval. `tools/evidence-policy-rehearsal.test.mjs`
+checks the no-commit/no-persistent-write contract offline; it is not a hosted SQL
+parser or an access-engine test. The recorded 62 isolated SQL checks and 23
+evidence/source checks still provide the prior synthetic role/boundary coverage.
+The previous temporary SQL runtime is no longer present; no replacement was
+downloaded or installed. Hosted parsing, actual authenticated sessions, signed
+downloads and full platform behavior remain unverified by this preparation.
+
+After owner approval, run the **complete** rehearsal in one SQL Editor request
+on main Venture Branding. Never run highlighted fragments, remove a guard,
+substitute COMMIT or feed it to a client that commits each statement. Require the
+single `evidence_rehearsal` success object and completed final ROLLBACK, followed
+by the approved read-only preflight again to confirm the baseline externally.
+If execution errors, issue ROLLBACK in that same editor session before any further
+work; no success claim follows an error. The SQL Editor may use a different pooled
+session for a later request, so a separate ROLLBACK is cleanup assistance rather
+than proof; the full original request contains no COMMIT and must fail/roll back
+as a unit. Save the response and follow-up baseline before asking to persist the
+correction. Persistent application requires separate approval. Do not resume Test
+or interrupt Cotivate for this main-only rehearsal.
 
 If a rehearsal fails, roll back the transaction. Do not reinstall the original
 weaker predicate as a production rollback or disable row security to resolve a
