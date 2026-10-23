@@ -1,5 +1,7 @@
 # Current environment and release record
 
+October 22 preparation: the owner narrowed work to Production-specific Member/Client source preparation and existing-client mapping review only. `supabase/proposals/portal-production/README.md` records the prepared gated browser/worker path and private SQL assembler. No migration, activation, worker deployment, Auth setting change or Test/Cotivate action is included. Current Production flags/feature contract remain unchanged; its new origin list and Member flag are absent/off. Private client mapping and generated SQL stay outside Git, with mapping approval false. The October 22 evidence row-policy correction was separately approved/applied and must remain preserved. No backup/restore, rehearsal, public rollout or policy-content task is part of this narrowed checkpoint.
+
 Updated October 21, 2026. This record supersedes historical host/homepage instructions in older handoffs.
 
 - Venture Branding is a SaaS, not a CRM or practice-management system. Clio/QuickBooks remain separate.

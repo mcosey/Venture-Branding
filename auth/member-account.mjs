@@ -2,10 +2,17 @@ import {createConnection} from './connection.mjs?v=20261018-record-pages';
 import {createDiagnostics,databaseCategory} from '../shared/diagnostics.mjs';
 export const SIGNUP_NOTICE = 'member-signup-test-2026-10-16';
 export const PENDING_SIGNUP = 'vb-member-test-pending-signup-v1';
-export function memberAccountsEnabled(config,hostname) {
- return config?.memberAccountsEnabled===true && config.environment==='bcm-test'
-  && config.url==='https://imvkhicfmidzbzsbhkzs.supabase.co'
+export function memberAccountsEnabled(config,hostname,origin=globalThis.location?.origin) {
+ if(config?.memberAccountsEnabled!==true)return false;
+ if(config.environment==='bcm-test')return config.url==='https://imvkhicfmidzbzsbhkzs.supabase.co'
   && ['127.0.0.1','localhost'].includes(hostname);
+ if(config.environment!=='bcm-production'||config.url!=='https://omvkwiosonatswocbdgx.supabase.co'
+  ||!Array.isArray(config.memberOrigins)||!config.memberOrigins.includes(origin))return false;
+ try{
+  const url=new URL(origin);
+  return url.origin===origin&&url.hostname===hostname&&!url.username&&!url.password
+   &&(url.protocol==='https:'||(url.protocol==='http:'&&['127.0.0.1','localhost'].includes(hostname)));
+ }catch{return false;}
 }
 export function workspaceFor(entry) {
  const routes={client:'portal.html',member:'member.html',onboarding:'signup.html',staff:'attorney-login.html'};

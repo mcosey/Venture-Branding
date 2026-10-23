@@ -6,6 +6,19 @@ test('Member registration cannot activate against Production, non-loopback, or a
  assert.equal(memberAccountsEnabled(config,'127.0.0.1'),true);
  for(const [c,h]of [[{...config,url:'https://omvkwiosonatswocbdgx.supabase.co'},'localhost'],[config,'example.com'],[{...config,memberAccountsEnabled:false},'localhost'],[{...config,environment:'bcm-production'},'localhost']])assert.equal(memberAccountsEnabled(c,h),false);
 });
+test('prepared Production Member gate requires an exact opted-in origin and project',()=>{
+ const production={...config,environment:'bcm-production',url:'https://omvkwiosonatswocbdgx.supabase.co',memberOrigins:['http://127.0.0.1:8894']};
+ assert.equal(memberAccountsEnabled(production,'127.0.0.1','http://127.0.0.1:8894'),true);
+ for(const [c,h,o] of [
+  [{...production,memberAccountsEnabled:false},'127.0.0.1','http://127.0.0.1:8894'],
+  [{...production,memberOrigins:[]},'127.0.0.1','http://127.0.0.1:8894'],
+  [production,'127.0.0.1','http://127.0.0.1:8893'],
+  [production,'other.example','http://127.0.0.1:8894'],
+  [{...production,url:config.url},'127.0.0.1','http://127.0.0.1:8894'],
+  [{...production,memberOrigins:['http://insecure.example']},'insecure.example','http://insecure.example'],
+  [{...production,memberOrigins:['https://user:pass@example.test']},'example.test','https://user:pass@example.test']
+ ])assert.equal(memberAccountsEnabled(c,h,o),false);
+});
 test('routing accepts only known server-derived entries',()=>{
  assert.equal(workspaceFor('member'),'member.html');assert.equal(workspaceFor('onboarding'),'signup.html');assert.equal(workspaceFor('client'),'portal.html');
  for(const value of ['denied','https://evil.test','__proto__',null])assert.equal(workspaceFor(value),null);
