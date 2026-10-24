@@ -17,7 +17,7 @@ test('malformed or incompatible saved data cannot break the roadmap or invent co
 });
 test('all working milestones link to existing articles and have unique route ids',()=>{
  assert.equal(new Set(milestones.map(m=>m.id)).size,milestones.length);assert.equal(new Set(categories.map(c=>c.id)).size,categories.length);
- for(const m of milestones){assert.ok(m.tasks.length>0);assert.ok(m.questions.length>0);for(const [,slug] of m.resources)assert.ok(fs.existsSync(new URL('../blog/posts/'+slug+'.html',import.meta.url)),slug);}
+ for(const m of milestones){assert.ok(m.tasks.length>0);assert.ok(Array.isArray(m.questions));for(const [,slug] of m.resources)assert.ok(fs.existsSync(new URL('../blog/posts/'+slug+'.html',import.meta.url)),slug);}
 });
 
 test('each category has satellites and every working satellite opens an existing milestone',()=>{

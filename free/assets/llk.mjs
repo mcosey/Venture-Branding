@@ -3,10 +3,12 @@ import {memberContext} from '../../auth/member-session.mjs?v=1';
 import {renderBusiness,savedBusinessName} from './llk-business.mjs?v=member-account-2';
 import {icon} from './llk-icons.mjs';
 import {createMasterAtlas} from './llk-atlas.mjs?v=company-label-1';
-import {categories,categoryTasks,milestones,emptyProgress,decodeProgress,milestoneStatus} from './llk-data.mjs';
+import {createChecklistItem} from './llk-checklist.mjs';
+import {categories,categoryTasks,milestones,emptyProgress,decodeProgress,milestoneStatus,taskProgressIndex} from './llk-data.mjs';
 const key='vb-llk-prototype-v1'+(memberContext?':'+memberContext.user.id:'');let progress=emptyProgress(), storageAvailable=true, listView=false, diagramObserver;
 if(!memberContext){try{progress=decodeProgress(localStorage.getItem(key));}catch{storageAvailable=false;}}
 let accountStore, browserImport;
+const expandedTasks=new Set();
 const main=document.querySelector('#llk-main'), status=document.querySelector('#save-status');
 const e=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
 function link(text,href,cls='text-link'){const n=e('a',text,cls);n.href=href;return n;}
@@ -72,9 +74,39 @@ function graph(items,centerName,centerSub,category){
 function master(){heading('Legal Launch Kit','See the legal landscape around your business. Choose a category to learn, plan, and take your next step.');const total=milestones.reduce((sum,m)=>sum+milestoneStatus(progress,m).done,0);const stats=e('div',undefined,'stats');stats.append(e('span','7 topic areas'),e('span','Formation: '+milestones.filter(m=>milestoneStatus(progress,m).label==='Completed').length+' of 5 milestones completed'),e('span',total+' planning tasks checked'));main.append(stats,graph(categories,'Your business','Explore freely',false));const guidance=panel('Start with formation');guidance.append(e('p','Phase 1 includes five working Formation milestones. The other categories show the planned roadmap and are not built yet.'),link('Explore Formation & structure →','#category/formation','primary'));main.append(guidance);}
 function category(id){const c=categories.find(c=>c.id===id);if(!c){notFound();return;}if(id!=='formation'){heading(c.name,c.description);main.append(link('← All categories','#'));const p=panel('Category preview');p.append(e('p','This category is planned for Phase 2. Its milestones and content are not connected in this prototype.'),link('Explore the working Formation category →','#category/formation','primary'));main.append(p);return;}
  heading(c.name,c.description,crumbs());main.append(graph(milestones,'Formation','5 planning milestones',true));}
-function milestone(id){const m=milestones.find(m=>m.id===id);if(!m){notFound();return;}heading(m.name,m.intro,crumbs(m));const s=milestoneStatus(progress,m);const summary=e('div',undefined,'workspace-summary');const p=panel(s.label,'progress-panel');p.append(e('p',s.done+' of '+s.total+' planning tasks checked'),e('strong',s.percent+'%','percent'));const bar=e('progress');bar.max=s.total;bar.value=s.done;bar.setAttribute('aria-label',m.name+' checklist progress');p.append(bar);const what=panel('What is this?');what.append(e('p',m.explanation));summary.append(p,what);main.append(summary);
- const layout=e('div',undefined,'milestone-layout');const tasks=panel('Milestone checklist');tasks.append(e('p','Check tasks as you address them. You can uncheck them at any time.','muted'));m.tasks.forEach((task,i)=>{const label=e('label',undefined,'task');const input=e('input');input.type='checkbox';input.id='task-'+i;input.checked=progress.tasks[m.id]?.[i]===true;input.onchange=()=>{progress.tasks[m.id]??=m.tasks.map(()=>false);progress.tasks[m.id][i]=input.checked;save(m.id);render();document.querySelector('#task-'+i)?.focus();};label.append(input,e('span',task));tasks.append(label);});layout.append(tasks);const resources=panel('Resources');resources.append(e('p','Read more in the Venture Branding library.','muted'));for(const [title,slug]of m.resources)resources.append(link(title+' ↗','../blog/posts/'+slug+'.html','resource'));layout.append(resources);main.append(layout);
- const bottom=e('div',undefined,'milestone-layout');const questions=panel('Questions for counsel');const ul=e('ul');for(const q of m.questions)ul.append(e('li',q));questions.append(ul);const planner=panel('Conversation planner');const label=e('label','What would you like to discuss?');label.htmlFor='planning-notes';const notes=e('textarea');notes.id='planning-notes';notes.maxLength=3000;notes.rows=5;notes.value=progress.notes[m.id]||'';notes.placeholder='Organize your questions for a future conversation.';notes.setAttribute('aria-describedby','notes-help');notes.oninput=()=>{progress.notes[m.id]=notes.value;save(m.id);};const help=e('p',memberContext?'Avoid confidential information. Notes are saved to your account for your planning and are not sent to an attorney.':'Avoid confidential information. Notes remain in this browser and are not sent to an attorney.','muted');help.id='notes-help';planner.append(label,notes,help);bottom.append(questions,planner);main.append(bottom);const related=panel('Related milestones');const row=e('div',undefined,'related-links');for(const other of milestones.filter(x=>x.id!==m.id))row.append(link(other.name,'#milestone/'+other.id));related.append(row);main.append(related);}
+function milestone(id){
+ const m=milestones.find(m=>m.id===id);if(!m){notFound();return;}
+ heading(m.name,m.intro,crumbs(m));const s=milestoneStatus(progress,m);
+ const summary=e('div',undefined,'workspace-summary');const p=panel(s.label,'progress-panel');
+ p.append(e('p',s.done+' of '+s.total+' planning tasks checked'),e('strong',s.percent+'%','percent'));
+ const bar=e('progress');bar.max=s.total;bar.value=s.done;bar.setAttribute('aria-label',m.name+' checklist progress');p.append(bar);
+ const what=panel('What is this?');what.append(e('p',m.explanation));summary.append(p,what);main.append(summary);
+ const layout=e('div',undefined,'milestone-layout');const tasks=panel('Milestone checklist');
+ tasks.append(e('p','Check tasks as you address them. You can uncheck them at any time.','muted'));
+ m.tasks.forEach((task,i)=>{
+  const index=taskProgressIndex(m,i),key=m.id+':'+i;
+  tasks.append(createChecklistItem({title:task,detail:m.taskDetails?.[i],index:i,checked:progress.tasks[m.id]?.[index]===true,open:expandedTasks.has(key),
+   onToggle:open=>{if(open)expandedTasks.add(key);else expandedTasks.delete(key);},
+   onChange:checked=>{
+    progress.tasks[m.id]??=Array.from({length:taskProgressIndex(m,m.tasks.length)},()=>false);
+    progress.tasks[m.id][index]=checked;save(m.id);render();document.querySelector('#task-'+i)?.focus();
+   }
+  }));
+ });
+ layout.append(tasks);const resources=panel('Resources');resources.append(e('p','Read more in the Venture Branding library.','muted'));
+ for(const [title,slug]of m.resources)resources.append(link(title,'../blog/posts/'+slug+'.html','resource'));
+ layout.append(resources);main.append(layout);
+ const bottom=e('div',undefined,'milestone-layout'+(m.questions.length?'':' planner-only'));
+ if(m.questions.length){const questions=panel('Questions for counsel');const ul=e('ul');for(const q of m.questions)ul.append(e('li',q));questions.append(ul);bottom.append(questions);}
+ const planner=panel('Conversation planner');const label=e('label','What would you like to discuss?');label.htmlFor='planning-notes';
+ const notes=e('textarea');notes.id='planning-notes';notes.maxLength=3000;notes.rows=5;notes.value=progress.notes[m.id]||'';
+ notes.placeholder='Organize your questions for a future conversation.';notes.setAttribute('aria-describedby','notes-help');
+ notes.oninput=()=>{progress.notes[m.id]=notes.value;save(m.id);};
+ const help=e('p',memberContext?'Avoid confidential information. Notes are saved to your account for your planning and are not sent to an attorney.':'Avoid confidential information. Notes remain in this browser and are not sent to an attorney.','muted');help.id='notes-help';
+ planner.append(label,notes,help);bottom.append(planner);main.append(bottom);
+ const related=panel('Related milestones');const row=e('div',undefined,'related-links');
+ for(const other of milestones.filter(x=>x.id!==m.id))row.append(link(other.name,'#milestone/'+other.id));related.append(row);main.append(related);
+}
 function notFound(){heading('This milestone is not available','Choose a category to continue exploring.');main.append(link('Return to Legal Launch Kit','#','primary'));}
 function render(){
  diagramObserver?.disconnect();main.replaceChildren();const parts=location.hash.slice(1).split('/');

@@ -14,3 +14,11 @@ body{font-family:"Avenir Next",Avenir,"Segoe UI",sans-serif;font-weight:400}h1,h
 .business-ack-text{max-width:82ch;margin:20px 0 24px;line-height:1.8}.business-ack-text p{font-size:14px;margin-bottom:16px}.business-ack{margin-top:20px}
 
 .business-ack-text{padding-left:24px}.business-ack-text li{padding-left:8px;margin-bottom:16px;font-size:14px;color:var(--muted)}.business-ack-text li::marker{color:var(--coral);font-weight:500}
+
+.task-details{flex:1;min-width:0}
+.task-details summary{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;list-style:none;cursor:pointer}
+.task-details summary::-webkit-details-marker{display:none}
+.task-details summary::after{content:"";width:8px;height:8px;flex:0 0 8px;border-right:2px solid var(--coral);border-bottom:2px solid var(--coral);transform:rotate(45deg);margin:7px 3px 0 0}
+.task-details[open] summary::after{transform:rotate(225deg);margin-top:11px}
+.task-details p{color:var(--muted);font-size:13px;line-height:1.7;margin:12px 0 0}
+.milestone-layout.planner-only{grid-template-columns:minmax(0,1fr)}

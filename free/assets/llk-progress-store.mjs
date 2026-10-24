@@ -1,4 +1,4 @@
-import {milestones,emptyProgress,decodeProgress} from './llk-data.mjs';
+import {milestones,emptyProgress,decodeProgress,taskProgressIndex} from './llk-data.mjs';
 import {createDiagnostics,databaseCategory} from '../../shared/diagnostics.mjs';
 const known=new Set(milestones.map(m=>m.id));
 export function progressPayload(progress,id){
@@ -19,7 +19,7 @@ export function readAccountProgress(rows,companyId){
 }
 export function mergeBrowserProgress(account,browser){
  const merged=decodeProgress(JSON.stringify(account)),source=decodeProgress(JSON.stringify(browser));
- for(const m of milestones){merged.tasks[m.id]=m.tasks.map((_,i)=>merged.tasks[m.id]?.[i]===true||source.tasks[m.id]?.[i]===true);if(!merged.notes[m.id])merged.notes[m.id]=source.notes[m.id]||'';}
+ for(const m of milestones){merged.tasks[m.id]=Array.from({length:taskProgressIndex(m,m.tasks.length)},(_,i)=>merged.tasks[m.id]?.[i]===true||source.tasks[m.id]?.[i]===true);if(!merged.notes[m.id])merged.notes[m.id]=source.notes[m.id]||'';}
  return merged;
 }
 export function createAccountProgressStore({db,companyId,onState=()=>{},delay=350,diagnostics}){

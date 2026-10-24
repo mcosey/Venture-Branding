@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createAccountProgressStore,mergeBrowserProgress,readAccountProgress} from '../free/assets/llk-progress-store.mjs';
-import {emptyProgress} from '../free/assets/llk-data.mjs';
+import {emptyProgress,milestones,milestoneStatus,taskProgressIndex} from '../free/assets/llk-data.mjs';
 function fixture(){
  const rows=new Map(),calls=[],states=[];let failure=false,counter=0;
  const db={from:()=>({select:()=>({eq:async(_,company)=>({data:[...rows.values()].filter(row=>row.company_id===company)})})}),rpc:async(name,args)=>{
@@ -46,7 +46,17 @@ test('unexpected account scope or malformed rows fail closed',()=>{
 });
 test('explicit import keeps account checkmarks and existing account notes',()=>{
  const account=emptyProgress(),browser=emptyProgress();account.tasks.entity=[true,false,false,false];account.notes.entity='Account note';browser.tasks.entity=[false,true,false,false];browser.notes.entity='Browser note';browser.notes.founders='Another question';
- const merged=mergeBrowserProgress(account,browser);assert.deepEqual(merged.tasks.entity,[true,true,false,false]);assert.equal(merged.notes.entity,'Account note');assert.equal(merged.notes.founders,'Another question');assert.equal(account.tasks.entity[1],false);
+ const merged=mergeBrowserProgress(account,browser);assert.deepEqual(merged.tasks.entity.slice(0,4),[true,true,false,false]);assert.ok(merged.tasks.entity.slice(4).every(value=>value===false));assert.equal(merged.notes.entity,'Account note');assert.equal(merged.notes.founders,'Another question');assert.equal(account.tasks.entity[1],false);
+});
+test('revised entity checklist preserves legacy progress and notes without inventing new completion',async()=>{
+ const f=fixture(),m=milestones.find(m=>m.id==='entity');
+ f.rows.set('entity',{company_id:'own-company',milestone_id:'entity',progress:{version:1,tasks:[true,true,true,true],notes:'Existing planning note'},updated_at:'legacy-revision'});
+ const progress=await f.store.load();assert.equal(milestoneStatus(progress,m).done,0);
+ assert.deepEqual(progress.tasks.entity.slice(0,4),[true,true,true,true]);assert.equal(progress.notes.entity,'Existing planning note');
+ progress.tasks.entity[taskProgressIndex(m,0)]=true;f.store.queue('entity',progress);assert.equal(await f.store.flush(),true);
+ const restored=await createAccountProgressStore({db:f.db,companyId:'own-company'}).load();
+ assert.equal(milestoneStatus(restored,m).done,1);assert.equal(milestoneStatus(restored,m).total,m.tasks.length);
+ assert.deepEqual(restored.tasks.entity.slice(0,4),[true,true,true,true]);assert.equal(restored.notes.entity,'Existing planning note');
 });
 test('reset saves empty progress and persists across another session',async()=>{
  const f=fixture(),progress=await f.store.load();progress.notes.entity='Question';progress.tasks.entity=[true,true,true,true];f.store.queue('entity',progress);await f.store.flush();
