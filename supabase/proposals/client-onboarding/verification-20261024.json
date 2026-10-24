@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-24",
+  "project": "omvkwiosonatswocbdgx",
+  "approved": true,
+  "database_applied": true,
+  "offline_checks": {
+    "passed": 500,
+    "failed": 0,
+    "network_blocked": true
+  },
+  "rehearsal": {
+    "checks": 34,
+    "passed": true,
+    "existing_records_preserved": true,
+    "auth_ids_preserved": true,
+    "permissions_preserved": true,
+    "proposed_objects_rolled_back": true
+  },
+  "installed_verification": {
+    "checks": 34,
+    "passed": true,
+    "existing_records_preserved": true,
+    "auth_ids_preserved": true,
+    "permissions_preserved": true
+  },
+  "fixtures": {
+    "fictional_auth_rows_per_run": 6,
+    "fictional_clients_per_run": 3,
+    "all_rolled_back": true,
+    "audit_sequence_counters_may_advance": true
+  },
+  "persistent_auth_users_created": 0,
+  "persistent_client_records_created": 0,
+  "profile_backfills": 0,
+  "emails_sent": 0,
+  "legal_text_changed": false,
+  "hosting_changes": false,
+  "software_installed": false,
+  "test_project_changed": false,
+  "cotivate_project_changed": false,
+  "client_agreements": "Handled separately with the engagement letter; no Client agreement acceptance recorded by this flow.",
+  "browser_verified": "Existing Client sees basic profile form without Member acknowledgments or repeated sign-in prompt.",
+  "remaining_user_step": "Submit the existing Client profile and verify the Legal Launch Kit map loads.",
+  "private_receipts": "Saved outside the repository.",
+  "applied_sql_sha256": "a81b32171ae644a2d7410afa549c15c65a7b2b8cb49174919fff4016fb4367d5"
+}

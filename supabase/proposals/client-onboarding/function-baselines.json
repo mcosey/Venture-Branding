@@ -1,0 +1,10 @@
+{
+  "vb_onboard_test_member": {
+    "baseline_body_md5": "eba7597ebb94408d2e38cee1259d1f54",
+    "new_body_md5": "5f979b8f6982e818742997f11e6c8239"
+  },
+  "vb_accept_test_engagement_invite": {
+    "baseline_body_md5": "bc2308c3858db647d9e12c3ea5622065",
+    "new_body_md5": "55c84632f1333025a3e611035e9cdd9c"
+  }
+}

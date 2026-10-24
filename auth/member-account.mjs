@@ -2,6 +2,7 @@ import {createConnection} from './connection.mjs?v=20261018-record-pages';
 import {createDiagnostics,databaseCategory} from '../shared/diagnostics.mjs';
 export const SIGNUP_NOTICE = 'member-signup-test-2026-10-16';
 export const PENDING_SIGNUP = 'vb-member-test-pending-signup-v1';
+export const PENDING_CLIENT_SIGNUP = 'vb-client-pending-signup-v1';
 export function memberAccountsEnabled(config,hostname,origin=globalThis.location?.origin) {
  if(config?.memberAccountsEnabled!==true)return false;
  if(config.environment==='bcm-test')return config.url==='https://imvkhicfmidzbzsbhkzs.supabase.co'
@@ -21,6 +22,9 @@ export function workspaceFor(entry) {
 export function matchingDraft(raw,email) {
  try {const value=JSON.parse(raw);return value?.notice===SIGNUP_NOTICE&&typeof email==='string'&&value.email?.toLowerCase()===email.toLowerCase()?value:null;}catch{return null;}
 }
+export function matchingClientDraft(raw,email,invitationId){
+ try{const value=JSON.parse(raw);return value?.version===1&&typeof email==='string'&&value.email?.toLowerCase()===email.toLowerCase()&&value.invitation===invitationId&&value.profile?value:null;}catch{return null;}
+}
 export function signupProfile(values) {
  const profile={full_name:String(values.fullName||'').trim(),name:String(values.companyName||'').trim(),industry:String(values.industry||'').trim(),launch_date:String(values.launchDate||'')};
  if(!profile.full_name||profile.full_name.length>120||!profile.name||profile.name.length>120||profile.industry.length>100)throw Error('Enter your name and company name within the displayed limits.');
@@ -28,7 +32,7 @@ export function signupProfile(values) {
  return profile;
 }
 export function memberClient(){return createConnection('client');}
-export async function verifiedEntry(db,{diagnostics}={}) {
+export async function verifiedEntry(db,{diagnostics,requireProfile=false,invitationId=null}={}) {
  const identity=await db.auth.getUser();if(identity.error||!identity.data.user)throw Error('Please sign in to continue.');
  const assurance=await db.auth.mfa.getAuthenticatorAssuranceLevel();
  if(assurance.error||(assurance.data.nextLevel==='aal2'&&assurance.data.currentLevel!=='aal2'))throw Error('Please verify your sign-in.');
@@ -36,7 +40,37 @@ export async function verifiedEntry(db,{diagnostics}={}) {
  try{entry=await db.rpc('vb_portal_entry');}catch{throw diagnostic.error('entry','This account does not currently have portal access.');}
  if(entry.error){if(entry.error.code==='42501')throw Error('This account does not currently have portal access.');throw diagnostic.error('entry','This account does not currently have portal access.',databaseCategory(entry.error.code));}
  if(!workspaceFor(entry.data))throw Error('This account does not currently have portal access.');
+ if(requireProfile&&['member','client','onboarding'].includes(entry.data)){
+  let onboardingKind=entry.data==='client'?'client':'member';
+  if(invitationId){
+   let invitation;try{invitation=await db.rpc('vb_read_test_engagement_invite',{invitation_id:invitationId});}catch{throw diagnostic.error('entry','Your invitation could not be verified. Please try again.');}
+   if(invitation.error||!invitation.data||typeof invitation.data.client_name!=='string')throw Error('This invitation is unavailable for this account.');
+   onboardingKind='client';
+  }
+  const companies=entry.data==='onboarding'&&onboardingKind==='member'?[]:await loadMemberCompanies(db,{diagnostics});
+  let complete=companies.length>0;
+  if(complete&&onboardingKind==='member'){
+   let accepted;try{accepted=await db.rpc('vb_member_onboarding_complete');}catch{throw diagnostic.error('entry','Account setup could not be checked. Please try again.');}
+   if(accepted.error||typeof accepted.data!=='boolean')throw diagnostic.error('entry','Account setup could not be checked. Please try again.');
+   complete=accepted.data;
+  }
+  return {user:identity.data.user,entry:complete?(entry.data==='onboarding'?'member':entry.data):'onboarding',onboardingKind,companies};
+ }
  return {user:identity.data.user,entry:entry.data};
+}
+
+export async function onboardClient(db,profile,invitationId=null,{diagnostics}={}){
+ const diagnostic=createDiagnostics('member',diagnostics);let result;
+ try{result=await db.rpc('vb_onboard_client',{profile,invitation_id:invitationId});}catch{throw diagnostic.error('onboarding','Client profile setup could not complete. Please try again.');}
+ if(result.error||typeof result.data!=='string')throw diagnostic.error('onboarding','Client profile setup could not complete. Please try again.',databaseCategory(result.error?.code));
+ return true;
+}
+
+export async function completePendingClientSignup(db,user,raw,invitationId,options={}){
+ const pending=matchingClientDraft(raw,user?.email,invitationId);
+ if(!pending)return false;
+ const profile=signupProfile({fullName:pending.profile.full_name,companyName:pending.profile.name,industry:pending.profile.industry});
+ return onboardClient(db,profile,invitationId,options);
 }
 
 export async function onboardMember(db,profile,{diagnostics}={}) {

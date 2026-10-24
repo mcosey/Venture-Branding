@@ -1,7 +1,7 @@
 import {createDiagnostics,isDiagnosticError} from '../shared/diagnostics.mjs';
 import {showFlowLoading} from '../shared/loading.mjs';
 import {pendingInvitation,invitationDestination} from './invitation-route.mjs';
-import {memberAccountsEnabled,verifiedEntry,workspaceFor} from './member-account.mjs?v=1';
+import {memberAccountsEnabled,verifiedEntry,workspaceFor} from './member-account.mjs?v=client-onboarding-1';
 import {nextStep, validConfiguration} from './flow.mjs?v=20261011-test-portal';
 import {requireAccess} from './connection.mjs?v=20261018-record-pages';
 const $ = id => document.getElementById(id);
@@ -154,7 +154,7 @@ async function refresh() {
     show('set-password','Set your password','Choose a password for your Venture Branding account.');
   } else {
     if(audience==='client'&&memberAccountsEnabled(window.VB_AUTH_CONFIG,location.hostname)){
-      const access=await verifiedEntry(client);clearSecrets();location.replace(invitationDestination(workspaceFor(access.entry),engagementInvitation));return;
+      const access=await verifiedEntry(client,{requireProfile:true,invitationId:engagementInvitation});clearSecrets();location.replace(invitationDestination(workspaceFor(access.entry),engagementInvitation));return;
     }
     await requireAccess(client,audience);
     clearSecrets();
