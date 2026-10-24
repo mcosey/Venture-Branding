@@ -1,5 +1,7 @@
 # Production Member/Client preparation — steps 2 and 3 only
 
+> Activation update — October 23, 2026: the owner separately approved main installation. The database package and existing client mapping were applied with preservation/access checks; the corrected main invitation bundle is deployed and verifies unsigned/origin denial. Main signup requires email confirmation. The browser configuration opts in only the 8895 loopback preview. The shared allowlist now connects lookup/research from 8895 while preserving 8000. The separately approved upload origin-only change is deployed and verified, preserving every other installed line. All 483 offline checks and the limited live connection/unsigned-denial checks passed; see activation-20261023.json. No real-email/signed-in walkthrough or public launch is claimed. No website was published, no email/account was created and Test/Cotivate stayed untouched. The original preparation record below is historical; CURRENT-ENVIRONMENTS.md tracks current status.
+
 Prepared October 22, 2026. **Not applied or deployed.** No backup, restore,
 rehearsal, hosted acceptance walkthrough, policy-drafting or hosting work is
 included. The owner narrowed this checkpoint to preparing Production-specific

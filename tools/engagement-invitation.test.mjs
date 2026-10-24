@@ -22,6 +22,16 @@ test('Production invitation entry is disabled without an exact approved server o
  const wrong=harness({environment:'bcm-production',serverOrigin:'http://127.0.0.1:8894',url:'https://imvkhicfmidzbzsbhkzs.supabase.co'});
  assert.equal((await wrong.request({},'http://127.0.0.1:8894')).status,503);assert.equal(wrong.calls.length,0);
 });
+test('Production origin is read with current readiness, while unsigned requests cannot reach Auth or delivery',async()=>{
+ const values={SUPABASE_URL:'https://omvkwiosonatswocbdgx.supabase.co',VB_ENGAGEMENT_INVITES_ENABLED:'true'};
+ const handler=createEngagementInviteHandler({environment:'bcm-production',env:key=>values[key],createClient:()=>{throw Error('Unsigned request reached Auth');}});
+ const origin='http://127.0.0.1:8895';
+ const request=()=>handler(new Request('https://example.test/engagement-invite',{method:'POST',headers:{origin},body:'{}'}));
+ assert.equal((await request()).status,503);
+ values.VB_ENGAGEMENT_INVITE_ORIGIN=origin;
+ const enabled=await request();assert.equal(enabled.status,401);assert.equal(enabled.headers.get('Access-Control-Allow-Origin'),origin);
+ values.VB_ENGAGEMENT_INVITE_ORIGIN='*';assert.equal((await request()).status,503);
+});
 test('prepared Production delivery preserves saved recipient, MFA and both account paths',async()=>{
  const origin='http://127.0.0.1:8894';
  for(const existing of [false,true]){

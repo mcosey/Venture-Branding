@@ -479,15 +479,15 @@
         "watch",
         "maintenance",
         "filing",
-        "legacyInvitations",
         "bcm",
         "evidence",
-        "digest"
-      ],
-      "disabled": [
+        "digest",
         "member",
         "engagementInvitations",
         "scopedWatch"
+      ],
+      "disabled": [
+        "legacyInvitations"
       ]
     }
   }

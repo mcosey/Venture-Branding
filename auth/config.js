@@ -1,6 +1,8 @@
 // Browser-safe configuration only. Never put a secret/service-role key here.
 window.VB_AUTH_CONFIG = Object.freeze({
   environment: 'bcm-production',
+  memberAccountsEnabled: true,
+  memberOrigins: ['http://127.0.0.1:8895'],
   bcmEnabled: true,
   allowBcmResearch: true,
   url: 'https://omvkwiosonatswocbdgx.supabase.co',

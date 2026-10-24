@@ -1,0 +1,56 @@
+{
+  "status": "approved-main-local-activation-verified",
+  "verification_date": "2026-10-23",
+  "project_ref": "omvkwiosonatswocbdgx",
+  "local_origin": "http://127.0.0.1:8895",
+  "database_applied_and_preservation_verified": true,
+  "private_mapping_in_repository": false,
+  "signup": {
+    "enabled": true,
+    "email_confirmation_required": true,
+    "anonymous_signins": false,
+    "new_callbacks": [
+      "http://127.0.0.1:8895/login.html",
+      "http://127.0.0.1:8895/attorney-login.html"
+    ],
+    "old_callbacks_and_default_site_url_preserved": true,
+    "verified_after_reload": true
+  },
+  "invitation": {
+    "source": "engagement-invite-production.ts",
+    "sha256": "e5014f4aacd5e95add78acb0ed4c6c77d496b6e18c7c7e3af416a912aef4606c",
+    "verify_legacy_jwt": false,
+    "authentication": "getUser plus staff/MFA-gated database reservation",
+    "settings_verified_after_reload": true,
+    "unsigned_post": 401,
+    "wrong_origin": 403,
+    "approved_options": 204
+  },
+  "shared_origins": [
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:8895"
+  ],
+  "evidence": {
+    "installed_before_sha256": "4d7ee709719297be8672dd43416db2e4e05a727c34cd3a423da4dfbb70b8e841",
+    "installed_after_sha256": "b545c050d7ab83ab4251d039ef26f83495b431279bbc61e43fb22c869b731ef3",
+    "only_change": "Add 8895 to installed fixed origin list; preserve 8000/8011/8012",
+    "other_installed_source_preserved": true,
+    "full_local_review_bundle_deployed": false,
+    "sdk_pin_deployed": false,
+    "unsigned_post": 401
+  },
+  "checks": {
+    "offline_portal_passed": 483,
+    "live_invitation_boundaries_passed": 3,
+    "live_existing_service_connection_auth_checks_passed": 10
+  },
+  "limits": {
+    "emails_sent": 0,
+    "accounts_created": 0,
+    "files_uploaded": 0,
+    "provider_calls": 0,
+    "public_website_published": false,
+    "signed_in_email_delivery_walkthrough": false,
+    "test_or_cotivate_changed": false
+  }
+}

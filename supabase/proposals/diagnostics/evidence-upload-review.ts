@@ -95,7 +95,7 @@ export function imageType(bytes){
  return null;
 }
 export function createHandler({createClient,env,diagnostics}){
- const originAllowed=o=>/^http:\/\/127\.0\.0\.1:(8000|8011|8012)$/.test(o||'');
+ const originAllowed=o=>/^http:\/\/127\.0\.0\.1:(8000|8011|8012|8895)$/.test(o||'');
  return async request=>{
   const diagnostic=createDiagnostics('evidence',diagnostics);let stage='input';
   const origin=request.headers.get('origin'),cors=originAllowed(origin)?{'Access-Control-Allow-Origin':origin,'Vary':'Origin','Access-Control-Allow-Headers':'authorization,apikey,content-type,x-client-info','Access-Control-Allow-Methods':'POST,OPTIONS'}:{};

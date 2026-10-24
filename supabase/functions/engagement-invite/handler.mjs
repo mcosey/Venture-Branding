@@ -6,19 +6,23 @@ const PROJECTS=Object.freeze({
 const UUID=/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 export function createEngagementInviteHandler({createClient,env,diagnostics,environment='bcm-test'}){
  const projectUrl=Object.hasOwn(PROJECTS,environment)?PROJECTS[environment]:null;
- const configuredOrigin=environment==='bcm-test'?'http://127.0.0.1:8893':env('VB_ENGAGEMENT_INVITE_ORIGIN');
- let allowedOrigin=null;
- try{
-  const url=new URL(configuredOrigin);
-  if(url.origin===configuredOrigin&&!url.username&&!url.password
-   &&(url.protocol==='https:'||(url.protocol==='http:'&&['127.0.0.1','localhost'].includes(url.hostname))))allowedOrigin=url.origin;
- }catch{}
  return async request=>{
+  // Read the origin with readiness for this request rather than retaining an
+  // unavailable startup value after server settings have been supplied.
+  const configuredOrigin=environment==='bcm-test'?'http://127.0.0.1:8893':env('VB_ENGAGEMENT_INVITE_ORIGIN');
+  let allowedOrigin=null;
+  try{
+   const url=new URL(configuredOrigin);
+   if(url.origin===configuredOrigin&&!url.username&&!url.password
+    &&(url.protocol==='https:'||(url.protocol==='http:'&&['127.0.0.1','localhost'].includes(url.hostname))))allowedOrigin=url.origin;
+  }catch{}
   const diagnostic=createDiagnostics('engagement_invite',diagnostics);let stage='input';
   const origin=request.headers.get('origin');
   const headers={'Content-Type':'application/json','Cache-Control':'no-store','Vary':'Origin',...(allowedOrigin&&origin===allowedOrigin?{'Access-Control-Allow-Origin':allowedOrigin}:{})};
   const response=(value,status=200)=>{if(status>=400&&!['input','identity','role'].includes(stage)){const ref=diagnostic.failure(stage,status===409?'conflict':'unavailable',status);if(ref)value={...value,supportReference:ref};}return new Response(JSON.stringify(value),{status,headers});};
-  if(!projectUrl||!allowedOrigin||env('SUPABASE_URL')!==projectUrl||env('VB_ENGAGEMENT_INVITES_ENABLED')!=='true')return response({error:'Invitation delivery is not enabled.'},503);
+  if(!projectUrl||env('SUPABASE_URL')!==projectUrl)return response({error:'Invitation project configuration is unavailable.'},503);
+  if(!allowedOrigin)return response({error:'Invitation return address is not configured.'},503);
+  if(env('VB_ENGAGEMENT_INVITES_ENABLED')!=='true')return response({error:'Invitation delivery is not enabled.'},503);
   if(origin&&origin!==allowedOrigin)return response({error:'Origin not allowed.'},403);
   if(request.method==='OPTIONS')return new Response(null,{status:204,headers:{...headers,'Access-Control-Allow-Headers':'authorization,apikey,content-type,x-client-info','Access-Control-Allow-Methods':'POST,OPTIONS'}});
   if(request.method!=='POST')return response({error:'POST required.'},405);

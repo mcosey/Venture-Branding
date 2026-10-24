@@ -8,9 +8,9 @@
   "sources": {
     "shared/diagnostics.mjs": "960df3d9fda873911f8240cd096b1ee326d13e7076f7ec4b95af00cf1349a6ed",
     "supabase/functions/uspto-lookup/handler.mjs": "3f8e4b44fa543e2411e30e5b14209d93f352ea56b22525c1064588c276e79270",
-    "supabase/functions/engagement-invite/handler.mjs": "38f6456632f18d17518a1db6348a4edeb84f8ce2309b6a7821865f1c1326eeb0",
+    "supabase/functions/engagement-invite/handler.mjs": "ca0488a761cb3690270fa39bc082193c2c3618dbf402e56ccf87431df89eace0",
     "supabase/functions/client-invite/handler.mjs": "40bbc7b2a13506051204ef0150feb48f35339adc03e8ff267aab85aa31edd100",
-    "supabase/functions/evidence-upload/handler.mjs": "1d07e0b3bc6e744e6fa70935b5c1414f85961c255fcffe798fee5714df1cf445",
+    "supabase/functions/evidence-upload/handler.mjs": "f5d7a3b7dfb32047ff2f6f16ab20ec29e0f34642f4f260ad7ad8b0cc0814b3ff",
     "supabase/functions/watch-ingest/handler.mjs": "caa75b5048481b4f48ec8946286d9e65f41c17854b323571c1fc5fe74f4a0300",
     "supabase/functions/bcm-ai/handler.mjs": "3eb2b05651872e17068505a8a4550d575416a399b98714c961b92c74e5288e7b",
     "supabase/functions/uspto-lookup/record.mjs": "41877bae6f7a30407e7875225f1c4ed05be1a290b88b9858f039adf72793f379",
@@ -58,11 +58,11 @@
   },
   "artifacts": {
     "uspto-lookup-test.ts": "c6086e4ce7af9ae38cd3d23d043706594ef0b905090474905aa1c62d5466333c",
-    "engagement-invite-test.ts": "4fb00855df37f14bd39ec0dab81eef830dde37252a2129e0e78a33219c116641",
+    "engagement-invite-test.ts": "cb446eb9cd79908b01927f65e49269b99dc4fbead9edecb159f9c6ae34e07003",
     "bcm-ai-scan-test.ts": "d636fd009c5bf01181c4118e5df11e17f1d07751645bcdee6afa74c9823c54c4",
     "bcm-ai-schedule-test.ts": "93fac646802a413a2433c3559f05ce45734cb7bac76c1dbca96c0ddf12be4bcb",
     "client-invite-review.ts": "719eaa7389ece1ec111f5d4aa3d4aee9c80c0dd8ceb17b91039e80e150e746d1",
-    "evidence-upload-review.ts": "f2df83b4a71160ed065fa9433658223f97b64efc97c59cac4e7d1d219de952fc",
+    "evidence-upload-review.ts": "29acce18d59e82f9d982a2519647173a93f7b76934bd0cb8bb5757ca25827846",
     "watch-ingest-review.ts": "b574d1da534c39f6fd920e9feaf9a8a22c05e171bc37dc526fefb24f2eb0292b"
   }
 }
