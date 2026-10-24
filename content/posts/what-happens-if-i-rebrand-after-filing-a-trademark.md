@@ -173,7 +173,7 @@ The legal consequences may depend on whether use of the original mark continues,
 
 An attorney evaluating the transition may therefore consider both the requirements for registering the new brand and the continued legal significance of the original trademark.
 
-For more information, see *How Long Does a Trademark Last?*
+For more information, see *[How Long Does a Trademark Last?](how-long-does-a-trademark-last.html)*
 
 ## Can a Rebrand Create New Trademark Conflicts?
 
