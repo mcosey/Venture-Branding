@@ -1,0 +1,12 @@
+body{display:block;padding:40px 24px}
+main.legal-document{width:min(100%,920px);margin:0 auto}
+.legal-document .brand img{width:180px}
+.legal-document .card{padding:clamp(24px,5vw,56px)}
+.legal-document h1{font-size:clamp(30px,5vw,44px);line-height:1.2;margin:0 0 28px}
+.legal-document h2{font:600 clamp(18px,3vw,22px)/1.4 Inter,system-ui,sans-serif;margin:36px 0 16px;overflow-wrap:anywhere}
+.legal-document p,.legal-document li{color:var(--muted);line-height:1.8;overflow-wrap:anywhere}
+.legal-document p{margin:0 0 20px}
+.legal-document li{margin:8px 0}
+.legal-document ul{padding-left:24px;margin:0 0 24px}
+.legal-document a{overflow-wrap:anywhere}
+.legal-document .footer{margin-bottom:24px}

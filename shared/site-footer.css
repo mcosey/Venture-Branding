@@ -1,0 +1,8 @@
+.vb-legal-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px 24px;border-top:1px solid #ffffff18;margin-top:32px;padding:24px 0;color:#aeb9c7;font:400 12px/1.6 Inter,system-ui,sans-serif;letter-spacing:normal;text-transform:none}
+.vb-legal-footer .vb-copyright{margin:0;color:inherit;font:inherit}
+.vb-legal-footer .vb-legal-links{display:flex;flex-wrap:wrap;gap:12px 24px;margin:0;padding:0}
+.vb-legal-footer .vb-legal-links a{color:inherit;font:inherit;text-decoration:none;white-space:normal}
+.vb-legal-footer .vb-legal-links a:hover{text-decoration:underline}
+.vb-legal-footer a:focus-visible{outline:2px solid #ed9197;outline-offset:4px}
+.site-footer .footer-links{flex-wrap:wrap}
+@media(max-width:600px){.vb-legal-footer{align-items:flex-start;flex-direction:column}}
