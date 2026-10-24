@@ -2,7 +2,7 @@ export const categories = [
  {id:'formation',name:'Formation & structure',icon:'◇',description:'Choose a structure and document how your business will operate.',x:50,y:18},
  {id:'brand',name:'Brand protection',icon:'◎',description:'Explore names, trademarks, and brand strategy.',x:77,y:30},
  {id:'ownership',name:'IP ownership',icon:'✧',description:'Understand who owns the work your business relies on.',x:77,y:61},
- {id:'contracts',name:'Contracts',icon:'≡',description:'Plan agreements with customers, vendors, and partners.',x:23,y:30},
+ {id:'contracts',name:'Vibe Coding',icon:'≡',description:'Explore legal considerations when building software and brand assets with AI.',x:23,y:30},
  {id:'people',name:'People & hiring',icon:'♧',description:'Consider your relationships with employees and contractors.',x:23,y:61},
  {id:'fundraising',name:'Fundraising',icon:'↗',description:'Explore financing, equity, and investor relationships.',x:37,y:84},
  {id:'compliance',name:'Ongoing obligations',icon:'✓',description:'Plan for filings, privacy, and other continuing obligations.',x:67,y:84}
@@ -48,7 +48,7 @@ export const categoryTasks = {
  formation:[{name:'Business structure',id:'entity',x:50,y:7.33,side:'top'},{name:'Founders’ agreement',id:'founders',x:45.41,y:9.26,side:'left'},{name:'Governing documents',id:'governance',x:57.52,y:14.35,side:'right'},{name:'Initial ownership',id:'equity',x:42.48,y:14.35,side:'left'},{name:'Initial decisions',id:'consents',x:54.59,y:9.26,side:'right'}],
  brand:[{name:'Trademark clearance',x:77.00,y:19.33,side:'top'},{name:'Brand strategy',x:85.00,y:30.00,side:'right'},{name:'Domain names',x:83.13,y:36.86,side:'right'}],
  ownership:[{name:'Assigning IP',x:82.66,y:53.46,side:'right'},{name:'Contractor IP',x:85.00,y:61.00,side:'right'},{name:'Open source',x:82.66,y:68.54,side:'right'}],
- contracts:[{name:'Customer agreements',x:23.00,y:19.33,side:'top'},{name:'Vendor contracts',x:15.00,y:30.00,side:'left'},{name:'NDAs',x:16.87,y:36.86,side:'left'}],
+ contracts:[{name:'Considerations',href:'#vibe-coding/considerations',x:15,y:26,side:'left'}],
  people:[{name:'Employee or contractor',x:16.87,y:54.14,side:'left'},{name:'Offer letters',x:15.00,y:61.00,side:'left'},{name:'Workplace policies',x:16.87,y:67.86,side:'left'}],
  fundraising:[{name:'Term sheets',x:30.07,y:78.67,side:'left'},{name:'Investor rights',x:29.00,y:84.00,side:'left'},{name:'Diligence preparation',x:45.00,y:84.00,side:'right'}],
  compliance:[{name:'Annual filings',x:72.66,y:76.46,side:'right'},{name:'Tax questions',x:75.00,y:84.00,side:'right'},{name:'Data privacy',x:72.66,y:91.54,side:'right'}]

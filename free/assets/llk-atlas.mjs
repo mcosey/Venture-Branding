@@ -1,7 +1,7 @@
 // One drawing plane keeps labels, rings, paths, and nodes in the same coordinate system.
 export const atlasLayout = {
  formation:{x:640,y:155,color:'#00f0cc',lines:['Formation &','structure']},
- contracts:{x:300,y:245,color:'#269fff',lines:['Contracts']},
+ contracts:{x:300,y:245,color:'#269fff',lines:['Vibe','Coding']},
  brand:{x:980,y:245,color:'#269fff',lines:['Brand','protection']},
  people:{x:300,y:510,color:'#b06cff',lines:['People &','hiring']},
  ownership:{x:980,y:510,color:'#16f2c4',lines:['IP ownership']},
@@ -16,10 +16,7 @@ export const atlasTasks = {
  {index:3,angle:-170,lines:['Initial','ownership'],dx:-24,dy:-5,anchor:'end'},
  {index:4,angle:-45,lines:['Initial','decisions'],dx:24,dy:-10,anchor:'start'},
  {index:2,angle:-10,lines:['Governing','documents'],dx:24,dy:-5,anchor:'start'}],
- contracts:[
- {index:0,angle:-90,lines:['Customer','agreements'],dx:0,dy:-38,anchor:'middle'},
- {index:1,angle:-145,lines:['Vendor','contracts'],dx:-25,dy:-5,anchor:'end'},
- {index:2,angle:165,lines:['NDAs'],dx:-25,dy:5,anchor:'end'}],
+ contracts:[{index:0,angle:-145,lines:['Considerations'],dx:-25,dy:-5,anchor:'end'}],
  brand:[
  {index:0,angle:-90,lines:['Trademark','clearance'],dx:0,dy:-38,anchor:'middle'},
  {index:1,angle:-35,lines:['Brand strategy'],dx:24,dy:5,anchor:'start'},
@@ -71,7 +68,7 @@ export function createMasterAtlas({businessName='',categories,categoryTasks,mile
  const html=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
  const section=html('section',undefined,'llk-atlas'+(listView?' is-list':''));section.setAttribute('aria-label','Legal Launch Kit roadmap');
  const controls=html('div',undefined,'atlas-controls');const caption=html('span','YOUR LEGAL ROADMAP','eyebrow');const button=html('button',listView?'Show map':'Show list','quiet-button');button.type='button';button.onclick=onToggle;controls.append(caption,button);section.append(controls);
- const svg=h('svg',{viewBox:'0 0 1280 910',class:'atlas-drawing',role:'group','aria-label':'Your business and seven connected legal topic clusters'});svg.append(h('title',{},'Legal Launch Kit'),h('desc',{},'Choose a category or milestone. Formation is interactive; other categories are previews. Connections show relationships, not a required order.'));
+ const svg=h('svg',{viewBox:'0 0 1280 910',class:'atlas-drawing',role:'group','aria-label':'Your business and seven connected legal topic clusters'});svg.append(h('title',{},'Legal Launch Kit'),h('desc',{},'Choose a category or milestone. Formation and Vibe Coding are available; other categories are previews. Connections show relationships, not a required order.'));
  const defs=h('defs');
  const glow=h('filter',{id:'atlas-soft-glow',x:'-100%',y:'-100%',width:'300%',height:'300%'});glow.append(h('feGaussianBlur',{stdDeviation:3}));defs.append(glow);
  const vignette=h('radialGradient',{id:'atlas-depth'});vignette.append(h('stop',{offset:'0%','stop-color':'#0b1c2b','stop-opacity':'.16'}),h('stop',{offset:'100%','stop-color':'#03111b','stop-opacity':'0'}));defs.append(vignette);svg.append(defs);
@@ -136,19 +133,19 @@ export function createMasterAtlas({businessName='',categories,categoryTasks,mile
  }
  ringwork(svg,root,'#ff71a5',true);core(root,companyLabel(businessName),'#business','#ff71a5',true);
  for(const category of categories){
-  const c=atlasLayout[category.id];ringwork(svg,c,c.color);core(c,c.lines,'#category/'+category.id,c.color);
+  const c=atlasLayout[category.id];ringwork(svg,c,c.color);core(c,c.lines,category.href||'#category/'+category.id,c.color);
   for(const angle of [70,110]){const p=ringPoint(c,angle,96);svg.append(h('circle',{cx:p.x,cy:p.y,r:6,class:'ornamental-port',style:`--tone:${c.color}`}),h('path',{d:`M${p.x-2} ${p.y}h4m-2-2v4`,class:'port-symbol'}));}
   for(const item of atlasTasks[category.id]){
    const task=categoryTasks[category.id][item.index],p=ringPoint(c,item.angle),milestone=task.id?milestones.find(m=>m.id===task.id):null,state=milestone?milestoneStatus(progress,milestone):null;
-   const a=h('a',{href:milestone?'#milestone/'+task.id:'#category/'+category.id,tabindex:0,class:'atlas-milestone'+(state?.label==='Completed'?' completed':state?.done?' started':''),'aria-label':task.name+(state?' — '+state.label:' — category preview'),style:`--tone:${c.color}`});
-   a.append(h('title',{},task.name+(milestone?'':' — Phase 2 preview')),h('circle',{cx:p.x,cy:p.y,r:11,class:'milestone-aura'}),h('circle',{cx:p.x,cy:p.y,r:11,class:'milestone-circle'}),h('circle',{cx:p.x,cy:p.y,r:4,class:'milestone-center'}));
+   const a=h('a',{href:milestone?'#milestone/'+task.id:task.href||'#category/'+category.id,tabindex:0,class:'atlas-milestone'+(state?.label==='Completed'?' completed':state?.done?' started':''),'aria-label':task.name+(state?' — '+state.label:task.href?'':' — category preview'),style:`--tone:${c.color}`});
+   a.append(h('title',{},task.name+(milestone||task.href?'':' — Phase 2 preview')),h('circle',{cx:p.x,cy:p.y,r:11,class:'milestone-aura'}),h('circle',{cx:p.x,cy:p.y,r:11,class:'milestone-circle'}),h('circle',{cx:p.x,cy:p.y,r:4,class:'milestone-center'}));
    if(state?.label==='Completed')a.append(h('path',{d:`M${p.x-5} ${p.y}l3 3 6-6`,class:'milestone-check'}));
    label(a,p.x+item.dx,p.y+item.dy,item.lines,item.anchor);svg.append(a);
   }
  }
  section.append(svg);
  const list=html('div',undefined,'atlas-accessible-list');const businessLink=html('a',(businessName||'Your business')+' · company profile','atlas-business-entry');businessLink.href='#business';list.append(businessLink);
- for(const category of categories){const article=html('section',undefined,'panel');const title=html('a',category.name);title.href='#category/'+category.id;const head=html('h2');head.append(title);article.append(head);const ul=html('ul');for(const task of categoryTasks[category.id]){const li=html('li'),a=html('a',task.name+(task.id?'':' · Preview'));a.href=task.id?'#milestone/'+task.id:'#category/'+category.id;li.append(a);ul.append(li);}article.append(ul);list.append(article);}section.append(list);
- const legend=html('div',undefined,'atlas-legend');for(const [cls,text]of [['','Not started'],['started','In progress'],['completed','Completed']]){const item=html('span',undefined,cls);item.append(html('i'),document.createTextNode(text));legend.append(item);}section.append(legend,html('p','Formation’s milestones are interactive. Other categories are previews. Connections show relationships, not required steps.','atlas-note'));
+ for(const category of categories){const article=html('section',undefined,'panel');const title=html('a',category.name);title.href=category.href||'#category/'+category.id;const head=html('h2');head.append(title);article.append(head);const ul=html('ul');for(const task of categoryTasks[category.id]){const li=html('li'),a=html('a',task.name+(task.id||task.href?'':' · Preview'));a.href=task.id?'#milestone/'+task.id:task.href||'#category/'+category.id;li.append(a);ul.append(li);}article.append(ul);list.append(article);}section.append(list);
+ const legend=html('div',undefined,'atlas-legend');for(const [cls,text]of [['','Not started'],['started','In progress'],['completed','Completed']]){const item=html('span',undefined,cls);item.append(html('i'),document.createTextNode(text));legend.append(item);}section.append(legend,html('p','Explore Formation milestones and Vibe Coding considerations. Other categories are previews. Connections show relationships, not required steps.','atlas-note'));
  return section;
 }

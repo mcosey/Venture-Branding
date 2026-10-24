@@ -4,6 +4,7 @@ import {renderBusiness,savedBusinessName} from './llk-business.mjs?v=member-acco
 import {icon} from './llk-icons.mjs';
 import {createMasterAtlas} from './llk-atlas.mjs?v=company-label-1';
 import {createChecklistItem} from './llk-checklist.mjs';
+import {renderVibeConsiderations,isVibeConsiderationsRoute,vibeMilestones} from './llk-vibe-coding.mjs';
 import {categories,categoryTasks,milestones,emptyProgress,decodeProgress,milestoneStatus,taskProgressIndex} from './llk-data.mjs';
 const key='vb-llk-prototype-v1'+(memberContext?':'+memberContext.user.id:'');let progress=emptyProgress(), storageAvailable=true, listView=false, diagramObserver;
 if(!memberContext){try{progress=decodeProgress(localStorage.getItem(key));}catch{storageAvailable=false;}}
@@ -64,15 +65,21 @@ function clipConnections(canvas,svg){
 }
 function graph(items,centerName,centerSub,category){
  if(!category)return createMasterAtlas({businessName:savedBusinessName(),categories,categoryTasks,milestones,progress,milestoneStatus,listView,onToggle:()=>{listView=!listView;render();},icon});
- const section=e('section',undefined,'map-panel');section.setAttribute('aria-label','Formation milestone grid');const toolbar=e('div',undefined,'map-toolbar');toolbar.append(e('span','FORMATION ROADMAP','eyebrow'));const toggle=e('button',listView?'Show sphere grid':'Show list','quiet-button');toggle.type='button';toggle.onclick=()=>{listView=!listView;render();};toolbar.append(toggle);section.append(toolbar);
+ const isVibe=category==='contracts';
+ const section=e('section',undefined,'map-panel');section.setAttribute('aria-label',isVibe?'Vibe Coding milestone grid':'Formation milestone grid');const toolbar=e('div',undefined,'map-toolbar');toolbar.append(e('span',isVibe?'VIBE CODING ROADMAP':'FORMATION ROADMAP','eyebrow'));const toggle=e('button',listView?'Show sphere grid':'Show list','quiet-button');toggle.type='button';toggle.onclick=()=>{listView=!listView;render();};toolbar.append(toggle);section.append(toolbar);
  const canvas=e('div',undefined,'sphere-canvas'+(listView?' list-view':''));const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');svg.setAttribute('aria-hidden','true');svg.classList.add('connections');
  for(const item of items){const edge=document.createElementNS(ns,'line');for(const [key,value]of Object.entries({x1:50,y1:47,x2:item.x,y2:item.y}))edge.setAttribute(key,String(value));svg.append(edge);}canvas.append(svg);
- const center=e('div',undefined,'sphere center');center.style.left='50%';center.style.top='47%';center.append(icon('business'),e('strong',centerName),e('small',centerSub));canvas.append(center);
- for(const item of items){const state=milestoneStatus(progress,item);canvas.append(node(item,'#milestone/'+item.id,state.label,state.done===state.total?'complete':state.done?'in-progress':''));}
- section.append(canvas);clipConnections(canvas,svg);section.append(e('p',memberContext?'Explore milestones in any order. Checklist progress is saved to your account.':'Explore milestones in any order. Checklist progress is saved in this browser.','map-note'));return section;
+ const center=e('div',undefined,'sphere center');center.style.left='50%';center.style.top='47%';center.append(icon(isVibe?'contracts':'business'),e('strong',centerName),e('small',centerSub));canvas.append(center);
+ for(const item of items){const state=item.tasks?milestoneStatus(progress,item):null;canvas.append(node(item,item.href||'#milestone/'+item.id,state?.label||'',state&&state.done===state.total?'complete':state?.done?'in-progress':''));}
+ section.append(canvas);clipConnections(canvas,svg);section.append(e('p',isVibe?'Explore the Vibe Coding considerations.':memberContext?'Explore milestones in any order. Checklist progress is saved to your account.':'Explore milestones in any order. Checklist progress is saved in this browser.','map-note'));return section;
 }
-function master(){heading('Legal Launch Kit','See the legal landscape around your business. Choose a category to learn, plan, and take your next step.');const total=milestones.reduce((sum,m)=>sum+milestoneStatus(progress,m).done,0);const stats=e('div',undefined,'stats');stats.append(e('span','7 topic areas'),e('span','Formation: '+milestones.filter(m=>milestoneStatus(progress,m).label==='Completed').length+' of 5 milestones completed'),e('span',total+' planning tasks checked'));main.append(stats,graph(categories,'Your business','Explore freely',false));const guidance=panel('Start with formation');guidance.append(e('p','Phase 1 includes five working Formation milestones. The other categories show the planned roadmap and are not built yet.'),link('Explore Formation & structure →','#category/formation','primary'));main.append(guidance);}
-function category(id){const c=categories.find(c=>c.id===id);if(!c){notFound();return;}if(id!=='formation'){heading(c.name,c.description);main.append(link('← All categories','#'));const p=panel('Category preview');p.append(e('p','This category is planned for Phase 2. Its milestones and content are not connected in this prototype.'),link('Explore the working Formation category →','#category/formation','primary'));main.append(p);return;}
+function master(){heading('Legal Launch Kit','See the legal landscape around your business. Choose a category to learn, plan, and take your next step.');const total=milestones.reduce((sum,m)=>sum+milestoneStatus(progress,m).done,0);const stats=e('div',undefined,'stats');stats.append(e('span','7 topic areas'),e('span','Formation: '+milestones.filter(m=>milestoneStatus(progress,m).label==='Completed').length+' of 5 milestones completed'),e('span',total+' planning tasks checked'));main.append(stats,graph(categories,'Your business','Explore freely',false));const guidance=panel('Start with formation');guidance.append(e('p','Explore five Formation milestones and the Vibe Coding considerations. The other topic areas are previews.'),link('Explore Formation & structure →','#category/formation','primary'));main.append(guidance);}
+function category(id){const c=categories.find(c=>c.id===id);if(!c){notFound();return;}
+ if(id==='contracts'){
+  const nav=e('nav',undefined,'breadcrumbs');nav.setAttribute('aria-label','Breadcrumb');nav.append(link('Legal Launch Kit','#'),e('span','›'),e('span',c.name));
+  heading(c.name,c.description,nav);main.append(graph(vibeMilestones,c.name,'1 milestone',id));return;
+ }
+ if(id!=='formation'){heading(c.name,c.description);main.append(link('← All categories','#'));const p=panel('Category preview');p.append(e('p','This category is planned for Phase 2. Its milestones and content are not connected in this prototype.'),link('Explore the working Formation category →','#category/formation','primary'));main.append(p);return;}
  heading(c.name,c.description,crumbs());main.append(graph(milestones,'Formation','5 planning milestones',true));}
 function milestone(id){
  const m=milestones.find(m=>m.id===id);if(!m){notFound();return;}
@@ -109,7 +116,9 @@ function milestone(id){
 }
 function notFound(){heading('This milestone is not available','Choose a category to continue exploring.');main.append(link('Return to Legal Launch Kit','#','primary'));}
 function render(){
- diagramObserver?.disconnect();main.replaceChildren();const parts=location.hash.slice(1).split('/');
+ diagramObserver?.disconnect();main.replaceChildren();
+ if(isVibeConsiderationsRoute(location.hash)){renderVibeConsiderations(main);return;}
+ const parts=location.hash.slice(1).split('/');
  if(parts[0]==='business')renderBusiness(main,{e,link,panel,heading,refresh:render});else if(parts[0]==='category')category(parts[1]);else if(parts[0]==='milestone')milestone(parts[1]);else master();
  const note=e('div',undefined,'local-progress');const msg=e('span',persistenceMessage());msg.id='save-message';msg.setAttribute('role','status');msg.setAttribute('aria-live','polite');note.append(msg);
  if(accountStore){

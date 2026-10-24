@@ -9,7 +9,7 @@ export {Node,mockDocument,flatten};
 export function buildAtlas(businessName=''){return createMasterAtlas({businessName,categories,categoryTasks,milestones,progress:emptyProgress(),milestoneStatus,listView:false,onToggle:()=>{},icon});}
 test('single SVG renderer constructs all working links and a separate mobile list',()=>{
  const previous=globalThis.document;globalThis.document=mockDocument;
- try{const nodes=flatten(buildAtlas());const svg=nodes.filter(n=>n.tag==='svg'&&n.attrs.class==='atlas-drawing');assert.equal(svg.length,1);const paths=flatten(svg[0]).filter(n=>n.tag==='a').map(n=>n.attrs.href);assert.ok(paths.includes('#business'));for(const m of milestones)assert.equal(paths.filter(h=>h==='#milestone/'+m.id).length,1);for(const c of categories)assert.ok(paths.includes('#category/'+c.id));assert.ok(nodes.some(n=>n.attrs.class==='atlas-accessible-list'));assert.ok(nodes.some(n=>n.tag==='tspan'&&n.textContent==='Offer letters'));}
+ try{const nodes=flatten(buildAtlas());const svg=nodes.filter(n=>n.tag==='svg'&&n.attrs.class==='atlas-drawing');assert.equal(svg.length,1);const paths=flatten(svg[0]).filter(n=>n.tag==='a').map(n=>n.attrs.href);assert.ok(paths.includes('#business'));for(const m of milestones)assert.equal(paths.filter(h=>h==='#milestone/'+m.id).length,1);for(const c of categories)assert.ok(paths.includes(c.href||'#category/'+c.id));assert.ok(nodes.some(n=>n.attrs.class==='atlas-accessible-list'));assert.ok(nodes.some(n=>n.tag==='tspan'&&n.textContent==='Offer letters'));}
  finally{globalThis.document=previous;}
 });
 test('explicit label placements cover each existing task once, with room around the map',()=>{
