@@ -4,3 +4,5 @@ body{background:#09141e;color:var(--text);font:14px/1.55 Inter,system-ui,sans-se
 @media(max-width:1250px){.sidebar{width:190px}.sidebar .brand{margin-left:10px}.sidebar .brand img{width:145px}.sidebar nav a,.sidebar nav button{gap:15px;padding:12px 14px}.workspace{margin-left:190px;padding:0 22px}}
 @media(max-width:800px){.sidebar{position:relative;inset:auto;width:auto;display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;padding:17px 22px;border-right:0;border-bottom:1px solid var(--line)}.sidebar .brand{margin:0}.sidebar .brand img{width:138px}.sidebar .menu-toggle{display:flex}.sidebar nav{display:none;flex-basis:100%;margin-top:20px}.sidebar nav.open{display:grid;grid-template-columns:1fr}.sidebar .back-link,.sidebar .sidebar-note{display:none}.workspace{margin:0;padding:0 20px}.member-topbar{min-height:78px;flex-wrap:nowrap}.workspace main{padding:24px 0}}
 @media(max-width:480px){.workspace{padding:0 16px}.sidebar{padding:16px}}
+
+.llk-consultation{padding-bottom:8px}
