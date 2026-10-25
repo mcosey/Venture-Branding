@@ -1,2 +1,2 @@
-/* Match the existing milestone panels without inventing checklist progress. */
-.vibe-checklist{min-height:180px}
+.vibe-checklist .task input:disabled{opacity:.65;cursor:default}
+.milestone-layout:has(>.vibe-checklist){align-items:start}

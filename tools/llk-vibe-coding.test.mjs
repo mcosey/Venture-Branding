@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {renderVibeConsiderations,isVibeConsiderationsRoute,vibeMilestones} from '../free/assets/llk-vibe-coding.mjs';
+import {renderVibeConsiderations,isVibeConsiderationsRoute,vibeMilestones,vibeChecklist} from '../free/assets/llk-vibe-coding.mjs';
 import {categories,categoryTasks} from '../free/assets/llk-data.mjs';
 import {atlasTasks} from '../free/assets/llk-atlas.mjs';
 import {icon} from '../free/assets/llk-icons.mjs';
@@ -13,7 +13,7 @@ test('Vibe Coding has a category overview and one satellite linking to its consi
  assert.ok(isVibeConsiderationsRoute(tasks[0].href));
  assert.equal(isVibeConsiderationsRoute('#category/contracts'),false);
 });
-test('the considerations page matches milestone sections without drafting tasks or inventing progress',()=>{
+test('the considerations review has two resource and optional-consultation items without a readiness score',()=>{
  const previous=globalThis.document;globalThis.document=mockDocument;
  try{
   const main=new Node('main');renderVibeConsiderations(main);const nodes=flatten(main);
@@ -21,7 +21,14 @@ test('the considerations page matches milestone sections without drafting tasks 
   assert.deepEqual(nodes.filter(n=>n.tag==='h2').map(n=>n.textContent),['Vibe Coding','What is this?','Milestone checklist','Resources']);
   assert.ok(nodes.some(n=>n.attrs.class==='workspace-summary'));
   assert.ok(nodes.some(n=>n.attrs.class==='milestone-layout'));
-  assert.equal(nodes.some(n=>['input','textarea','form','details','progress'].includes(n.tag)),false);
+  const inputs=nodes.filter(n=>n.tag==='input'),details=nodes.filter(n=>n.tag==='details');
+  assert.equal(inputs.length,2);assert.equal(details.length,2);
+  assert.deepEqual(vibeChecklist.map(([title])=>title),['Read Venture Branding resources on vibe coding.','Consider whether to consult an attorney about your site or application.']);
+  assert.ok(inputs.every(n=>n.disabled&&n.checked===false));
+  assert.equal(new Set(inputs.map(n=>n.id)).size,2);
+  for(const input of inputs)assert.ok(nodes.some(n=>n.id===input.attrs['aria-labelledby']));
+  assert.ok(details.every(n=>!n.open&&n.children[0].tag==='summary'&&n.children[1].textContent.length>0));
+  assert.equal(nodes.some(n=>['textarea','form','progress'].includes(n.tag)),false);
   const resources=nodes.filter(n=>n.tag==='a'&&n.attrs.class==='resource');assert.equal(resources.length,2);
   for(const a of resources)assert.ok(fs.existsSync(new URL('../free/'+a.href,import.meta.url)),a.href);
   assert.ok(nodes.some(n=>n.tag==='a'&&n.href==='#category/contracts'));
