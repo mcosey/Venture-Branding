@@ -8,6 +8,9 @@ ENDPOINTS = {'production': 'https://omvkwiosonatswocbdgx.supabase.co/functions/v
              'test': 'https://imvkhicfmidzbzsbhkzs.supabase.co/functions/v1/watch-ingest'}
 MAX_ZIP = 100 * 1024 * 1024
 MAX_XML = 2 * 1024 * 1024 * 1024
+# Official history can exceed 1 MiB even for old records outside Watch's lookback.
+# Keep parsing bounded; candidate field and upload limits remain independently enforced.
+MAX_XML_SECTION = 4 * 1024 * 1024
 MAX_RECORDS = 20000
 
 class FeedError(Exception):
@@ -18,6 +21,30 @@ class FeedError(Exception):
 STAGES = frozenset(('credentials', 'catalog-request', 'catalog-validation', 'inventory-request',
                     'inventory-validation', 'source-metadata', 'archive-download',
                     'archive-validation', 'file-ingestion', 'client-checks', 'sample-validation'))
+
+# Exact internal messages only. Never include a failing record's values in a reason.
+ARCHIVE_VALIDATION_REASONS = {
+    'Invalid filing date': 'invalid-filing-date',
+    'Unexpected source filename': 'unexpected-source-filename',
+    'Invalid application fields': 'invalid-record-fields',
+    'Invalid application identity or status': 'invalid-record-identity-or-status',
+    'Invalid application date': 'invalid-record-date',
+    'Invalid application classes': 'invalid-record-classes',
+    'Invalid application owners': 'invalid-record-owners',
+    'Invalid application goods': 'invalid-record-goods',
+    'Unsafe or oversized XML': 'unsafe-or-oversized-xml',
+    'XML case/section exceeds supported size': 'xml-section-size-limit',
+    'Expected one unencrypted official XML file': 'unexpected-archive-members',
+    'Archive exceeds supported size': 'archive-size-limit',
+    'XML nesting limit': 'xml-nesting-limit',
+    'Missing case header': 'missing-case-header',
+    'Future filing in source': 'future-filing-date',
+    'Invalid application serial': 'invalid-application-serial',
+    'Invalid or duplicate application identity': 'invalid-or-duplicate-identity',
+    'Record exceeds supported fields': 'record-field-size-limit',
+    'Candidate limit exceeded': 'candidate-count-limit',
+    'No case-file records in source': 'no-case-records',
+}
 
 @contextmanager
 def diagnostic(stage, filename=None):
@@ -35,7 +62,10 @@ def diagnostic(stage, filename=None):
             error.http_status if isinstance(error, FeedError) else None)
         if type(status) is int and 100 <= status <= 599:
             reason = 'http-status=' + str(status)
-        elif isinstance(error, FeedError): reason = 'validation-or-request-failed'
+        elif isinstance(error, FeedError):
+            reason = 'validation-or-request-failed'
+            if stage in ('archive-validation', 'sample-validation'):
+                reason = ARCHIVE_VALIDATION_REASONS.get(str(error), reason)
         elif isinstance(error, zipfile.BadZipFile): reason = 'invalid-archive'
         elif isinstance(error, ET.ParseError): reason = 'invalid-xml'
         elif isinstance(error, (TimeoutError, OSError)): reason = 'connection-or-file-error'
@@ -96,7 +126,7 @@ class SafeXML:
         boundary = scan.rfind(b'</case-file>')
         self.without_boundary = len(scan) - boundary - 12 if boundary >= 0 else self.without_boundary + len(chunk)
         # Bounded XML sections: an unexpectedly huge case cannot exhaust memory before parse completes.
-        if self.without_boundary > 1024*1024: raise FeedError('XML case/section exceeds supported size')
+        if self.without_boundary > MAX_XML_SECTION: raise FeedError('XML case/section exceeds supported size')
         self.tail = chunk[-16:]
         return chunk
 

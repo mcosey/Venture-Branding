@@ -95,6 +95,24 @@ class RunnerTests(unittest.TestCase):
   with self.assertRaises(FeedError):extract(self.sample('<root>'+case()+'</root>','../apc261011.xml'),'apc261011.zip')
  def test_30_day_late_arrival_boundary(self):
   r,c=extract(self.sample('<root>'+case(filing='20260911')+case('12345678','20260910')+'</root>'),'apc261011.zip');self.assertEqual(len(r),1);self.assertEqual(c['outside_lookback'],1)
+ def test_large_historical_record_does_not_block_current_candidates(self):
+  # Oct 28's official archive has a 2,328,518-byte historical, non-word record.
+  # Reproduce its size with fictional history; do not store real source records.
+  history='<case-file-event-statements>'+('<event><text>'+'x'*1000+'</text></event>')*2300+'</case-file-event-statements>'
+  old=case('12345678',filing='20190612',drawing='3').replace('</case-file>',history+'</case-file>')
+  self.assertGreater(len(old),2328518)
+  records,counts=extract(self.sample('<root>'+old+case()+'</root>'),'apc261011.zip')
+  self.assertEqual([r['serial'] for r in records],['01234567'])
+  self.assertEqual(counts['total'],2);self.assertEqual(counts['outside_lookback'],1)
+ def test_record_sections_still_have_a_finite_size_limit(self):
+  import runner
+  old=case(filing='20190612').replace('</case-file>','<history>'+'x'*(runner.MAX_XML_SECTION+65536)+'</history></case-file>')
+  with self.assertRaisesRegex(FeedError,'XML case/section exceeds supported size'):
+   extract(self.sample('<root>'+old+'</root>'),'apc261011.zip')
+ def test_large_historical_section_cannot_hide_an_entity_declaration(self):
+  old=case(filing='20190612').replace('</case-file>','<history>'+'x'*(2*1024*1024)+'<!ENTITY unsafe "value"></history></case-file>')
+  with self.assertRaisesRegex(FeedError,'Unsafe or oversized XML'):
+   extract(self.sample('<root>'+old+'</root>'),'apc261011.zip')
  def product(self):
   rows=[{'fileName':n,'fileSize':100,'fileDownloadURI':'https://api.uspto.gov/api/v1/datasets/products/files/TRTDXFAP/'+n} for n in ['apc261011.zip','apc261012.zip']]
   return {'bulkDataProductBag':[{'productIdentifier':'TRTDXFAP','productFileBag':{'count':2,'fileDataBag':rows}}]}
@@ -150,6 +168,42 @@ class DiagnosticTests(unittest.TestCase):
   for secret in ['ODP-PRIVATE', 'INGEST-PRIVATE', 'signed-private', 'body-private', 'header-private', 'https://']:
    self.assertNotIn(secret,result)
   return result
+ def test_archive_validation_reports_only_fixed_reason_codes(self):
+  import runner
+  for message,code in runner.ARCHIVE_VALIDATION_REASONS.items():
+   with self.subTest(code=code):
+    self.assertRegex(code,r'^[a-z]+(?:-[a-z]+)*$')
+    for stage in ('archive-validation','sample-validation'):
+     def action():
+      with runner.diagnostic(stage,'apc261028.zip'):raise FeedError(message)
+     result=self.capture(action)
+     self.assertIn(stage+' file=apc261028.zip reason='+code+'\n',result)
+     self.assertNotIn(message,result)
+ def test_validation_reason_matching_is_exact_and_stage_limited(self):
+  from runner import diagnostic
+  for stage,message in [('archive-validation','Invalid filing date: body-private'),
+                        ('sample-validation','Invalid filing date\nbody-private'),
+                        ('file-ingestion','Invalid filing date')]:
+   def action():
+    with diagnostic(stage):raise FeedError(message)
+   self.assertIn('reason=validation-or-request-failed\n',self.capture(action))
+ def test_rejected_source_reports_reason_before_any_ingestion(self):
+  import runner
+  from unittest.mock import patch
+  today=dt.datetime.now(dt.timezone.utc).date();filename='apc'+today.strftime('%y%m%d')+'.zip'
+  scenarios=[('invalid-filing-date',case(filing='20260230')),
+             ('invalid-record-classes',case(filing=today.strftime('%Y%m%d')).replace('<international-code>041</international-code>','<international-code>099</international-code>'))]
+  for reason,xml in scenarios:
+   with self.subTest(reason=reason):
+    archive=io.BytesIO()
+    with zipfile.ZipFile(archive,'w') as z:z.writestr(filename[:-4]+'.xml','<root>'+xml+'</root>')
+    payload=archive.getvalue()
+    item={'fileName':filename,'fileSize':len(payload),'fileLastModifiedDateTime':'public-revision','fileDownloadURI':runner.API+'/files/TRTDXFAP/'+filename}
+    catalog={'bulkDataProductBag':[{'productIdentifier':'TRTDXFAP','productFileBag':{'count':1,'fileDataBag':[item]}}]}
+    with patch.dict(runner.os.environ,{'ODP_API_KEY':'ODP-PRIVATE','WATCH_INGEST_KEY':'INGEST-PRIVATE'}),patch.object(runner,'request',side_effect=[catalog,{'files':[]}]),patch.object(runner.ARCHIVE_OPENER,'open',return_value=io.BytesIO(payload)),patch.object(runner,'ingest') as upload,patch.object(runner,'run_checks') as checks:
+     output=self.capture(lambda:runner.run('test'))
+     self.assertIn('archive-validation file='+filename+' reason='+reason+'\n',output)
+     upload.assert_not_called();checks.assert_not_called()
  def test_untrusted_error_text_and_filename_never_reach_log(self):
   from runner import diagnostic
   def action():
@@ -239,7 +293,7 @@ class DiagnosticTests(unittest.TestCase):
   import subprocess
   process=subprocess.run(['python3',str(Path(__file__).with_name('runner.py')),'--sample','/missing/ODP-PRIVATE-signed-private.zip'],capture_output=True,text=True)
   self.assertEqual(process.returncode,1)
-  self.assertIn('Watch failed: sample-validation reason=validation-or-request-failed',process.stdout)
+  self.assertIn('Watch failed: sample-validation reason=unexpected-source-filename',process.stdout)
   self.assertIn('No completed check is claimed.',process.stdout)
   self.assertNotIn('ODP-PRIVATE',process.stdout);self.assertEqual(process.stderr,'')
 
