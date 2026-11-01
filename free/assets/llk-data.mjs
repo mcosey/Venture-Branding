@@ -28,7 +28,53 @@ export const milestones = [
   questions:[],
   resources:[['Founders, owners, directors, and managers','founders-owners-directors-and-managers-who-actually-runs-a-startup'],['Why incorporate in Delaware?','why-incorporate-in-delaware'],['What is a registered agent?','what-is-a-registered-agent-and-does-your-startup-need-one'],['Qualified small business stock (QSBS)','what-is-qualified-small-business-stock-qsbs-and-why-should-founders-care']]
  },
- {id:'founders',name:'Founders’ agreement',icon:'♧',x:75,y:23,intro:'Prepare to document expectations around ownership, roles, decisions, and departures.',explanation:'Founders’ arrangements can be documented in several kinds of agreements. A separate founders’ agreement is not necessary for every business; counsel can help identify and implement the appropriate documents.',tasks:['Discuss founder goals, responsibilities, and time commitments.','Outline proposed ownership, contributions, and vesting questions.','Discuss the appropriate agreements and implementation with counsel.','Prepare questions about decisions, disagreements, and departures.'],questions:['Do we need a separate founders’ agreement, or should other documents address these arrangements?','How should founder vesting and departure provisions work?','How should we resolve disagreements and approve major decisions?'],resources:[['Founders’ agreements','founders-agreements'],['Understanding Section 83(b) elections','understanding-section-83b-elections']]},
+ {id:'founders',name:'Founders’ agreement',icon:'♧',x:75,y:23,
+  intro:'Document expectations around ownership, responsibilities, decisions, and departures.',
+  explanation:'Founders’ arrangements describe how the founders will work together. These terms can appear in a founders’ agreement or across the company’s equity, IP, and governing documents.',
+  // Keep the four original discussion-task positions separate from the revised items.
+  progressOffset:4,
+  tasks:[
+   'Define each founder’s role.',
+   'Agree on each founder’s contributions.',
+   'Agree on the founders’ ownership split.',
+   'Decide whether founder equity will vest.',
+   'Agree on decision-making authority.',
+   'Choose a process for resolving deadlocks.',
+   'Agree on founder-departure terms.',
+   'Decide on ownership-transfer restrictions.',
+   'Agree on confidentiality obligations.',
+   'Document founder IP assignments.',
+   'Identify conflicting obligations.',
+   'Agree on founder compensation.',
+   'Agree on outside business activities.',
+   'Agree on what happens if the venture ends.',
+   'Sign the founders’ agreement.'
+  ],
+  taskDetails:[
+   'A founder’s responsibilities may differ from their ownership percentage or formal title.',
+   'Contributions can include money, services, equipment or intellectual property.',
+   'This captures the ownership allocation agreed among the founders.',
+   'Vesting connects a founder’s equity rights to continued participation or other agreed conditions.',
+   'Day-to-day decisions and major company decisions may involve different approval rights.',
+   'A deadlock occurs when the required decision-makers cannot reach an agreement.',
+   'A founder’s departure can affect their role, equity and continuing obligations.',
+   'These terms address a founder’s ability to transfer their ownership interest to someone else.',
+   'These provisions address the treatment of nonpublic company information.',
+   'Assignments address the company’s rights in business-related IP contributed or developed by its founders. The documentation can cover existing IP and future work, with transfer timing depending on whether the entity exists.',
+   'Existing employment, consulting or other agreements can affect a founder’s contributions or IP rights.',
+   'Salary or other compensation, if any, is separate from equity ownership.',
+   'Founders may have different expectations about other ventures and time commitments.',
+   'Ending the collaboration can raise questions about its assets, IP and continuing obligations.',
+   'The signed agreement records the terms accepted by its parties.'
+  ],
+  questions:[],
+  resources:[
+   ['Founders’ Agreements: What Co-Founders Should Agree on Before Starting a Business','founders-agreements'],
+   ['Founder Equity: How to Divide Ownership and Structure Vesting','founder-equity-how-to-divide-ownership-and-structure-vesting'],
+   ['What Happens When a Co-Founder Leaves Your Startup?','what-happens-when-a-co-founder-leaves-your-startup'],
+   ['Founders, Owners, Directors, and Managers: Who Actually Runs a Startup?','founders-owners-directors-and-managers-who-actually-runs-a-startup']
+  ]
+ },
  {id:'governance',name:'Governing documents',icon:'≡',x:20,y:70,intro:'Understand the documents that establish how your business makes decisions.',explanation:'Governing documents depend on the entity type and arrangements among its owners. This checklist helps organize the information needed to discuss those documents with counsel.',tasks:['Identify the entity type and current governing documents.','List who will manage the business and make major decisions.','Outline voting, approval, and dispute questions.','Discuss adoption and maintenance of governing documents with counsel.'],questions:['Which governing documents does our entity need?','Which decisions require owner or board approval?','How should we document decisions and retain records?'],resources:[['Founders’ agreements','founders-agreements']]},
  {id:'equity',name:'Initial ownership',icon:'◉',x:50,y:81,intro:'Plan how ownership will be allocated and properly documented.',explanation:'An agreed ownership split and the legal issuance of equity are different steps. Prepare your proposed arrangements and questions about authorization, documentation, vesting, and tax advice.',tasks:['List proposed owners and ownership allocations.','Record expected contributions and any vesting questions.','Identify questions about authorization and equity documentation.','Discuss implementation and time-sensitive tax issues with advisors.'],questions:['What approvals and documents are needed to issue ownership interests?','How will future financing affect ownership?','Are there time-sensitive tax steps we need to address?'],resources:[['Understanding startup capitalization','understanding-startup-capitalization'],['Understanding Section 83(b) elections','understanding-section-83b-elections']]},
  {id:'consents',name:'Initial decisions & records',icon:'✓',x:81,y:70,intro:'Organize the initial decisions and records your business may need.',explanation:'Required approvals and records vary by entity and situation. Use this workspace to collect questions and prepare to discuss the appropriate next steps.',tasks:['List the initial business decisions that need approval.','Identify who has authority to approve each decision.','Discuss required approvals and records with counsel.','Choose where to organize final business records.'],questions:['Which initial actions need formal approval?','Who should sign or approve those actions?','What records should we retain and update?'],resources:[['Founders’ agreements','founders-agreements']]}

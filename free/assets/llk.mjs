@@ -111,8 +111,6 @@ function milestone(id){
  notes.oninput=()=>{progress.notes[m.id]=notes.value;save(m.id);};
  const help=e('p',memberContext?'Avoid confidential information. Notes are saved to your account for your planning and are not sent to an attorney.':'Avoid confidential information. Notes remain in this browser and are not sent to an attorney.','muted');help.id='notes-help';
  planner.append(label,notes,help);bottom.append(planner);main.append(bottom);
- const related=panel('Related milestones');const row=e('div',undefined,'related-links');
- for(const other of milestones.filter(x=>x.id!==m.id))row.append(link(other.name,'#milestone/'+other.id));related.append(row);main.append(related);
 }
 function notFound(){heading('This milestone is not available','Choose a category to continue exploring.');main.append(link('Return to Legal Launch Kit','#','primary'));}
 function render(){
