@@ -4,6 +4,7 @@ import {renderBusiness,savedBusinessName} from './llk-business.mjs?v=member-acco
 import {icon} from './llk-icons.mjs';
 import {createMasterAtlas} from './llk-atlas.mjs?v=company-label-1';
 import {createChecklistItem} from './llk-checklist.mjs';
+import {renderTrademarkProtection,isTrademarkProtectionRoute,brandMilestones} from './llk-trademark.mjs';
 import {renderVibeConsiderations,isVibeConsiderationsRoute,vibeMilestones} from './llk-vibe-coding.mjs';
 import {categories,categoryTasks,milestones,emptyProgress,decodeProgress,milestoneStatus,taskProgressIndex} from './llk-data.mjs';
 const key='vb-llk-prototype-v1'+(memberContext?':'+memberContext.user.id:'');let progress=emptyProgress(), storageAvailable=true, listView=false, diagramObserver;
@@ -21,7 +22,7 @@ function updatePersistence(){
  const message=persistenceMessage();status.textContent=message;const label=document.querySelector('#save-message');if(label)label.textContent=message;
  const retry=document.querySelector('#retry-progress');if(retry)retry.hidden=accountStore?.state!=='error';
  const reload=document.querySelector('#reload-progress');if(reload)reload.hidden=accountStore?.state!=='conflict';
- for(const input of main.querySelectorAll('input[type=checkbox],textarea,#reset-progress,#import-progress'))input.disabled=accountStore?.state==='conflict';
+ for(const input of main.querySelectorAll('input[type=checkbox]:not([data-review-only]),textarea,#reset-progress,#import-progress'))input.disabled=accountStore?.state==='conflict';
 }
 function save(id){
  if(accountStore){for(const m of milestones)if(!id||id===m.id)accountStore.queue(m.id,progress);updatePersistence();return;}
@@ -65,19 +66,20 @@ function clipConnections(canvas,svg){
 }
 function graph(items,centerName,centerSub,category){
  if(!category)return createMasterAtlas({businessName:savedBusinessName(),categories,categoryTasks,milestones,progress,milestoneStatus,listView,onToggle:()=>{listView=!listView;render();},icon});
- const isVibe=category==='contracts';
- const section=e('section',undefined,'map-panel');section.setAttribute('aria-label',isVibe?'Vibe Coding milestone grid':'Formation milestone grid');const toolbar=e('div',undefined,'map-toolbar');toolbar.append(e('span',isVibe?'VIBE CODING ROADMAP':'FORMATION ROADMAP','eyebrow'));const toggle=e('button',listView?'Show sphere grid':'Show list','quiet-button');toggle.type='button';toggle.onclick=()=>{listView=!listView;render();};toolbar.append(toggle);section.append(toolbar);
+ const isVibe=category==='contracts',isBrand=category==='brand';
+ const gridName=isVibe?'Vibe Coding':isBrand?'Brand Protection':'Formation';
+ const section=e('section',undefined,'map-panel');section.setAttribute('aria-label',gridName+' milestone grid');const toolbar=e('div',undefined,'map-toolbar');toolbar.append(e('span',gridName.toUpperCase()+' ROADMAP','eyebrow'));const toggle=e('button',listView?'Show sphere grid':'Show list','quiet-button');toggle.type='button';toggle.onclick=()=>{listView=!listView;render();};toolbar.append(toggle);section.append(toolbar);
  const canvas=e('div',undefined,'sphere-canvas'+(listView?' list-view':''));const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');svg.setAttribute('aria-hidden','true');svg.classList.add('connections');
  for(const item of items){const edge=document.createElementNS(ns,'line');for(const [key,value]of Object.entries({x1:50,y1:47,x2:item.x,y2:item.y}))edge.setAttribute(key,String(value));svg.append(edge);}canvas.append(svg);
- const center=e('div',undefined,'sphere center');center.style.left='50%';center.style.top='47%';center.append(icon(isVibe?'contracts':'business'),e('strong',centerName),e('small',centerSub));canvas.append(center);
+ const center=e('div',undefined,'sphere center');center.style.left='50%';center.style.top='47%';center.append(icon(isVibe?'contracts':isBrand?'brand':'business'),e('strong',centerName),e('small',centerSub));canvas.append(center);
  for(const item of items){const state=item.tasks?milestoneStatus(progress,item):null;canvas.append(node(item,item.href||'#milestone/'+item.id,state?.label||'',state&&state.done===state.total?'complete':state?.done?'in-progress':''));}
- section.append(canvas);clipConnections(canvas,svg);section.append(e('p',isVibe?'Explore the Vibe Coding considerations.':memberContext?'Explore milestones in any order. Checklist progress is saved to your account.':'Explore milestones in any order. Checklist progress is saved in this browser.','map-note'));return section;
+ section.append(canvas);clipConnections(canvas,svg);section.append(e('p',isVibe?'Explore the Vibe Coding considerations.':isBrand?'Explore Trademark Protection.':memberContext?'Explore milestones in any order. Checklist progress is saved to your account.':'Explore milestones in any order. Checklist progress is saved in this browser.','map-note'));return section;
 }
-function master(){heading('Legal Launch Kit','See the legal landscape around your business. Choose a category to learn, plan, and take your next step.');const total=milestones.reduce((sum,m)=>sum+milestoneStatus(progress,m).done,0);const stats=e('div',undefined,'stats');stats.append(e('span','7 topic areas'),e('span','Formation: '+milestones.filter(m=>milestoneStatus(progress,m).label==='Completed').length+' of 5 milestones completed'),e('span',total+' planning tasks checked'));main.append(stats,graph(categories,'Your business','Explore freely',false));const guidance=panel('Start with formation');guidance.append(e('p','Explore five Formation milestones and the Vibe Coding considerations. The other topic areas are previews.'),link('Explore Formation & structure →','#category/formation','primary'));main.append(guidance);}
+function master(){heading('Legal Launch Kit','See the legal landscape around your business. Choose a category to learn, plan, and take your next step.');const total=milestones.reduce((sum,m)=>sum+milestoneStatus(progress,m).done,0);const stats=e('div',undefined,'stats');stats.append(e('span','7 topic areas'),e('span','Formation: '+milestones.filter(m=>milestoneStatus(progress,m).label==='Completed').length+' of 5 milestones completed'),e('span',total+' planning tasks checked'));main.append(stats,graph(categories,'Your business','Explore freely',false));const guidance=panel('Start with formation');guidance.append(e('p','Explore five Formation milestones, Trademark Protection and the Vibe Coding considerations. The other topic areas are previews.'),link('Explore Formation & structure →','#category/formation','primary'));main.append(guidance);}
 function category(id){const c=categories.find(c=>c.id===id);if(!c){notFound();return;}
- if(id==='contracts'){
+ if(id==='contracts'||id==='brand'){
   const nav=e('nav',undefined,'breadcrumbs');nav.setAttribute('aria-label','Breadcrumb');nav.append(link('Legal Launch Kit','#'),e('span','›'),e('span',c.name));
-  heading(c.name,c.description,nav);main.append(graph(vibeMilestones,c.name,'1 milestone',id));return;
+  heading(c.name,c.description,nav);main.append(graph(id==='brand'?brandMilestones:vibeMilestones,c.name,'1 milestone',id));return;
  }
  if(id!=='formation'){heading(c.name,c.description);main.append(link('← All categories','#'));const p=panel('Category preview');p.append(e('p','This category is planned for Phase 2. Its milestones and content are not connected in this prototype.'),link('Explore the working Formation category →','#category/formation','primary'));main.append(p);return;}
  heading(c.name,c.description,crumbs());main.append(graph(milestones,'Formation','5 planning milestones',true));}
@@ -115,6 +117,7 @@ function milestone(id){
 function notFound(){heading('This milestone is not available','Choose a category to continue exploring.');main.append(link('Return to Legal Launch Kit','#','primary'));}
 function render(){
  diagramObserver?.disconnect();main.replaceChildren();
+ if(isTrademarkProtectionRoute(location.hash)){renderTrademarkProtection(main);return;}
  if(isVibeConsiderationsRoute(location.hash)){renderVibeConsiderations(main);return;}
  const parts=location.hash.slice(1).split('/');
  if(parts[0]==='business')renderBusiness(main,{e,link,panel,heading,refresh:render});else if(parts[0]==='category')category(parts[1]);else if(parts[0]==='milestone')milestone(parts[1]);else master();

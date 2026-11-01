@@ -34,7 +34,7 @@ export function renderVibeConsiderations(main){
  function reviewItem(title,detail){
   const row=createChecklistItem({title,detail,index:taskIndex++,checked:false});
   // Content review only: do not imply that this new milestone has account saving.
-  row.children[0].disabled=true;
+  row.children[0].disabled=true;row.children[0].setAttribute('data-review-only','true');
   return row;
  }
  for(const [title,detail]of vibeChecklist)checklist.append(reviewItem(title,detail));

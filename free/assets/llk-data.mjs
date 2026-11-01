@@ -92,7 +92,7 @@ export function milestoneStatus(progress,m){const done=m.tasks.filter((_,i)=>pro
 // Satellite coordinates locate the small circles; labels sit outside each cluster.
 export const categoryTasks = {
  formation:[{name:'Business structure',id:'entity',x:50,y:7.33,side:'top'},{name:'Founders’ agreement',id:'founders',x:45.41,y:9.26,side:'left'},{name:'Governing documents',id:'governance',x:57.52,y:14.35,side:'right'},{name:'Initial ownership',id:'equity',x:42.48,y:14.35,side:'left'},{name:'Initial decisions',id:'consents',x:54.59,y:9.26,side:'right'}],
- brand:[{name:'Trademark clearance',x:77.00,y:19.33,side:'top'},{name:'Brand strategy',x:85.00,y:30.00,side:'right'},{name:'Domain names',x:83.13,y:36.86,side:'right'}],
+ brand:[{name:'Trademark Protection',href:'#brand-protection/trademarks',x:77,y:19.33,side:'top'}],
  ownership:[{name:'Assigning IP',x:82.66,y:53.46,side:'right'},{name:'Contractor IP',x:85.00,y:61.00,side:'right'},{name:'Open source',x:82.66,y:68.54,side:'right'}],
  contracts:[{name:'Considerations',href:'#vibe-coding/considerations',x:15,y:26,side:'left'}],
  people:[{name:'Employee or contractor',x:16.87,y:54.14,side:'left'},{name:'Offer letters',x:15.00,y:61.00,side:'left'},{name:'Workplace policies',x:16.87,y:67.86,side:'left'}],

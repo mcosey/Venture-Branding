@@ -17,10 +17,7 @@ export const atlasTasks = {
  {index:4,angle:-45,lines:['Initial','decisions'],dx:24,dy:-10,anchor:'start'},
  {index:2,angle:-10,lines:['Governing','documents'],dx:24,dy:-5,anchor:'start'}],
  contracts:[{index:0,angle:-145,lines:['Considerations'],dx:-25,dy:-5,anchor:'end'}],
- brand:[
- {index:0,angle:-90,lines:['Trademark','clearance'],dx:0,dy:-38,anchor:'middle'},
- {index:1,angle:-35,lines:['Brand strategy'],dx:24,dy:5,anchor:'start'},
- {index:2,angle:5,lines:['Domain names'],dx:24,dy:5,anchor:'start'}],
+ brand:[{index:0,angle:-35,lines:['Trademark','Protection'],dx:24,dy:5,anchor:'start'}],
  people:[
  {index:0,angle:-120,lines:['Employee or','contractor'],dx:-24,dy:-16,anchor:'end'},
  {index:1,angle:-170,lines:['Offer letters'],dx:-26,dy:5,anchor:'end'},
@@ -68,7 +65,7 @@ export function createMasterAtlas({businessName='',categories,categoryTasks,mile
  const html=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
  const section=html('section',undefined,'llk-atlas'+(listView?' is-list':''));section.setAttribute('aria-label','Legal Launch Kit roadmap');
  const controls=html('div',undefined,'atlas-controls');const caption=html('span','YOUR LEGAL ROADMAP','eyebrow');const button=html('button',listView?'Show map':'Show list','quiet-button');button.type='button';button.onclick=onToggle;controls.append(caption,button);section.append(controls);
- const svg=h('svg',{viewBox:'0 0 1280 910',class:'atlas-drawing',role:'group','aria-label':'Your business and seven connected legal topic clusters'});svg.append(h('title',{},'Legal Launch Kit'),h('desc',{},'Choose a category or milestone. Formation and Vibe Coding are available; other categories are previews. Connections show relationships, not a required order.'));
+ const svg=h('svg',{viewBox:'0 0 1280 910',class:'atlas-drawing',role:'group','aria-label':'Your business and seven connected legal topic clusters'});svg.append(h('title',{},'Legal Launch Kit'),h('desc',{},'Choose a category or milestone. Formation, Brand Protection and Vibe Coding are available; other categories are previews. Connections show relationships, not a required order.'));
  const defs=h('defs');
  const glow=h('filter',{id:'atlas-soft-glow',x:'-100%',y:'-100%',width:'300%',height:'300%'});glow.append(h('feGaussianBlur',{stdDeviation:3}));defs.append(glow);
  const vignette=h('radialGradient',{id:'atlas-depth'});vignette.append(h('stop',{offset:'0%','stop-color':'#0b1c2b','stop-opacity':'.16'}),h('stop',{offset:'100%','stop-color':'#03111b','stop-opacity':'0'}));defs.append(vignette);svg.append(defs);
@@ -146,6 +143,6 @@ export function createMasterAtlas({businessName='',categories,categoryTasks,mile
  section.append(svg);
  const list=html('div',undefined,'atlas-accessible-list');const businessLink=html('a',(businessName||'Your business')+' · company profile','atlas-business-entry');businessLink.href='#business';list.append(businessLink);
  for(const category of categories){const article=html('section',undefined,'panel');const title=html('a',category.name);title.href=category.href||'#category/'+category.id;const head=html('h2');head.append(title);article.append(head);const ul=html('ul');for(const task of categoryTasks[category.id]){const li=html('li'),a=html('a',task.name+(task.id||task.href?'':' · Preview'));a.href=task.id?'#milestone/'+task.id:task.href||'#category/'+category.id;li.append(a);ul.append(li);}article.append(ul);list.append(article);}section.append(list);
- const legend=html('div',undefined,'atlas-legend');for(const [cls,text]of [['','Not started'],['started','In progress'],['completed','Completed']]){const item=html('span',undefined,cls);item.append(html('i'),document.createTextNode(text));legend.append(item);}section.append(legend,html('p','Explore Formation milestones and Vibe Coding considerations. Other categories are previews. Connections show relationships, not required steps.','atlas-note'));
+ const legend=html('div',undefined,'atlas-legend');for(const [cls,text]of [['','Not started'],['started','In progress'],['completed','Completed']]){const item=html('span',undefined,cls);item.append(html('i'),document.createTextNode(text));legend.append(item);}section.append(legend,html('p','Explore Formation milestones, Trademark Protection and Vibe Coding considerations. Other categories are previews. Connections show relationships, not required steps.','atlas-note'));
  return section;
 }
