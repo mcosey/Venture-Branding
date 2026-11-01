@@ -1,2 +1,0 @@
-:is(.vibe-checklist,.review-checklist) .task input:disabled{opacity:.65;cursor:default}
-.milestone-layout:has(>.vibe-checklist,>.review-checklist){align-items:start}

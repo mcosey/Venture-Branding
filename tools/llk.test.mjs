@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {categories,categoryTasks,milestones,emptyProgress,decodeProgress,milestoneStatus,taskProgressIndex} from '../free/assets/llk-data.mjs';
+import {categories,categoryTasks,milestones,savedMilestones,emptyProgress,decodeProgress,milestoneStatus,taskProgressIndex} from '../free/assets/llk-data.mjs';
 test('progress survives reload and can be undone; all tasks required for completion',()=>{
  const m=milestones.find(x=>x.id==='founders');const p=emptyProgress();
  assert.equal(milestoneStatus(p,m).label,'Not started');p.tasks[m.id]=Array(taskProgressIndex(m,m.tasks.length)).fill(false);p.tasks[m.id][taskProgressIndex(m,0)]=true;
@@ -26,12 +26,12 @@ test('revised founder decisions never inherit completion from the original discu
  assert.equal(m.tasks[9],'Document founder IP assignments.');
 });
 test('all working milestones link to existing articles and have unique route ids',()=>{
- assert.equal(new Set(milestones.map(m=>m.id)).size,milestones.length);assert.equal(new Set(categories.map(c=>c.id)).size,categories.length);
- for(const m of milestones){assert.ok(m.tasks.length>0);assert.ok(Array.isArray(m.questions));for(const [,slug] of m.resources)assert.ok(fs.existsSync(new URL('../blog/posts/'+slug+'.html',import.meta.url)),slug);}
+ assert.equal(new Set(savedMilestones.map(m=>m.id)).size,savedMilestones.length);assert.equal(new Set(categories.map(c=>c.id)).size,categories.length);
+ for(const m of savedMilestones){assert.ok(m.tasks.length>0);assert.ok(Array.isArray(m.questions));for(const [,slug] of m.resources)assert.ok(fs.existsSync(new URL('../blog/posts/'+slug+'.html',import.meta.url)),slug);}
 });
 
 test('each category has satellites and every working satellite opens an existing milestone',()=>{
- for(const category of categories){assert.ok(categoryTasks[category.id].length>0);for(const task of categoryTasks[category.id]){assert.ok(task.x>0&&task.x<100&&task.y>0&&task.y<100);if(task.id)assert.ok(milestones.some(m=>m.id===task.id));}}
+ for(const category of categories){assert.ok(categoryTasks[category.id].length>0);for(const task of categoryTasks[category.id]){assert.ok(task.x>0&&task.x<100&&task.y>0&&task.y<100);if(task.id)assert.ok(savedMilestones.some(m=>m.id===task.id));}}
  assert.equal(categoryTasks.formation.length,milestones.length);
 });
 

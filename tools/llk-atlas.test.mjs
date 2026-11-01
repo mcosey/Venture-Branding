@@ -2,14 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createMasterAtlas,atlasLayout,atlasTasks,ringPoint,atlasRoute} from '../free/assets/llk-atlas.mjs';
 import {icon} from '../free/assets/llk-icons.mjs';
-import {categories,categoryTasks,milestones,emptyProgress,milestoneStatus} from '../free/assets/llk-data.mjs';
+import {categories,categoryTasks,savedMilestones as milestones,emptyProgress,milestoneStatus} from '../free/assets/llk-data.mjs';
 // A tiny DOM stand-in verifies that the renderer builds real anchors and valid text nodes.
 import {Node,mockDocument,flatten} from './fixtures/llk-dom.mjs';
 export {Node,mockDocument,flatten};
 export function buildAtlas(businessName=''){return createMasterAtlas({businessName,categories,categoryTasks,milestones,progress:emptyProgress(),milestoneStatus,listView:false,onToggle:()=>{},icon});}
 test('single SVG renderer constructs all working links and a separate mobile list',()=>{
  const previous=globalThis.document;globalThis.document=mockDocument;
- try{const nodes=flatten(buildAtlas());const svg=nodes.filter(n=>n.tag==='svg'&&n.attrs.class==='atlas-drawing');assert.equal(svg.length,1);const paths=flatten(svg[0]).filter(n=>n.tag==='a').map(n=>n.attrs.href);assert.ok(paths.includes('#business'));for(const m of milestones)assert.equal(paths.filter(h=>h==='#milestone/'+m.id).length,1);for(const c of categories)assert.ok(paths.includes(c.href||'#category/'+c.id));assert.ok(nodes.some(n=>n.attrs.class==='atlas-accessible-list'));assert.ok(nodes.some(n=>n.tag==='tspan'&&n.textContent==='Offer letters'));}
+ try{const nodes=flatten(buildAtlas());const svg=nodes.filter(n=>n.tag==='svg'&&n.attrs.class==='atlas-drawing');assert.equal(svg.length,1);const paths=flatten(svg[0]).filter(n=>n.tag==='a').map(n=>n.attrs.href);assert.ok(paths.includes('#business'));for(const m of milestones)assert.equal(paths.filter(h=>h===(m.href||'#milestone/'+m.id)).length,1);for(const c of categories)assert.ok(paths.includes(c.href||'#category/'+c.id));assert.ok(nodes.some(n=>n.attrs.class==='atlas-accessible-list'));assert.ok(nodes.some(n=>n.tag==='tspan'&&n.textContent==='Offer letters'));}
  finally{globalThis.document=previous;}
 });
 test('explicit label placements cover each existing task once, with room around the map',()=>{

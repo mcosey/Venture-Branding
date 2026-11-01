@@ -134,7 +134,7 @@ export function createMasterAtlas({businessName='',categories,categoryTasks,mile
   for(const angle of [70,110]){const p=ringPoint(c,angle,96);svg.append(h('circle',{cx:p.x,cy:p.y,r:6,class:'ornamental-port',style:`--tone:${c.color}`}),h('path',{d:`M${p.x-2} ${p.y}h4m-2-2v4`,class:'port-symbol'}));}
   for(const item of atlasTasks[category.id]){
    const task=categoryTasks[category.id][item.index],p=ringPoint(c,item.angle),milestone=task.id?milestones.find(m=>m.id===task.id):null,state=milestone?milestoneStatus(progress,milestone):null;
-   const a=h('a',{href:milestone?'#milestone/'+task.id:task.href||'#category/'+category.id,tabindex:0,class:'atlas-milestone'+(state?.label==='Completed'?' completed':state?.done?' started':''),'aria-label':task.name+(state?' — '+state.label:task.href?'':' — category preview'),style:`--tone:${c.color}`});
+   const a=h('a',{href:task.href||(milestone?'#milestone/'+task.id:'#category/'+category.id),tabindex:0,class:'atlas-milestone'+(state?.label==='Completed'?' completed':state?.done?' started':''),'aria-label':task.name+(state?' — '+state.label:task.href?'':' — category preview'),style:`--tone:${c.color}`});
    a.append(h('title',{},task.name+(milestone||task.href?'':' — Phase 2 preview')),h('circle',{cx:p.x,cy:p.y,r:11,class:'milestone-aura'}),h('circle',{cx:p.x,cy:p.y,r:11,class:'milestone-circle'}),h('circle',{cx:p.x,cy:p.y,r:4,class:'milestone-center'}));
    if(state?.label==='Completed')a.append(h('path',{d:`M${p.x-5} ${p.y}l3 3 6-6`,class:'milestone-check'}));
    label(a,p.x+item.dx,p.y+item.dy,item.lines,item.anchor);svg.append(a);
@@ -142,7 +142,7 @@ export function createMasterAtlas({businessName='',categories,categoryTasks,mile
  }
  section.append(svg);
  const list=html('div',undefined,'atlas-accessible-list');const businessLink=html('a',(businessName||'Your business')+' · company profile','atlas-business-entry');businessLink.href='#business';list.append(businessLink);
- for(const category of categories){const article=html('section',undefined,'panel');const title=html('a',category.name);title.href=category.href||'#category/'+category.id;const head=html('h2');head.append(title);article.append(head);const ul=html('ul');for(const task of categoryTasks[category.id]){const li=html('li'),a=html('a',task.name+(task.id||task.href?'':' · Preview'));a.href=task.id?'#milestone/'+task.id:task.href||'#category/'+category.id;li.append(a);ul.append(li);}article.append(ul);list.append(article);}section.append(list);
+ for(const category of categories){const article=html('section',undefined,'panel');const title=html('a',category.name);title.href=category.href||'#category/'+category.id;const head=html('h2');head.append(title);article.append(head);const ul=html('ul');for(const task of categoryTasks[category.id]){const li=html('li'),a=html('a',task.name+(task.id||task.href?'':' · Preview'));a.href=task.href||(task.id?'#milestone/'+task.id:'#category/'+category.id);li.append(a);ul.append(li);}article.append(ul);list.append(article);}section.append(list);
  const legend=html('div',undefined,'atlas-legend');for(const [cls,text]of [['','Not started'],['started','In progress'],['completed','Completed']]){const item=html('span',undefined,cls);item.append(html('i'),document.createTextNode(text));legend.append(item);}section.append(legend,html('p','Explore Formation milestones, Trademark Protection and Vibe Coding considerations. Other categories are previews. Connections show relationships, not required steps.','atlas-note'));
  return section;
 }

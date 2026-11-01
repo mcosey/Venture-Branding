@@ -1,4 +1,4 @@
-import {milestones,emptyProgress,decodeProgress,taskProgressIndex} from './llk-data.mjs';
+import {savedMilestones as milestones,emptyProgress,decodeProgress,taskProgressIndex} from './llk-data.mjs';
 import {createDiagnostics,databaseCategory} from '../../shared/diagnostics.mjs';
 const known=new Set(milestones.map(m=>m.id));
 export function progressPayload(progress,id){

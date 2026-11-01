@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-31",
+  "target": "Venture Branding main",
+  "project_id": "omvkwiosonatswocbdgx",
+  "applied": true,
+  "source_sha256": "cb3cd1a4eb9a1682e29013f2af30fff3085901ae144d179169abf9c1b8144ff8",
+  "baseline_body_md5": "e7fac3bb8be1d7fc7479e22c2409c6bd",
+  "installed_body_md5": "42457d8a4c15ce7d91fca4f731241192",
+  "added_milestones": [
+    "considerations",
+    "trademarks"
+  ],
+  "database_checks": {
+    "passed": 20,
+    "all_passed": true,
+    "existing_rows_preserved": true,
+    "permissions_preserved": true,
+    "fictional_accounts": 2,
+    "fictional_companies": 2,
+    "fictional_fixtures_rolled_back": true
+  },
+  "installed_metadata_checks": {
+    "passed": 9,
+    "all_passed": true
+  },
+  "browser_checks": {
+    "trademarks": {
+      "saved_checkmark": true,
+      "persisted_after_full_reload": true,
+      "uncheck_saved": true,
+      "original_checkmarks_restored_after_reload": true
+    },
+    "considerations": {
+      "saved_checkmark": true,
+      "persisted_after_full_reload": true,
+      "uncheck_saved": true,
+      "original_checkmarks_restored_after_reload": true
+    }
+  },
+  "offline_portal_tests": {
+    "passed": 514,
+    "failed": 0
+  },
+  "diagnostics_integrity": "passed",
+  "limits": [
+    "Actual second-device sign-in not repeated; fresh store/session loading covered locally",
+    "No account notes or Formation checkmarks edited",
+    "Two empty progress rows remain after restoring the two new checklists",
+    "Rollback fixtures may advance audit sequence counters",
+    "No email, provider request, hosting, Test/Cotivate-project changes or software installation"
+  ],
+  "first_attempt": "Rejected at SQL parsing because editor inserted into existing query; no changes. Retried exact approved source after clearing editor."
+}

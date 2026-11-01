@@ -62,3 +62,32 @@ test('reset saves empty progress and persists across another session',async()=>{
  const f=fixture(),progress=await f.store.load();progress.notes.entity='Question';progress.tasks.entity=[true,true,true,true];f.store.queue('entity',progress);await f.store.flush();
  f.store.queue('entity',emptyProgress());await f.store.flush();const restored=await f.store.load();assert.equal(restored.notes.entity,'');assert.equal(restored.tasks.entity.some(Boolean),false);
 });
+
+for(const id of ['trademarks','considerations']){
+ test(id+' saves independently, survives a fresh account session and can be unchecked or reset',async()=>{
+  const f=fixture(),progress=await f.store.load();progress.tasks.entity[4]=true;progress.notes.entity='Preserve Formation';f.store.queue('entity',progress);await f.store.flush();
+  const formation=structuredClone(f.rows.get('entity'));
+  const m=(await import('../free/assets/llk-data.mjs')).savedMilestones.find(m=>m.id===id);
+  progress.tasks[id]=m.tasks.map(()=>true);f.store.queue(id,progress);assert.equal(await f.store.flush(),true);
+  const other=createAccountProgressStore({db:f.db,companyId:'own-company'}),restored=await other.load();
+  assert.deepEqual(restored.tasks[id],m.tasks.map(()=>true));assert.equal(milestoneStatus(restored,m).label,'Completed');
+  restored.tasks[id][0]=false;other.queue(id,restored);assert.equal(await other.flush(),true);
+  const loaded=await f.store.load();assert.equal(loaded.tasks[id][0],false);assert.equal(milestoneStatus(loaded,m).label,'In progress');
+  f.store.queue(id,emptyProgress());assert.equal(await f.store.flush(),true);
+  assert.equal((await other.load()).tasks[id].some(Boolean),false);assert.deepEqual(f.rows.get('entity'),formation);
+ });
+ test(id+' retains failed saves for retry and refuses an older session overwrite',async()=>{
+  const f=fixture(),progress=await f.store.load();f.setFailure(true);progress.tasks[id][0]=true;
+  f.store.queue(id,progress);assert.equal(await f.store.flush(),false);assert.equal(f.store.state,'error');assert.equal(f.rows.size,0);
+  f.setFailure(false);assert.equal(await f.store.retry(),true);
+  const stale=createAccountProgressStore({db:f.db,companyId:'own-company'}),old=await stale.load();
+  progress.tasks[id][1]=true;f.store.queue(id,progress);assert.equal(await f.store.flush(),true);
+  old.tasks[id][0]=false;stale.queue(id,old);assert.equal(await stale.flush(),false);assert.equal(stale.state,'conflict');
+  assert.deepEqual((await f.store.load()).tasks[id].slice(0,2),[true,true]);
+ });
+}
+test('new milestone browser imports preserve existing account completion without crossing milestone IDs',()=>{
+ const account=emptyProgress(),browser=emptyProgress();account.tasks.trademarks=[true,false];browser.tasks.trademarks=[false,true];browser.tasks.considerations=[true,false];
+ const merged=mergeBrowserProgress(account,browser);assert.deepEqual(merged.tasks.trademarks,[true,true,false,false,false,false]);
+ assert.deepEqual(merged.tasks.considerations,[true,false]);assert.equal(merged.tasks.entity.some(Boolean),false);
+});

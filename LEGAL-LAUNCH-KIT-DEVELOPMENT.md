@@ -1,5 +1,41 @@
 # Legal Launch Kit development — persistent branch note
 
+## Saved Trademark Protection and Vibe Coding progress — October 31, 2026
+
+Both pages now use the Formation milestone renderer and account progress store.
+The owner approved the one-function main database allowlist update; all 20 rollback
+fixture checks, record/permission preservation comparisons and 9 installed metadata
+checks passed. Signed-in browser check/uncheck/reload passed for both pages, with
+original checkmarks restored. No notes or Formation progress were edited. All 514
+local checks and the refreshed diagnostics integrity check passed. See
+`supabase/proposals/llk-saved-milestones/README.md` and its verification receipt.
+The owner approved saving this integration in a separate commit for their push.
+No website publishing, Test or
+Cotivate-project change, email, provider request or software installation occurred.
+
+## LLK page completion workflow — October 31, 2026
+
+Owner instruction: new LLK milestone pages include functioning checkboxes and
+account-backed saving as part of the build, including the Trademark Protection
+and Vibe Coding Considerations pages. Do not treat saving as an optional extra
+or call an inactive checklist complete.
+
+- Add each page to the shared `savedMilestones` registry and use the shared
+  milestone renderer and account progress store. Keep one implementation of
+  save/retry/conflict handling, progress summaries and task disclosures.
+- Keep milestone IDs and task positions stable. When the meaning of existing
+  tasks changes, reserve old positions rather than relabel saved completion.
+- Include any required server milestone allowlist update. Preserve owner-only
+  access, validation, stale-revision protection and existing account data.
+  Prepare and verify that update before seeking any required live approval.
+- Verify save, reload, uncheck, isolation, failed saves and stale revisions;
+  distinguish local simulations from actual database/browser evidence.
+- A page is finished only when its content, navigation and account saving work.
+  If a live update or user sign-in blocks completion, report that specific
+  remaining step plainly. Do not silently ship a disabled visual draft.
+- Keep changes local and let the owner push reviewed commits. Public hosting,
+  Test activation, Cotivate changes and software installation are not implied.
+
 ## Consolidation review branch — October 17, 2026
 
 Owner approved combining tg, attorney-workspace and legal-launch-kit in isolated codex/portal-consolidation. Read CONSOLIDATION-REVIEW.md for inputs, conflict resolutions, 340 JavaScript + 36 Python passing checks and live review limits. Current localhost8893 review serves the combined checkout. Default tg and original feature branches remain unchanged; no database/deployment changes. Returning Client's Watch snapshot is denied by the existing configuration-owning-engagement boundary; separate Test compatibility investigation is needed before default merge. Owner clarified VB is SaaS, not CRM/matter management; use Clio/QuickBooks for that, leave Calendly deferred, and reserve database audit/refactoring for later.

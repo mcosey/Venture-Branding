@@ -3,10 +3,10 @@ import {memberContext} from '../../auth/member-session.mjs?v=1';
 import {renderBusiness,savedBusinessName} from './llk-business.mjs?v=member-account-2';
 import {icon} from './llk-icons.mjs';
 import {createMasterAtlas} from './llk-atlas.mjs?v=company-label-1';
-import {createChecklistItem} from './llk-checklist.mjs';
-import {renderTrademarkProtection,isTrademarkProtectionRoute,brandMilestones} from './llk-trademark.mjs';
-import {renderVibeConsiderations,isVibeConsiderationsRoute,vibeMilestones} from './llk-vibe-coding.mjs';
-import {categories,categoryTasks,milestones,emptyProgress,decodeProgress,milestoneStatus,taskProgressIndex} from './llk-data.mjs';
+import {renderSavedMilestone} from './llk-milestone.mjs';
+import {isTrademarkProtectionRoute,brandMilestones} from './llk-trademark.mjs';
+import {isVibeConsiderationsRoute,vibeMilestones} from './llk-vibe-coding.mjs';
+import {categories,categoryTasks,milestones,savedMilestones,emptyProgress,decodeProgress,milestoneStatus} from './llk-data.mjs';
 const key='vb-llk-prototype-v1'+(memberContext?':'+memberContext.user.id:'');let progress=emptyProgress(), storageAvailable=true, listView=false, diagramObserver;
 if(!memberContext){try{progress=decodeProgress(localStorage.getItem(key));}catch{storageAvailable=false;}}
 let accountStore, browserImport;
@@ -22,10 +22,10 @@ function updatePersistence(){
  const message=persistenceMessage();status.textContent=message;const label=document.querySelector('#save-message');if(label)label.textContent=message;
  const retry=document.querySelector('#retry-progress');if(retry)retry.hidden=accountStore?.state!=='error';
  const reload=document.querySelector('#reload-progress');if(reload)reload.hidden=accountStore?.state!=='conflict';
- for(const input of main.querySelectorAll('input[type=checkbox]:not([data-review-only]),textarea,#reset-progress,#import-progress'))input.disabled=accountStore?.state==='conflict';
+ for(const input of main.querySelectorAll('input[type=checkbox],textarea,#reset-progress,#import-progress'))input.disabled=accountStore?.state==='conflict';
 }
 function save(id){
- if(accountStore){for(const m of milestones)if(!id||id===m.id)accountStore.queue(m.id,progress);updatePersistence();return;}
+ if(accountStore){for(const m of savedMilestones)if(!id||id===m.id)accountStore.queue(m.id,progress);updatePersistence();return;}
  try{localStorage.setItem(key,JSON.stringify(progress));storageAvailable=true;}catch{storageAvailable=false;}
  updatePersistence();
 }
@@ -34,7 +34,7 @@ async function loadAccountProgress(){
  try{
   progress=await accountStore.load();
   let raw;try{raw=localStorage.getItem(key);}catch{}
-  const old=decodeProgress(raw);browserImport=milestones.some(m=>old.tasks[m.id]?.some(Boolean)||old.notes[m.id])?old:null;
+  const old=decodeProgress(raw);browserImport=savedMilestones.some(m=>old.tasks[m.id]?.some(Boolean)||old.notes[m.id])?old:null;
   render();
  }catch{
   main.replaceChildren();heading('Your progress is unavailable','Please retry before making changes.');
@@ -42,7 +42,7 @@ async function loadAccountProgress(){
  }
 }
 function heading(title,description,crumb){const h=e('header',undefined,'page-heading');h.append(e('p','LEGAL LAUNCH KIT','eyebrow'));if(crumb)h.append(crumb);h.append(e('h1',title),e('p',description,'intro'));main.append(h);}
-function crumbs(m){const nav=e('nav',undefined,'breadcrumbs');nav.setAttribute('aria-label','Breadcrumb');nav.append(link('Legal Launch Kit','#'),e('span','›'));if(m)nav.append(link('Formation & structure','#category/formation'),e('span','›'),e('span',m.name));else nav.append(e('span','Formation & structure'));return nav;}
+function crumbs(m){const nav=e('nav',undefined,'breadcrumbs'),category=categories.find(c=>c.id===(m?.categoryId||'formation'));nav.setAttribute('aria-label','Breadcrumb');nav.append(link('Legal Launch Kit','#'),e('span','›'));if(m)nav.append(link(category.name,'#category/'+category.id),e('span','›'),e('span',m.name));else nav.append(e('span',category.name));return nav;}
 function panel(title,cls=''){const n=e('section',undefined,'panel '+cls);n.append(e('h2',title));return n;}
 function node(item,href,sub,cls=''){const n=link('',href,'sphere '+cls);n.style.left=item.x+'%';n.style.top=item.y+'%';n.dataset.cluster=item.id;n.append(icon(item.id),e('strong',item.id==='formation'?'Formation &\nstructure':item.name));if(sub)n.append(e('small',sub));n.title=item.description||sub||item.name;return n;}
 // Mask every connector under every visible node, including unrelated crossing lines.
@@ -65,7 +65,7 @@ function clipConnections(canvas,svg){
  requestAnimationFrame(()=>{if(!canvas.isConnected)return;update();diagramObserver=new ResizeObserver(update);diagramObserver.observe(canvas);});
 }
 function graph(items,centerName,centerSub,category){
- if(!category)return createMasterAtlas({businessName:savedBusinessName(),categories,categoryTasks,milestones,progress,milestoneStatus,listView,onToggle:()=>{listView=!listView;render();},icon});
+ if(!category)return createMasterAtlas({businessName:savedBusinessName(),categories,categoryTasks,milestones:savedMilestones,progress,milestoneStatus,listView,onToggle:()=>{listView=!listView;render();},icon});
  const isVibe=category==='contracts',isBrand=category==='brand';
  const gridName=isVibe?'Vibe Coding':isBrand?'Brand Protection':'Formation';
  const section=e('section',undefined,'map-panel');section.setAttribute('aria-label',gridName+' milestone grid');const toolbar=e('div',undefined,'map-toolbar');toolbar.append(e('span',gridName.toUpperCase()+' ROADMAP','eyebrow'));const toggle=e('button',listView?'Show sphere grid':'Show list','quiet-button');toggle.type='button';toggle.onclick=()=>{listView=!listView;render();};toolbar.append(toggle);section.append(toolbar);
@@ -73,9 +73,9 @@ function graph(items,centerName,centerSub,category){
  for(const item of items){const edge=document.createElementNS(ns,'line');for(const [key,value]of Object.entries({x1:50,y1:47,x2:item.x,y2:item.y}))edge.setAttribute(key,String(value));svg.append(edge);}canvas.append(svg);
  const center=e('div',undefined,'sphere center');center.style.left='50%';center.style.top='47%';center.append(icon(isVibe?'contracts':isBrand?'brand':'business'),e('strong',centerName),e('small',centerSub));canvas.append(center);
  for(const item of items){const state=item.tasks?milestoneStatus(progress,item):null;canvas.append(node(item,item.href||'#milestone/'+item.id,state?.label||'',state&&state.done===state.total?'complete':state?.done?'in-progress':''));}
- section.append(canvas);clipConnections(canvas,svg);section.append(e('p',isVibe?'Explore the Vibe Coding considerations.':isBrand?'Explore Trademark Protection.':memberContext?'Explore milestones in any order. Checklist progress is saved to your account.':'Explore milestones in any order. Checklist progress is saved in this browser.','map-note'));return section;
+ section.append(canvas);clipConnections(canvas,svg);section.append(e('p',memberContext?'Explore milestones in any order. Checklist progress is saved to your account.':'Explore milestones in any order. Checklist progress is saved in this browser.','map-note'));return section;
 }
-function master(){heading('Legal Launch Kit','See the legal landscape around your business. Choose a category to learn, plan, and take your next step.');const total=milestones.reduce((sum,m)=>sum+milestoneStatus(progress,m).done,0);const stats=e('div',undefined,'stats');stats.append(e('span','7 topic areas'),e('span','Formation: '+milestones.filter(m=>milestoneStatus(progress,m).label==='Completed').length+' of 5 milestones completed'),e('span',total+' planning tasks checked'));main.append(stats,graph(categories,'Your business','Explore freely',false));const guidance=panel('Start with formation');guidance.append(e('p','Explore five Formation milestones, Trademark Protection and the Vibe Coding considerations. The other topic areas are previews.'),link('Explore Formation & structure →','#category/formation','primary'));main.append(guidance);}
+function master(){heading('Legal Launch Kit','See the legal landscape around your business. Choose a category to learn, plan, and take your next step.');const total=savedMilestones.reduce((sum,m)=>sum+milestoneStatus(progress,m).done,0);const stats=e('div',undefined,'stats');stats.append(e('span','7 topic areas'),e('span','Formation: '+milestones.filter(m=>milestoneStatus(progress,m).label==='Completed').length+' of 5 milestones completed'),e('span',total+' planning tasks checked'));main.append(stats,graph(categories,'Your business','Explore freely',false));const guidance=panel('Start with formation');guidance.append(e('p','Explore five Formation milestones, Trademark Protection and the Vibe Coding considerations. The other topic areas are previews.'),link('Explore Formation & structure →','#category/formation','primary'));main.append(guidance);}
 function category(id){const c=categories.find(c=>c.id===id);if(!c){notFound();return;}
  if(id==='contracts'||id==='brand'){
   const nav=e('nav',undefined,'breadcrumbs');nav.setAttribute('aria-label','Breadcrumb');nav.append(link('Legal Launch Kit','#'),e('span','›'),e('span',c.name));
@@ -84,42 +84,16 @@ function category(id){const c=categories.find(c=>c.id===id);if(!c){notFound();re
  if(id!=='formation'){heading(c.name,c.description);main.append(link('← All categories','#'));const p=panel('Category preview');p.append(e('p','This category is planned for Phase 2. Its milestones and content are not connected in this prototype.'),link('Explore the working Formation category →','#category/formation','primary'));main.append(p);return;}
  heading(c.name,c.description,crumbs());main.append(graph(milestones,'Formation','5 planning milestones',true));}
 function milestone(id){
- const m=milestones.find(m=>m.id===id);if(!m){notFound();return;}
- heading(m.name,m.intro,crumbs(m));const s=milestoneStatus(progress,m);
- const summary=e('div',undefined,'workspace-summary');const p=panel(s.label,'progress-panel');
- p.append(e('p',s.done+' of '+s.total+' planning tasks checked'),e('strong',s.percent+'%','percent'));
- const bar=e('progress');bar.max=s.total;bar.value=s.done;bar.setAttribute('aria-label',m.name+' checklist progress');p.append(bar);
- const what=panel('What is this?');what.append(e('p',m.explanation));summary.append(p,what);main.append(summary);
- const layout=e('div',undefined,'milestone-layout');const tasks=panel('Milestone checklist');
- tasks.append(e('p','Check tasks as you address them. You can uncheck them at any time.','muted'));
- m.tasks.forEach((task,i)=>{
-  const index=taskProgressIndex(m,i),key=m.id+':'+i;
-  tasks.append(createChecklistItem({title:task,detail:m.taskDetails?.[i],index:i,checked:progress.tasks[m.id]?.[index]===true,open:expandedTasks.has(key),
-   onToggle:open=>{if(open)expandedTasks.add(key);else expandedTasks.delete(key);},
-   onChange:checked=>{
-    progress.tasks[m.id]??=Array.from({length:taskProgressIndex(m,m.tasks.length)},()=>false);
-    progress.tasks[m.id][index]=checked;save(m.id);render();document.querySelector('#task-'+i)?.focus();
-   }
-  }));
+ const m=savedMilestones.find(m=>m.id===id);if(!m){notFound();return;}
+ renderSavedMilestone(main,{milestone:m,progress,accountBacked:!!memberContext,expandedTasks,
+  onCheck:(id,index)=>{save(id);render();document.querySelector('#task-'+index)?.focus();},
+  onNotes:id=>save(id)
  });
- layout.append(tasks);const resources=panel('Resources');resources.append(e('p','Read more in the Venture Branding library.','muted'));
- for(const [title,slug]of m.resources)resources.append(link(title,'../blog/posts/'+slug+'.html','resource'));
- layout.append(resources);main.append(layout);
- const bottom=e('div',undefined,'milestone-layout'+(m.questions.length?'':' planner-only'));
- if(m.questions.length){const questions=panel('Questions for counsel');const ul=e('ul');for(const q of m.questions)ul.append(e('li',q));questions.append(ul);bottom.append(questions);}
- const planner=panel('Conversation planner');const label=e('label','What would you like to discuss?');label.htmlFor='planning-notes';
- const notes=e('textarea');notes.id='planning-notes';notes.maxLength=3000;notes.rows=5;notes.value=progress.notes[m.id]||'';
- notes.placeholder='Organize your questions for a future conversation.';notes.setAttribute('aria-describedby','notes-help');
- notes.oninput=()=>{progress.notes[m.id]=notes.value;save(m.id);};
- const help=e('p',memberContext?'Avoid confidential information. Notes are saved to your account for your planning and are not sent to an attorney.':'Avoid confidential information. Notes remain in this browser and are not sent to an attorney.','muted');help.id='notes-help';
- planner.append(label,notes,help);bottom.append(planner);main.append(bottom);
 }
 function notFound(){heading('This milestone is not available','Choose a category to continue exploring.');main.append(link('Return to Legal Launch Kit','#','primary'));}
 function render(){
  diagramObserver?.disconnect();main.replaceChildren();
- if(isTrademarkProtectionRoute(location.hash)){renderTrademarkProtection(main);return;}
- if(isVibeConsiderationsRoute(location.hash)){renderVibeConsiderations(main);return;}
- const parts=location.hash.slice(1).split('/');
+ const parts=isTrademarkProtectionRoute(location.hash)?['milestone','trademarks']:isVibeConsiderationsRoute(location.hash)?['milestone','considerations']:location.hash.slice(1).split('/');
  if(parts[0]==='business')renderBusiness(main,{e,link,panel,heading,refresh:render});else if(parts[0]==='category')category(parts[1]);else if(parts[0]==='milestone')milestone(parts[1]);else master();
  const note=e('div',undefined,'local-progress');const msg=e('span',persistenceMessage());msg.id='save-message';msg.setAttribute('role','status');msg.setAttribute('aria-live','polite');note.append(msg);
  if(accountStore){
