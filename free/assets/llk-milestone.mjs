@@ -27,6 +27,6 @@ export function renderSavedMilestone(main,{milestone:m,progress,expandedTasks=ne
   }));
  });
  layout.append(tasks);const resources=panel('Resources');resources.append(e('p','Read more in the Venture Branding library.','muted'));
- for(const [title,slug]of m.resources)resources.append(link(title,'../blog/posts/'+slug+'.html','resource'));
+ for(const [title,slug]of m.resources)resources.append(link(title,slug.startsWith('#')?slug:'../blog/posts/'+slug+'.html','resource'));
  layout.append(resources);main.append(layout);
 }

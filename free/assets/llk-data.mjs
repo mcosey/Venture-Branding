@@ -73,7 +73,37 @@ export const milestones = [
    ['Founders, Owners, Directors, and Managers: Who Actually Runs a Startup?','founders-owners-directors-and-managers-who-actually-runs-a-startup']
   ]
  },
- {id:'governance',name:'Governing documents',icon:'≡',x:20,y:70,intro:'Understand the documents that establish how your business makes decisions.',explanation:'Governing documents depend on the entity type and arrangements among its owners. This checklist helps organize the information needed to discuss those documents with counsel.',tasks:['Identify the entity type and current governing documents.','List who will manage the business and make major decisions.','Outline voting, approval, and dispute questions.','Discuss adoption and maintenance of governing documents with counsel.'],resources:[['Founders’ agreements','founders-agreements']]},
+ {id:'governance',name:'Governing documents',icon:'≡',x:20,y:70,
+  intro:'Establish the rules for how your business will operate and make decisions.',
+  explanation:'Governing documents describe the company’s internal rules, including decision-making, leadership and voting. The documents depend on the entity type and applicable state law.',
+  // Preserve the four original discussion-task positions without applying them to new decisions.
+  progressOffset:4,
+  tasks:[
+   'Identify the governing documents.',
+   'Define the amendment process.',
+   'Set decision-making procedures.',
+   'Define leadership selection rules.',
+   'Establish voting rights.',
+   'Set approval thresholds.',
+   'Choose where to store the governing documents.',
+   'Adopt the governing documents.'
+  ],
+  taskDetails:[
+   'The governing documents a business uses depend on its entity type and applicable state law. Examples include corporate bylaws and LLC operating agreements.',
+   'The amendment process describes how the governing documents can be changed.',
+   'These procedures describe how company decisions are made, such as through meetings or written approvals.',
+   'These rules describe how directors, managers or officers are appointed, removed or replaced.',
+   'Voting rights describe who participates in decisions and how their votes are counted.',
+   'Approval thresholds describe the level of approval needed for different decisions, such as a majority or unanimous approval.',
+   'A central location keeps current versions, signed copies and later amendments organized. Google Drive, Microsoft OneDrive and Dropbox are examples of document-storage services with options for limiting who can access or edit files.',
+   'Adoption is the formal approval or execution of the applicable governing documents.'
+  ],
+  resources:[
+   ['Business structure','#milestone/entity'],
+   ['Founders, Owners, Directors, and Managers: Who Actually Runs a Startup?','founders-owners-directors-and-managers-who-actually-runs-a-startup'],
+   ["Founders' Agreements: What Co-Founders Should Agree on Before Starting a Business",'founders-agreements']
+  ]
+ },
  {id:'equity',name:'Initial ownership',icon:'◉',x:50,y:81,intro:'Plan how ownership will be allocated and properly documented.',explanation:'An agreed ownership split and the legal issuance of equity are different steps. Prepare your proposed arrangements and questions about authorization, documentation, vesting, and tax advice.',tasks:['List proposed owners and ownership allocations.','Record expected contributions and any vesting questions.','Identify questions about authorization and equity documentation.','Discuss implementation and time-sensitive tax issues with advisors.'],resources:[['Understanding startup capitalization','understanding-startup-capitalization'],['Understanding Section 83(b) elections','understanding-section-83b-elections']]},
  {id:'consents',name:'Initial decisions & records',icon:'✓',x:81,y:70,intro:'Organize the initial decisions and records your business may need.',explanation:'Required approvals and records vary by entity and situation. Use this workspace to collect questions and prepare to discuss the appropriate next steps.',tasks:['List the initial business decisions that need approval.','Identify who has authority to approve each decision.','Discuss required approvals and records with counsel.','Choose where to organize final business records.'],resources:[['Founders’ agreements','founders-agreements']]}
 ];

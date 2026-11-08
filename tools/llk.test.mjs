@@ -27,7 +27,7 @@ test('revised founder decisions never inherit completion from the original discu
 });
 test('all working milestones link to existing articles and have unique route ids',()=>{
  assert.equal(new Set(savedMilestones.map(m=>m.id)).size,savedMilestones.length);assert.equal(new Set(categories.map(c=>c.id)).size,categories.length);
- for(const m of savedMilestones){assert.ok(m.tasks.length>0);for(const [,slug] of m.resources)assert.ok(fs.existsSync(new URL('../blog/posts/'+slug+'.html',import.meta.url)),slug);}
+ for(const m of savedMilestones){assert.ok(m.tasks.length>0);for(const [,slug] of m.resources){if(slug.startsWith('#milestone/'))assert.ok(savedMilestones.some(m=>slug==='#milestone/'+m.id));else assert.ok(fs.existsSync(new URL('../blog/posts/'+slug+'.html',import.meta.url)),slug);}}
 });
 
 test('each category has satellites and every working satellite opens an existing milestone',()=>{
