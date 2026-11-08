@@ -8,8 +8,10 @@ export const trademarkChecklist=[
 ];
 export const trademarkResources=[
  ['What Is a Trademark?','what-is-a-trademark'],
+ ['Can I Trademark My App Icon?','can-i-trademark-my-app-icon'],
  ['How Do I Know If My Trademark Is Available?','how-do-i-know-if-my-trademark-is-available'],
  ["Who Should Own My Startup’s Trademark?",'who-should-own-my-startups-trademark'],
+ ['Can I License My Trademark to Another Business?','can-i-license-my-trademark-to-another-business'],
  ['What Happens After I File a Trademark Application?','what-happens-after-i-file-a-trademark-application'],
  ['Can I Protect My Trademark Internationally?','can-i-protect-my-trademark-internationally'],
  ['How Long Does a Trademark Last?','how-long-does-a-trademark-last'],
