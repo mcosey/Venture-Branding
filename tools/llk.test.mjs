@@ -27,7 +27,7 @@ test('revised founder decisions never inherit completion from the original discu
 });
 test('all working milestones link to existing articles and have unique route ids',()=>{
  assert.equal(new Set(savedMilestones.map(m=>m.id)).size,savedMilestones.length);assert.equal(new Set(categories.map(c=>c.id)).size,categories.length);
- for(const m of savedMilestones){assert.ok(m.tasks.length>0);assert.ok(Array.isArray(m.questions));for(const [,slug] of m.resources)assert.ok(fs.existsSync(new URL('../blog/posts/'+slug+'.html',import.meta.url)),slug);}
+ for(const m of savedMilestones){assert.ok(m.tasks.length>0);for(const [,slug] of m.resources)assert.ok(fs.existsSync(new URL('../blog/posts/'+slug+'.html',import.meta.url)),slug);}
 });
 
 test('each category has satellites and every working satellite opens an existing milestone',()=>{
@@ -35,7 +35,8 @@ test('each category has satellites and every working satellite opens an existing
  assert.equal(categoryTasks.formation.length,milestones.length);
 });
 
-test('People task labels face outward, away from their category circle',()=>{
- const category=categories.find(c=>c.id==='people');
- for(const task of categoryTasks.people){assert.ok(task.x<category.x);assert.equal(task.side,'left');}
+test('the four retained topics preserve every saved checklist',()=>{
+ assert.deepEqual(categories.map(c=>c.id),['formation','brand','contracts','compliance']);
+ assert.deepEqual(Object.keys(categoryTasks).sort(),categories.map(c=>c.id).sort());
+ assert.deepEqual(savedMilestones.map(m=>m.id),['entity','founders','governance','equity','consents','considerations','trademarks']);
 });

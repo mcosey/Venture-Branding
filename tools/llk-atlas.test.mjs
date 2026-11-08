@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createMasterAtlas,atlasLayout,atlasTasks,ringPoint,atlasRoute} from '../free/assets/llk-atlas.mjs';
+import {createMasterAtlas,atlasLayout,atlasTasks,atlasBusiness,ringPoint,atlasRoute} from '../free/assets/llk-atlas.mjs';
 import {icon} from '../free/assets/llk-icons.mjs';
 import {categories,categoryTasks,savedMilestones as milestones,emptyProgress,milestoneStatus} from '../free/assets/llk-data.mjs';
 // A tiny DOM stand-in verifies that the renderer builds real anchors and valid text nodes.
@@ -9,26 +9,26 @@ export {Node,mockDocument,flatten};
 export function buildAtlas(businessName=''){return createMasterAtlas({businessName,categories,categoryTasks,milestones,progress:emptyProgress(),milestoneStatus,listView:false,onToggle:()=>{},icon});}
 test('single SVG renderer constructs all working links and a separate mobile list',()=>{
  const previous=globalThis.document;globalThis.document=mockDocument;
- try{const nodes=flatten(buildAtlas());const svg=nodes.filter(n=>n.tag==='svg'&&n.attrs.class==='atlas-drawing');assert.equal(svg.length,1);const paths=flatten(svg[0]).filter(n=>n.tag==='a').map(n=>n.attrs.href);assert.ok(paths.includes('#business'));for(const m of milestones)assert.equal(paths.filter(h=>h===(m.href||'#milestone/'+m.id)).length,1);for(const c of categories)assert.ok(paths.includes(c.href||'#category/'+c.id));assert.ok(nodes.some(n=>n.attrs.class==='atlas-accessible-list'));assert.ok(nodes.some(n=>n.tag==='tspan'&&n.textContent==='Offer letters'));}
+ try{const nodes=flatten(buildAtlas());const svg=nodes.filter(n=>n.tag==='svg'&&n.attrs.class==='atlas-drawing');assert.equal(svg.length,1);const paths=flatten(svg[0]).filter(n=>n.tag==='a').map(n=>n.attrs.href);assert.ok(paths.includes('#business'));for(const m of milestones)assert.equal(paths.filter(h=>h===(m.href||'#milestone/'+m.id)).length,1);for(const c of categories)assert.ok(paths.includes(c.href||'#category/'+c.id));assert.ok(nodes.some(n=>n.attrs.class==='atlas-accessible-list'));assert.ok(nodes.some(n=>n.tag==='tspan'&&n.textContent==='Annual filings'));}
  finally{globalThis.document=previous;}
 });
 test('explicit label placements cover each existing task once, with room around the map',()=>{
  for(const category of categories){const c=atlasLayout[category.id],specs=atlasTasks[category.id];assert.equal(specs.length,categoryTasks[category.id].length);assert.equal(new Set(specs.map(s=>s.index)).size,specs.length);
- for(const spec of specs){assert.ok(categoryTasks[category.id][spec.index]);const p=ringPoint(c,spec.angle);const x=p.x+spec.dx,y=p.y+spec.dy;assert.ok(x>60&&x<1220);assert.ok(y>20&&y+17*(spec.lines.length-1)<890);}
- const [start,end]=atlasRoute({x:640,y:440},c,119,104);assert.ok(Math.hypot(start.x-640,start.y-440)>118);assert.ok(Math.hypot(end.x-c.x,end.y-c.y)>103);
+ for(const spec of specs){assert.ok(categoryTasks[category.id][spec.index]);const p=ringPoint(c,spec.angle);const x=p.x+spec.dx,y=p.y+spec.dy;assert.ok(x>60&&x<1220);assert.ok(y>-20&&y+17*(spec.lines.length-1)<985);}
+ const [start,end]=atlasRoute(atlasBusiness,c,119,104);assert.ok(Math.hypot(start.x-atlasBusiness.x,start.y-atlasBusiness.y)>118);assert.ok(Math.hypot(end.x-c.x,end.y-c.y)>103);
  }
 });
 
-test('Fundraising and Ongoing Obligations milestones occupy the southern half of their rings',()=>{
- for(const id of ['fundraising','compliance'])for(const task of atlasTasks[id]){const point=ringPoint(atlasLayout[id],task.angle);assert.ok(point.y>atlasLayout[id].y);assert.ok(task.dy>0);}
+test('Ongoing Obligations milestones occupy the southern half of their rings',()=>{
+ for(const id of ['compliance'])for(const task of atlasTasks[id]){const point=ringPoint(atlasLayout[id],task.angle);assert.ok(point.y>atlasLayout[id].y);assert.ok(task.dy>0);}
 });
 
-test('every middle milestone aligns outward with the business/category connection',async()=>{
+test('each milestone fan is symmetric around the outward business/category connection',async()=>{
  const {atlasBusiness,outwardAxis}=await import('../free/assets/llk-atlas.mjs');
  for(const [id,specs]of Object.entries(atlasTasks)){
   const center=atlasLayout[id],axis=outwardAxis(center),offset=angle=>((angle-axis+540)%360)-180;
   const ordered=specs.slice().sort((a,b)=>offset(a.angle)-offset(b.angle));
-  const middle=ordered[(ordered.length-1)/2],point=ringPoint(center,middle.angle);
+  const medianAngle=(ordered[Math.floor((ordered.length-1)/2)].angle+ordered[Math.ceil((ordered.length-1)/2)].angle)/2,point=ringPoint(center,medianAngle);
   const vx=center.x-atlasBusiness.x,vy=center.y-atlasBusiness.y,wx=point.x-center.x,wy=point.y-center.y;
   assert.ok(Math.abs(vx*wy-vy*wx)<1e-7,id+' is collinear');
   assert.ok(vx*wx+vy*wy>0,id+' faces outward');
@@ -50,7 +50,7 @@ test('the whole business circle opens the business route by click or Enter',()=>
 
 test('core fills are centered so lighting does not form a lower crescent',()=>{
  const previous=globalThis.document;globalThis.document=mockDocument;
- try{const gradients=flatten(buildAtlas()).filter(n=>n.tag==='radialGradient'&&n.attrs.id?.startsWith('atlas-core-')&&!n.attrs.id.endsWith('-halo'));assert.equal(gradients.length,8);for(const gradient of gradients){assert.equal(gradient.attrs.cx,'50%');assert.equal(gradient.attrs.cy,'50%');assert.equal(gradient.attrs.r,'50%');}}
+ try{const gradients=flatten(buildAtlas()).filter(n=>n.tag==='radialGradient'&&n.attrs.id?.startsWith('atlas-core-')&&!n.attrs.id.endsWith('-halo'));assert.equal(gradients.length,categories.length+1);for(const gradient of gradients){assert.equal(gradient.attrs.cx,'50%');assert.equal(gradient.attrs.cy,'50%');assert.equal(gradient.attrs.r,'50%');}}
  finally{if(previous===undefined)delete globalThis.document;else globalThis.document=previous;}
 });
 
@@ -60,4 +60,21 @@ test('the saved company name replaces the center label while retaining the profi
  const previous=globalThis.document;globalThis.document=mockDocument;
  try{const business=flatten(buildAtlas('Cotivate')).find(n=>n.tag==='a'&&n.attrs.href==='#business');assert.ok(flatten(business).some(n=>n.tag==='tspan'&&n.textContent==='Cotivate'));assert.equal(business.attrs['aria-label'],'Cotivate — edit company profile');}
  finally{if(previous===undefined)delete globalThis.document;else globalThis.document=previous;}
+});
+
+
+test('four topic clusters form a symmetric cross at equal distances from the business',()=>{
+ const {formation,contracts,brand,compliance}=atlasLayout;
+ assert.deepEqual(Object.keys(atlasLayout).sort(),['brand','compliance','contracts','formation']);
+ assert.equal(formation.x,atlasBusiness.x);assert.equal(compliance.x,atlasBusiness.x);
+ assert.equal(contracts.y,atlasBusiness.y);assert.equal(brand.y,atlasBusiness.y);
+ const radii=Object.values(atlasLayout).map(c=>Math.hypot(c.x-atlasBusiness.x,c.y-atlasBusiness.y));
+ assert.ok(radii.every(r=>r===325));
+ const previous=globalThis.document;globalThis.document=mockDocument;
+ try{const nodes=flatten(buildAtlas());const drawing=nodes.find(n=>n.attrs.class==='atlas-drawing');
+ assert.equal(drawing.attrs['aria-label'],'Your business and 4 connected legal topic clusters');
+ const list=nodes.find(n=>n.attrs.class==='atlas-accessible-list');assert.equal(list.children.filter(n=>n.tag==='section').length,4);
+ assert.equal(nodes.filter(n=>n.attrs.class==='neighbor-filament').length,4);
+ for(const id of ['people','ownership','fundraising'])assert.ok(!nodes.some(n=>n.attrs.href==='#category/'+id));
+ }finally{globalThis.document=previous;}
 });

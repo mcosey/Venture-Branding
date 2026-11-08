@@ -7,10 +7,10 @@ export const vibeChecklist=[
  ['Consider whether to consult an attorney about your site or application.','The resources provide general background. A consultation is available if you would like help with questions about your particular site or application.']
 ];
 export const vibeMilestones=[{
- id:'considerations',categoryId:'contracts',name:'Considerations',href:'#vibe-coding/considerations',x:50,y:17,
+ id:'considerations',categoryId:'contracts',name:'Vibe Coding',href:'#vibe-coding/considerations',x:25,y:23,
  intro:'Explore Venture Branding’s resources on vibe coding.',
  explanation:'A place to explore Venture Branding’s resources on vibe coding and consider whether a consultation would be useful for your site or application.',
  tasks:vibeChecklist.map(([title])=>title),taskDetails:vibeChecklist.map(([,detail])=>detail),
- resources:vibeResources,questions:[],planner:false
+ resources:vibeResources
 }];
 export function isVibeConsiderationsRoute(hash){return hash===vibeMilestones[0].href;}
