@@ -25,3 +25,5 @@
 
 /* Keep short provider names readable within article tables. */
 .article-body table a{overflow-wrap:normal;word-break:normal;white-space:nowrap}
+/* Keep table words intact; wide comparisons can scroll within the article. */
+.article-body table th,.article-body table td{overflow-wrap:normal;word-break:normal}
