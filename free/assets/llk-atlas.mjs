@@ -12,8 +12,7 @@ export const atlasTasks = {
  formation:[
  {index:0,angle:-90,lines:['Business','structure'],dx:0,dy:-36,anchor:'middle'},
  {index:1,angle:-135,lines:['Founders’','agreement'],dx:-24,dy:-10,anchor:'end'},
- {index:3,angle:-170,lines:['Initial','ownership'],dx:-24,dy:-5,anchor:'end'},
- {index:4,angle:-45,lines:['Initial','decisions'],dx:24,dy:-10,anchor:'start'},
+ {index:3,angle:-45,lines:['Initial','Steps'],dx:24,dy:-10,anchor:'start'},
  {index:2,angle:-10,lines:['Governing','documents'],dx:24,dy:-5,anchor:'start'}],
  contracts:[{index:0,angle:-160,lines:['Vibe Coding'],dx:-25,dy:-5,anchor:'end'},{index:1,angle:160,lines:['Website Basics'],dx:-25,dy:-5,anchor:'end'}],
  brand:[{index:0,angle:-35,lines:['Trademark','Protection'],dx:24,dy:5,anchor:'start'}],

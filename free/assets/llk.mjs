@@ -7,7 +7,7 @@ import {renderSavedMilestone} from './llk-milestone.mjs';
 import {isTrademarkProtectionRoute,brandMilestones} from './llk-trademark.mjs';
 import {isVibeConsiderationsRoute,vibeMilestones} from './llk-vibe-coding.mjs';
 import {websiteBasics,renderWebsiteBasics} from './llk-website.mjs';
-import {categories,categoryTasks,milestones,savedMilestones,emptyProgress,decodeProgress,milestoneStatus} from './llk-data.mjs';
+import {categories,categoryTasks,milestones,savedMilestones,storedMilestones,emptyProgress,decodeProgress,milestoneStatus} from './llk-data.mjs';
 const key='vb-llk-prototype-v1'+(memberContext?':'+memberContext.user.id:'');let progress=emptyProgress(), storageAvailable=true, listView=false, diagramObserver;
 if(!memberContext){try{progress=decodeProgress(localStorage.getItem(key));}catch{storageAvailable=false;}}
 let accountStore, browserImport;
@@ -26,7 +26,7 @@ function updatePersistence(){
  for(const input of main.querySelectorAll('input[type=checkbox],textarea,#reset-progress,#import-progress'))input.disabled=accountStore?.state==='conflict';
 }
 function save(id){
- if(accountStore){for(const m of savedMilestones)if(!id||id===m.id)accountStore.queue(m.id,progress);updatePersistence();return;}
+ if(accountStore){for(const m of storedMilestones)if(!id||id===m.id)accountStore.queue(m.id,progress);updatePersistence();return;}
  try{localStorage.setItem(key,JSON.stringify(progress));storageAvailable=true;}catch{storageAvailable=false;}
  updatePersistence();
 }
@@ -76,7 +76,7 @@ function graph(items,centerName,centerSub,category){
  for(const item of items){const state=item.tasks?milestoneStatus(progress,item):null;canvas.append(node(item,item.href||'#milestone/'+item.id,state?.label||'',state&&state.done===state.total?'complete':state?.done?'in-progress':''));}
  section.append(canvas);clipConnections(canvas,svg);section.append(e('p',memberContext?'Explore milestones in any order. Checklist progress is saved to your account.':'Explore milestones in any order. Checklist progress is saved in this browser.','map-note'));return section;
 }
-function master(){heading('Legal Launch Kit','See the legal landscape around your business. Choose a category to learn, plan, and take your next step.');const total=savedMilestones.reduce((sum,m)=>sum+milestoneStatus(progress,m).done,0);const stats=e('div',undefined,'stats');stats.append(e('span',categories.length+' topic areas'),e('span','Formation: '+milestones.filter(m=>milestoneStatus(progress,m).label==='Completed').length+' of 5 milestones completed'),e('span',total+' planning tasks checked'));main.append(stats,graph(categories,'Your business','Explore freely',false));const guidance=panel('Start with formation');guidance.append(e('p','Explore five Formation milestones, Trademark Protection and Web & App. Ongoing obligations is a preview.'),link('Explore Formation & structure →','#category/formation','primary'));main.append(guidance);}
+function master(){heading('Legal Launch Kit','See the legal landscape around your business. Choose a category to learn, plan, and take your next step.');const total=savedMilestones.reduce((sum,m)=>sum+milestoneStatus(progress,m).done,0);const stats=e('div',undefined,'stats');stats.append(e('span',categories.length+' topic areas'),e('span','Formation: '+milestones.filter(m=>milestoneStatus(progress,m).label==='Completed').length+' of '+milestones.length+' milestones completed'),e('span',total+' planning tasks checked'));main.append(stats,graph(categories,'Your business','Explore freely',false));const guidance=panel('Start with formation');guidance.append(e('p','Explore '+milestones.length+' Formation milestones, Trademark Protection and Web & App. Ongoing obligations is a preview.'),link('Explore Formation & structure →','#category/formation','primary'));main.append(guidance);}
 function category(id){const c=categories.find(c=>c.id===id);if(!c){notFound();return;}
  if(id==='contracts'||id==='brand'){
   const nav=e('nav',undefined,'breadcrumbs');nav.setAttribute('aria-label','Breadcrumb');nav.append(link('Legal Launch Kit','#'),e('span','›'),e('span',c.name));
@@ -84,8 +84,10 @@ function category(id){const c=categories.find(c=>c.id===id);if(!c){notFound();re
   heading(c.name,c.description,nav);main.append(graph(pages,c.name,pages.length+(id==='brand'?' milestone':' topics'),id));return;
  }
  if(id!=='formation'){heading(c.name,c.description);main.append(link('← All categories','#'));const p=panel('Category preview');p.append(e('p','This category is planned for Phase 2. Its milestones and content are not connected in this prototype.'),link('Explore the working Formation category →','#category/formation','primary'));main.append(p);return;}
- heading(c.name,c.description,crumbs());main.append(graph(milestones,'Formation','5 planning milestones',true));}
+ heading(c.name,c.description,crumbs());main.append(graph(milestones,'Formation',milestones.length+' planning milestones',true));}
 function milestone(id){
+ // Existing Initial Ownership bookmarks open the combined checklist.
+ if(id==='equity')id='consents';
  const m=savedMilestones.find(m=>m.id===id);if(!m){notFound();return;}
  renderSavedMilestone(main,{milestone:m,progress,expandedTasks,
   onCheck:(id,index)=>{save(id);render();document.querySelector('#task-'+index)?.focus();}

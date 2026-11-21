@@ -38,5 +38,5 @@ test('each category has satellites and every working satellite opens an existing
 test('the four retained topics preserve every saved checklist',()=>{
  assert.deepEqual(categories.map(c=>c.id),['formation','brand','contracts','compliance']);
  assert.deepEqual(Object.keys(categoryTasks).sort(),categories.map(c=>c.id).sort());
- assert.deepEqual(savedMilestones.map(m=>m.id),['entity','founders','governance','equity','consents','considerations','trademarks']);
+ assert.deepEqual(savedMilestones.map(m=>m.id),['entity','founders','governance','consents','considerations','trademarks']);
 });

@@ -91,3 +91,88 @@ test('new milestone browser imports preserve existing account completion without
  const merged=mergeBrowserProgress(account,browser);assert.deepEqual(merged.tasks.trademarks,[true,true,false,false,false,false]);
  assert.deepEqual(merged.tasks.considerations,[true,false]);assert.equal(merged.tasks.entity.some(Boolean),false);
 });
+
+test('Initial Steps maps retained legacy checkboxes without counting removed items or completing new resolutions',()=>{
+ const m=milestones.find(m=>m.id==='consents');
+ assert.equal(milestones.some(m=>m.id==='equity'),false);
+ const retained=[['equity',3,4],['consents',3,5]];
+ for(const [id,oldIndex,newIndex]of retained){
+  const old={version:1,tasks:{consents:[false,false,false,false],equity:[false,false,false,false]},notes:{}};
+  old.tasks[id][oldIndex]=true;
+  const {progress}=readAccountProgress(Object.entries(old.tasks).map(([milestone_id,tasks])=>({company_id:'own-company',milestone_id,progress:{version:1,tasks,notes:''},updated_at:'legacy-'+milestone_id})),'own-company');
+  assert.equal(milestoneStatus(progress,m).done,1,id+':'+oldIndex);
+  m.tasks.forEach((_,i)=>assert.equal(progress.tasks.consents[taskProgressIndex(m,i)],i===newIndex));
+ }
+ const removed=readAccountProgress([
+  {company_id:'own-company',milestone_id:'consents',progress:{version:1,tasks:[true,true,true,false],notes:''},updated_at:'c'},
+  {company_id:'own-company',milestone_id:'equity',progress:{version:1,tasks:[true,true,true,false],notes:''},updated_at:'e'}
+ ],'own-company').progress;
+ assert.equal(milestoneStatus(removed,m).done,0);
+});
+
+test('combined checklist saves and reloads unchecked ownership tasks without resurrecting legacy checks',async()=>{
+ const f=fixture(),m=milestones.find(m=>m.id==='consents');
+ const oldRow=(id,tasks,notes)=>({company_id:'own-company',milestone_id:id,progress:{version:1,tasks,notes},updated_at:'legacy-'+id});
+ f.rows.set('equity',oldRow('equity',[true,true,true,true],'Existing equity note'));
+ f.rows.set('consents',oldRow('consents',[true,true,true,true],'Existing decision note'));
+ const originalEquity=structuredClone(f.rows.get('equity'));
+ const progress=await f.store.load();assert.equal(f.calls.length,0);assert.equal(milestoneStatus(progress,m).done,2);
+ progress.tasks.consents[taskProgressIndex(m,4)]=false;
+ f.store.queue('consents',progress);assert.equal(await f.store.flush(),true);
+ assert.equal(f.calls[0].expected_updated_at,'legacy-consents');
+ const fresh=createAccountProgressStore({db:f.db,companyId:'own-company'}),restored=await fresh.load();
+ assert.equal(milestoneStatus(restored,m).done,1);
+ assert.equal(restored.tasks.consents[taskProgressIndex(m,4)],false);
+ assert.equal(restored.notes.consents,'Existing decision note');
+ assert.equal(restored.notes.equity,'Existing equity note');
+ assert.deepEqual(f.rows.get('equity'),originalEquity);
+ fresh.queue('consents',emptyProgress());assert.equal(await fresh.flush(),true);
+ assert.equal(milestoneStatus(await f.store.load(),m).done,0);
+});
+
+test('combined checklist browser import retains legacy ownership progress and respects later unchecks',()=>{
+ const m=milestones.find(m=>m.id==='consents'),browser=emptyProgress();
+ browser.tasks.equity=[true,true,true,true];browser.notes.equity='Legacy note';
+ const merged=mergeBrowserProgress(emptyProgress(),browser);
+ assert.equal(milestoneStatus(merged,m).done,1);assert.equal(merged.notes.equity,'Legacy note');
+ merged.tasks.consents[taskProgressIndex(m,4)]=false;
+ const restored=readAccountProgress(Object.entries(merged.tasks).map(([milestone_id,tasks])=>({company_id:'own-company',milestone_id,progress:{version:1,tasks,notes:merged.notes[milestone_id]||''},updated_at:'saved-'+milestone_id})),'own-company').progress;
+ assert.equal(milestoneStatus(restored,m).done,0);
+ assert.equal(restored.tasks.consents[taskProgressIndex(m,4)],false);
+});
+
+test('Founder and Governing Documents cuts preserve later checkmarks without reusing removed slots',()=>{
+ for(const [id,removed,retained]of [['founders',[14,15],[16,17,18]],['governance',[10],[11]]]){
+  const m=milestones.find(m=>m.id===id),tasks=Array(taskProgressIndex(m,m.tasks.length)).fill(false);
+  removed.forEach(i=>{tasks[i]=true;});
+  const row={company_id:'own-company',milestone_id:id,progress:{version:1,tasks,notes:'Existing note'},updated_at:'legacy'};
+  let progress=readAccountProgress([row],'own-company').progress;
+  assert.equal(milestoneStatus(progress,m).done,0);
+  retained.forEach(i=>{tasks[i]=true;});
+  progress=readAccountProgress([row],'own-company').progress;
+  assert.equal(milestoneStatus(progress,m).done,retained.length);
+  assert.equal(progress.notes[id],'Existing note');
+  assert.equal(progress.tasks[id][taskProgressIndex(m,m.tasks.length-1)],true);
+ }
+});
+
+test('entity choices move to Initial Steps without counting removed tasks or reviving later unchecks',async()=>{
+ const entity=milestones.find(m=>m.id==='entity'),steps=milestones.find(m=>m.id==='consents');
+ for(let i=0;i<3;i++){
+  const f=fixture(),tasks=Array(12).fill(false);tasks[4+i]=true;tasks[9]=true;tasks[11]=true;
+  const row={company_id:'own-company',milestone_id:'entity',progress:{version:1,tasks,notes:'Preserve entity notes'},updated_at:'entity-legacy'};
+  f.rows.set('entity',structuredClone(row));
+  const progress=await f.store.load();
+  assert.equal(f.calls.length,0);assert.equal(milestoneStatus(progress,entity).done,0);
+  assert.equal(milestoneStatus(progress,steps).done,1);
+  assert.equal(progress.tasks.consents[taskProgressIndex(steps,i)],true);
+  assert.equal(progress.tasks.consents[taskProgressIndex(steps,3)],false);
+  progress.tasks.consents[taskProgressIndex(steps,i)]=false;
+  f.store.queue('consents',progress);assert.equal(await f.store.flush(),true);
+  const restored=await createAccountProgressStore({db:f.db,companyId:'own-company'}).load();
+  assert.equal(milestoneStatus(restored,steps).done,0);
+  assert.deepEqual(f.rows.get('entity'),row);
+ }
+ const retained=readAccountProgress([{company_id:'own-company',milestone_id:'entity',progress:{version:1,tasks:[false,false,false,false,false,false,false,true,true,false,true,false],notes:''},updated_at:'entity-retained'}],'own-company').progress;
+ assert.equal(milestoneStatus(retained,entity).done,3);assert.equal(milestoneStatus(retained,steps).done,0);
+});

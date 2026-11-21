@@ -9,29 +9,23 @@ export const categories = [
 ];
 export const milestones = [
  {id:'entity',name:'Business structure',icon:'◇',x:24,y:23,
-  intro:'Explore the business structure that fits your ownership, operations, and financing plans.',
-  explanation:'The right structure depends on your circumstances. Use this workspace to prepare for a conversation about entity choice; it does not select or form an entity for you.',
-  // Reserve the four original planning-task positions so their saved checkmarks
-  // cannot become completion of unrelated decisions in the revised checklist.
-  progressOffset:4,
-  tasks:['Decide entity choice.','Choose the state of formation.','Choose the legal entity name.','Choose the management structure.','Designate a registered agent, if required.','Confirm formation filing requirements.','File the formation document.','Determine whether registration in other states is required.'],
+  intro:'Explore management structure, registered-agent designation, and formation documents.',
+  explanation:'This checklist covers management structure, a registered agent where required, and the documents used to form the entity.',
+  // Preserve saved positions for the retained tasks and the choices moved to Initial Steps.
+  progressIndices:[7,8,10],progressLength:12,
+  tasks:['Choose the management structure.','Designate a registered agent (if required).','File required formation document(s).'],
   taskDetails:[
-   'Choose the legal form for the business, such as an LLC or corporation.',
-   'Select the state in which the entity will be formed. This is a separate choice from where it will operate.',
-   'Choose the formal name that will appear in the entity’s state records. It may differ from the name used for branding.',
    'Choose how management authority will be organized. For an LLC, this may involve member-managed or manager-managed arrangements.',
    'Identify who will receive legal papers for the entity. The required designation and address depend on the state.',
-   'Check the selected state’s required formation documents, information, signatures, and fees.',
-   'Submit the document used to form the entity, such as articles of organization or a certificate of incorporation.',
-   'Identify states outside the formation state where the company’s activities may require foreign qualification.'
+   'Submit the documents used to form the entity, such as articles of organization or a certificate of incorporation.'
   ],
   resources:[['Founders, owners, directors, and managers','founders-owners-directors-and-managers-who-actually-runs-a-startup'],['Why incorporate in Delaware?','why-incorporate-in-delaware'],['What is a registered agent?','what-is-a-registered-agent-and-does-your-startup-need-one'],['Qualified small business stock (QSBS)','what-is-qualified-small-business-stock-qsbs-and-why-should-founders-care']]
  },
  {id:'founders',name:'Founders’ agreement',icon:'♧',x:75,y:23,
   intro:'Document expectations around ownership, responsibilities, decisions, and departures.',
   explanation:'Founders’ arrangements describe how the founders will work together. These terms can appear in a founders’ agreement or across the company’s equity, IP, and governing documents.',
-  // Keep the four original discussion-task positions separate from the revised items.
-  progressOffset:4,
+  // Keep saved positions stable after removing the conflicts and compensation items.
+  progressIndices:[4,5,6,7,8,9,10,11,12,13,16,17,18],progressLength:19,
   tasks:[
    'Define each founder’s role.',
    'Agree on each founder’s contributions.',
@@ -43,8 +37,6 @@ export const milestones = [
    'Decide on ownership-transfer restrictions.',
    'Agree on confidentiality obligations.',
    'Document founder IP assignments.',
-   'Identify conflicting obligations.',
-   'Agree on founder compensation.',
    'Agree on outside business activities.',
    'Agree on what happens if the venture ends.',
    'Sign the founders’ agreement.'
@@ -60,8 +52,6 @@ export const milestones = [
    'These terms address a founder’s ability to transfer their ownership interest to someone else.',
    'These provisions address the treatment of nonpublic company information.',
    'Assignments address the company’s rights in business-related IP contributed or developed by its founders. The documentation can cover existing IP and future work, with transfer timing depending on whether the entity exists.',
-   'Existing employment, consulting or other agreements can affect a founder’s contributions or IP rights.',
-   'Salary or other compensation, if any, is separate from equity ownership.',
    'Founders may have different expectations about other ventures and time commitments.',
    'Ending the collaboration can raise questions about its assets, IP and continuing obligations.',
    'The signed agreement records the terms accepted by its parties.'
@@ -76,8 +66,8 @@ export const milestones = [
  {id:'governance',name:'Governing documents',icon:'≡',x:20,y:70,
   intro:'Establish the rules for how your business will operate and make decisions.',
   explanation:'Governing documents describe the company’s internal rules, including decision-making, leadership and voting. The documents depend on the entity type and applicable state law.',
-  // Preserve the four original discussion-task positions without applying them to new decisions.
-  progressOffset:4,
+  // Preserve saved positions; the storage item now appears only in Initial Steps.
+  progressIndices:[4,5,6,7,8,9,11],progressLength:12,
   tasks:[
    'Identify the governing documents.',
    'Define the amendment process.',
@@ -85,7 +75,6 @@ export const milestones = [
    'Define leadership selection rules.',
    'Establish voting rights.',
    'Set approval thresholds.',
-   'Choose where to store the governing documents.',
    'Adopt the governing documents.'
   ],
   taskDetails:[
@@ -95,7 +84,6 @@ export const milestones = [
    'These rules describe how directors, managers or officers are appointed, removed or replaced.',
    'Voting rights describe who participates in decisions and how their votes are counted.',
    'Approval thresholds describe the level of approval needed for different decisions, such as a majority or unanimous approval.',
-   'A central location keeps current versions, signed copies and later amendments organized. Google Drive, Microsoft OneDrive and Dropbox are examples of document-storage services with options for limiting who can access or edit files.',
    'Adoption is the formal approval or execution of the applicable governing documents.'
   ],
   resources:[
@@ -104,25 +92,63 @@ export const milestones = [
    ["Founders' Agreements: What Co-Founders Should Agree on Before Starting a Business",'founders-agreements']
   ]
  },
- {id:'equity',name:'Initial ownership',icon:'◉',x:50,y:81,intro:'Plan how ownership will be allocated and properly documented.',explanation:'An agreed ownership split and the legal issuance of equity are different steps. Prepare your proposed arrangements and questions about authorization, documentation, vesting, and tax advice.',tasks:['List proposed owners and ownership allocations.','Record expected contributions and any vesting questions.','Identify questions about authorization and equity documentation.','Discuss implementation and time-sensitive tax issues with advisors.'],resources:[['Understanding startup capitalization','understanding-startup-capitalization'],['Understanding Section 83(b) elections','understanding-section-83b-elections']]},
- {id:'consents',name:'Initial decisions & records',icon:'✓',x:81,y:70,intro:'Organize the initial decisions and records your business may need.',explanation:'Required approvals and records vary by entity and situation. Use this workspace to collect questions and prepare to discuss the appropriate next steps.',tasks:['List the initial business decisions that need approval.','Identify who has authority to approve each decision.','Discuss required approvals and records with counsel.','Choose where to organize final business records.'],resources:[['Founders’ agreements','founders-agreements']]}
+ {id:'consents',name:'Initial Steps',icon:'✓',x:75,y:70,
+  intro:'Plan the entity’s basic details, initial resolutions, and business records.',
+  explanation:'This checklist brings together entity choice, formation state, legal name, initial authorizing resolutions, implementation and tax questions, and a place for company documents and records.',
+  // Retain implementation and storage positions. The new resolutions item gets
+  // its own slot so removed planning items cannot mark it complete.
+  progressIndices:[7,8,9,6,5,3],progressLength:10,
+  tasks:[
+   'Decided entity type.',
+   'Choose the state of formation.',
+   'Choose the legal entity name.',
+   'Initial authorizing resolutions.',
+   'Discuss implementation and time-sensitive tax issues with advisors.',
+   'Choose where to store and organize the governing documents and business records.'
+  ],
+  taskDetails:[
+   'Choose the legal form for the business, such as an LLC or corporation.',
+   'Select the state in which the entity will be formed. This is a separate choice from where it will operate.',
+   'Choose the formal name that will appear in the entity’s state records. It may differ from the name used for branding.',
+   'Written resolutions record the initial actions formally approved by the company’s authorized decision-makers.',
+   'Implementation can involve tax questions with timing implications, including Section 83(b) elections where applicable.',
+   'A central location keeps current versions, signed copies and later amendments organized. Google Drive, Microsoft OneDrive and Dropbox are examples of document-storage services with options for limiting who can access or edit files.'
+  ],
+  resources:[
+   ['Initial Authorizing Resolutions: What Happens After You Form Your Company?','initial-authorizing-resolutions-what-happens-after-you-form-your-company'],
+   ['Understanding Startup Capitalization: Authorized Stock, Outstanding Shares, and Fully Diluted Ownership','understanding-startup-capitalization'],
+   ['Understanding Section 83(b) Elections: Tax Consequences, Filing Requirements, and Startup Equity','understanding-section-83b-elections'],
+   ["Founders' Agreements: What Co-Founders Should Agree on Before Starting a Business",'founders-agreements']
+  ]
+ }
 ];
-// One registry drives normalization, account writes, routes and roadmap status.
+// Active checklists drive routes and roadmap status.
 // Keep `milestones` as the Formation group for its existing category layout.
 export const savedMilestones=[...milestones,...vibeMilestones,...brandMilestones];
-export function taskProgressIndex(m,index){return (m.progressOffset||0)+index;}
+// Keep the retired row readable and resettable without displaying a second page.
+export const storedMilestones=[...savedMilestones,{id:'equity',tasks:[],progressLength:4}];
+export function taskProgressIndex(m,index){
+ if(index===m.tasks.length&&m.progressLength)return m.progressLength;
+ return m.progressIndices?.[index]??(m.progressOffset||0)+index;
+}
 export function emptyProgress(){return {version:1,tasks:{},notes:{}};}
 export function decodeProgress(raw){
  const result=emptyProgress();
  try{const data=JSON.parse(raw);if(data?.version!==1)return result;
- for(const m of savedMilestones){result.tasks[m.id]=Array.from({length:taskProgressIndex(m,m.tasks.length)},(_,i)=>data.tasks?.[m.id]?.[i]===true);if(typeof data.notes?.[m.id]==='string')result.notes[m.id]=data.notes[m.id].slice(0,3000);}
+ for(const m of storedMilestones){result.tasks[m.id]=Array.from({length:taskProgressIndex(m,m.tasks.length)},(_,i)=>data.tasks?.[m.id]?.[i]===true);if(typeof data.notes?.[m.id]==='string')result.notes[m.id]=data.notes[m.id].slice(0,3000);}
+ // Carry over only the two retained ownership tasks. Once a combined-page value
+ // exists, including an explicit false, the retired row must not override it.
+ for(const [target,source]of [[4,2],[5,3]])if(data.tasks?.consents?.[target]===undefined)result.tasks.consents[target]=data.tasks?.equity?.[source]===true;
+ // Moved entity choices keep their original completion until the Initial Steps
+ // row records a value. An explicit uncheck on that page takes precedence.
+ for(const [target,source]of [[7,4],[8,5],[9,6]])if(data.tasks?.consents?.[target]===undefined)result.tasks.consents[target]=data.tasks?.entity?.[source]===true;
  }catch{}return result;
 }
 export function milestoneStatus(progress,m){const done=m.tasks.filter((_,i)=>progress.tasks[m.id]?.[taskProgressIndex(m,i)]===true).length;return {done,total:m.tasks.length,percent:Math.round(done/m.tasks.length*100),label:done===m.tasks.length?'Completed':done?'In progress':'Not started'};}
 
 // Satellite coordinates locate the small circles; labels sit outside each cluster.
 export const categoryTasks = {
- formation:[{name:'Business structure',id:'entity',x:50,y:7.33,side:'top'},{name:'Founders’ agreement',id:'founders',x:45.41,y:9.26,side:'left'},{name:'Governing documents',id:'governance',x:57.52,y:14.35,side:'right'},{name:'Initial ownership',id:'equity',x:42.48,y:14.35,side:'left'},{name:'Initial decisions',id:'consents',x:54.59,y:9.26,side:'right'}],
+ formation:[{name:'Business structure',id:'entity',x:50,y:7.33,side:'top'},{name:'Founders’ agreement',id:'founders',x:45.41,y:9.26,side:'left'},{name:'Governing documents',id:'governance',x:57.52,y:14.35,side:'right'},{name:'Initial Steps',id:'consents',x:54.59,y:9.26,side:'right'}],
  brand:[{name:'Trademark Protection',id:'trademarks',href:'#brand-protection/trademarks',x:77,y:19.33,side:'top'}],
  contracts:[{name:'Vibe Coding',id:'considerations',href:'#vibe-coding/considerations',x:20,y:43,side:'left'},{name:'Website Basics',href:'#website/basics',x:20,y:54,side:'left'}],
  compliance:[{name:'Annual filings',x:72.66,y:76.46,side:'right'},{name:'Tax questions',x:75.00,y:84.00,side:'right'},{name:'Data privacy',x:72.66,y:91.54,side:'right'}]

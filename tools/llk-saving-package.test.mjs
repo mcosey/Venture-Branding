@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {savedMilestones} from '../free/assets/llk-data.mjs';
+import {storedMilestones} from '../free/assets/llk-data.mjs';
 
 test('the saving proposal changes only the reviewed function milestone allowlist',async()=>{
  const read=name=>readFile(new URL('../supabase/proposals/'+name,import.meta.url),'utf8');
@@ -15,7 +15,7 @@ test('the saving proposal changes only the reviewed function milestone allowlist
  assert.equal(body.split(old).length,2);
  assert.equal(createHash('md5').update(body.replace(old,updated)).digest('hex'),baseline.updated_body_md5);
  const ids=[...updated.matchAll(/'([a-z-]+)'/g)].map(m=>m[1]);
- assert.deepEqual(ids.sort(),savedMilestones.map(m=>m.id).sort());
+ assert.deepEqual(ids.sort(),storedMilestones.map(m=>m.id).sort());
  assert.ok(sql.includes(baseline.baseline_body_md5));assert.ok(sql.includes(baseline.updated_body_md5));
  const update=sql.split('do $update$')[1].split('end $update$;')[0];
  assert.match(update,/execute replace\(definition,\$old\$/);
