@@ -21,3 +21,9 @@ body{font-family:"Avenir Next",Avenir,"Segoe UI",sans-serif;font-weight:400}h1,h
 .task-details summary::after{content:"";width:8px;height:8px;flex:0 0 8px;border-right:2px solid var(--coral);border-bottom:2px solid var(--coral);transform:rotate(45deg);margin:7px 3px 0 0}
 .task-details[open] summary::after{transform:rotate(225deg);margin-top:11px}
 .task-details p{color:var(--muted);font-size:13px;line-height:1.7;margin:12px 0 0}
+
+.llk-consultation{background:#111f2d;padding:clamp(26px,4vw,44px);margin-top:8px}
+.llk-consultation h2{font-family:Fraunces,Georgia,serif;font-size:clamp(28px,3.6vw,44px);line-height:1.15;max-width:25ch;margin:0 0 28px}
+.llk-consultation-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:14px 24px;border-radius:999px;background:#cc495c;color:#fff;text-decoration:none;font-size:16px;font-weight:600;box-shadow:0 10px 24px #cc495c30}
+.llk-consultation-button:hover{background:#d65366}
+.llk-consultation-button:focus-visible{outline:2px solid #fff;outline-offset:4px}

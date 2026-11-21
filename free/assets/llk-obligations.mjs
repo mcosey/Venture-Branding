@@ -20,6 +20,7 @@ export const taxMilestone={
 };
 export const ipMilestone={
  id:'ongoing-ip',categoryId:'compliance',name:'Intellectual Property',href:'#ongoing/intellectual-property',x:75,y:23,side:'right',
+ showConsultation:true,
  accountSavingReady:false,
  intro:'Keep track of your trademark, its use, and the goodwill associated with your brand.',
  explanation:'This checklist brings together trademark monitoring, use connected with an intent-to-use application, state trademark registrations, and brand goodwill.',

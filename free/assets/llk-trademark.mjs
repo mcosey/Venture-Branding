@@ -19,6 +19,7 @@ export const trademarkResources=[
 ];
 export const brandMilestones=[{
  id:'trademarks',categoryId:'brand',name:'Trademark Protection',href:'#brand-protection/trademarks',x:50,y:17,
+ showConsultation:true,
  intro:'Explore ownership, clearance and registration for your business’s trademarks.',
  explanation:'A planning checklist for the initial trademark-protection process. The resources also cover maintaining trademark rights and responding to others’ use.',
  tasks:trademarkChecklist.map(([title])=>title),taskDetails:trademarkChecklist.map(([,detail])=>detail),

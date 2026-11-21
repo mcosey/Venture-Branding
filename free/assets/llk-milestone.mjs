@@ -33,4 +33,10 @@ export function renderSavedMilestone(main,{milestone:m,progress,expandedTasks=ne
  for(const title of m.pendingResources||[])resources.append(e('p',title+' (in preparation)','resource muted'));
  for(const [title,slug]of m.resources)resources.append(link(title,slug.startsWith('#')?slug:'../blog/posts/'+slug+'.html','resource'));
  layout.append(resources);main.append(layout);
+ if(m.showConsultation){
+  const consultation=panel('Let’s talk about your company’s brand.','llk-consultation');
+  const booking=link('Book a consultation','https://calendly.com/venturebrandinglaw/30min','llk-consultation-button');
+  booking.target='_blank';booking.rel='noopener noreferrer';
+  consultation.append(booking);main.append(consultation);
+ }
 }
