@@ -1,6 +1,7 @@
 // Keep completion separate from the native disclosure control.
-export function createChecklistItem({title,detail,index,checked,open=false,onChange,onToggle}){
+export function createChecklistItem({title,detail,index,checked,open=false,disabled=false,onChange,onToggle}){
  const input=document.createElement('input');input.type='checkbox';input.id='task-'+index;input.checked=checked;
+ if(disabled){input.disabled=true;input.setAttribute('data-saving-pending','true');}
  input.addEventListener('change',()=>onChange(input.checked));
  if(!detail){
   const label=document.createElement('label');label.className='task';

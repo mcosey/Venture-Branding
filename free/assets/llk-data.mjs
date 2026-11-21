@@ -1,11 +1,12 @@
 import {vibeMilestones} from './llk-vibe-coding.mjs';
 import {brandMilestones} from './llk-trademark.mjs';
+import {ongoingTopics,ongoingMilestones} from './llk-obligations.mjs';
 
 export const categories = [
  {id:'formation',name:'Formation & structure',icon:'◇',description:'Choose a structure and document how your business will operate.',x:50,y:18},
  {id:'brand',name:'Brand protection',icon:'◎',description:'Explore names, trademarks, and brand strategy.',x:72.27,y:48.35},
  {id:'contracts',name:'Web & App',icon:'≡',description:'Explore vibe coding and common considerations for a business website.',x:27.73,y:48.35},
- {id:'compliance',name:'Ongoing obligations',icon:'✓',description:'Plan for filings, privacy, and other continuing obligations.',x:50,y:79.67}
+ {id:'compliance',name:'Ongoing obligations',icon:'✓',description:'Explore ongoing obligations for your business.',x:50,y:79.67}
 ];
 export const milestones = [
  {id:'entity',name:'Business structure',icon:'◇',x:24,y:23,
@@ -124,7 +125,7 @@ export const milestones = [
 ];
 // Active checklists drive routes and roadmap status.
 // Keep `milestones` as the Formation group for its existing category layout.
-export const savedMilestones=[...milestones,...vibeMilestones,...brandMilestones];
+export const savedMilestones=[...milestones,...vibeMilestones,...brandMilestones,...ongoingMilestones];
 // Keep the retired row readable and resettable without displaying a second page.
 export const storedMilestones=[...savedMilestones,{id:'equity',tasks:[],progressLength:4}];
 export function taskProgressIndex(m,index){
@@ -151,5 +152,5 @@ export const categoryTasks = {
  formation:[{name:'Business structure',id:'entity',x:50,y:7.33,side:'top'},{name:'Founders’ agreement',id:'founders',x:45.41,y:9.26,side:'left'},{name:'Governing documents',id:'governance',x:57.52,y:14.35,side:'right'},{name:'Initial Steps',id:'consents',x:54.59,y:9.26,side:'right'}],
  brand:[{name:'Trademark Protection',id:'trademarks',href:'#brand-protection/trademarks',x:77,y:19.33,side:'top'}],
  contracts:[{name:'Vibe Coding',id:'considerations',href:'#vibe-coding/considerations',x:20,y:43,side:'left'},{name:'Website Basics',href:'#website/basics',x:20,y:54,side:'left'}],
- compliance:[{name:'Annual filings',x:72.66,y:76.46,side:'right'},{name:'Tax questions',x:75.00,y:84.00,side:'right'},{name:'Data privacy',x:72.66,y:91.54,side:'right'}]
+ compliance:ongoingTopics.map(({id,...topic})=>({...topic,...(ongoingMilestones.some(m=>m.id===id)?{id}:{})}))
 };

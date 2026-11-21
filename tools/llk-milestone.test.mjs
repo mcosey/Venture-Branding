@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {savedMilestones,emptyProgress,taskProgressIndex,milestoneStatus} from '../free/assets/llk-data.mjs';
 import {renderSavedMilestone} from '../free/assets/llk-milestone.mjs';
+import {ongoingTopics} from '../free/assets/llk-obligations.mjs';
 import {Node,mockDocument,flatten} from './fixtures/llk-dom.mjs';
 
 test('every working checklist retains saving and resources without counsel questions or free-text planners',()=>{
@@ -25,6 +26,21 @@ test('every working checklist retains saving and resources without counsel quest
    assert.equal(milestoneStatus(progress,m).done,1);
    assert.equal(fresh.filter(n=>n.tag==='a'&&n.attrs.class==='resource').length,m.resources.length);
    assert.equal(fresh.some(n=>n.tag==='textarea'),false);
+  }
+ }finally{globalThis.document=previous;}
+});
+
+test('ongoing checklist previews cannot submit progress before account saving is enabled',()=>{
+ const previous=globalThis.document;globalThis.document=mockDocument;
+ try{
+  for(const m of ongoingTopics.filter(m=>m.tasks&&m.accountSavingReady===false)){
+  const main=new Node('main'),progress=emptyProgress(),changed=[];
+  renderSavedMilestone(main,{milestone:m,progress,onCheck:(...args)=>changed.push(args)});
+  const nodes=flatten(main),inputs=nodes.filter(n=>n.tag==='input');
+  assert.equal(inputs.length,m.tasks.length);assert.ok(inputs.every(n=>n.disabled));
+  inputs[0].checked=true;inputs[0].events.change();
+  assert.deepEqual(changed,[]);assert.deepEqual(progress,emptyProgress());
+  for(const title of m.pendingResources||[])assert.ok(nodes.some(n=>n.tag==='p'&&n.textContent===title+' (in preparation)'));
   }
  }finally{globalThis.document=previous;}
 });

@@ -17,9 +17,11 @@ export const atlasTasks = {
  contracts:[{index:0,angle:-160,lines:['Vibe Coding'],dx:-25,dy:-5,anchor:'end'},{index:1,angle:160,lines:['Website Basics'],dx:-25,dy:-5,anchor:'end'}],
  brand:[{index:0,angle:-35,lines:['Trademark','Protection'],dx:24,dy:5,anchor:'start'}],
  compliance:[
- {index:0,angle:140,lines:['Annual filings'],dx:-12,dy:52,anchor:'end'},
- {index:1,angle:90,lines:['Tax questions'],dx:0,dy:31,anchor:'middle'},
- {index:2,angle:40,lines:['Data privacy'],dx:24,dy:22,anchor:'start'}]
+ {index:0,angle:162,lines:['Business'],dx:0,dy:0,anchor:'end'},
+ {index:1,angle:126,lines:['Intellectual','Property'],dx:0,dy:0,anchor:'end'},
+ {index:2,angle:90,lines:['Government'],dx:0,dy:0,anchor:'middle'},
+ {index:3,angle:54,lines:['Tax'],dx:0,dy:0,anchor:'start'},
+ {index:4,angle:18,lines:['Misc'],dx:0,dy:0,anchor:'start'}]
 
 };
 export const atlasBusiness = {x:640,y:480};

@@ -16,17 +16,21 @@ export function renderSavedMilestone(main,{milestone:m,progress,expandedTasks=ne
  const what=panel('What is this?');what.append(e('p',m.explanation));summary.append(p,what);main.append(summary);
  const layout=e('div',undefined,'milestone-layout');const tasks=panel('Milestone checklist');
  tasks.append(e('p','Check tasks as you address them. You can uncheck them at any time.','muted'));
+ if(m.accountSavingReady===false)tasks.append(e('p','Checklist preview. Account saving will be connected before these checkboxes are enabled.','muted'));
  m.tasks.forEach((task,i)=>{
   const index=taskProgressIndex(m,i),key=m.id+':'+i;
-  tasks.append(createChecklistItem({title:task,detail:m.taskDetails?.[i],index:i,checked:progress.tasks[m.id]?.[index]===true,open:expandedTasks.has(key),
+  const item=createChecklistItem({title:task,detail:m.taskDetails?.[i],index:i,checked:progress.tasks[m.id]?.[index]===true,open:expandedTasks.has(key),disabled:m.accountSavingReady===false,
    onToggle:open=>{if(open)expandedTasks.add(key);else expandedTasks.delete(key);},
    onChange:checked=>{
+    if(m.accountSavingReady===false)return;
     progress.tasks[m.id]??=Array.from({length:taskProgressIndex(m,m.tasks.length)},()=>false);
     progress.tasks[m.id][index]=checked;onCheck(m.id,i);
    }
-  }));
+  });
+  tasks.append(item);
  });
  layout.append(tasks);const resources=panel('Resources');resources.append(e('p','Read more in the Venture Branding library.','muted'));
+ for(const title of m.pendingResources||[])resources.append(e('p',title+' (in preparation)','resource muted'));
  for(const [title,slug]of m.resources)resources.append(link(title,slug.startsWith('#')?slug:'../blog/posts/'+slug+'.html','resource'));
  layout.append(resources);main.append(layout);
 }
