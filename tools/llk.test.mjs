@@ -32,12 +32,12 @@ test('all working milestones link to existing articles and have unique route ids
 });
 
 test('each category has satellites and every working satellite opens an existing milestone',()=>{
- for(const category of categories){assert.ok(categoryTasks[category.id].length>0);for(const task of categoryTasks[category.id]){assert.ok(task.x>0&&task.x<100&&task.y>0&&task.y<100);if(task.id)assert.ok(savedMilestones.some(m=>m.id===task.id));}}
+ for(const category of categories){assert.ok(categoryTasks[category.id].length>0);for(const task of categoryTasks[category.id]){assert.ok(task.x>0&&task.x<100&&task.y>0&&task.y<100);if(task.id&&!task.href)assert.ok(savedMilestones.some(m=>m.id===task.id));}}
  assert.equal(categoryTasks.formation.length,milestones.length);
 });
 
 test('the four retained topics preserve every saved checklist',()=>{
  assert.deepEqual(categories.map(c=>c.id),['formation','brand','contracts','compliance']);
  assert.deepEqual(Object.keys(categoryTasks).sort(),categories.map(c=>c.id).sort());
- assert.deepEqual(savedMilestones.map(m=>m.id),['entity','founders','governance','consents','considerations','trademarks']);
+ assert.deepEqual(savedMilestones.map(m=>m.id),['entity','founders','governance','consents','trademarks']);
 });

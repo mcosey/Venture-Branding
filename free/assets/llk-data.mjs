@@ -1,4 +1,3 @@
-import {vibeMilestones} from './llk-vibe-coding.mjs';
 import {brandMilestones} from './llk-trademark.mjs';
 import {ongoingTopics,ongoingMilestones} from './llk-obligations.mjs';
 
@@ -10,17 +9,19 @@ export const categories = [
 ];
 export const milestones = [
  {id:'entity',name:'Business structure',icon:'◇',x:24,y:23,
-  intro:'Explore management structure, registered-agent designation, and formation documents.',
-  explanation:'This checklist covers management structure, a registered agent where required, and the documents used to form the entity.',
-  // Preserve saved positions for the retained tasks and the choices moved to Initial Steps.
-  progressIndices:[7,8,10],progressLength:12,
-  tasks:['Choose the management structure.','Designate a registered agent (if required).','File required formation document(s).'],
+  intro:'Explore entity type, formation state, legal name, and management structure.',
+  explanation:'This checklist covers the entity type, state of formation, legal entity name, and management structure.',
+  // New slots receive the latest choices from Initial Steps without reviving
+  // older Business Structure checkmarks after an explicit uncheck.
+  progressIndices:[12,13,14,7],progressLength:15,
+  tasks:['Decided entity type.','Choose the state of formation.','Choose the legal entity name.','Choose the management structure.'],
   taskDetails:[
-   'Choose how management authority will be organized. For an LLC, this may involve member-managed or manager-managed arrangements.',
-   'Identify who will receive legal papers for the entity. The required designation and address depend on the state.',
-   'Submit the documents used to form the entity, such as articles of organization or a certificate of incorporation.'
+   'Choose the legal form for the business, such as an LLC or corporation.',
+   'Select the state in which the entity will be formed. This is a separate choice from where it will operate.',
+   'The legal entity name is the formal name that appears in the state’s records and may differ from the name used for branding. Founders may need to consider name availability and state-specific naming conventions, requirements, and restrictions.',
+   'Choose how management authority will be organized. For an LLC, this may involve member-managed or manager-managed arrangements.'
   ],
-  resources:[['Founders, owners, directors, and managers','founders-owners-directors-and-managers-who-actually-runs-a-startup'],['Why incorporate in Delaware?','why-incorporate-in-delaware'],['What is a registered agent?','what-is-a-registered-agent-and-does-your-startup-need-one'],['Qualified small business stock (QSBS)','what-is-qualified-small-business-stock-qsbs-and-why-should-founders-care']]
+  resources:[['Founders, owners, directors, and managers','founders-owners-directors-and-managers-who-actually-runs-a-startup'],['Why incorporate in Delaware?','why-incorporate-in-delaware'],['Qualified small business stock (QSBS)','what-is-qualified-small-business-stock-qsbs-and-why-should-founders-care']]
  },
  {id:'founders',name:'Founders’ agreement',icon:'♧',x:75,y:23,
   intro:'Document expectations around ownership, responsibilities, decisions, and departures.',
@@ -94,28 +95,26 @@ export const milestones = [
   ]
  },
  {id:'consents',name:'Initial Steps',icon:'✓',x:75,y:70,
-  intro:'Plan the entity’s basic details, initial resolutions, and business records.',
-  explanation:'This checklist brings together entity choice, formation state, legal name, initial authorizing resolutions, implementation and tax questions, and a place for company documents and records.',
-  // Retain implementation and storage positions. The new resolutions item gets
-  // its own slot so removed planning items cannot mark it complete.
-  progressIndices:[7,8,9,6,5,3],progressLength:10,
+  intro:'Plan registered-agent designation, formation filings, initial resolutions, and business records.',
+  explanation:'This checklist brings together a registered agent where required, formation filings, initial authorizing resolutions, implementation and tax questions, and a place for company documents and records.',
+  // Retained tasks keep their positions. Moved formation steps use new slots.
+  progressIndices:[10,11,6,5,3],progressLength:12,
   tasks:[
-   'Decided entity type.',
-   'Choose the state of formation.',
-   'Choose the legal entity name.',
+   'Designate a registered agent (if required).',
+   'File required formation document(s).',
    'Initial authorizing resolutions.',
    'Discuss implementation and time-sensitive tax issues with advisors.',
    'Choose where to store and organize the governing documents and business records.'
   ],
   taskDetails:[
-   'Choose the legal form for the business, such as an LLC or corporation.',
-   'Select the state in which the entity will be formed. This is a separate choice from where it will operate.',
-   'Choose the formal name that will appear in the entity’s state records. It may differ from the name used for branding.',
+   'Identify who will receive legal papers for the entity. The required designation and address depend on the state.',
+   'Submit the documents used to form the entity, such as articles of organization or a certificate of incorporation.',
    'Written resolutions record the initial actions formally approved by the company’s authorized decision-makers.',
    'Implementation can involve tax questions with timing implications, including Section 83(b) elections where applicable.',
    'A central location keeps current versions, signed copies and later amendments organized. Google Drive, Microsoft OneDrive and Dropbox are examples of document-storage services with options for limiting who can access or edit files.'
   ],
   resources:[
+   ['What Is a Registered Agent, and Does Your Startup Need One?','what-is-a-registered-agent-and-does-your-startup-need-one'],
    ['Initial Authorizing Resolutions: What Happens After You Form Your Company?','initial-authorizing-resolutions-what-happens-after-you-form-your-company'],
    ['Understanding Startup Capitalization: Authorized Stock, Outstanding Shares, and Fully Diluted Ownership','understanding-startup-capitalization'],
    ['Understanding Section 83(b) Elections: Tax Consequences, Filing Requirements, and Startup Equity','understanding-section-83b-elections'],
@@ -125,7 +124,7 @@ export const milestones = [
 ];
 // Active checklists drive routes and roadmap status.
 // Keep `milestones` as the Formation group for its existing category layout.
-export const savedMilestones=[...milestones,...vibeMilestones,...brandMilestones,...ongoingMilestones];
+export const savedMilestones=[...milestones,...brandMilestones,...ongoingMilestones];
 // Keep the retired row readable and resettable without displaying a second page.
 export const storedMilestones=[...savedMilestones,{id:'equity',tasks:[],progressLength:4}];
 export function taskProgressIndex(m,index){
@@ -143,6 +142,11 @@ export function decodeProgress(raw){
  // Moved entity choices keep their original completion until the Initial Steps
  // row records a value. An explicit uncheck on that page takes precedence.
  for(const [target,source]of [[7,4],[8,5],[9,6]])if(data.tasks?.consents?.[target]===undefined)result.tasks.consents[target]=data.tasks?.entity?.[source]===true;
+ // Choices now return to Business Structure. The latest Initial Steps value,
+ // including false, wins over their older Business Structure positions.
+ for(const [target,source]of [[12,7],[13,8],[14,9]])if(data.tasks?.entity?.[target]===undefined)result.tasks.entity[target]=result.tasks.consents[source];
+ // Registered-agent designation and formation filings move in the other direction.
+ for(const [target,source]of [[10,8],[11,10]])if(data.tasks?.consents?.[target]===undefined)result.tasks.consents[target]=data.tasks?.entity?.[source]===true;
  }catch{}return result;
 }
 export function milestoneStatus(progress,m){const done=m.tasks.filter((_,i)=>progress.tasks[m.id]?.[taskProgressIndex(m,i)]===true).length;return {done,total:m.tasks.length,percent:Math.round(done/m.tasks.length*100),label:done===m.tasks.length?'Completed':done?'In progress':'Not started'};}

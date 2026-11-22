@@ -16,7 +16,9 @@ test('the saving proposal changes only the reviewed function milestone allowlist
  assert.equal(body.split(old).length,2);
  assert.equal(createHash('md5').update(body.replace(old,updated)).digest('hex'),baseline.updated_body_md5);
  const ids=[...updated.matchAll(/'([a-z-]+)'/g)].map(m=>m[1]);
- for(const id of ids)assert.ok(storedMilestones.some(m=>m.id===id));
+ // This historical receipt retains Vibe Coding's former permission. The UI
+ // no longer registers that reading guide for saving; no live permission changes are needed.
+ for(const id of ids)assert.ok(id==='considerations'||storedMilestones.some(m=>m.id===id));
  assert.ok(sql.includes(baseline.baseline_body_md5));assert.ok(sql.includes(baseline.updated_body_md5));
  const update=sql.split('do $update$')[1].split('end $update$;')[0];
  assert.match(update,/execute replace\(definition,\$old\$/);
@@ -41,7 +43,7 @@ test('the Tax saving proposal adds only its checklist to the existing reviewed s
  assert.equal(installed.split(old).length,2);
  assert.equal(hash(installed.replace(old,updated)),baseline.updated_body_md5);
  const ids=[...updated.matchAll(/'([a-z-]+)'/g)].map(m=>m[1]);
- assert.deepEqual(ids.sort(),[...new Set([...storedMilestones.map(m=>m.id),taxMilestone.id])].sort());
+ assert.deepEqual(ids.sort(),[...new Set([...storedMilestones.map(m=>m.id),'considerations',taxMilestone.id])].sort());
  const oldIds=[...old.matchAll(/'([a-z-]+)'/g)].map(m=>m[1]);
  assert.deepEqual(ids.filter(id=>!oldIds.includes(id)),['ongoing-tax']);
  assert.match(sql,/rollback to savepoint llk_fixtures;/);

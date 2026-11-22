@@ -63,16 +63,16 @@ test('reset saves empty progress and persists across another session',async()=>{
  f.store.queue('entity',emptyProgress());await f.store.flush();const restored=await f.store.load();assert.equal(restored.notes.entity,'');assert.equal(restored.tasks.entity.some(Boolean),false);
 });
 
-for(const id of ['trademarks','considerations']){
+for(const id of ['trademarks']){
  test(id+' saves independently, survives a fresh account session and can be unchecked or reset',async()=>{
   const f=fixture(),progress=await f.store.load();progress.tasks.entity[4]=true;progress.notes.entity='Preserve Formation';f.store.queue('entity',progress);await f.store.flush();
   const formation=structuredClone(f.rows.get('entity'));
   const m=(await import('../free/assets/llk-data.mjs')).savedMilestones.find(m=>m.id===id);
-  progress.tasks[id]=m.tasks.map(()=>true);f.store.queue(id,progress);assert.equal(await f.store.flush(),true);
+  progress.tasks[id]=Array(taskProgressIndex(m,m.tasks.length)).fill(false);m.tasks.forEach((_,i)=>{progress.tasks[id][taskProgressIndex(m,i)]=true;});f.store.queue(id,progress);assert.equal(await f.store.flush(),true);
   const other=createAccountProgressStore({db:f.db,companyId:'own-company'}),restored=await other.load();
-  assert.deepEqual(restored.tasks[id],m.tasks.map(()=>true));assert.equal(milestoneStatus(restored,m).label,'Completed');
-  restored.tasks[id][0]=false;other.queue(id,restored);assert.equal(await other.flush(),true);
-  const loaded=await f.store.load();assert.equal(loaded.tasks[id][0],false);assert.equal(milestoneStatus(loaded,m).label,'In progress');
+  assert.deepEqual(restored.tasks[id],progress.tasks[id]);assert.equal(milestoneStatus(restored,m).label,'Completed');
+  restored.tasks[id][taskProgressIndex(m,0)]=false;other.queue(id,restored);assert.equal(await other.flush(),true);
+  const loaded=await f.store.load();assert.equal(loaded.tasks[id][taskProgressIndex(m,0)],false);assert.equal(milestoneStatus(loaded,m).label,'In progress');
   f.store.queue(id,emptyProgress());assert.equal(await f.store.flush(),true);
   assert.equal((await other.load()).tasks[id].some(Boolean),false);assert.deepEqual(f.rows.get('entity'),formation);
  });
@@ -89,13 +89,22 @@ for(const id of ['trademarks','considerations']){
 test('new milestone browser imports preserve existing account completion without crossing milestone IDs',()=>{
  const account=emptyProgress(),browser=emptyProgress();account.tasks.trademarks=[true,false];browser.tasks.trademarks=[false,true];browser.tasks.considerations=[true,false];
  const merged=mergeBrowserProgress(account,browser);assert.deepEqual(merged.tasks.trademarks,[true,true,false,false,false,false]);
- assert.deepEqual(merged.tasks.considerations,[true,false]);assert.equal(merged.tasks.entity.some(Boolean),false);
+ assert.equal(merged.tasks.considerations,undefined);assert.equal(merged.tasks.entity.some(Boolean),false);
+});
+
+test('retired Vibe Coding progress is ignored and cannot be queued or changed by another checklist save',async()=>{
+ const f=fixture(),row={company_id:'own-company',milestone_id:'considerations',progress:{version:1,tasks:[true,true],notes:'Legacy note'},updated_at:'legacy-vibe'};
+ f.rows.set('considerations',structuredClone(row));const progress=await f.store.load();
+ assert.equal(progress.tasks.considerations,undefined);assert.equal(f.calls.length,0);
+ assert.throws(()=>f.store.queue('considerations',progress),/Unknown milestone/);
+ f.store.queue('entity',progress);assert.equal(await f.store.flush(),true);
+ assert.deepEqual(f.rows.get('considerations'),row);assert.ok(f.calls.every(call=>call.milestone!=='considerations'));
 });
 
 test('Initial Steps maps retained legacy checkboxes without counting removed items or completing new resolutions',()=>{
  const m=milestones.find(m=>m.id==='consents');
  assert.equal(milestones.some(m=>m.id==='equity'),false);
- const retained=[['equity',3,4],['consents',3,5]];
+ const retained=[['equity',3,3],['consents',3,4]];
  for(const [id,oldIndex,newIndex]of retained){
   const old={version:1,tasks:{consents:[false,false,false,false],equity:[false,false,false,false]},notes:{}};
   old.tasks[id][oldIndex]=true;
@@ -117,12 +126,12 @@ test('combined checklist saves and reloads unchecked ownership tasks without res
  f.rows.set('consents',oldRow('consents',[true,true,true,true],'Existing decision note'));
  const originalEquity=structuredClone(f.rows.get('equity'));
  const progress=await f.store.load();assert.equal(f.calls.length,0);assert.equal(milestoneStatus(progress,m).done,2);
- progress.tasks.consents[taskProgressIndex(m,4)]=false;
+ progress.tasks.consents[taskProgressIndex(m,3)]=false;
  f.store.queue('consents',progress);assert.equal(await f.store.flush(),true);
  assert.equal(f.calls[0].expected_updated_at,'legacy-consents');
  const fresh=createAccountProgressStore({db:f.db,companyId:'own-company'}),restored=await fresh.load();
  assert.equal(milestoneStatus(restored,m).done,1);
- assert.equal(restored.tasks.consents[taskProgressIndex(m,4)],false);
+ assert.equal(restored.tasks.consents[taskProgressIndex(m,3)],false);
  assert.equal(restored.notes.consents,'Existing decision note');
  assert.equal(restored.notes.equity,'Existing equity note');
  assert.deepEqual(f.rows.get('equity'),originalEquity);
@@ -135,10 +144,10 @@ test('combined checklist browser import retains legacy ownership progress and re
  browser.tasks.equity=[true,true,true,true];browser.notes.equity='Legacy note';
  const merged=mergeBrowserProgress(emptyProgress(),browser);
  assert.equal(milestoneStatus(merged,m).done,1);assert.equal(merged.notes.equity,'Legacy note');
- merged.tasks.consents[taskProgressIndex(m,4)]=false;
+ merged.tasks.consents[taskProgressIndex(m,3)]=false;
  const restored=readAccountProgress(Object.entries(merged.tasks).map(([milestone_id,tasks])=>({company_id:'own-company',milestone_id,progress:{version:1,tasks,notes:merged.notes[milestone_id]||''},updated_at:'saved-'+milestone_id})),'own-company').progress;
  assert.equal(milestoneStatus(restored,m).done,0);
- assert.equal(restored.tasks.consents[taskProgressIndex(m,4)],false);
+ assert.equal(restored.tasks.consents[taskProgressIndex(m,3)],false);
 });
 
 test('Founder and Governing Documents cuts preserve later checkmarks without reusing removed slots',()=>{
@@ -156,23 +165,35 @@ test('Founder and Governing Documents cuts preserve later checkmarks without reu
  }
 });
 
-test('entity choices move to Initial Steps without counting removed tasks or reviving later unchecks',async()=>{
- const entity=milestones.find(m=>m.id==='entity'),steps=milestones.find(m=>m.id==='consents');
- for(let i=0;i<3;i++){
-  const f=fixture(),tasks=Array(12).fill(false);tasks[4+i]=true;tasks[9]=true;tasks[11]=true;
-  const row={company_id:'own-company',milestone_id:'entity',progress:{version:1,tasks,notes:'Preserve entity notes'},updated_at:'entity-legacy'};
-  f.rows.set('entity',structuredClone(row));
-  const progress=await f.store.load();
-  assert.equal(f.calls.length,0);assert.equal(milestoneStatus(progress,entity).done,0);
-  assert.equal(milestoneStatus(progress,steps).done,1);
-  assert.equal(progress.tasks.consents[taskProgressIndex(steps,i)],true);
-  assert.equal(progress.tasks.consents[taskProgressIndex(steps,3)],false);
-  progress.tasks.consents[taskProgressIndex(steps,i)]=false;
-  f.store.queue('consents',progress);assert.equal(await f.store.flush(),true);
+test('Formation moves preserve saved checks and later unchecks in both directions',async()=>{
+ const moves=[['consents',7,'entity',0],['consents',8,'entity',1],['consents',9,'entity',2],['entity',8,'consents',0],['entity',10,'consents',1]];
+ for(const [source,slot,target,index]of moves){
+  const f=fixture(),m=milestones.find(m=>m.id===target),tasks=Array(source==='entity'?12:10).fill(false);tasks[slot]=true;
+  const original={company_id:'own-company',milestone_id:source,progress:{version:1,tasks,notes:'Preserve source notes'},updated_at:'legacy-'+source};
+  f.rows.set(source,structuredClone(original));const progress=await f.store.load();
+  assert.equal(f.calls.length,0);assert.equal(milestoneStatus(progress,m).done,1);
+  assert.equal(progress.tasks[target][taskProgressIndex(m,index)],true);
+  progress.tasks[target][taskProgressIndex(m,index)]=false;f.store.queue(target,progress);assert.equal(await f.store.flush(),true);
   const restored=await createAccountProgressStore({db:f.db,companyId:'own-company'}).load();
-  assert.equal(milestoneStatus(restored,steps).done,0);
-  assert.deepEqual(f.rows.get('entity'),row);
+  assert.equal(milestoneStatus(restored,m).done,0);assert.deepEqual(f.rows.get(source),original);
+  assert.equal(restored.notes[source],'Preserve source notes');
  }
- const retained=readAccountProgress([{company_id:'own-company',milestone_id:'entity',progress:{version:1,tasks:[false,false,false,false,false,false,false,true,true,false,true,false],notes:''},updated_at:'entity-retained'}],'own-company').progress;
- assert.equal(milestoneStatus(retained,entity).done,3);assert.equal(milestoneStatus(retained,steps).done,0);
+});
+
+test('returning entity choices use the latest Initial Steps value and preserve older accounts',()=>{
+ const entity=milestones.find(m=>m.id==='entity'),steps=milestones.find(m=>m.id==='consents');
+ const row=(id,tasks)=>({company_id:'own-company',milestone_id:id,progress:{version:1,tasks,notes:''},updated_at:'legacy-'+id});
+ for(let i=0;i<3;i++){
+  const oldEntity=Array(12).fill(false);oldEntity[4+i]=true;oldEntity[9]=true;oldEntity[11]=true;
+  const older=readAccountProgress([row('entity',oldEntity)],'own-company').progress;
+  assert.equal(milestoneStatus(older,entity).done,1);assert.equal(milestoneStatus(older,steps).done,0);
+  const latest=Array(10).fill(false);
+  const unchecked=readAccountProgress([row('entity',oldEntity),row('consents',latest)],'own-company').progress;
+  assert.equal(milestoneStatus(unchecked,entity).done,0);
+  latest[7+i]=true;oldEntity[4+i]=false;
+  const checked=readAccountProgress([row('entity',oldEntity),row('consents',latest)],'own-company').progress;
+  assert.equal(milestoneStatus(checked,entity).done,1);
+ }
+ const retained=readAccountProgress([row('entity',[false,false,false,false,false,false,false,true,true,false,true,false])],'own-company').progress;
+ assert.equal(milestoneStatus(retained,entity).done,1);assert.equal(milestoneStatus(retained,steps).done,2);
 });
