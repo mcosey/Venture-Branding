@@ -13,7 +13,7 @@ export function renderWebsiteBasics(main){
  const link=(text,href)=>{const n=e('a',text,'text-link');n.href=href;return n;};
  const header=e('header',undefined,'page-heading'),nav=e('nav',undefined,'breadcrumbs');
  nav.setAttribute('aria-label','Breadcrumb');nav.append(link('Legal Launch Kit','#'),e('span','›'),link('Web & App','#category/contracts'),e('span','›'),e('span',websiteBasics.name));
- header.append(e('p','LEGAL LAUNCH KIT','eyebrow'),nav,e('h1',websiteBasics.name),e('p',websiteBasics.intro,'intro'));main.append(header);
+ header.append(e('p','LEGAL LAUNCH KIT','eyebrow'),nav,e('h1',websiteBasics.name));main.append(header);
  const what=e('section',undefined,'panel');what.append(e('h2','What is this?'),e('p','A place to explore website accessibility, user-facing terms, privacy disclosures, and cookies or tracking technologies.'));main.append(what);
  const topics=e('div',undefined,'milestone-layout');
  for(const [title,context]of websiteTopics){const panel=e('section',undefined,'panel');panel.append(e('h2',title),e('p',context));topics.append(panel);}

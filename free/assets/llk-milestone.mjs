@@ -9,13 +9,12 @@ export function renderSavedMilestone(main,{milestone:m,progress,expandedTasks=ne
  const header=e('header',undefined,'page-heading'),nav=e('nav',undefined,'breadcrumbs');
  const category=categories.find(c=>c.id===(m.categoryId||'formation'));
  nav.setAttribute('aria-label','Breadcrumb');nav.append(link('Legal Launch Kit','#'),e('span','›'),link(category.name,'#category/'+category.id),e('span','›'),e('span',m.name));
- header.append(e('p','LEGAL LAUNCH KIT','eyebrow'),nav,e('h1',m.name),e('p',m.intro,'intro'));main.append(header);const s=milestoneStatus(progress,m);
+ header.append(e('p','LEGAL LAUNCH KIT','eyebrow'),nav,e('h1',m.name));main.append(header);const s=milestoneStatus(progress,m);
  const summary=e('div',undefined,'workspace-summary');const p=panel(s.label,'progress-panel');
  p.append(e('p',s.done+' of '+s.total+' planning tasks checked'),e('strong',s.percent+'%','percent'));
  const bar=e('progress');bar.max=s.total;bar.value=s.done;bar.setAttribute('aria-label',m.name+' checklist progress');p.append(bar);
  const what=panel('What is this?');what.append(e('p',m.explanation));summary.append(p,what);main.append(summary);
  const layout=e('div',undefined,'milestone-layout');const tasks=panel('Milestone checklist');
- tasks.append(e('p','Check tasks as you address them. You can uncheck them at any time.','muted'));
  if(m.accountSavingReady===false)tasks.append(e('p','Checklist preview. Account saving will be connected before these checkboxes are enabled.','muted'));
  m.tasks.forEach((task,i)=>{
   const index=taskProgressIndex(m,i),key=m.id+':'+i;
@@ -29,7 +28,7 @@ export function renderSavedMilestone(main,{milestone:m,progress,expandedTasks=ne
   });
   tasks.append(item);
  });
- layout.append(tasks);const resources=panel('Resources');resources.append(e('p','Read more in the Venture Branding library.','muted'));
+ layout.append(tasks);const resources=panel('Resources');
  for(const title of m.pendingResources||[])resources.append(e('p',title+' (in preparation)','resource muted'));
  for(const [title,slug]of m.resources)resources.append(link(title,slug.startsWith('#')?slug:'../blog/posts/'+slug+'.html','resource'));
  layout.append(resources);main.append(layout);

@@ -43,7 +43,7 @@ async function loadAccountProgress(){
   const retry=e('button','Retry loading progress','primary');retry.type='button';retry.onclick=()=>{void loadAccountProgress();};main.append(retry);
  }
 }
-function heading(title,description,crumb){const h=e('header',undefined,'page-heading');h.append(e('p','LEGAL LAUNCH KIT','eyebrow'));if(crumb)h.append(crumb);h.append(e('h1',title),e('p',description,'intro'));main.append(h);}
+function heading(title,description,crumb){const h=e('header',undefined,'page-heading');h.append(e('p','LEGAL LAUNCH KIT','eyebrow'));if(crumb)h.append(crumb);h.append(e('h1',title));main.append(h);}
 function crumbs(m){const nav=e('nav',undefined,'breadcrumbs'),category=categories.find(c=>c.id===(m?.categoryId||'formation'));nav.setAttribute('aria-label','Breadcrumb');nav.append(link('Legal Launch Kit','#'),e('span','›'));if(m)nav.append(link(category.name,'#category/'+category.id),e('span','›'),e('span',m.name));else nav.append(e('span',category.name));return nav;}
 function panel(title,cls=''){const n=e('section',undefined,'panel '+cls);n.append(e('h2',title));return n;}
 function node(item,href,sub,cls=''){const n=link('',href,'sphere '+cls);n.style.left=item.x+'%';n.style.top=item.y+'%';n.dataset.cluster=item.id;n.append(icon(item.id),e('strong',item.id==='formation'?'Formation &\nstructure':item.name));if(sub)n.append(e('small',sub));n.title=item.description||sub||item.name;return n;}
