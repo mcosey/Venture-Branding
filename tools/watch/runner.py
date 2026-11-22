@@ -8,9 +8,10 @@ ENDPOINTS = {'production': 'https://omvkwiosonatswocbdgx.supabase.co/functions/v
              'test': 'https://imvkhicfmidzbzsbhkzs.supabase.co/functions/v1/watch-ingest'}
 MAX_ZIP = 100 * 1024 * 1024
 MAX_XML = 2 * 1024 * 1024 * 1024
-# Official history can exceed 1 MiB even for old records outside Watch's lookback.
+# Official history can exceed 4 MiB even for old records outside Watch's lookback.
+# The Nov 19 archive includes a 4,317,740-byte historical record.
 # Keep parsing bounded; candidate field and upload limits remain independently enforced.
-MAX_XML_SECTION = 4 * 1024 * 1024
+MAX_XML_SECTION = 8 * 1024 * 1024
 MAX_RECORDS = 20000
 
 class FeedError(Exception):

@@ -109,6 +109,29 @@ class RunnerTests(unittest.TestCase):
   old=case(filing='20190612').replace('</case-file>','<history>'+'x'*(runner.MAX_XML_SECTION+65536)+'</history></case-file>')
   with self.assertRaisesRegex(FeedError,'XML case/section exceeds supported size'):
    extract(self.sample('<root>'+old+'</root>'),'apc261011.zip')
+ def test_november_sized_history_does_not_block_current_candidates(self):
+  # Nov 19's official record is 4,317,740 bytes, predominantly Madrid history.
+  # Use larger fictional history and ensure that current candidates survive intact.
+  history='<madrid-international-filing-requests>'+('<request><text>'+'x'*1000+'</text></request>')*4800+'</madrid-international-filing-requests>'
+  old=case('12345678',filing='19950501',drawing='1').replace('</case-file>',history+'</case-file>')
+  self.assertGreater(len(old),4317740)
+  records,counts=extract(self.sample('<root>'+old+case()+'</root>'),'apc261011.zip')
+  self.assertEqual(records,[self.record()])
+  self.assertEqual(counts['total'],2);self.assertEqual(counts['outside_lookback'],1)
+ def test_large_history_never_relaxes_current_candidate_field_limits(self):
+  history='<madrid-international-filing-requests>'+('<request><text>'+'x'*1000+'</text></request>')*4800+'</madrid-international-filing-requests>'
+  old=case('12345678',filing='19950501').replace('</case-file>',history+'</case-file>')
+  for candidate in [case().replace('EXAMPLE','N'*4097),case().replace('Example LLC','O'*4097),case().replace('Education services','x'*524289)]:
+   with self.subTest(candidate_length=len(candidate)),self.assertRaises(FeedError):
+    extract(self.sample('<root>'+old+candidate+'</root>'),'apc261011.zip')
+ def test_november_sized_history_cannot_hide_malformed_or_unsafe_xml(self):
+  history='<madrid-international-filing-requests>'+('<request><text>'+'x'*1000+'</text></request>')*4800+'</madrid-international-filing-requests>'
+  old=case('12345678',filing='19950501').replace('</case-file>',history+'</case-file>')
+  with self.assertRaises(Exception):
+   extract(self.sample('<root>'+old+case()),'apc261011.zip')
+  unsafe=old.replace('</madrid-international-filing-requests>','<!ENTITY unsafe "value"></madrid-international-filing-requests>')
+  with self.assertRaisesRegex(FeedError,'Unsafe or oversized XML'):
+   extract(self.sample('<root>'+unsafe+'</root>'),'apc261011.zip')
  def test_large_historical_section_cannot_hide_an_entity_declaration(self):
   old=case(filing='20190612').replace('</case-file>','<history>'+'x'*(2*1024*1024)+'<!ENTITY unsafe "value"></history></case-file>')
   with self.assertRaisesRegex(FeedError,'Unsafe or oversized XML'):
