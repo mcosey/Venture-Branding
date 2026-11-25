@@ -5,8 +5,8 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/what-happens-if-my-trademark-application-is-abandoned.jpg"
+imageAlt: "A laptop screen showing an application status of Abandoned."
 ---
 
 Suppose you filed a federal trademark application several months ago and assumed it was progressing toward registration. When you check its status, however, you discover that the U.S. Patent and Trademark Office (USPTO) has marked the application as abandoned.

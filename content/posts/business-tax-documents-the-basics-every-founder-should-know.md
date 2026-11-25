@@ -5,8 +5,8 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/business-tax-documents-the-basics-every-founder-should-know.jpg"
+imageAlt: "Receipts and a calculator beside a folder labeled Tax Records."
 ---
 
 Starting a business introduces founders to several unfamiliar tax documents. Some establish the company's tax identity, while others relate to reporting income, expenses, and payments.

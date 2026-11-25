@@ -5,8 +5,8 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-trademark-my-personal-name.jpg"
+imageAlt: "A stack of business cards with Your Name printed on the top card."
 ---
 
 Suppose you're launching a consulting practice, clothing brand, or other business under your personal name. Because the name is your own, you might assume that you can register it as a trademark and prevent others from using it commercially.

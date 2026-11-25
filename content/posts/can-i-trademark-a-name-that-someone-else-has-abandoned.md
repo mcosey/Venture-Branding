@@ -5,8 +5,8 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-trademark-a-name-that-someone-else-has-abandoned.jpg"
+imageAlt: "A weathered storefront sign with traces of its former lettering."
 ---
 
 Suppose you've settled on a name for your business. While searching the U.S. Patent and Trademark Office (USPTO) database, you discover that another company previously registered the same name. However, the registration is now marked as "DEAD."

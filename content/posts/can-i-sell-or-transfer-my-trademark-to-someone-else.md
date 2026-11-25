@@ -5,8 +5,8 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-sell-or-transfer-my-trademark-to-someone-else.jpg"
+imageAlt: "Two people passing a blank cream envelope across a table."
 ---
 
 Suppose you've developed a successful brand and another company offers to purchase it. You're interested in selling the brand but intend to continue operating the rest of your business.

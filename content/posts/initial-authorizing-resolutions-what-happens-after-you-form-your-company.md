@@ -5,6 +5,8 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
+image: "images/blog/initial-authorizing-resolutions-what-happens-after-you-form-your-company.jpg"
+imageAlt: "A pen on a document titled Initial Resolutions at a meeting table."
 ---
 
 Filing a certificate of incorporation or articles of organization generally establishes a company's legal existence. However, several important organizational matters may remain unresolved. Who has authority to act on behalf of the company? Who will serve as its directors or officers? What rules will govern its operations?

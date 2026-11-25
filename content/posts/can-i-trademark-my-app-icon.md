@@ -5,8 +5,8 @@ date: "2026-11-08"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-trademark-my-app-icon.jpg"
+imageAlt: "A smartphone displaying a coral app icon with three cream shapes beside two pencil sketches."
 ---
 
 Suppose you've developed a mobile application and created a distinctive icon for it. After launching on the Apple App Store or Google Play, users begin recognizing your application by its icon, sometimes without reading its name.

@@ -5,8 +5,8 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/what-is-goodwill-and-why-does-trademark-law-protect-it.jpg"
+imageAlt: "A shop owner smiling at a customer while handing over a paper shopping bag."
 ---
 
 Suppose two businesses sell comparable products at nearly identical prices. Despite their similarities, customers consistently prefer one brand because of its reputation, product quality, and their previous experiences with the company.

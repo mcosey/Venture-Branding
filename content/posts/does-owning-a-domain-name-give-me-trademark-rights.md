@@ -5,8 +5,8 @@ date: "2026-11-15"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/does-owning-a-domain-name-give-me-trademark-rights.jpg"
+imageAlt: "A card displaying venturebranding.com beside a pouch with a woven brand label."
 ---
 
 Suppose you're preparing to launch a business. After settling on a name, you discover that the corresponding .com domain is available. You purchase it, register your business, and begin developing your website.

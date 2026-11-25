@@ -5,6 +5,8 @@ date: "2026-10-24"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
+image: "images/blog/can-i-use-ai-to-create-my-business-logo.jpg"
+imageAlt: "A designer sketching a logo beside a laptop displaying six geometric logo concepts."
 ---
 
 Artificial intelligence has made logo design more accessible. Entrepreneurs can use ChatGPT to generate illustrations and experiment with visual identities, while tools like Claude can assist with designs through formats such as SVG graphics.

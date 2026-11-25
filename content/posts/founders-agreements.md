@@ -5,6 +5,8 @@ date: "2026-10-13"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
+image: "images/blog/founders-agreements.jpg"
+imageAlt: "Two co-founders reviewing a founders’ agreement together."
 ---
 
 Starting a business with someone often begins with a shared idea and an understanding of how each person will contribute. But as the business develops, disagreements may emerge over responsibilities, ownership, financial contributions, or major decisions.

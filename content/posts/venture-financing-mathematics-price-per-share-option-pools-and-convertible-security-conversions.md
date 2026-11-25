@@ -5,8 +5,8 @@ date: "2026-11-08"
 author: "Venture Branding"
 category: "Venture Law"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/venture-financing-mathematics-price-per-share-option-pools-and-convertible-security-conversions.jpg"
+imageAlt: "A financial worksheet with Shares and Price columns beside a pencil and charts."
 ---
 
 Understanding a venture financing requires more than knowing the company's valuation and the amount investors intend to contribute. Transactional attorneys must determine how those figures translate into share issuances, conversion prices, and ownership percentages.

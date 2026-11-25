@@ -5,8 +5,8 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/know-before-you-go-does-your-business-need-to-register-in-other-states.jpg"
+imageAlt: "A cargo van approaching a State Line sign on a country road."
 ---
 
 Forming an LLC or corporation establishes a company's legal existence, but it does not necessarily satisfy all the requirements for operating a business.

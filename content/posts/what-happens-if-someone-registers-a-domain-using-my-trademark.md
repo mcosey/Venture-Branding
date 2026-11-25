@@ -5,8 +5,8 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/what-happens-if-someone-registers-a-domain-using-my-trademark.jpg"
+imageAlt: "A tablet displaying venturebranding.com beside a magnifying glass."
 ---
 
 Suppose your business operates under the trademark "Summit Forge." One day, you discover that an unrelated party has registered the domain name SummitForgeShop.com.

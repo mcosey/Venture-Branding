@@ -5,8 +5,8 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/business-tax-documents-entity-elections-employment-taxes-and-equity-compensation.jpg"
+imageAlt: "Three folders labeled Elections, Payroll, and Equity."
 ---
 
 As a business grows, hiring employees, changing its tax classification, and issuing equity compensation can introduce tax documents that founders may not encounter during formation.

@@ -5,8 +5,8 @@ date: "2026-11-08"
 author: "Venture Branding"
 category: "Venture Law"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/private-placement-exemptions-in-startup-financings.jpg"
+imageAlt: "A blank ivory folio on a table in a small meeting room."
 ---
 
 When a startup raises capital by issuing stock, convertible notes, or other securities, the transaction is subject to federal securities laws. The fact that the company is privately held, or that its investors are sophisticated venture capital funds, does not automatically exempt the offering from registration.

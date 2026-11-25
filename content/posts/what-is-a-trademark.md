@@ -6,8 +6,8 @@ author: "Venture Branding"
 category: "Trademarks"
 status: "published"
 order: "3"
-image: ""
-imageAlt: ""
+image: "images/blog/what-is-a-trademark.jpg"
+imageAlt: "Venture Branding’s monogram printed on a navy product box and a cream hang tag."
 ---
 
 Let's say you've just started a company. You've picked a name, formed an LLC, purchased the domain, and begun building your website.

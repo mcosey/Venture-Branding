@@ -5,6 +5,8 @@ date: "2026-10-13"
 author: "Venture Branding"
 category: "Venture Law"
 status: "published"
+image: "images/blog/anatomy-of-a-venture-financing.jpg"
+imageAlt: "A term sheet tucked into a navy folder with a coral divider."
 ---
 
 *An introduction to venture capital transactions for law students and junior attorneys.*

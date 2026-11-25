@@ -5,8 +5,8 @@ date: "2026-11-25"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/what-is-product-hunt.jpg"
+imageAlt: "A launch-day checklist in front of a laptop displaying a generic app mockup."
 ---
 
 Launching a new product can be challenging, especially for startups without an established audience. Even a well-designed application may struggle to attract users if few people know it exists.

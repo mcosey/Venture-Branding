@@ -5,8 +5,8 @@ date: "2026-11-08"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-license-my-trademark-to-another-business.jpg"
+imageAlt: "Two people comparing navy and cream fabric swatches bearing the same coral emblem."
 ---
 
 Suppose you've built a recognizable brand and another company wants to sell products under its name. Perhaps a manufacturer wants to produce branded merchandise, or a distributor wants to market products using your trademark.
