@@ -28,6 +28,22 @@ test('normal build excludes draft, sample, missing-status, and future articles e
   assert.ok(!article.includes('unfinished.html'));
   assert.ok(article.includes('<strong>article</strong>'));
 });
+test('blog listing and posts share the homepage navigation with working relative links',t => {
+  const f=fixture(t);
+  f.post('approved');
+  build(f);
+  const home=fs.readFileSync(path.join(f.outDir,'v8.html'),'utf8');
+  const index=fs.readFileSync(path.join(f.outDir,'blog.html'),'utf8');
+  const post=fs.readFileSync(path.join(f.outDir,'blog/posts/approved.html'),'utf8');
+  const nav = page => page.match(/<nav class="top"[^>]*>([\s\S]*?)<\/nav>/)[1];
+  const navigateToBlog = html => html.replaceAll('href="#','href="v8.html#');
+  assert.equal(nav(index).replace(' aria-current="page"',''),navigateToBlog(nav(home)));
+  assert.equal(nav(post).replaceAll('href="../../','href="'),navigateToBlog(nav(home)));
+  for (const page of [home,index,post]) {
+    assert.match(page,/shared\/site-header\.css/);
+    assert.match(page,/shared\/site-header\.js/);
+  }
+});
 test('preview includes draft and sample with labels and noindex; related links resolve',t => {
   const f=fixture(t); f.post('draft-post','draft'); f.post('sample-post','sample');
   assert.equal(build({...f,preview:true}).count,2);
@@ -42,7 +58,7 @@ test('preview includes draft and sample with labels and noindex; related links r
     for(const [,url] of content.matchAll(/(?:href|src)="([^"]+)"/g)) {
       if (/^(https?:|mailto:)/.test(url)) continue;
       const [pathname,anchor]=url.split('#');
-      const target=pathname ? path.resolve(path.dirname(file),pathname) : file;
+      const target=pathname.startsWith('/') ? path.join(root,pathname) : pathname ? path.resolve(path.dirname(file),pathname) : file;
       assert.ok(fs.existsSync(target),`Missing ${url} from ${file}`);
       if(anchor) assert.ok(fs.readFileSync(target,'utf8').includes(`id="${anchor}"`),`Missing anchor ${url}`);
     }

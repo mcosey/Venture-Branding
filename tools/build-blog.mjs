@@ -62,16 +62,23 @@ export function readPosts(sourceDir, preview = false, today = new Date().toISOSt
 }
 const label = post => post.status === 'sample' ? 'Sample article · Preview only' : post.status === 'draft' ? 'Draft · Preview only' : post.scheduled ? 'Scheduled · Preview only' : '';
 const readingTime = post => `<span class="reading-time">${post.readingMinutes} min read</span>`;
-function shell(title, description, body, prefix, preview) {
+function blogHeader(homeHeader, prefix, preview) {
+  return homeHeader.replace(/\b(href|src)="([^"]+)"/g, (attribute, name, target) => {
+    if (/^(?:[a-z][a-z\d+.-]*:|\/)/i.test(target)) return attribute;
+    if (preview && target === 'login.html') return 'href="/login.html"';
+    const destination = target.startsWith('#') ? `v8.html${target}` : target;
+    const current = target === 'blog.html' && !prefix ? ' aria-current="page"' : '';
+    return `${name}="${prefix}${destination}"${current}`;
+  });
+}
+function shell(title, description, body, prefix, preview, homeHeader) {
   return `<!DOCTYPE html>\n${marker}\n<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${escape(title)} ,  Venture Branding</title><meta name="description" content="${escape(description)}">${preview ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <link rel="icon" href="${prefix}images/09.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${prefix}blog/assets/blog.css"><link rel="stylesheet" href="${prefix}shared/site-footer.css"><script src="${prefix}blog/assets/blog.js" defer></script></head><body>
-<a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="shell header-inner">
-<a class="brand" href="${prefix}v8.html" aria-label="Venture Branding home"><img src="${prefix}images/02.png" alt="Venture Branding"></a>
-<button class="menu" aria-expanded="false" aria-controls="blog-navigation" type="button">Menu</button>
-<nav class="navigation" id="blog-navigation" aria-label="Primary"><a href="${prefix}v8.html#about">About</a><a href="${prefix}v8.html#services">Services</a><a href="${prefix}blog.html" aria-current="page">Blog</a><a href="${prefix}v8.html#contact">Contact</a><a class="cta" href="${consultationUrl}" target="_blank" rel="noopener noreferrer">Book a Consultation</a></nav></div></header>
+<link rel="stylesheet" href="${prefix}blog/assets/blog.css"><link rel="stylesheet" href="${prefix}shared/site-header.css"><link rel="stylesheet" href="${prefix}shared/site-footer.css"><script src="${prefix}shared/site-header.js" defer></script><script src="${prefix}blog/assets/blog.js" defer></script></head><body class="blog-page">
+<a class="skip" href="#main">Skip to content</a>
+${blogHeader(homeHeader,prefix,preview)}
 ${preview ? '<div class="preview-note"><strong>Local review preview.</strong> Samples and drafts shown here are excluded from the normal blog build.</div>' : ''}
 <main id="main">${body}</main><footer class="site-footer"><div class="shell footer-inner"><p>© Venture Branding Law All rights Reserved</p><nav class="footer-links" aria-label="Footer"><a href="${prefix}v8.html">Home</a><a href="${prefix}blog.html">Blog</a><a href="${prefix}v8.html#contact">Contact</a><a href="${prefix}terms.html">Terms &amp; Conditions</a><a href="${prefix}privacy.html">Privacy Policy</a></nav></div></footer></body></html>\n`;
 }
@@ -85,33 +92,36 @@ function archiveCard(post, featured = false) {
   const cover = post.image ? `<img class="archive-card__image" src="${escape(post.image)}" alt="${escape(post.imageAlt)}" loading="lazy">` : '';
   return `<article class="archive-card${featured ? ' featured-card' : ''}"${featured ? '' : ` data-category="${escape(post.category)}" data-search="${escape([post.title,post.description,post.category,post.author].join(' ').toLocaleLowerCase())}"`}>${cover}${label(post) ? `<span class="badge">${label(post)}</span>` : ''}<div class="meta"><span>${escape(post.category)}</span>${readingTime(post)}</div><h3><a href="blog/posts/${post.slug}.html">${escape(post.title)}</a></h3><p>${escape(post.description)}</p><a class="read" href="blog/posts/${post.slug}.html">Read article <span aria-hidden="true">↗</span></a></article>`;
 }
-function listing(posts, preview) {
+function listing(posts, preview, homeHeader) {
   const categories = [...new Set(posts.map(post => post.category))];
   const startingSlugs = ['what-is-a-trademark','anatomy-of-a-venture-financing','founders-agreements'];
   const featured = startingSlugs.map(slug => posts.find(post => post.slug === slug)).filter(Boolean);
-  const body = `<section class="hero archive-hero"><div class="shell"><span class="eyebrow">The Venture Branding journal</span><h1>Build your business.<br><em>Protect what makes it yours.</em></h1><p>Practical advice on trademarks, venture law, and the decisions founders face, from an attorney and fellow founder.</p><div class="hero-actions"><a class="button" href="#articles-title">Explore articles <span aria-hidden="true">↓</span></a><a class="text-link" href="v8.html#services">Explore Services ↗</a></div></div></section>
-<section class="shell archive-discovery" aria-label="Explore the blog">${posts.length ? '<div class="search" hidden><label for="blog-search">Find something useful</label><input id="blog-search" type="search" placeholder="Search articles" aria-controls="article-list"></div>' : ''}<div class="browse-top"><div class="browse-heading"><div><span class="eyebrow">Browse by topic</span><p>Explore the legal questions that matter to your business.</p></div><span class="category-count">${categories.length} categories</span></div>${posts.length ? `<div class="topic-filters" hidden role="group" aria-label="Filter articles by topic"><button type="button" data-topic="" aria-pressed="true">All articles <span>${posts.length}</span></button>${categories.map(category => `<button type="button" data-topic="${escape(category)}" aria-pressed="false">${escape(category)} <span>${posts.filter(post => post.category === category).length}</span></button>`).join('')}</div>` : ''}</div></section>
+  const body = `<section class="hero archive-hero"><div class="shell"><h1>The Venture Branding Blog.</h1><div class="hero-actions"><a class="button" href="#articles-title">Explore Articles <span aria-hidden="true">↓</span></a><a class="button" href="v8.html#services">Explore Services <span aria-hidden="true">↗</span></a></div></div></section>
+<section class="shell archive-discovery" aria-label="Explore the blog">${posts.length ? '<div class="search" hidden><input id="blog-search" type="search" aria-label="Search articles" placeholder="Search articles" aria-controls="article-list"></div>' : ''}<div class="browse-top"><div class="browse-heading"><span class="eyebrow">Browse by topic</span><span class="category-count">${categories.length} categories</span></div>${posts.length ? `<div class="topic-filters" hidden role="group" aria-label="Filter articles by topic"><button type="button" data-topic="" aria-pressed="true">All articles <span>${posts.length}</span></button>${categories.map(category => `<button type="button" data-topic="${escape(category)}" aria-pressed="false">${escape(category)} <span>${posts.filter(post => post.category === category).length}</span></button>`).join('')}</div>` : ''}</div></section>
 <div class="shell archive-layout"><div class="archive-main">
-${featured.length ? `<section class="featured-section" aria-labelledby="featured-title"><div class="section-intro"><div><span class="eyebrow">A good place to start</span><h2 id="featured-title">Foundations for founders.</h2></div><p>Start with the essentials, then explore the questions that matter to your business.</p></div><div class="cards">${featured.map(post => archiveCard(post,true)).join('')}</div></section>` : ''}
-<section class="blog-content" aria-labelledby="articles-title"><div class="toolbar"><div><span class="eyebrow">The article library</span><h2 id="articles-title">${preview ? 'Article preview' : 'All articles'}</h2><p class="count" id="result-count" role="status">${posts.length} ${posts.length === 1 ? 'article' : 'articles'}</p></div></div>
+${featured.length ? `<section class="featured-section" aria-labelledby="featured-title"><div class="section-intro"><h2 id="featured-title">Foundations for founders.</h2><p>Start with the essentials, then explore the questions that matter to your business.</p></div><div class="cards">${featured.map(post => archiveCard(post,true)).join('')}</div></section>` : ''}
+<section class="blog-content" aria-labelledby="articles-title"><div class="toolbar"><div><h2 id="articles-title">${preview ? 'Article preview' : 'The article library'}</h2><p class="count" id="result-count" role="status">${posts.length} ${posts.length === 1 ? 'article' : 'articles'}</p></div></div>
 ${posts.length ? `<div class="cards archive-grid" id="article-list">${posts.map(post => archiveCard(post)).join('')}</div><div class="empty" id="no-results" hidden><h2>No matching articles.</h2><p>Try another search or explore a different topic.</p><button class="reset" id="clear-search" type="button">Reset search and topic</button></div>` : ''}</section>
 </div><aside class="archive-sidebar" aria-label="Blog resources"><div class="sidebar-sticky"><section class="sidebar-panel"><span class="eyebrow">Category overview</span><h2>Browse by the question you’re trying to answer.</h2><nav aria-label="Article categories">${categories.map(category => `<a href="#articles-title" data-topic-link="${escape(category)}"><span>${escape(category)}</span><span>${posts.filter(post => post.category === category).length}</span></a>`).join('')}</nav></section><section class="sidebar-panel newsletter"><span class="eyebrow">Stay informed</span><h2>Get founder insights.</h2><label for="newsletter-email">Email address</label><input id="newsletter-email" type="email" placeholder="you@example.com" disabled><button class="button" type="button" disabled>Subscribe</button></section></div></aside></div>
 <section class="shell consultation"><div><span class="eyebrow">When reading raises a question</span><h2>Let’s talk about your company’s brand.</h2></div><a class="button" href="${consultationUrl}" target="_blank" rel="noopener noreferrer">Book a consultation ↗</a></section>`;
-  return shell('Blog','Practical advice on trademarks, venture law, and building a business.',body,'',preview);
+  return shell('Blog','Practical advice on trademarks, venture law, and building a business.',body,'',preview,homeHeader);
 }
-function article(post, posts, preview) {
+function article(post, posts, preview, homeHeader) {
   const prefix = '../../';
   const related = posts.filter(item => item.slug !== post.slug).sort((a,b) => Number(b.category===post.category)-Number(a.category===post.category)).slice(0,3);
   const body = `<article><header class="shell article-top"><a class="back" href="../../blog.html">← Back to the blog</a><p class="eyebrow">${escape(post.category)}</p>${label(post) ? `<span class="badge">${label(post)}</span>` : ''}<h1>${escape(post.title)}</h1><p class="description">${escape(post.description)}</p><div class="byline"><span>By ${escape(post.author)}</span>${readingTime(post)}</div></header>
 <div class="article-paper"><div class="article-body">${post.status === 'sample' ? '<p class="reading-note"><strong>Layout sample.</strong> This article is for reviewing the blog design. It is not published content or legal guidance.</p>' : ''}${post.image ? `<img class="article-cover" src="${prefix}${escape(post.image)}" alt="${escape(post.imageAlt)}">` : ''}${post.html}<div class="article-end"><a href="../../blog.html">← All articles</a><a href="../../v8.html#services">Explore Services →</a></div></div></div></article>
 ${related.length ? `<section class="shell related" aria-labelledby="related-title"><h2 id="related-title">Related reading</h2><div class="cards">${related.map(item => card(item,prefix)).join('')}</div></section>` : ''}`;
-  return shell(post.title,post.description,body,prefix,preview);
+  return shell(post.title,post.description,body,prefix,preview,homeHeader);
 }
 export function build({preview=false,outDir=preview ? path.join(root,'work/blog-preview') : root,sourceDir=path.join(root,'content/posts')}={}) {
   const posts = readPosts(sourceDir,preview);
+  const home = fs.readFileSync(path.join(root,'v8.html'),'utf8');
+  const homeHeader = home.match(/<header id="header" class="vb-site-header">[\s\S]*?<\/header>/)?.[0];
+  if (!homeHeader) throw new Error('Missing the shared site header in v8.html.');
   // Validate and render before touching the previous build.
-  const index = listing(posts,preview);
-  const pages = posts.map(post => [post.slug,article(post,posts,preview)]);
+  const index = listing(posts,preview,homeHeader);
+  const pages = posts.map(post => [post.slug,article(post,posts,preview,homeHeader)]);
   const articleDir = path.join(outDir,'blog/posts');
   fs.mkdirSync(articleDir,{recursive:true});
   for (const filename of fs.readdirSync(articleDir)) {
@@ -129,13 +139,12 @@ export function build({preview=false,outDir=preview ? path.join(root,'work/blog-
       fs.mkdirSync(path.dirname(path.join(outDir,post.image)),{recursive:true});
       fs.copyFileSync(path.join(root,post.image),path.join(outDir,post.image));
     }
-    for (const filename of ['terms.html','privacy.html','auth/auth.css','shared/site-footer.css','shared/legal.css']) {
+    for (const filename of ['terms.html','privacy.html','auth/auth.css','shared/site-header.css','shared/site-header.js','shared/site-footer.css','shared/legal.css']) {
       fs.mkdirSync(path.dirname(path.join(outDir,filename)),{recursive:true});
       fs.copyFileSync(path.join(root,filename),path.join(outDir,filename));
     }
-    let home = fs.readFileSync(path.join(root,'v8.html'),'utf8');
-    if (preview) home = home.replace('<head>','<head>\n<meta name="robots" content="noindex,nofollow">');
-    fs.writeFileSync(path.join(outDir,'v8.html'),home);
+    const previewHome = preview ? home.replace('<head>','<head>\n<meta name="robots" content="noindex,nofollow">') : home;
+    fs.writeFileSync(path.join(outDir,'v8.html'),previewHome);
   }
   fs.writeFileSync(path.join(outDir,'blog.html'),index);
   for (const [slug,html] of pages) fs.writeFileSync(path.join(articleDir,`${slug}.html`),html);

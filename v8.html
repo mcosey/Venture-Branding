@@ -50,25 +50,8 @@
   .progress{position:fixed;top:0;left:0;height:3px;width:100%;z-index:200;background:transparent;pointer-events:none}
   .progress__bar{height:100%;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--coral-grad)}
 
-  /* ---- header ---- */
-  header{
-    position:fixed;top:0;left:0;right:0;z-index:150;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:18px clamp(20px,5vw,48px);
-    transition:background .35s ease,backdrop-filter .35s ease,padding .35s ease;
-  }
-  header.scrolled{background:rgba(9,15,23,.72);backdrop-filter:blur(14px);padding-top:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
-  .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-  .brand img{height:34px;width:auto}
-  nav.top{display:flex;gap:8px;align-items:center}
-  nav.top a{
-    text-decoration:none;font-size:15px;font-weight:500;color:#cfd7e0;
-    padding:8px 16px;border-radius:999px;transition:color .2s,background .2s;
-  }
-  nav.top a:hover{color:#fff;background:rgba(255,255,255,.08)}
-  nav.top a.cta{background:var(--coral-grad);color:#fff}
-  nav.top a.cta:hover{filter:brightness(1.08)}
-  .menu-toggle{display:none;background:transparent;border:1px solid var(--line);border-radius:999px;color:#e8ecf1;font:inherit;font-size:14px;padding:8px 16px;cursor:pointer}
+  .foot .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .foot .brand img{height:34px;width:auto}
   section[id]{scroll-margin-top:90px}
   .preparation{padding:clamp(72px,9vw,120px) 0;background:var(--navy-2);border-top:1px solid var(--line)}
   .preparation .eyebrow{color:var(--coral-text)}
@@ -247,10 +230,6 @@
     .hero__mono{opacity:.08}
   }
   @media (max-width:960px){
-    .menu-toggle{display:block}
-    nav.top{display:none;position:absolute;top:100%;left:0;right:0;padding:16px 20px 24px;background:var(--navy-2);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch}
-    nav.top.open{display:flex}
-    nav.top a{padding:12px 16px}
     .hero{padding:110px 0 100px}
   }
   @media (max-width:560px){
@@ -273,12 +252,14 @@
     .hprogress{display:none}
   }
 </style>
+<link rel="stylesheet" href="shared/site-header.css">
+<script src="shared/site-header.js" defer></script>
 <script type="module" src="shared/control-spacing.js?v=20261010"></script><link rel="stylesheet" href="shared/site-footer.css"></head>
 <body>
 
 <div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
 
-<header id="header">
+<header id="header" class="vb-site-header">
   <a class="brand" href="#top" aria-label="Venture Branding home">
     <img src="images/02.png" alt="Venture Branding">
   </a>
@@ -506,29 +487,7 @@
 
 <script>
 (function(){
-  var menuToggle = document.querySelector('.menu-toggle');
-  var primaryNav = document.getElementById('primary-nav');
-  function closeMenu(){
-    primaryNav.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-  }
-  menuToggle.addEventListener('click', function(){
-    var open = primaryNav.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', String(open));
-  });
-  primaryNav.addEventListener('click', function(e){
-    if(e.target.closest('a')) closeMenu();
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && primaryNav.classList.contains('open')){
-      closeMenu();
-      menuToggle.focus();
-    }
-  });
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Header state
-  var header = document.getElementById('header');
   var progressBar = document.getElementById('progressBar');
 
   // Reveal on enter (works even with reduced motion ,  CSS already shows them, but harmless)
@@ -571,9 +530,6 @@
     var docH = document.documentElement.scrollHeight - window.innerHeight;
     var p = docH > 0 ? y / docH : 0;
     progressBar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-
-    // header
-    if(y > 24){ header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
 
     if(reduce) return;
 
