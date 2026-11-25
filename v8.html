@@ -189,7 +189,7 @@
   .eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--coral-deep)}
   .eyebrow--dot{display:inline-flex;align-items:center;gap:10px}
   .eyebrow--dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--coral-grad)}
-  .about__head{max-width:20ch;margin:16px 0 0}
+  .about__head{margin:16px 0 0}
   .about h2{font-size:clamp(2rem,4.6vw,3.3rem);color:var(--ink)}
   .about__grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:clamp(36px,5vw,72px);margin-top:clamp(44px,6vw,72px);align-items:start}
   .about__photo{position:relative}
@@ -200,6 +200,7 @@
   .about__logos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;margin:28px 0 0;padding:0}
   .about__logos li{display:flex;align-items:center;justify-content:center;min-width:0;min-height:86px;padding:16px;background:#fff;border:1px solid rgba(13,21,31,.1);border-radius:12px}
   .about__logos img{display:block;width:100%;height:auto;max-height:54px;object-fit:contain}
+  .about__logos .about__logo--tfa{padding-inline:10px}
   .about__tfa{position:relative;width:100%;aspect-ratio:1024 / 150;overflow:hidden}
   .about__tfa img{position:absolute;top:-33.333%;left:0;width:100%;height:auto;max-height:none}
   .about__bio{position:relative}
@@ -413,7 +414,8 @@
   <section class="about" id="about" aria-labelledby="about-title">
     <div class="wrap">
       <span class="eyebrow eyebrow--dot reveal">About</span>
-      <h2 class="about__head reveal d1" id="about-title">Not just an attorney.</h2>
+      <h2 class="about__head reveal d1" id="about-title">Not just an attorney;<br>
+        But a fellow founder who gets it.</h2>
       <div class="about__grid">
         <div class="about__background reveal">
         <figure class="about__photo">
@@ -424,7 +426,7 @@
           <li><img src="images/about/penn-carey-law.png" alt="Penn Carey Law, University of Pennsylvania" loading="lazy"></li>
           <li><img src="images/about/university-of-chicago.png" alt="The University of Chicago" loading="lazy"></li>
           <li><img src="images/about/purdue-university.png" alt="Purdue University" loading="lazy"></li>
-          <li><div class="about__tfa"><img src="images/about/teach-for-america.png" alt="Teach For America" loading="lazy"></div></li>
+          <li class="about__logo--tfa"><div class="about__tfa"><img src="images/about/teach-for-america.png" alt="Teach For America" loading="lazy"></div></li>
         </ul>
         </div>
         <div class="about__bio reveal d1">
@@ -456,8 +458,7 @@
               </ul>
           </div>
           <div class="about__closing">
-          <p>I know what it’s like to actually build, fail, and build again.</p>
-          <p><strong>I’m not just an attorney; I’m a fellow founder who gets it.</strong></p>
+            <p><strong>I know what it’s like to actually build and what comes with executing on an idea.</strong></p>
           </div>
         </div>
       </div>
