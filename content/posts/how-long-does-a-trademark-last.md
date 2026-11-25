@@ -81,7 +81,7 @@ Depending on the circumstances, a business may retain common-law rights arising 
 
 Those rights are separate from the registration itself. A canceled or expired registration generally cannot simply be renewed after the applicable deadlines have passed, and obtaining another federal registration ordinarily requires a new application.
 
-For more information about unregistered trademark rights, see *[Don't Overlook Common-Law and State Trademarks](dont-overlook-common-law-and-state-trademarks.html)*.
+For more information about unregistered trademark rights, see *[Don’t Overlook Common-Law and State Trademarks](dont-overlook-common-law-and-state-trademarks.html)*.
 
 ## Does a Business Have to Keep Using Its Trademark?
 
@@ -99,7 +99,7 @@ For a software service, that evidence might include an acceptable webpage displa
 
 However, trademark registrations often cover multiple goods or services.
 
-Suppose TempoGarden's registration covers both downloadable software and its online productivity platform. The company subsequently discontinues the downloadable product but continues offering the online service.
+Suppose TempoGarden’s registration covers both downloadable software and its online productivity platform. The company subsequently discontinues the downloadable product but continues offering the online service.
 
 That change may affect which goods and services remain properly covered by the registration.
 
@@ -107,7 +107,7 @@ The USPTO requires accurate maintenance filings and expects registration records
 
 The agency may also request additional evidence through its post-registration audit program.
 
-An attorney preparing maintenance filings therefore examines the registration's identification of goods and services alongside the business's current commercial activities.
+An attorney preparing maintenance filings therefore examines the registration’s identification of goods and services alongside the business’s current commercial activities.
 
 For more information about evidence of trademark use, see *[What Is a Trademark Specimen?](what-is-a-trademark-specimen.html)*
 
@@ -127,7 +127,7 @@ For example, an attorney evaluating a discontinued software product may examine 
 
 A trademark may also be abandoned if it loses its significance as an identifier of commercial source, including when it becomes the generic name for the relevant goods or services.
 
-These issues are distinct from filing maintenance documents. A registration's active status does not conclusively resolve every question concerning continued trademark rights.
+These issues are distinct from filing maintenance documents. A registration’s active status does not conclusively resolve every question concerning continued trademark rights.
 
 ## What If Trademark Use Is Temporarily Interrupted?
 
@@ -135,11 +135,11 @@ Federal law recognizes limited circumstances in which nonuse may be excused for 
 
 Under Section 8 of the Lanham Act, an owner may establish that nonuse results from special circumstances that excuse the interruption and does not reflect an intention to abandon the mark.
 
-The USPTO generally requires specific supporting facts concerning the reasons for nonuse and the owner's efforts to resume use.
+The USPTO generally requires specific supporting facts concerning the reasons for nonuse and the owner’s efforts to resume use.
 
 For example, reduced customer demand, by itself, does not necessarily constitute excusable nonuse.
 
-An attorney evaluating an interruption may consider its cause, expected duration, and the circumstances surrounding the business's operations.
+An attorney evaluating an interruption may consider its cause, expected duration, and the circumstances surrounding the business’s operations.
 
 The availability of excusable nonuse for maintenance purposes is also distinct from whether a trademark has been abandoned under the applicable law.
 
@@ -163,15 +163,15 @@ The two declarations may be filed together when the relevant requirements are sa
 
 ## How Do Trademark Attorneys Handle Registration Maintenance?
 
-Trademark maintenance involves more than reviewing a registration's anniversary date.
+Trademark maintenance involves more than reviewing a registration’s anniversary date.
 
-An attorney may examine the current registration record, the identified goods or services, evidence of continued use, and changes in the business's operations.
+An attorney may examine the current registration record, the identified goods or services, evidence of continued use, and changes in the business’s operations.
 
 For example, a company may have discontinued one product while continuing to use its trademark with several other offerings. That change may affect the information and evidence required in its maintenance filing.
 
 Ownership changes, licensing arrangements, and corporate reorganizations can also raise questions relevant to the registration record.
 
-The attorney's role includes evaluating these circumstances and preparing filings that accurately reflect the owner's rights and commercial activities.
+The attorney’s role includes evaluating these circumstances and preparing filings that accurately reflect the owner’s rights and commercial activities.
 
 ## The Bottom Line
 
@@ -179,8 +179,8 @@ A trademark can potentially remain protected indefinitely, but federal registrat
 
 Most federal registrations require maintenance filings between years five and six, renewal between years nine and ten, and subsequent renewal filings every ten years.
 
-Continued qualifying use remains important throughout the trademark's life. Extended nonuse, changes in business operations, and missed maintenance deadlines can affect trademark rights or registration status.
+Continued qualifying use remains important throughout the trademark’s life. Extended nonuse, changes in business operations, and missed maintenance deadlines can affect trademark rights or registration status.
 
-Federal registration therefore does not necessarily expire after ten years, but obtaining registration is only one stage in maintaining a business's trademark protection.
+Federal registration therefore does not necessarily expire after ten years, but obtaining registration is only one stage in maintaining a business’s trademark protection.
 
 *This article provides general educational information about U.S. trademark law. It does not constitute legal advice or establish an attorney-client relationship. Trademark maintenance, abandonment, and renewal requirements depend on the applicable law and circumstances.*

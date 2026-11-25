@@ -11,9 +11,9 @@ imageAlt: "A letter headed Payment Due sits in a blank envelope beside reading g
 
 You file a trademark application with the United States Patent and Trademark Office (USPTO). A few days later, you receive an official-looking email informing you that an additional payment is required to complete your registration.
 
-The message includes your trademark's name, application number, and business information. It may even display the USPTO's logo.
+The message includes your trademark’s name, application number, and business information. It may even display the USPTO’s logo.
 
-But the message isn't necessarily from the USPTO.
+But the message isn’t necessarily from the USPTO.
 
 Trademark scams have become an increasingly serious problem for business owners. Scammers impersonate government officials, send misleading invoices, invent registration requirements, and pressure applicants into paying for services they do not need.
 
@@ -27,7 +27,7 @@ In a July 2026 presentation, the agency reported that **trademark scam reports r
 
 The agency identified USPTO impersonation as the most prevalent type of reported trademark scam.
 
-That figure measures the increase in reports received by the agency, not the total number of scams committed or the amount of money lost. Nevertheless, it illustrates the growing volume of suspicious activity being brought to the USPTO's attention.
+That figure measures the increase in reports received by the agency, not the total number of scams committed or the amount of money lost. Nevertheless, it illustrates the growing volume of suspicious activity being brought to the USPTO’s attention.
 
 The agency has responded by publishing educational resources, identifying fraudulent solicitations, and working with other federal authorities to address trademark-related fraud.
 
@@ -39,11 +39,11 @@ Trademark scammers target businesses at nearly every stage of the registration p
 
 **Registered trademark owners.** Businesses with existing registrations may receive misleading renewal notices or requests for payment to preserve their trademark rights.
 
-**Business owners who haven't filed.** Some scams begin with advertisements offering unusually inexpensive trademark registration or logo design services. These offers may lead to demands for additional payments or requests for sensitive information.
+**Business owners who haven’t filed.** Some scams begin with advertisements offering unusually inexpensive trademark registration or logo design services. These offers may lead to demands for additional payments or requests for sensitive information.
 
-First-time applicants can be particularly vulnerable because they may be unfamiliar with the USPTO's procedures and official correspondence.
+First-time applicants can be particularly vulnerable because they may be unfamiliar with the USPTO’s procedures and official correspondence.
 
-### How Do Scammers Know You've Filed a Trademark?
+### How Do Scammers Know You’ve Filed a Trademark?
 
 Federal trademark applications become public records.
 
@@ -51,7 +51,7 @@ Information associated with an application, including identifying and correspond
 
 Scammers can use these records to identify applicants and personalize their communications.
 
-For example, a fraudulent invoice might include the applicant's business name, trademark, filing date, and serial number.
+For example, a fraudulent invoice might include the applicant’s business name, trademark, filing date, and serial number.
 
 Because those details are accurate, the recipient may assume the invoice is legitimate.
 
@@ -101,13 +101,13 @@ Not every trademark scam involves someone pretending to be the USPTO.
 
 Some businesses advertise inexpensive trademark registration services while misleading customers about their qualifications, fees, or relationship with the federal government.
 
-The USPTO has warned about companies that impersonate law firms or falsely suggest that licensed attorneys will handle customers' applications.
+The USPTO has warned about companies that impersonate law firms or falsely suggest that licensed attorneys will handle customers’ applications.
 
 Other schemes begin with inexpensive logo design or trademark services before introducing substantial additional charges.
 
-For matters requiring attorney representation before the USPTO, the relevant practitioner must satisfy the USPTO's professional eligibility requirements.
+For matters requiring attorney representation before the USPTO, the relevant practitioner must satisfy the USPTO’s professional eligibility requirements.
 
-A company's website, advertising claims, or professional-looking materials do not independently establish that it employs a qualified trademark attorney.
+A company’s website, advertising claims, or professional-looking materials do not independently establish that it employs a qualified trademark attorney.
 
 ### 5. Fake Websites and Requests for Account Information
 
@@ -115,7 +115,7 @@ Some scammers create websites resembling official USPTO pages.
 
 These websites may seek account credentials, payment information, or other sensitive details.
 
-The USPTO also warns about unauthorized attempts to change contact information in trademark records, potentially interfering with an owner's control over its applications or registrations.
+The USPTO also warns about unauthorized attempts to change contact information in trademark records, potentially interfering with an owner’s control over its applications or registrations.
 
 These schemes demonstrate that trademark-related fraud can involve more than unnecessary payments. In some cases, scammers seek access to accounts or identifying information.
 
@@ -140,13 +140,13 @@ Similarly, an email appearing to originate from an @uspto.gov address is not con
 
 ## How Can Official USPTO Communications Be Verified?
 
-One of the most useful resources is the USPTO's Trademark Status and Document Retrieval system (TSDR).
+One of the most useful resources is the USPTO’s Trademark Status and Document Retrieval system (TSDR).
 
 TSDR allows users to review the status and official documents associated with federal trademark applications and registrations.
 
-Formal USPTO correspondence, including office actions, is generally available in the application's electronic record.
+Formal USPTO correspondence, including office actions, is generally available in the application’s electronic record.
 
-For example, if a message claims that the USPTO issued an office action requiring immediate attention, the application's document history can help determine whether such an action was actually issued.
+For example, if a message claims that the USPTO issued an office action requiring immediate attention, the application’s document history can help determine whether such an action was actually issued.
 
 The USPTO also provides a Trademark Assistance Center to address questions about trademark procedures and communications.
 
@@ -154,7 +154,7 @@ Because scammers sometimes include fraudulent links or telephone numbers in thei
 
 When an applicant is represented by a trademark attorney, that attorney can also review the correspondence and assess whether it reflects an authentic filing requirement.
 
-## What If You've Already Paid a Trademark Scammer?
+## What If You’ve Already Paid a Trademark Scammer?
 
 The USPTO publishes guidance for individuals and businesses that believe they have been targeted by trademark fraud.
 
@@ -168,7 +168,7 @@ If the incident involved access to a USPTO account, unauthorized filings, or cha
 
 The consequences depend on what information was disclosed, whether payments were made, and whether the scam affected an application or registration. A trademark attorney may help evaluate those issues.
 
-## The Value of Knowing Who You're Working With
+## The Value of Knowing Who You’re Working With
 
 Trademark registration involves government correspondence, procedural deadlines, and legal requirements that may be unfamiliar to many business owners.
 
@@ -184,6 +184,6 @@ Trademark scams are a growing concern, and their effectiveness often depends on 
 
 Scammers may possess accurate information about your application, use official-looking documents, or impersonate actual USPTO employees.
 
-A communication's appearance, however, does not establish its authenticity. Understanding how these schemes operate, recognizing common warning signs, and knowing how official USPTO communications can be verified can help business owners distinguish legitimate trademark requirements from fraudulent or misleading solicitations.
+A communication’s appearance, however, does not establish its authenticity. Understanding how these schemes operate, recognizing common warning signs, and knowing how official USPTO communications can be verified can help business owners distinguish legitimate trademark requirements from fraudulent or misleading solicitations.
 
 *This article provides general educational information about U.S. trademark law and* *trademark-related fraud. It does not constitute legal advice or establish an attorney-client* *relationship. The appropriate response to a suspicious communication depends on the* *circumstances.*

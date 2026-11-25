@@ -3,8 +3,10 @@ title: "Venture Financing Instruments: SAFEs, Convertible Notes, and Other Finan
 description: "Understand SAFEs, convertible notes, preferred stock, and other structures used in startup financings."
 date: "2026-10-13"
 author: "Venture Branding"
-category: "Venture Law"
+category: "Advanced Venture Law"
 status: "published"
+image: "images/blog/venture-financing-instruments.jpg"
+imageAlt: "Three sets of clipped cards are labeled SAFE, Convertible Note, and Preferred Stock."
 ---
 
 Startups commonly raise capital through simple agreements for future equity (SAFEs), convertible promissory notes, and preferred stock. Companies may also use venture debt and warrants as part of their financing arrangements.
@@ -23,7 +25,7 @@ Venture financing instruments generally fall into three categories:
 
 A preferred stockholder already owns shares. A convertible noteholder is generally a creditor until conversion. A SAFE holder has contractual rights to receive equity or specified payments upon a triggering event, but does not initially hold stock or conventional debt.
 
-These distinctions affect investor rights, payment priorities, and the company's obligations before a subsequent financing.
+These distinctions affect investor rights, payment priorities, and the company’s obligations before a subsequent financing.
 
 ## 2. Simple Agreements for Future Equity (SAFEs)
 
@@ -37,7 +39,7 @@ Unlike conventional convertible debt, a standard SAFE does not accrue interest o
 
 A SAFE may provide favorable conversion economics through a valuation cap or discount.
 
-A **valuation cap** establishes a ceiling on the valuation used to calculate the investor's conversion price. If the company's subsequent financing occurs at a sufficiently higher valuation, the cap allows the SAFE holder to convert at a lower price than the new investors.
+A **valuation cap** establishes a ceiling on the valuation used to calculate the investor’s conversion price. If the company’s subsequent financing occurs at a sufficiently higher valuation, the cap allows the SAFE holder to convert at a lower price than the new investors.
 
 A **discount** reduces the price paid by new investors by a negotiated percentage.
 
@@ -57,7 +59,7 @@ Y Combinator currently publishes three principal U.S. post-money SAFE forms:
 
 - Most-favored-nation (MFN) provisions without an initial cap or discount.
 
-An MFN provision generally permits the holder to adopt the terms of a qualifying subsequent SAFE, subject to the agreement's amendment procedures. Customized SAFEs may include both a valuation cap and discount, with conversion determined by the contractual method more favorable to the investor.
+An MFN provision generally permits the holder to adopt the terms of a qualifying subsequent SAFE, subject to the agreement’s amendment procedures. Customized SAFEs may include both a valuation cap and discount, with conversion determined by the contractual method more favorable to the investor.
 
 ### Pre-Money and Post-Money Valuations
 
@@ -72,19 +74,19 @@ Suppose a startup raises $2 million at an $8 million pre-money valuation.
 | Pre-money valuation | $8,000,000 |
 | Investment | $2,000,000 |
 | Post-money valuation | $10,000,000 |
-| New investors' ownership | 20% |
+| New investors’ ownership | 20% |
 
-The new investors acquire 20% because their $2 million investment represents 20% of the company's $10 million post-money valuation.
+The new investors acquire 20% because their $2 million investment represents 20% of the company’s $10 million post-money valuation.
 
 This simplified example assumes no additional capitalization adjustments, such as conversions of outstanding instruments or changes to the equity incentive pool.
 
-In a priced financing, the agreed pre-money valuation is ordinarily divided by the contractually defined pre-financing capitalization to determine the new investors' price per share.
+In a priced financing, the agreed pre-money valuation is ordinarily divided by the contractually defined pre-financing capitalization to determine the new investors’ price per share.
 
 ### Pre-Money and Post-Money SAFEs
 
-The distinction between pre-money and post-money SAFEs concerns how their valuation caps and capitalization definitions determine the investor's conversion economics.
+The distinction between pre-money and post-money SAFEs concerns how their valuation caps and capitalization definitions determine the investor’s conversion economics.
 
-Under Y Combinator's original **pre-money SAFE**, the capitalization used to calculate the cap-based conversion price generally excluded other outstanding convertible securities. Additional convertible financing could therefore dilute the ownership ultimately attributable to earlier SAFE investments.
+Under Y Combinator’s original **pre-money SAFE**, the capitalization used to calculate the cap-based conversion price generally excluded other outstanding convertible securities. Additional convertible financing could therefore dilute the ownership ultimately attributable to earlier SAFE investments.
 
 The **post-money SAFE** was designed to make the ownership sold through a capped SAFE more readily calculable.
 
@@ -98,31 +100,31 @@ Assuming the cap-based conversion applies, the SAFE generally represents 10% of 
 
 If the company issues another $500,000 post-money SAFE at the same cap, the two SAFEs generally represent a combined 20% at that measurement point.
 
-That percentage is not necessarily the investors' ownership after the Series A closes. The new investment and applicable equity incentive pool adjustments can produce additional dilution.
+That percentage is not necessarily the investors’ ownership after the Series A closes. The new investment and applicable equity incentive pool adjustments can produce additional dilution.
 
-The post-money cap includes the SAFE financing according to the agreement's capitalization provisions. It does not include the new money raised in the subsequent priced round.
+The post-money cap includes the SAFE financing according to the agreement’s capitalization provisions. It does not include the new money raised in the subsequent priced round.
 
 ### Calculating the SAFE Conversion Price
 
-Under YC's standard post-money valuation-cap SAFE, the cap-based conversion price is:
+Under YC’s standard post-money valuation-cap SAFE, the cap-based conversion price is:
 
 **SAFE Price = Post-Money Valuation Cap ÷ Company Capitalization**
 
 The operative conversion provisions generally determine whether the investor receives shares based on that SAFE Price or the price paid by new investors in the equity financing.
 
-The agreement's definition of *Company Capitalization* is critical. It generally includes specified outstanding equity, equity awards, reserved shares, and converting securities, while excluding specified new financing-related option pool increases.
+The agreement’s definition of *Company Capitalization* is critical. It generally includes specified outstanding equity, equity awards, reserved shares, and converting securities, while excluding specified new financing-related option pool increases.
 
 Because converting securities are included, determining the share count may require interdependent calculations when multiple SAFEs or other instruments are outstanding.
 
-An attorney should therefore use the definitions in the executed SAFE rather than simply dividing the valuation cap by the company's outstanding common shares.
+An attorney should therefore use the definitions in the executed SAFE rather than simply dividing the valuation cap by the company’s outstanding common shares.
 
 ### Conversion and Liquidity Events
 
-Under YC's standard post-money SAFE, an equity financing generally triggers automatic conversion into preferred stock without requiring a minimum amount of new capital.
+Under YC’s standard post-money SAFE, an equity financing generally triggers automatic conversion into preferred stock without requiring a minimum amount of new capital.
 
 Depending on the conversion terms, the investor may receive the preferred stock issued to new investors or a separate series of SAFE preferred stock with adjusted per-share economic rights.
 
-If the company is acquired before conversion, a liquidity event provision generally entitles the SAFE holder to the greater of its purchase amount or an amount determined under the agreement's as-converted calculation, subject to payment priorities and available proceeds.
+If the company is acquired before conversion, a liquidity event provision generally entitles the SAFE holder to the greater of its purchase amount or an amount determined under the agreement’s as-converted calculation, subject to payment priorities and available proceeds.
 
 A dissolution event may also trigger payment rights. Under the standard YC structure, SAFE claims generally rank behind outstanding indebtedness and creditor claims.
 
@@ -170,7 +172,7 @@ $5,000,000 ÷ 5,000,000 = **$1.00 per share**
 
 The cap-based conversion price is $1.00.
 
-The applicable capitalization is determined by the note's terms and may include outstanding stock, options, warrants, and reserved equity, while excluding certain convertible securities.
+The applicable capitalization is determined by the note’s terms and may include outstanding stock, options, warrants, and reserved equity, while excluding certain convertible securities.
 
 **Method 2: Conversion Discount**
 
@@ -236,7 +238,7 @@ $106,000 ÷ $1.60 = **66,250 shares**
 
 The valuation cap therefore produces 39,750 additional shares.
 
-This hypothetical assumes that the note's capitalization definition excludes the converting note, the Series A purchase price is calculated using the stated capitalization, and no other adjustments are required. Real transactions may require additional calculations involving multiple securities, equity incentive pools, or negotiated financing definitions.
+This hypothetical assumes that the note’s capitalization definition excludes the converting note, the Series A purchase price is calculated using the stated capitalization, and no other adjustments are required. Real transactions may require additional calculations involving multiple securities, equity incentive pools, or negotiated financing definitions.
 
 ### Qualified Financing Thresholds
 
@@ -276,7 +278,7 @@ Preferred stock may carry several rights that differ from common stock:
 
 - **Dividend rights:** Preferences concerning distributions.
 
-The certificate of incorporation ordinarily establishes the stock's principal rights and preferences. Contractual protections may appear in an investors' rights agreement, voting agreement, or other financing documents.
+The certificate of incorporation ordinarily establishes the stock’s principal rights and preferences. Contractual protections may appear in an investors’ rights agreement, voting agreement, or other financing documents.
 
 The NVCA publishes model documents commonly used as starting points for these transactions.
 
@@ -302,7 +304,7 @@ Typical terms include interest, scheduled payments, security interests, restrict
 
 Venture debt can restrict later financings. For example, a loan agreement may prohibit additional indebtedness without lender consent. A subsequent convertible note financing could therefore require an amendment, waiver, or determination that the notes constitute permitted indebtedness.
 
-The borrowing documents must be reviewed alongside the company's existing financing arrangements.
+The borrowing documents must be reviewed alongside the company’s existing financing arrangements.
 
 ## 6. Warrants and Other Equity-Linked Instruments
 
@@ -336,7 +338,7 @@ Before a priced financing, counsel should identify outstanding SAFEs, convertibl
 
 Each instrument must be reviewed for applicable conversion provisions, valuation caps, discounts, capitalization definitions, accrued interest, and conversion triggers.
 
-Where multiple instruments convert simultaneously, the calculations may be interdependent. The resulting capitalization should be reconciled against the company's stock ledger, capitalization table, and governing agreements.
+Where multiple instruments convert simultaneously, the calculations may be interdependent. The resulting capitalization should be reconciled against the company’s stock ledger, capitalization table, and governing agreements.
 
 ### Corporate Approvals and Existing Rights
 
@@ -362,7 +364,7 @@ Rule 506(b) generally prohibits general solicitation. Rule 506(c) permits genera
 
 SAFEs, convertible notes, preferred stock, venture debt, and warrants provide different methods of financing emerging companies.
 
-For ECVC attorneys, understanding these instruments requires examining the rights they create, calculating conversion prices and resulting shares, and identifying how each interacts with the company's capitalization and existing agreements.
+For ECVC attorneys, understanding these instruments requires examining the rights they create, calculating conversion prices and resulting shares, and identifying how each interacts with the company’s capitalization and existing agreements.
 
 The governing documents ultimately determine the securities issued, approvals required, and economic consequences of a financing.
 

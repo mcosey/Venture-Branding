@@ -3,7 +3,7 @@ title: "The Legal Risks of Vibe Coding: What Founders Should Know Before Launchi
 description: "Understand legal risks involving privacy, accessibility, security, consumer protection, and code ownership when launching an AI-built product."
 date: "2026-10-24"
 author: "Venture Branding"
-category: "Founders"
+category: "For Founders"
 status: "published"
 image: "images/blog/the-legal-risks-of-vibe-coding.jpg"
 imageAlt: "A founder reviewing a web prototype alongside an abstract code panel on a laptop."
@@ -33,7 +33,7 @@ Suppose a founder launches a subscription platform with a cookie banner offering
 
 The banner appears when the website loads, suggesting that visitors control whether tracking occurs.
 
-However, an advertising pixel begins transmitting information before the visitor makes a selection. Even clicking "Reject" may not stop the transmission if the consent mechanism has not been properly connected to the tracking scripts.
+However, an advertising pixel begins transmitting information before the visitor makes a selection. Even clicking “Reject” may not stop the transmission if the consent mechanism has not been properly connected to the tracking scripts.
 
 Whether prior consent is legally required depends on the jurisdiction, technology, and information involved.
 
@@ -41,13 +41,13 @@ In the European Union and United Kingdom, nonessential cookies and similar techn
 
 The legal framework in the United States differs. There is no universal federal requirement that every website obtain affirmative consent before using ordinary analytics cookies. Nevertheless, federal and state privacy laws may impose disclosure, consent, or opt-out obligations in particular circumstances.
 
-California's privacy laws, for example, require covered businesses to honor qualifying requests to opt out of certain uses of personal information, including applicable Global Privacy Control signals. Website tracking has also prompted litigation under California's Invasion of Privacy Act, although the application of that statute to particular technologies remains contested.
+California’s privacy laws, for example, require covered businesses to honor qualifying requests to opt out of certain uses of personal information, including applicable Global Privacy Control signals. Website tracking has also prompted litigation under California’s Invasion of Privacy Act, although the application of that statute to particular technologies remains contested.
 
-The relevant question is whether the website's actual tracking practices comply with applicable law and the choices presented to visitors.
+The relevant question is whether the website’s actual tracking practices comply with applicable law and the choices presented to visitors.
 
 ### Tracking Has Produced Real Enforcement Actions
 
-In 2022, California's Attorney General announced a $1.2 million settlement with Sephora over allegations that the company failed to disclose certain sales of personal information and honor qualifying opt-out signals.
+In 2022, California’s Attorney General announced a $1.2 million settlement with Sephora over allegations that the company failed to disclose certain sales of personal information and honor qualifying opt-out signals.
 
 In 2023, the Federal Trade Commission finalized an order requiring BetterHelp to pay $7.8 million to resolve allegations that it disclosed sensitive consumer information to advertising platforms despite its privacy promises.
 
@@ -83,7 +83,7 @@ Title III of the Americans with Disabilities Act (ADA) prohibits disability disc
 
 Courts have addressed how these obligations apply to websites and mobile applications. The legal analysis can differ by jurisdiction, particularly for businesses operating exclusively online.
 
-The Department of Justice nevertheless maintains that the ADA's accessibility requirements extend to goods and services that covered public accommodations offer through their websites.
+The Department of Justice nevertheless maintains that the ADA’s accessibility requirements extend to goods and services that covered public accommodations offer through their websites.
 
 Consider a founder who uses AI to build an e-commerce website.
 
@@ -93,7 +93,7 @@ Those barriers may prevent customers with disabilities from using the service.
 
 ### Website Accessibility Lawsuits Are Not Hypothetical
 
-In *Robles v. Domino's Pizza*, litigation over the accessibility of Domino's website and mobile application resulted in a federal district court ruling against the company in 2021. The court ordered accessibility remediation and awarded damages under California law. The dispute was subsequently resolved.
+In *Robles v. Domino’s Pizza*, litigation over the accessibility of Domino’s website and mobile application resulted in a federal district court ruling against the company in 2021. The court ordered accessibility remediation and awarded damages under California law. The dispute was subsequently resolved.
 
 The case involved conventionally developed software, but its accessibility issues are equally relevant to AI-built products.
 
@@ -103,7 +103,7 @@ For private businesses subject to ADA Title III, however, federal law does not p
 
 Founders should also avoid assuming that an automated accessibility tool guarantees compliance.
 
-In 2025, the FTC finalized an order requiring accessiBe to pay $1 million to settle allegations that it overstated its AI-powered accessibility product's ability to bring websites into WCAG compliance.
+In 2025, the FTC finalized an order requiring accessiBe to pay $1 million to settle allegations that it overstated its AI-powered accessibility product’s ability to bring websites into WCAG compliance.
 
 Automated testing can identify certain problems, but meaningful accessibility review may also require manual testing and evaluation using assistive technologies.
 
@@ -123,7 +123,7 @@ Customers register, log in, and access dashboards displaying their invoices.
 
 The application checks whether a visitor is logged in before retrieving an invoice. However, it does not verify whether that visitor is authorized to access the particular record.
 
-A customer who changes an invoice identifier in a request may be able to retrieve another customer's information.
+A customer who changes an invoice identifier in a request may be able to retrieve another customer’s information.
 
 The authentication system works, but the authorization controls are inadequate.
 
@@ -135,7 +135,7 @@ The FTC has emphasized that businesses should maintain security measures appropr
 
 Security incidents may also implicate state privacy and breach-notification laws, contractual commitments, or industry-specific requirements.
 
-California's Consumer Privacy Act, for example, provides a limited private right of action for certain incidents involving specified personal information when the statutory conditions are satisfied.
+California’s Consumer Privacy Act, for example, provides a limited private right of action for certain incidents involving specified personal information when the statutory conditions are satisfied.
 
 Not every vulnerability automatically gives rise to liability. The applicable law, nature of the information, security practices, and circumstances of any unauthorized access matter.
 
@@ -145,7 +145,7 @@ Founders should not assume an AI coding assistant has performed that review mere
 
 ## 4. What Happens If Your Website Is Hit With a DDoS Attack?
 
-Security problems can also affect a website's availability.
+Security problems can also affect a website’s availability.
 
 A distributed denial-of-service (DDoS) attack attempts to overwhelm a website or its supporting infrastructure with traffic or requests, potentially making the service unavailable.
 
@@ -175,13 +175,13 @@ The application successfully collects payment information and begins charging cu
 
 However, the checkout page does not adequately disclose the recurring charges or explain how customers can cancel.
 
-The Restore Online Shoppers' Confidence Act (ROSCA) regulates certain online negative-option transactions, including recurring billing arrangements.
+The Restore Online Shoppers’ Confidence Act (ROSCA) regulates certain online negative-option transactions, including recurring billing arrangements.
 
 Among its requirements are clear disclosure of material terms before obtaining billing information, express informed consent, and a simple mechanism for stopping recurring charges.
 
 Applicable state automatic-renewal laws may impose additional requirements concerning disclosures, acknowledgments, cancellation methods, and renewal notices.
 
-Although a federal appeals court vacated the FTC's expanded click-to-cancel rule in 2025, ROSCA and other applicable consumer protection laws remain in effect.
+Although a federal appeals court vacated the FTC’s expanded click-to-cancel rule in 2025, ROSCA and other applicable consumer protection laws remain in effect.
 
 The appropriate cancellation process depends on the applicable requirements. There is no universal federal rule requiring every subscription to be canceled in exactly the same number of clicks used to enroll.
 
@@ -195,7 +195,7 @@ If the countdown falsely suggests an expiring offer, the inventory warning is fa
 
 In 2024, the FTC adopted a rule addressing specified deceptive practices involving consumer reviews and testimonials, including fabricated reviews attributed to nonexistent individuals.
 
-AI-generated language is not automatically unlawful. The concern arises when a testimonial falsely represents a genuine customer's experience or otherwise violates applicable advertising rules.
+AI-generated language is not automatically unlawful. The concern arises when a testimonial falsely represents a genuine customer’s experience or otherwise violates applicable advertising rules.
 
 Product claims also require attention. Describing software as secure, accurate, or capable of delivering particular results may require appropriate substantiation.
 
@@ -219,13 +219,13 @@ Marketing text messages may involve different consent requirements depending on 
 
 Operational messages, such as account verification codes, should also be distinguished from promotional communications.
 
-### Children's Information
+### Children’s Information
 
-An application directed to children may trigger obligations under the Children's Online Privacy Protection Act (COPPA).
+An application directed to children may trigger obligations under the Children’s Online Privacy Protection Act (COPPA).
 
 COPPA also applies to certain general-audience services with actual knowledge that they are collecting personal information from children under 13.
 
-Covered operators may be required to provide notices, obtain verifiable parental consent, and comply with requirements governing children's information.
+Covered operators may be required to provide notices, obtain verifiable parental consent, and comply with requirements governing children’s information.
 
 COPPA does not, however, require every general-audience website to install an age-verification screen.
 
@@ -279,7 +279,7 @@ Unresolved ownership or licensing questions can become important during fundrais
 
 ## 8. What Should Founders Review Before Launching?
 
-There is no universal checklist that establishes legal compliance for every website. The appropriate review depends on the application's functionality, the information it handles, the people using it, and the jurisdictions involved.
+There is no universal checklist that establishes legal compliance for every website. The appropriate review depends on the application’s functionality, the information it handles, the people using it, and the jurisdictions involved.
 
 Several questions can help counsel and technical professionals identify the areas requiring attention:
 
@@ -297,7 +297,7 @@ Several questions can help counsel and technical professionals identify the area
 
 An AI coding assistant can help identify potential issues, but a generated compliance report cannot conclusively establish that an application meets its legal obligations.
 
-Many questions require evaluating how the deployed website actually behaves, the company's business practices, and the laws applicable to the product.
+Many questions require evaluating how the deployed website actually behaves, the company’s business practices, and the laws applicable to the product.
 
 Depending on the circumstances, appropriate review may involve security testing, accessibility specialists, and legal counsel.
 

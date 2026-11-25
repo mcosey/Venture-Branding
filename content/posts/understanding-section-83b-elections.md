@@ -3,7 +3,7 @@ title: "Understanding Section 83(b) Elections: Tax Consequences, Filing Requirem
 description: "An introduction to Section 83(b) elections for law students and attorneys entering emerging companies practice."
 date: "2026-10-13"
 author: "Venture Branding"
-category: "Venture Law"
+category: "Advanced Venture Law"
 status: "published"
 image: "images/blog/understanding-section-83b-elections.jpg"
 imageAlt: "A document headed 83(b) Election sits in an open envelope next to a desk clock."
@@ -43,7 +43,7 @@ Under Section 83(a), compensation income is generally calculated as:
 
 If shares vest in installments, the calculation generally applies separately to each tranche, using the fair market value when that tranche becomes substantially vested.
 
-Consequently, appreciation during the vesting period can increase the recipient's ordinary compensation income.
+Consequently, appreciation during the vesting period can increase the recipient’s ordinary compensation income.
 
 Not every contractual restriction creates a substantial risk of forfeiture. The applicable analysis depends on the nature and enforceability of the restriction under the Treasury Regulations.
 
@@ -69,7 +69,7 @@ Treasury Regulation § 1.83-2 expressly permits an election when the recipient p
 
 With a valid election, subsequent appreciation generally does not become compensation income when the shares vest. Instead, the appreciation may be recognized as capital gain when the shares are eventually sold.
 
-The election does not change the contractual vesting schedule or eliminate the corporation's repurchase rights.
+The election does not change the contractual vesting schedule or eliminate the corporation’s repurchase rights.
 
 ## 3. A Numerical Example: With and Without an 83(b) Election
 
@@ -87,7 +87,7 @@ Assume:
 
 For simplicity, assume all shares vest at once after two years and are sold more than one year later. Actual founder stock commonly vests in installments.
 
-Also assume the shares are capital assets in the founder's hands and no special capital gains exclusions apply.
+Also assume the shares are capital assets in the founder’s hands and no special capital gains exclusions apply.
 
 ### Scenario A: The Founder Makes a Timely Election
 
@@ -121,7 +121,7 @@ $200,000 − $1,000 = **$199,000**
 
 This income may be taxable even though the founder has not sold the shares and received no cash proceeds.
 
-The founder's tax basis increases to $200,000, reflecting the purchase price and compensation income recognized.
+The founder’s tax basis increases to $200,000, reflecting the purchase price and compensation income recognized.
 
 When the founder subsequently sells the stock for $500,000:
 
@@ -167,7 +167,7 @@ If the property is a capital asset, the resulting loss is generally a capital lo
 
 The amount previously included as compensation is not added to the amount recoverable under this forfeiture rule.
 
-A decline in the stock's value creates a related risk. The taxpayer may have paid tax based on a higher initial value and cannot simply reverse that income inclusion when the stock depreciates.
+A decline in the stock’s value creates a related risk. The taxpayer may have paid tax based on a higher initial value and cannot simply reverse that income inclusion when the stock depreciates.
 
 A Section 83(b) election generally cannot be revoked without IRS consent, which is available only in limited circumstances. A mistaken prediction about future value does not ordinarily qualify.
 
@@ -201,7 +201,7 @@ Upon early exercise, the holder purchases actual stock, which may remain subject
 
 For a nonqualified stock option, an eligible recipient may make an election concerning the restricted shares acquired through early exercise.
 
-Suppose an employee exercises an option to purchase 10,000 unvested shares at $1 per share when the shares' fair market value is also $1.
+Suppose an employee exercises an option to purchase 10,000 unvested shares at $1 per share when the shares’ fair market value is also $1.
 
 The initial taxable spread is zero.
 
@@ -231,11 +231,11 @@ Because an RSU grant ordinarily does not transfer property to the recipient, an 
 
 An RSU should therefore not be confused with an actual restricted stock issuance.
 
-We'll explore these instruments further in *Stock Options, Restricted Stock, and RSUs in Startup Compensation*.
+We’ll explore these instruments further in *Stock Options, Restricted Stock, and RSUs in Startup Compensation*.
 
 ## 6. Tax Basis, Holding Periods, and Qualified Small Business Stock
 
-An election also affects the recipient's tax basis and capital gains holding period.
+An election also affects the recipient’s tax basis and capital gains holding period.
 
 ### Tax Basis
 
@@ -247,7 +247,7 @@ Suppose an employee pays $10,000 for restricted shares worth $15,000.
 
 The election produces $5,000 of ordinary income.
 
-The employee's initial tax basis is:
+The employee’s initial tax basis is:
 
 $10,000 + $5,000 = **$15,000**
 
@@ -293,7 +293,7 @@ The service provider makes the election, even when the corporation prepares the 
 
 The IRS provides [Form 15620, Section 83(b) Election](https://www.irs.gov/pub/irs-pdf/f15620.pdf), which requests information including:
 
-- The taxpayer's identifying information.
+- The taxpayer’s identifying information.
 
 - The type and quantity of property transferred.
 
@@ -307,7 +307,7 @@ The IRS provides [Form 15620, Section 83(b) Election](https://www.irs.gov/pub/ir
 
 A taxpayer may also make the election using a signed written statement satisfying Treasury Regulation § 1.83-2.
 
-The IRS's current mobile-friendly forms program lists Form 15620 as available through an online submission process requiring an IRS Online Account. The downloadable PDF instructions continue to describe filing the completed form by mail with the applicable IRS office.
+The IRS’s current mobile-friendly forms program lists Form 15620 as available through an online submission process requiring an IRS Online Account. The downloadable PDF instructions continue to describe filing the completed form by mail with the applicable IRS office.
 
 Taxpayers and practitioners should verify the requirements of the filing method selected.
 
@@ -355,10 +355,10 @@ Section 83(b) allows an eligible recipient of substantially nonvested property t
 
 For startup equity, the election can prevent appreciation during the vesting period from being treated as ordinary compensation income. It can also affect tax basis, capital gains holding periods, and potentially the holding period relevant to QSBS treatment.
 
-The benefits depend on the property's initial value, the recipient's tax circumstances, the applicable restrictions, and its subsequent performance.
+The benefits depend on the property’s initial value, the recipient’s tax circumstances, the applicable restrictions, and its subsequent performance.
 
 For attorneys entering ECVC practice, understanding Section 83(b) means recognizing when a stock issuance implicates the election, understanding its economic consequences, and identifying the applicable transfer date and filing requirements.
 
-The election's short statutory deadline makes those issues especially important at the time equity is issued.
+The election’s short statutory deadline makes those issues especially important at the time equity is issued.
 
 *This article is intended for general legal education and professional development. Its examples simplify federal tax rules and exclude various taxes, deductions, and special provisions. Specific tax consequences should be evaluated with qualified tax counsel. This article does not constitute legal or tax advice.*

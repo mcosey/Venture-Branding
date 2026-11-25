@@ -91,7 +91,7 @@ export const milestones = [
   resources:[
    ['Business structure','#milestone/entity'],
    ['Founders, Owners, Directors, and Managers: Who Actually Runs a Startup?','founders-owners-directors-and-managers-who-actually-runs-a-startup'],
-   ["Founders' Agreements: What Co-Founders Should Agree on Before Starting a Business",'founders-agreements']
+   ["Founders’ Agreements: What Co-Founders Should Agree on Before Starting a Business",'founders-agreements']
   ]
  },
  {id:'consents',name:'Initial Steps',icon:'✓',x:75,y:70,
@@ -118,7 +118,7 @@ export const milestones = [
    ['Initial Authorizing Resolutions: What Happens After You Form Your Company?','initial-authorizing-resolutions-what-happens-after-you-form-your-company'],
    ['Understanding Startup Capitalization: Authorized Stock, Outstanding Shares, and Fully Diluted Ownership','understanding-startup-capitalization'],
    ['Understanding Section 83(b) Elections: Tax Consequences, Filing Requirements, and Startup Equity','understanding-section-83b-elections'],
-   ["Founders' Agreements: What Co-Founders Should Agree on Before Starting a Business",'founders-agreements']
+   ["Founders’ Agreements: What Co-Founders Should Agree on Before Starting a Business",'founders-agreements']
   ]
  }
 ];

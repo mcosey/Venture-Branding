@@ -9,7 +9,7 @@ image: "images/blog/can-a-foreign-business-register-a-trademark-in-the-united-st
 imageAlt: "A folder showing the outline of the contiguous United States beside a roll of packing tape."
 ---
 
-Suppose you own a business outside the United States and want to expand into the American market. You may already have a registered trademark in your home country, or perhaps you're preparing to introduce your products or services to U.S. customers for the first time.
+Suppose you own a business outside the United States and want to expand into the American market. You may already have a registered trademark in your home country, or perhaps you’re preparing to introduce your products or services to U.S. customers for the first time.
 
 Can you register your trademark in the United States if neither you nor your business is based there?
 
@@ -39,7 +39,7 @@ Attorneys therefore evaluate which individual or entity owns the relevant rights
 
 ## Do I Need to Be Selling Products or Services in the United States?
 
-Not necessarily. Whether a foreign applicant must demonstrate actual commercial use before registration depends on the application's **filing basis**.
+Not necessarily. Whether a foreign applicant must demonstrate actual commercial use before registration depends on the application’s **filing basis**.
 
 U.S. trademark law recognizes several filing bases with different requirements.
 
@@ -101,7 +101,7 @@ Since August 3, 2019, the USPTO has required foreign-domiciled trademark applica
 
 For individuals, domicile generally means the place where a person resides and intends to maintain their principal home.
 
-For businesses, domicile generally means the principal place of business where senior executives or officers ordinarily direct and control the company's activities.
+For businesses, domicile generally means the principal place of business where senior executives or officers ordinarily direct and control the company’s activities.
 
 The requirement therefore depends on **domicile rather than citizenship**.
 
@@ -141,7 +141,7 @@ U.S. registrations generally require qualifying commercial use and periodic main
 
 Foreign individuals and businesses can obtain U.S. federal trademark registrations without becoming American citizens or establishing U.S. companies.
 
-The requirements depend on the applicant's trademark rights, commercial activities, and filing basis. Certain foreign applicants may obtain registration before establishing qualifying U.S. commercial use, but continued protection generally requires compliance with U.S. use and maintenance requirements.
+The requirements depend on the applicant’s trademark rights, commercial activities, and filing basis. Certain foreign applicants may obtain registration before establishing qualifying U.S. commercial use, but continued protection generally requires compliance with U.S. use and maintenance requirements.
 
 Foreign-domiciled applicants must also generally retain U.S.-licensed counsel for trademark matters before the USPTO.
 

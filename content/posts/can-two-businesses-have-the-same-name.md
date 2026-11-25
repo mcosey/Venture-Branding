@@ -9,7 +9,7 @@ image: images/blog/can-two-businesses-have-the-same-name.jpg
 imageAlt: Two neighboring storefronts each display the name Corner.
 ---
 
-You've settled on a name for your business, purchased the domain, and started developing your brand. Then, while researching the name, you discover another company already using it.
+You’ve settled on a name for your business, purchased the domain, and started developing your brand. Then, while researching the name, you discover another company already using it.
 
 Does that mean you have to choose something else?
 
@@ -17,7 +17,7 @@ Not necessarily.
 
 Two businesses can sometimes legally operate under identical or similar names. Trademark law does not automatically grant one company exclusive rights to a word or phrase across every industry.
 
-Whether the names can coexist generally depends on the businesses' respective trademark rights and the likelihood of consumer confusion.
+Whether the names can coexist generally depends on the businesses’ respective trademark rights and the likelihood of consumer confusion.
 
 ## Why Can Two Businesses Have the Same Name?
 
@@ -33,7 +33,7 @@ Now imagine a third business opening a café under the Willowridge name.
 
 Because bakeries and cafés may offer related products, serve overlapping customers, and operate through similar channels, using the same name could raise different trademark concerns.
 
-Neither example establishes a definitive legal outcome. The analysis depends on the parties' rights, commercial activities, and how consumers are likely to encounter their marks.
+Neither example establishes a definitive legal outcome. The analysis depends on the parties’ rights, commercial activities, and how consumers are likely to encounter their marks.
 
 ## What Is Likelihood of Confusion?
 
@@ -109,13 +109,13 @@ An attorney evaluating geographically separated businesses may examine their his
 
 Different business addresses do not, by themselves, resolve the question.
 
-For more information, see *[Don't Overlook Common-Law and State Trademarks](dont-overlook-common-law-and-state-trademarks.html)* .
+For more information, see *[Don’t Overlook Common-Law and State Trademarks](dont-overlook-common-law-and-state-trademarks.html)* .
 
-## Does Registering an LLC Name Mean It's Available to Use?
+## Does Registering an LLC Name Mean It’s Available to Use?
 
 Not necessarily.
 
-A business's legal name and its trademark serve different purposes.
+A business’s legal name and its trademark serve different purposes.
 
 A legal business name identifies the entity registered with a state. A trademark identifies the commercial source of goods or services.
 
@@ -123,9 +123,9 @@ Sometimes the names are identical, but registering one does not necessarily esta
 
 Suppose an entrepreneur forms Willowridge Technologies, LLC, after the Secretary of State approves the proposed entity name.
 
-That approval generally establishes that the name satisfies the state's applicable business-registration requirements.
+That approval generally establishes that the name satisfies the state’s applicable business-registration requirements.
 
-It does not determine whether using Willowridge as a trademark would conflict with another business's rights.
+It does not determine whether using Willowridge as a trademark would conflict with another business’s rights.
 
 A company can therefore have a properly registered legal name while encountering separate trademark issues when marketing its products or services.
 
@@ -133,19 +133,19 @@ The same general distinction applies to assumed-name and DBA filings.
 
 ## Can Famous Trademarks Receive Broader Protection?
 
-Yes. Certain famous trademarks receive protection beyond ordinary likelihood-of-confusion principles. Federal law recognizes claims involving *trademark dilution* , which can arise when use of another mark is likely to weaken a famous mark's distinctiveness or harm its reputation.
+Yes. Certain famous trademarks receive protection beyond ordinary likelihood-of-confusion principles. Federal law recognizes claims involving *trademark dilution* , which can arise when use of another mark is likely to weaken a famous mark’s distinctiveness or harm its reputation.
 
 Unlike a traditional likelihood-of-confusion claim, federal dilution does not require proof that consumers are likely to believe the businesses are connected.
 
 However, this protection is reserved for marks that satisfy demanding statutory requirements, including widespread recognition among the general consuming public of the United States.
 
-A mark's popularity within a particular industry does not necessarily meet that standard.
+A mark’s popularity within a particular industry does not necessarily meet that standard.
 
 The possibility of dilution is another reason unrelated products do not always eliminate potential trademark conflicts.
 
 ## What If Two Businesses Are Already Using the Same Name?
 
-Two businesses may be using identical or similar names without necessarily infringing each other's trademark rights.
+Two businesses may be using identical or similar names without necessarily infringing each other’s trademark rights.
 
 In some situations, businesses enter into *coexistence agreements* addressing how their marks may be used.
 
@@ -153,7 +153,7 @@ These agreements may establish limitations concerning goods or services, markets
 
 However, a coexistence agreement does not automatically resolve every trademark concern or guarantee that the USPTO will approve a registration.
 
-Its legal significance depends on the agreement's terms, the parties' rights, and the surrounding circumstances.
+Its legal significance depends on the agreement’s terms, the parties’ rights, and the surrounding circumstances.
 
 ## How Does a Trademark Attorney Evaluate Similar Business Names?
 

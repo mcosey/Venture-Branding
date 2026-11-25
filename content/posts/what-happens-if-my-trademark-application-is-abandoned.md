@@ -63,13 +63,13 @@ Revival does not eliminate outstanding substantive refusals. For example, if the
 
 ## How Long Do I Have to Revive an Abandoned Application?
 
-An applicant who receives a Notice of Abandonment generally must file a Petition to Revive within two months of the notice's issuance date.
+An applicant who receives a Notice of Abandonment generally must file a Petition to Revive within two months of the notice’s issuance date.
 
 If the applicant did not receive the notice, the petition generally must be filed:
 
 - Within two months of the date the applicant actually learned of the abandonment; and
 
-- No later than six months after the abandonment date shown in the USPTO's electronic records.
+- No later than six months after the abandonment date shown in the USPTO’s electronic records.
 
 The applicant must also provide the required declaration concerning nonreceipt of the notice.
 
@@ -109,7 +109,7 @@ Reinstatement and other petition procedures are also subject to filing deadlines
 
 Filing a new application may seem simpler than pursuing revival. However, starting over can have consequences for **trademark priority**.
 
-Under Section 7(c) of the Lanham Act, an application that results in registration on the Principal Register can establish nationwide constructive-use priority for the registered goods or services dating back to the application's filing date, subject to statutory exceptions.
+Under Section 7(c) of the Lanham Act, an application that results in registration on the Principal Register can establish nationwide constructive-use priority for the registered goods or services dating back to the application’s filing date, subject to statutory exceptions.
 
 Consider the following example:
 
@@ -121,7 +121,7 @@ If the original application is successfully revived, the business generally pres
 
 Any independently established trademark rights held by either business must also be considered.
 
-When evaluating revival and refiling, attorneys may consider the significance of the original filing date, outstanding refusals, government fees, changes to the applicant's business, and eligibility for procedural relief.
+When evaluating revival and refiling, attorneys may consider the significance of the original filing date, outstanding refusals, government fees, changes to the applicant’s business, and eligibility for procedural relief.
 
 Filing a new application does not necessarily resolve the legal issues that affected the original one.
 
@@ -131,7 +131,7 @@ Abandonment of a federal trademark application does not, by itself, make continu
 
 However, the circumstances surrounding abandonment may raise separate legal concerns.
 
-For example, if the USPTO refused registration because of a likelihood of confusion with an existing trademark, abandoning the application does not resolve a potential conflict with the other trademark owner's rights.
+For example, if the USPTO refused registration because of a likelihood of confusion with an existing trademark, abandoning the application does not resolve a potential conflict with the other trademark owner’s rights.
 
 The ability to lawfully use a trademark and eligibility to obtain federal registration are separate legal questions.
 
@@ -141,7 +141,7 @@ An attorney reviewing an abandoned application may examine:
 
 - The reason for abandonment and the relevant dates.
 
-- The application's filing basis and procedural history.
+- The application’s filing basis and procedural history.
 
 - USPTO correspondence and evidence of prior submissions.
 
@@ -151,7 +151,7 @@ An attorney reviewing an abandoned application may examine:
 
 - Potential consequences for trademark priority.
 
-The USPTO's Trademark Status and Document Retrieval (TSDR) system provides access to application records and correspondence that can assist in this evaluation.
+The USPTO’s Trademark Status and Document Retrieval (TSDR) system provides access to application records and correspondence that can assist in this evaluation.
 
 These records help attorneys assess whether the original application may be restored and the implications of pursuing a new application instead.
 

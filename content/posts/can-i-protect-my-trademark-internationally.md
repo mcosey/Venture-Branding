@@ -9,7 +9,7 @@ image: "images/blog/can-i-protect-my-trademark-internationally.jpg"
 imageAlt: "A globe beside two shipping cartons, one with a coral brand tag."
 ---
 
-Suppose you've built a successful business in the United States and registered its name with the U.S. Patent and Trademark Office (USPTO). As your business grows, you begin attracting customers in other countries.
+Suppose you’ve built a successful business in the United States and registered its name with the U.S. Patent and Trademark Office (USPTO). As your business grows, you begin attracting customers in other countries.
 
 Does your federal trademark registration protect your brand in those markets?
 
@@ -19,7 +19,7 @@ Generally, no. Trademark rights are territorial, meaning their legal protection 
 
 Federal trademark registration generally provides protection throughout the United States and its territories, subject to applicable limitations and earlier rights. It does not automatically grant enforceable trademark rights in other countries.
 
-For example, imagine a U.S. company sells outdoor equipment under the registered trademark "Summit Forge." The company later expands into Europe and discovers another business using the same name for similar products.
+For example, imagine a U.S. company sells outdoor equipment under the registered trademark “Summit Forge.” The company later expands into Europe and discovers another business using the same name for similar products.
 
 Its U.S. registration would not, by itself, establish that the American company has superior trademark rights in the foreign market. Those rights would depend on the applicable laws and circumstances, including whether the company has obtained protection in the relevant jurisdiction.
 
@@ -29,7 +29,7 @@ This distinction is particularly relevant for online businesses. A website may b
 
 Yes. Businesses may seek trademark protection in multiple jurisdictions, although registration requirements vary.
 
-A trademark registered in the United States may also qualify for protection elsewhere. However, the USPTO's decision to register a mark does not require foreign trademark authorities to reach the same conclusion.
+A trademark registered in the United States may also qualify for protection elsewhere. However, the USPTO’s decision to register a mark does not require foreign trademark authorities to reach the same conclusion.
 
 A name that is registrable in the United States may face obstacles abroad, including conflicting rights held by another business.
 
@@ -81,9 +81,9 @@ When evaluating international trademark protection, attorneys may consider:
 
 - **Potential conflicts:** Whether similar marks are being used or registered in relevant markets.
 
-- **Commercial priorities:** How additional protection fits the business's plans and resources.
+- **Commercial priorities:** How additional protection fits the business’s plans and resources.
 
-Timing may also matter. Trademark rights and registration priorities vary among jurisdictions, potentially affecting a business's ability to protect its brand in new markets.
+Timing may also matter. Trademark rights and registration priorities vary among jurisdictions, potentially affecting a business’s ability to protect its brand in new markets.
 
 These considerations help attorneys assess whether additional protection may be appropriate and which jurisdictions warrant further review.
 
@@ -93,7 +93,7 @@ A U.S. trademark attorney can help businesses understand the scope of their fede
 
 This may include reviewing existing U.S. applications and registrations, discussing international filing mechanisms at a general level, and identifying matters that may warrant foreign legal advice.
 
-When a matter requires analysis of another country's trademark laws, assistance from attorneys qualified in that jurisdiction may be necessary.
+When a matter requires analysis of another country’s trademark laws, assistance from attorneys qualified in that jurisdiction may be necessary.
 
 U.S. and foreign counsel may also coordinate when a business seeks protection in multiple markets.
 

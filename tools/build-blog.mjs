@@ -17,6 +17,21 @@ marked.use({renderer: {
   image({href, text}) { return `<img src="${escape(safeUrl(href))}" alt="${escape(text)}" loading="lazy">`; }
 }});
 
+const wordSegments = new Intl.Segmenter('en', {granularity:'word'});
+const nonfictionWordsPerMinute = 238;
+function estimateReadingMinutes(html) {
+  const text = html
+    .replace(/<\/?(?:a|code|del|em|strong)\b[^>]*>/gi, '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&(?:apos|#39|#x27);/gi, '’')
+    .replace(/&(?:#\w+|[a-z][a-z\d]*);/gi, ' ');
+  let words = 0;
+  for (const {isWordLike} of wordSegments.segment(text)) {
+    if (isWordLike) words++;
+  }
+  return Math.max(1, Math.ceil(words / nonfictionWordsPerMinute));
+}
+
 export function readPosts(sourceDir, preview = false, today = new Date().toISOString().slice(0,10)) {
   return fs.readdirSync(sourceDir).filter(name => name.endsWith('.md')).map(name => {
     const slug = name.slice(0,-3);
@@ -39,12 +54,14 @@ export function readPosts(sourceDir, preview = false, today = new Date().toISOSt
     if (meta.image && (!/^images\/blog\/[a-zA-Z0-9_./-]+\.(png|jpe?g|webp|avif)$/i.test(meta.image) || meta.image.split('/').includes('..') || !meta.imageAlt || !fs.existsSync(path.join(root,meta.image)))) throw new Error(`${name}: image must exist under images/blog and include imageAlt.`);
     const order = Number(meta.order || 0);
     if (!Number.isFinite(order)) throw new Error(`${name}: invalid order.`);
-    return {...meta, slug, status, order, scheduled:meta.date > today, html:marked.parse(match[2])};
+    const html = marked.parse(match[2]);
+    return {...meta, slug, status, order, scheduled:meta.date > today, html};
   }).filter(post => preview || (post.status === 'published' && !post.scheduled))
-    .sort((a,b) => b.date.localeCompare(a.date) || b.order-a.order || a.slug.localeCompare(b.slug));
+    .sort((a,b) => b.date.localeCompare(a.date) || b.order-a.order || a.slug.localeCompare(b.slug))
+    .map(post => ({...post, readingMinutes:estimateReadingMinutes(post.html)}));
 }
-const date = value => new Intl.DateTimeFormat('en-US',{month:'long',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date(`${value}T00:00:00Z`));
 const label = post => post.status === 'sample' ? 'Sample article · Preview only' : post.status === 'draft' ? 'Draft · Preview only' : post.scheduled ? 'Scheduled · Preview only' : '';
+const readingTime = post => `<span class="reading-time">${post.readingMinutes} min read</span>`;
 function shell(title, description, body, prefix, preview) {
   return `<!DOCTYPE html>\n${marker}\n<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${escape(title)} ,  Venture Branding</title><meta name="description" content="${escape(description)}">${preview ? '<meta name="robots" content="noindex,nofollow">' : ''}
@@ -62,11 +79,11 @@ function card(post, prefix) {
   const href = `${prefix}blog/posts/${post.slug}.html`;
   const search = [post.title,post.description,post.author,post.category].join(' ').toLocaleLowerCase();
   return `<article class="card" data-search="${escape(search)}">${post.image ? `<img class="card-image" src="${prefix}${escape(post.image)}" alt="${escape(post.imageAlt)}" loading="lazy">` : `<div class="card-motif" aria-hidden="true"><img src="${prefix}images/09.png" alt=""></div>`}
-<div class="card-copy">${label(post) ? `<span class="badge">${label(post)}</span>` : ''}<div class="meta"><span>${escape(post.category)}</span><time datetime="${post.date}">${date(post.date)}</time></div><h3><a href="${href}">${escape(post.title)}</a></h3><p>${escape(post.description)}</p><span class="card-author">By ${escape(post.author)}</span><a class="read" href="${href}" aria-label="Read ${escape(post.title)}">Read article <span aria-hidden="true">→</span></a></div></article>`;
+<div class="card-copy">${label(post) ? `<span class="badge">${label(post)}</span>` : ''}<div class="meta"><span>${escape(post.category)}</span>${readingTime(post)}</div><h3><a href="${href}">${escape(post.title)}</a></h3><p>${escape(post.description)}</p><span class="card-author">By ${escape(post.author)}</span><a class="read" href="${href}" aria-label="Read ${escape(post.title)}">Read article <span aria-hidden="true">→</span></a></div></article>`;
 }
 function archiveCard(post, featured = false) {
   const cover = post.image ? `<img class="archive-card__image" src="${escape(post.image)}" alt="${escape(post.imageAlt)}" loading="lazy">` : '';
-  return `<article class="archive-card${featured ? ' featured-card' : ''}"${featured ? '' : ` data-category="${escape(post.category)}" data-search="${escape([post.title,post.description,post.category,post.author].join(' ').toLocaleLowerCase())}"`}>${cover}${label(post) ? `<span class="badge">${label(post)}</span>` : ''}<div class="meta"><span>${escape(post.category)}</span><time datetime="${post.date}">${date(post.date)}</time></div><h3><a href="blog/posts/${post.slug}.html">${escape(post.title)}</a></h3><p>${escape(post.description)}</p><a class="read" href="blog/posts/${post.slug}.html">Read article <span aria-hidden="true">↗</span></a></article>`;
+  return `<article class="archive-card${featured ? ' featured-card' : ''}"${featured ? '' : ` data-category="${escape(post.category)}" data-search="${escape([post.title,post.description,post.category,post.author].join(' ').toLocaleLowerCase())}"`}>${cover}${label(post) ? `<span class="badge">${label(post)}</span>` : ''}<div class="meta"><span>${escape(post.category)}</span>${readingTime(post)}</div><h3><a href="blog/posts/${post.slug}.html">${escape(post.title)}</a></h3><p>${escape(post.description)}</p><a class="read" href="blog/posts/${post.slug}.html">Read article <span aria-hidden="true">↗</span></a></article>`;
 }
 function listing(posts, preview) {
   const categories = [...new Set(posts.map(post => post.category))];
@@ -85,7 +102,7 @@ ${posts.length ? `<div class="cards archive-grid" id="article-list">${posts.map(
 function article(post, posts, preview) {
   const prefix = '../../';
   const related = posts.filter(item => item.slug !== post.slug).sort((a,b) => Number(b.category===post.category)-Number(a.category===post.category)).slice(0,3);
-  const body = `<article><header class="shell article-top"><a class="back" href="../../blog.html">← Back to the blog</a><p class="eyebrow">${escape(post.category)}</p>${label(post) ? `<span class="badge">${label(post)}</span>` : ''}<h1>${escape(post.title)}</h1><p class="description">${escape(post.description)}</p><div class="byline"><span>By ${escape(post.author)}</span><time datetime="${post.date}">${date(post.date)}</time></div></header>
+  const body = `<article><header class="shell article-top"><a class="back" href="../../blog.html">← Back to the blog</a><p class="eyebrow">${escape(post.category)}</p>${label(post) ? `<span class="badge">${label(post)}</span>` : ''}<h1>${escape(post.title)}</h1><p class="description">${escape(post.description)}</p><div class="byline"><span>By ${escape(post.author)}</span>${readingTime(post)}</div></header>
 <div class="article-paper"><div class="article-body">${post.status === 'sample' ? '<p class="reading-note"><strong>Layout sample.</strong> This article is for reviewing the blog design. It is not published content or legal guidance.</p>' : ''}${post.image ? `<img class="article-cover" src="${prefix}${escape(post.image)}" alt="${escape(post.imageAlt)}">` : ''}${post.html}<div class="article-end"><a href="../../blog.html">← All articles</a><a href="../../v8.html#services">Explore Services →</a></div></div></div></article>
 ${related.length ? `<section class="shell related" aria-labelledby="related-title"><h2 id="related-title">Related reading</h2><div class="cards">${related.map(item => card(item,prefix)).join('')}</div></section>` : ''}`;
   return shell(post.title,post.description,body,prefix,preview);

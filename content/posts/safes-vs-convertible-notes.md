@@ -3,7 +3,7 @@ title: "SAFEs vs. Convertible Notes: What Founders Should Know Before Raising Ca
 description: "Compare SAFEs and convertible notes, including conversion, interest, maturity, repayment obligations, and founder dilution."
 date: "2026-10-16"
 author: "Venture Branding"
-category: "Founders"
+category: "For Founders"
 status: "published"
 image: images/blog/safes-vs-convertible-notes.jpg
 imageAlt: Two documents side by side with the headings SAFE and Convertible Note.
@@ -38,12 +38,12 @@ The principal differences can be summarized as follows:
 | Maturity date | None under standard SAFEs | Generally included |
 | Equity conversion | Upon specified triggering events | Upon specified triggering events |
 | Valuation cap or discount | May be included | May be included |
-| Ordinary repayment obligation | No loan repayment obligation, although specified event payments may apply | Subject to the note's repayment terms |
-| Investor's position before conversion | Contractual rights under the SAFE | Creditor rights under the note |
+| Ordinary repayment obligation | No loan repayment obligation, although specified event payments may apply | Subject to the note’s repayment terms |
+| Investor’s position before conversion | Contractual rights under the SAFE | Creditor rights under the note |
 
-The conversion triggers may also differ. Y Combinator's standard post-money SAFE converts automatically upon a priced equity financing without requiring the company to raise a minimum amount. Convertible notes commonly require a *qualified financing*, meaning a financing that satisfies a negotiated minimum fundraising threshold.
+The conversion triggers may also differ. Y Combinator’s standard post-money SAFE converts automatically upon a priced equity financing without requiring the company to raise a minimum amount. Convertible notes commonly require a *qualified financing*, meaning a financing that satisfies a negotiated minimum fundraising threshold.
 
-Neither instrument ordinarily results in an immediate issuance of stock. Instead, the investor's eventual ownership is determined under the applicable conversion provisions.
+Neither instrument ordinarily results in an immediate issuance of stock. Instead, the investor’s eventual ownership is determined under the applicable conversion provisions.
 
 ## 2. What Obligations Does Each Instrument Create?
 
@@ -65,7 +65,7 @@ However, the absence of an ordinary loan repayment obligation does not mean the 
 
 A convertible note generally requires the company to account for three additional obligations.
 
-**Principal.** The company owes the amount borrowed, subject to the note's conversion and repayment provisions.
+**Principal.** The company owes the amount borrowed, subject to the note’s conversion and repayment provisions.
 
 **Interest.** Interest ordinarily accrues while the note remains outstanding. Depending on the agreement, accrued interest may be paid or converted into additional equity alongside the principal.
 
@@ -91,7 +91,7 @@ Assume the company issues a standard post-money SAFE for $300,000.
 
 Eighteen months pass, but the company has not completed a priced equity financing.
 
-The SAFE does not become due merely because the founders' anticipated financing date has passed. It generally remains outstanding until an event covered by the agreement occurs.
+The SAFE does not become due merely because the founders’ anticipated financing date has passed. It generally remains outstanding until an event covered by the agreement occurs.
 
 The company may continue operating without facing a contractual maturity deadline under that SAFE.
 
@@ -107,15 +107,15 @@ If the note requires repayment at maturity, the company may face a $327,000 paym
 
 That obligation may be difficult to satisfy if the company has already used the borrowed funds to operate its business.
 
-Depending on the note's terms, the company and its investors might negotiate an extension, convert the debt into equity, or pursue another agreed solution.
+Depending on the note’s terms, the company and its investors might negotiate an extension, convert the debt into equity, or pursue another agreed solution.
 
-If the company fails to satisfy an obligation that has become due, the note's default provisions and applicable law determine the creditor's available remedies.
+If the company fails to satisfy an obligation that has become due, the note’s default provisions and applicable law determine the creditor’s available remedies.
 
 ### Why the Difference Matters
 
 A SAFE generally removes the maturity-related repayment pressure associated with convertible debt.
 
-A convertible note gives the investor creditor rights that may provide additional protection, but those rights can complicate a company's position if its fundraising plans change.
+A convertible note gives the investor creditor rights that may provide additional protection, but those rights can complicate a company’s position if its fundraising plans change.
 
 That does not make convertible notes inherently unsuitable. Their debt features may be appropriate where the parties anticipate a near-term financing or negotiate other protections that justify the structure.
 
@@ -125,13 +125,13 @@ The important question is whether the company understands the obligations that c
 
 An acquisition presents another important distinction.
 
-Under Y Combinator's standard valuation-cap SAFE, an acquisition before equity conversion generally entitles the holder to the greater of its original investment amount or the proceeds attributable to a specified as-converted interest, subject to the agreement and available proceeds.
+Under Y Combinator’s standard valuation-cap SAFE, an acquisition before equity conversion generally entitles the holder to the greater of its original investment amount or the proceeds attributable to a specified as-converted interest, subject to the agreement and available proceeds.
 
 Those payment rights generally rank behind outstanding debt and alongside the relevant preferred stock entitlements.
 
 A convertible note may instead provide for repayment of outstanding principal and interest, conversion into equity, or another negotiated payment upon a change of control.
 
-The note's status as debt can also affect its priority relative to equity interests.
+The note’s status as debt can also affect its priority relative to equity interests.
 
 The actual outcome depends on the governing instruments, transaction terms, and available assets. Neither instrument guarantees that an investor will recover the full amount invested.
 
@@ -145,15 +145,15 @@ Two important provisions are valuation caps and discounts.
 
 ### Valuation Caps
 
-A *valuation cap* establishes a ceiling on the valuation used to calculate an investor's conversion price under the contractual formula.
+A *valuation cap* establishes a ceiling on the valuation used to calculate an investor’s conversion price under the contractual formula.
 
 Suppose a founder raises $300,000 through a SAFE with a $6 million post-money valuation cap.
 
 If cap-based conversion applies under the standard post-money SAFE framework, the investment generally corresponds to approximately 5% of the relevant capitalization immediately before the new-money priced financing.
 
-This percentage can differ if the priced round's valuation is at or near the cap. The subsequent financing and any new or increased option pool established in connection with that round can also dilute the SAFE holder's resulting ownership.
+This percentage can differ if the priced round’s valuation is at or near the cap. The subsequent financing and any new or increased option pool established in connection with that round can also dilute the SAFE holder’s resulting ownership.
 
-A valuation cap does not necessarily establish the company's current fair market value or the valuation that future investors will accept.
+A valuation cap does not necessarily establish the company’s current fair market value or the valuation that future investors will accept.
 
 For convertible notes, valuation caps serve a similar pricing purpose, but capitalization definitions and conversion formulas may differ. A note with a $6 million cap should not automatically be assumed to produce the same ownership percentage as a $6 million post-money SAFE.
 
@@ -183,11 +183,11 @@ By comparison, a $300,000 investment converting at the same price without accrue
 
 The difference arises because interest increases the amount converted into equity.
 
-Actual calculations depend on the note's terms, including whether interest converts and how the conversion price is determined.
+Actual calculations depend on the note’s terms, including whether interest converts and how the conversion price is determined.
 
 ### Why Post-Money SAFEs Matter
 
-Y Combinator's standard post-money valuation-cap SAFE was designed to provide greater visibility into ownership sold through SAFE financings.
+Y Combinator’s standard post-money valuation-cap SAFE was designed to provide greater visibility into ownership sold through SAFE financings.
 
 For example, a founder who raises $600,000 through post-money valuation-cap SAFEs, all with $6 million caps, generally sells approximately 10% of the relevant capitalization before the next new-money priced round, assuming cap-based conversion under the standard structure.
 
@@ -195,23 +195,23 @@ This can help founders understand the cumulative effect of multiple SAFE investm
 
 However, different caps, discounts, convertible notes, and future financing terms can complicate the calculations.
 
-A company's capitalization table should therefore account for outstanding instruments and model their expected conversion before additional capital is raised.
+A company’s capitalization table should therefore account for outstanding instruments and model their expected conversion before additional capital is raised.
 
 ## 5. What Should Founders Understand Before Signing?
 
 The choice between a SAFE and a convertible note should begin with the actual terms of the proposed financing.
 
-For either instrument, counsel should evaluate the conversion provisions, valuation cap or discount, applicable definitions, and the investor's rights if the company is sold before conversion.
+For either instrument, counsel should evaluate the conversion provisions, valuation cap or discount, applicable definitions, and the investor’s rights if the company is sold before conversion.
 
 For convertible notes, particular attention should be given to the maturity date, interest provisions, repayment terms, default remedies, and any negotiated security interests or guarantees.
 
 For SAFEs, the review should address the applicable triggering events, liquidity and dissolution provisions, and any additional rights granted through side letters.
 
-Y Combinator's standard U.S. SAFE documentation includes separate versions providing for a valuation cap, a discount, or a most-favored-nation arrangement. Investors may also negotiate additional contractual rights, such as the opportunity to participate in a future financing.
+Y Combinator’s standard U.S. SAFE documentation includes separate versions providing for a valuation cap, a discount, or a most-favored-nation arrangement. Investors may also negotiate additional contractual rights, such as the opportunity to participate in a future financing.
 
 Both structures require appropriate corporate authorization and compliance with applicable securities laws. Using a widely available form does not eliminate those requirements.
 
-Founders should also understand the cumulative effect of their company's financing obligations.
+Founders should also understand the cumulative effect of their company’s financing obligations.
 
 Several instruments issued at different times, with different caps, discounts, and conversion provisions, can produce substantial dilution and complicate a later financing.
 

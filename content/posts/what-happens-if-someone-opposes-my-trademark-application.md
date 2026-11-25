@@ -13,7 +13,7 @@ After months of waiting, your trademark application has finally been approved by
 
 But approval for publication does not mean your trademark has been registered.
 
-Before most marks can be registered on the Principal Register, they must be published in the USPTO's *Trademark Official Gazette* . Publication gives third parties an opportunity to challenge the proposed registration.
+Before most marks can be registered on the Principal Register, they must be published in the USPTO’s *Trademark Official Gazette* . Publication gives third parties an opportunity to challenge the proposed registration.
 
 If someone believes your trademark should not be registered, they may initiate a legal proceeding known as a *trademark opposition* .
 
@@ -25,7 +25,7 @@ When an examining attorney approves an application for publication, the proposed
 
 Publication begins a **30-day opposition period** during which eligible third parties may challenge the application.
 
-This process provides an opportunity for objections that may not have arisen during the USPTO's examination.
+This process provides an opportunity for objections that may not have arisen during the USPTO’s examination.
 
 For example, an examining attorney generally searches federal trademark records for conflicting marks. However, a business may possess earlier common-law trademark rights that do not appear in those records.
 
@@ -35,7 +35,7 @@ Publication is not registration. The application must still satisfy any remainin
 
 ## What Is a Trademark Opposition?
 
-A trademark opposition is a formal proceeding in which a third party challenges another party's application for federal trademark registration.
+A trademark opposition is a formal proceeding in which a third party challenges another party’s application for federal trademark registration.
 
 Oppositions are heard by the *Trademark Trial and Appeal Board* (TTAB), an administrative tribunal within the USPTO.
 
@@ -71,7 +71,7 @@ Other potential grounds include:
 
 Each claim requires legal and factual support.
 
-The filing of an opposition does not establish that the allegations are correct or that the applicant's mark is unregistrable.
+The filing of an opposition does not establish that the allegations are correct or that the applicant’s mark is unregistrable.
 
 ## How Long Does Someone Have to Oppose a Trademark?
 
@@ -81,7 +81,7 @@ During that period, a potential opposer may file a formal Notice of Opposition o
 
 An initial 30-day extension is generally available upon timely request without a government filing fee.
 
-Longer extensions may be available, but they are subject to additional requirements, including applicable fees, a showing of good cause, the applicant's consent, or extraordinary circumstances.
+Longer extensions may be available, but they are subject to additional requirements, including applicable fees, a showing of good cause, the applicant’s consent, or extraordinary circumstances.
 
 Under USPTO rules, the opposition deadline cannot be extended beyond 180 days from the original publication date.
 
@@ -101,11 +101,11 @@ The proceeding resembles civil litigation, involving pleadings, deadlines, disco
 
 The opposing party files a document identifying the application being challenged and stating the grounds for opposition.
 
-For example, an opposer alleging likelihood of confusion may claim earlier trademark rights and explain why registration of the applicant's mark would conflict with those rights.
+For example, an opposer alleging likelihood of confusion may claim earlier trademark rights and explain why registration of the applicant’s mark would conflict with those rights.
 
 The TTAB institutes the proceeding and establishes a schedule for the parties.
 
-### 2. The Applicant's Answer
+### 2. The Applicant’s Answer
 
 The applicant ordinarily responds through a formal pleading called an *answer* , admitting or denying the relevant allegations and asserting any appropriate defenses.
 
@@ -121,7 +121,7 @@ If the proceeding continues, the parties may exchange information and documents 
 
 Depending on the issues, the evidence may concern trademark priority, commercial use, the relationship between goods or services, consumer perceptions, or other relevant matters.
 
-The parties may then submit evidence and legal arguments during the TTAB's trial and briefing stages.
+The parties may then submit evidence and legal arguments during the TTAB’s trial and briefing stages.
 
 Unlike a conventional courtroom trial, TTAB proceedings are generally decided on a written evidentiary record, although an oral hearing may be requested.
 
@@ -139,7 +139,7 @@ In other cases, the parties may negotiate a coexistence agreement addressing the
 
 Some disputes result in an applicant withdrawing its application or an opposer withdrawing its challenge.
 
-Substantive amendments to applications involved in opposition proceedings generally require TTAB approval, together with the other party's consent or an appropriate Board ruling.
+Substantive amendments to applications involved in opposition proceedings generally require TTAB approval, together with the other party’s consent or an appropriate Board ruling.
 
 Settlement is not guaranteed, and an agreement between the parties does not necessarily resolve every potential registration issue.
 
@@ -147,7 +147,7 @@ Because oppositions can involve discovery, motions, and other litigation procedu
 
 ## What Does the TTAB Actually Decide?
 
-The TTAB's authority is narrower than that of a court hearing a trademark infringement lawsuit.
+The TTAB’s authority is narrower than that of a court hearing a trademark infringement lawsuit.
 
 In an opposition, the TTAB determines whether the challenged mark is entitled to federal registration.
 
@@ -161,7 +161,7 @@ Those remedies generally require an appropriate court proceeding. Accordingly, f
 
 ## What Happens If Nobody Opposes the Application?
 
-If the opposition period expires without a challenge, or any opposition is resolved in the applicant's favor, the application generally proceeds to the next stage.
+If the opposition period expires without a challenge, or any opposition is resolved in the applicant’s favor, the application generally proceeds to the next stage.
 
 What happens next depends on the filing basis.
 

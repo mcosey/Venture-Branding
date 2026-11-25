@@ -1,5 +1,5 @@
 ---
-title: "Who Should Own My Startup's Trademark?"
+title: "Who Should Own My Startup’s Trademark?"
 description: "Understand trademark ownership, the correct applicant, and how founder and company rights affect filing, assignments, and business transactions."
 date: "2026-10-16"
 author: "Venture Branding"
@@ -19,7 +19,7 @@ The distinction matters because trademark ownership affects more than registrati
 
 Although individuals and business entities can both own trademarks, determining the appropriate owner requires examining how the rights developed and how the business operates.
 
-## Who Actually Owns a Startup's Trademark?
+## Who Actually Owns a Startup’s Trademark?
 
 Trademark ownership is generally tied to the rights and goodwill developed through use of a mark to identify the source of goods or services.
 
@@ -35,7 +35,7 @@ The answer cannot be determined solely from those facts.
 
 Selecting a name, purchasing a domain, or commissioning a logo does not necessarily establish trademark ownership. The analysis concerns how rights in the mark developed, which party owns those rights, and the relationship between the founder and the business.
 
-If commercial use has not yet begun, the analysis of an intent-to-use application also involves identifying which party possesses the required bona fide intention to use the mark in commerce. A founder's position as CEO or majority shareholder does not automatically establish personal ownership of the company's trademarks.
+If commercial use has not yet begun, the analysis of an intent-to-use application also involves identifying which party possesses the required bona fide intention to use the mark in commerce. A founder’s position as CEO or majority shareholder does not automatically establish personal ownership of the company’s trademarks.
 
 ## Can a Founder Personally Own a Trademark?
 
@@ -63,9 +63,9 @@ Depending on the circumstances, the company may own the resulting trademark righ
 
 Company ownership also has broader business implications.
 
-A trademark may form part of a company's intellectual-property portfolio, alongside other business assets. Ownership can become relevant during investor due diligence, acquisition negotiations, licensing arrangements, and corporate reorganizations.
+A trademark may form part of a company’s intellectual-property portfolio, alongside other business assets. Ownership can become relevant during investor due diligence, acquisition negotiations, licensing arrangements, and corporate reorganizations.
 
-For example, an investor who purchases shares in TempoGarden, Inc. does not ordinarily become the personal owner of the company's trademarks. Those assets generally remain with the corporation unless a transaction or other legal arrangement provides otherwise. Neither individual nor company ownership is universally required. The appropriate ownership arrangement depends on the underlying rights and legal relationships.
+For example, an investor who purchases shares in TempoGarden, Inc. does not ordinarily become the personal owner of the company’s trademarks. Those assets generally remain with the corporation unless a transaction or other legal arrangement provides otherwise. Neither individual nor company ownership is universally required. The appropriate ownership arrangement depends on the underlying rights and legal relationships.
 
 ## Why Does the Correct Owner Matter When Filing?
 
@@ -91,17 +91,17 @@ For example, if TempoGarden is still developing its software, an attorney may ne
 
 ### Can an Ownership Mistake Be Corrected?
 
-Some mistakes in an applicant's name or legal-entity information can be corrected.
+Some mistakes in an applicant’s name or legal-entity information can be corrected.
 
 However, the USPTO distinguishes between correcting how the proper applicant was identified and substituting a different party that should have filed the application.
 
-An application filed by the wrong party may be void and generally cannot be rescued simply by changing the applicant's name or recording a later assignment.
+An application filed by the wrong party may be void and generally cannot be rescued simply by changing the applicant’s name or recording a later assignment.
 
-This makes the applicant's identity an important legal consideration at the time of filing.
+This makes the applicant’s identity an important legal consideration at the time of filing.
 
 ## What Happens When a Founder Incorporates After Developing a Brand?
 
-Suppose TempoGarden's founder begins selling software under that name as a sole proprietor. Later, the founder forms TempoGarden, Inc., which begins operating the business.
+Suppose TempoGarden’s founder begins selling software under that name as a sole proprietor. Later, the founder forms TempoGarden, Inc., which begins operating the business.
 
 If the founder previously established personal trademark rights, incorporating the business does not necessarily transfer those rights to the corporation.
 
@@ -117,7 +117,7 @@ A statutory exception applies to qualifying transfers to a successor to an ongoi
 
 These rules can become relevant when founders form companies or reorganize their businesses while trademark applications remain pending.
 
-The legal effect of a transfer depends on the rights involved, the application's status, and the nature of the transaction.
+The legal effect of a transfer depends on the rights involved, the application’s status, and the nature of the transaction.
 
 ## What Happens If Trademark Ownership Is Unclear?
 
@@ -129,7 +129,7 @@ During an acquisition, the buyer discovers that the federal trademark registrati
 
 That discovery may raise questions about whether the company owns the trademark, whether a valid assignment occurred, or whether the business has another legal basis for using the mark.
 
-Similar issues can arise when a founder departs, a company licenses its brand, or a business attempts to enforce its trademark rights. The answers may depend on the company's commercial history, its agreements, and applicable law.
+Similar issues can arise when a founder departs, a company licenses its brand, or a business attempts to enforce its trademark rights. The answers may depend on the company’s commercial history, its agreements, and applicable law.
 
 USPTO ownership records can help document transfers, but they do not necessarily resolve every ownership question.
 
@@ -149,13 +149,13 @@ Under Section 5 of the Lanham Act, qualifying use by a related company can benef
 
 However, common ownership or the existence of a licensing agreement does not automatically establish that the legal requirements are satisfied.
 
-An attorney evaluating such an arrangement may consider which party exercises the requisite control and whether the parties' actual commercial relationship supports the claimed ownership.
+An attorney evaluating such an arrangement may consider which party exercises the requisite control and whether the parties’ actual commercial relationship supports the claimed ownership.
 
 ## How Does a Trademark Attorney Determine Ownership?
 
-Trademark ownership analysis often involves reviewing both legal documentation and the business's commercial history.
+Trademark ownership analysis often involves reviewing both legal documentation and the business’s commercial history.
 
-An attorney may examine the company's formation records, the history of the mark's use, founder agreements, assignments, licensing arrangements, and existing trademark applications or registrations.
+An attorney may examine the company’s formation records, the history of the mark’s use, founder agreements, assignments, licensing arrangements, and existing trademark applications or registrations.
 
 The analysis may also involve determining which party controls the nature and quality of the goods or services offered under the mark. Where a company has undergone ownership changes or restructuring, the attorney may evaluate the *chain of title* , meaning the history of legally effective ownership transfers.
 
@@ -169,8 +169,8 @@ Startup trademarks can belong to individuals or business entities. The appropria
 
 A founder does not necessarily own a trademark simply because the founder created the name. Likewise, forming a corporation does not automatically transfer previously established trademark rights to that corporation.
 
-These distinctions matter when preparing federal applications, transferring intellectual property, raising capital, or changing a company's ownership structure.
+These distinctions matter when preparing federal applications, transferring intellectual property, raising capital, or changing a company’s ownership structure.
 
-Understanding how trademark ownership is determined helps explain why identifying the legally appropriate owner is an important part of protecting a startup's brand.
+Understanding how trademark ownership is determined helps explain why identifying the legally appropriate owner is an important part of protecting a startup’s brand.
 
 *This article provides general educational information about U.S. trademark law. It does not* *constitute legal advice or establish an attorney-client relationship. Trademark ownership,* *assignments, and filing requirements depend on the particular facts and applicable law.*

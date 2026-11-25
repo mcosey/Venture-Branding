@@ -3,25 +3,25 @@ title: "Understanding Startup Capitalization: Authorized Stock, Outstanding Shar
 description: "Understand authorized shares, outstanding stock, option pools, and fully diluted ownership in startup capitalization."
 date: "2026-10-13"
 author: "Venture Branding"
-category: "Venture Law"
+category: "Advanced Venture Law"
 status: "published"
 image: "images/blog/understanding-startup-capitalization.jpg"
 imageAlt: "A divided drawer holds stacks of maple, coral, and navy counters, with one compartment empty."
 ---
 
-A corporation's capitalization describes its equity ownership structure, including outstanding shares and rights to acquire shares in the future. Understanding capitalization is essential to emerging companies and venture capital (ECVC) practice because it determines how ownership is allocated, how financing transactions affect existing stockholders, and whether a corporation has sufficient authorized shares to issue additional securities.
+A corporation’s capitalization describes its equity ownership structure, including outstanding shares and rights to acquire shares in the future. Understanding capitalization is essential to emerging companies and venture capital (ECVC) practice because it determines how ownership is allocated, how financing transactions affect existing stockholders, and whether a corporation has sufficient authorized shares to issue additional securities.
 
 Although capitalization tables often express ownership as percentages, the underlying analysis requires distinguishing between issued shares, potential future issuances, and the contractual assumptions used to calculate ownership.
 
 ## 1. Understanding Corporate Capitalization
 
-A corporation's capitalization includes its classes and series of stock, outstanding shares, and securities or contractual rights that may result in additional share issuances.
+A corporation’s capitalization includes its classes and series of stock, outstanding shares, and securities or contractual rights that may result in additional share issuances.
 
 This information is commonly summarized in a *capitalization table*, or *cap table*, identifying stockholders, equity awards, convertible instruments, and other interests affecting ownership.
 
-A cap table differs from the corporation's *stock ledger*. Under Delaware law, the stock ledger is the record of shares issued by the corporation and the persons registered as their owners. A cap table provides a broader financial and transactional picture, often including securities that have not yet been issued.
+A cap table differs from the corporation’s *stock ledger*. Under Delaware law, the stock ledger is the record of shares issued by the corporation and the persons registered as their owners. A cap table provides a broader financial and transactional picture, often including securities that have not yet been issued.
 
-The distinction matters because a company's existing stockholders may own all outstanding shares while representing less than 100% of its fully diluted capitalization once options and other potential issuances are considered.
+The distinction matters because a company’s existing stockholders may own all outstanding shares while representing less than 100% of its fully diluted capitalization once options and other potential issuances are considered.
 
 ## 2. Authorized, Issued, and Outstanding Shares
 
@@ -47,13 +47,13 @@ Each founder owns 50% of the outstanding shares. The remaining 2 million authori
 
 Under the Delaware General Corporation Law (DGCL), Section 102 governs the certificate of incorporation, including its capitalization provisions. Section 151 authorizes classes and series of stock, while Sections 152 and 161 address stock issuance authority.
 
-The board generally authorizes stock issuances in accordance with the DGCL and the corporation's governing documents. Having sufficient authorized shares does not, by itself, authorize a particular issuance.
+The board generally authorizes stock issuances in accordance with the DGCL and the corporation’s governing documents. Having sufficient authorized shares does not, by itself, authorize a particular issuance.
 
 ## 3. Common Stock, Preferred Stock, and Convertible Securities
 
 Startups frequently begin with common stock issued to their founders. Their capitalization becomes more complex as they issue equity awards and raise outside capital.
 
-**Common stock** ordinarily represents the corporation's residual equity ownership. Founders and employees frequently receive common stock, although its voting and economic rights depend on the governing documents.
+**Common stock** ordinarily represents the corporation’s residual equity ownership. Founders and employees frequently receive common stock, although its voting and economic rights depend on the governing documents.
 
 **Preferred stock** carries rights and preferences established under the certificate of incorporation. Venture investors commonly receive preferred stock with liquidation preferences, conversion rights, and protective provisions.
 
@@ -96,7 +96,7 @@ Attorneys must distinguish between shares underlying outstanding awards, shares 
 
 ## 5. Outstanding Ownership vs. Fully Diluted Ownership
 
-*Outstanding ownership* measures a stockholder's percentage of the corporation's currently outstanding shares. *Fully diluted ownership* uses a broader denominator that includes specified potential share issuances.
+*Outstanding ownership* measures a stockholder’s percentage of the corporation’s currently outstanding shares. *Fully diluted ownership* uses a broader denominator that includes specified potential share issuances.
 
 A simplified calculation is:
 
@@ -119,7 +119,7 @@ Using the hypothetical corporation:
 | Unallocated option pool | 0% | 20% |
 | **Total** | **100%** | **100%** |
 
-The founders each own 50% of the corporation's outstanding shares but 40% on the illustrated fully diluted basis.
+The founders each own 50% of the corporation’s outstanding shares but 40% on the illustrated fully diluted basis.
 
 No additional shares have been issued. The percentages differ because the fully diluted denominator includes 2 million reserved shares.
 
@@ -127,9 +127,9 @@ A stated ownership percentage is therefore incomplete without identifying the ca
 
 ## 6. How Venture Financing Changes Capitalization
 
-A priced equity financing increases a corporation's outstanding shares by issuing stock to investors.
+A priced equity financing increases a corporation’s outstanding shares by issuing stock to investors.
 
-The transaction commonly establishes a negotiated *pre-money valuation*, representing the company's value before the investment, and a *post-money valuation*, including the new capital.
+The transaction commonly establishes a negotiated *pre-money valuation*, representing the company’s value before the investment, and a *post-money valuation*, including the new capital.
 
 **Post-Money Valuation = Pre-Money Valuation + New Investment**
 
@@ -151,7 +151,7 @@ $5,000,000 ÷ $1.50 = approximately **3,333,333 shares**
 
 ### Calculating Post-Financing Ownership
 
-The corporation's fully diluted capitalization increases to approximately 13,333,333 shares.
+The corporation’s fully diluted capitalization increases to approximately 13,333,333 shares.
 
 | **Holder or category** | **Before financing** | **After financing** |
 | --- | --- | --- |
@@ -163,39 +163,39 @@ The corporation's fully diluted capitalization increases to approximately 13,333
 
 The new investors acquire approximately 25% of the post-financing fully diluted capitalization, consistent with a $5 million investment at a $20 million post-money valuation.
 
-Each founder's fully diluted ownership decreases from 40% to approximately 30%. This reduction is known as *dilution*. The founders retain their original share counts, but those shares represent a smaller percentage of the expanded capitalization.
+Each founder’s fully diluted ownership decreases from 40% to approximately 30%. This reduction is known as *dilution*. The founders retain their original share counts, but those shares represent a smaller percentage of the expanded capitalization.
 
 Because the corporation initially authorized only common stock, issuing Series A preferred stock would require an appropriate charter amendment. Counsel would also need to ensure sufficient authorized common stock is available for conversion of the preferred shares and obtain the necessary corporate approvals.
 
 ### Pre-Money Option Pool Increases
 
-Investors sometimes require an expansion of the company's equity incentive pool as part of a financing.
+Investors sometimes require an expansion of the company’s equity incentive pool as part of a financing.
 
 If the increase is included in the pre-money capitalization used to calculate the purchase price, the resulting dilution generally falls on the existing stockholders rather than the new investors.
 
 Consequently, two financings with the same headline valuation may produce different ownership outcomes depending on the negotiated option pool.
 
-The treatment of reserved shares should be reviewed carefully when evaluating a financing's economics.
+The treatment of reserved shares should be reviewed carefully when evaluating a financing’s economics.
 
 ## 7. How SAFEs and Convertible Notes Affect Capitalization
 
 SAFEs and convertible notes ordinarily do not represent issued shares before conversion. Their conversion during a priced financing can nevertheless materially change the capitalization table.
 
-The shares issuable depend on the instruments' valuation caps, discounts, capitalization definitions, and conversion provisions. Convertible notes may also provide for conversion of accrued interest.
+The shares issuable depend on the instruments’ valuation caps, discounts, capitalization definitions, and conversion provisions. Convertible notes may also provide for conversion of accrued interest.
 
 A *pro forma capitalization table* may reflect these anticipated issuances even though the shares are not yet outstanding.
 
-Where multiple instruments convert simultaneously, their calculations can be interdependent. Counsel must apply each instrument's contractual definitions and reconcile the resulting shares with the financing capitalization model.
+Where multiple instruments convert simultaneously, their calculations can be interdependent. Counsel must apply each instrument’s contractual definitions and reconcile the resulting shares with the financing capitalization model.
 
-For example, a company's outstanding stockholders may appear to own 100% of its shares immediately before a Series A. Once outstanding SAFEs convert, those same stockholders may represent a substantially smaller percentage of its capitalization before the Series A investors' new money is included.
+For example, a company’s outstanding stockholders may appear to own 100% of its shares immediately before a Series A. Once outstanding SAFEs convert, those same stockholders may represent a substantially smaller percentage of its capitalization before the Series A investors’ new money is included.
 
 ## 8. Capitalization Representations in Venture Financing Agreements
 
 Capitalization is a significant subject of representations and warranties in venture financing agreements.
 
-The National Venture Capital Association's model stock purchase agreement contains capitalization representations concerning authorized and outstanding stock, equity awards, and other securities or rights affecting ownership.
+The National Venture Capital Association’s model stock purchase agreement contains capitalization representations concerning authorized and outstanding stock, equity awards, and other securities or rights affecting ownership.
 
-These representations help investors assess the company's capitalization and identify outstanding obligations to issue additional securities.
+These representations help investors assess the company’s capitalization and identify outstanding obligations to issue additional securities.
 
 Preparing or reviewing them requires examining the underlying corporate records, including:
 
@@ -211,17 +211,17 @@ Preparing or reviewing them requires examining the underlying corporate records,
 
 - Outstanding SAFEs, convertible notes, warrants, and other equity rights.
 
-Counsel should confirm that the company's capitalization records accurately reflect securities issued, reserved, or subject to contractual rights and that proposed issuances have the required corporate authorization.
+Counsel should confirm that the company’s capitalization records accurately reflect securities issued, reserved, or subject to contractual rights and that proposed issuances have the required corporate authorization.
 
 ### Capitalization Schedules and Disclosure Schedules
 
 Financing agreements may include capitalization schedules identifying outstanding securities and disclosure schedules qualifying particular representations.
 
-A capitalization schedule identifies the relevant securities and share counts. A disclosure schedule may address exceptions or qualifications to the company's contractual representations.
+A capitalization schedule identifies the relevant securities and share counts. A disclosure schedule may address exceptions or qualifications to the company’s contractual representations.
 
 For example, a cap table might accurately report 100,000 outstanding options while the underlying corporate records reveal that certain grants lacked appropriate authorization.
 
-That discrepancy raises questions concerning the validity of the grants and the accuracy of the company's capitalization representations.
+That discrepancy raises questions concerning the validity of the grants and the accuracy of the company’s capitalization representations.
 
 Accordingly, capitalization diligence requires both numerical reconciliation and review of the legal documentation supporting the reported securities.
 
@@ -231,7 +231,7 @@ Several recurring issues illustrate the importance of accurate capitalization re
 
 **Unauthorized issuances:** Shares or equity awards may appear in the capitalization table without adequate corporate authorization. Depending on the circumstances, corrective action or statutory ratification may require consideration.
 
-**Incomplete equity records:** Option exercises, cancellations, stock repurchases, and other changes may not be accurately reflected in the company's records.
+**Incomplete equity records:** Option exercises, cancellations, stock repurchases, and other changes may not be accurately reflected in the company’s records.
 
 **Insufficient authorized shares:** A proposed financing or equity issuance may require a charter amendment to authorize additional shares or a new class or series.
 

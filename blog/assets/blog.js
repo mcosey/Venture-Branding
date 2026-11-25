@@ -10,7 +10,9 @@ if (menu && navigation) {
 }
 const search = document.querySelector('#blog-search');
 if (search) {
-  const cards = [...document.querySelectorAll('#article-list [data-search]')];
+  const normalizeSearch = text => text.toLocaleLowerCase().replace(/[‘’]/g, "'").replace(/[“”]/g, '"');
+  const cards = [...document.querySelectorAll('#article-list [data-search]')]
+    .map(card => ({card, searchable:normalizeSearch(card.dataset.search)}));
   const buttons = [...document.querySelectorAll('[data-topic]')];
   const count = document.querySelector('#result-count');
   const empty = document.querySelector('#no-results');
@@ -18,10 +20,10 @@ if (search) {
   document.querySelector('.search').hidden = false;
   document.querySelector('.topic-filters').hidden = false;
   const update = () => {
-    const words = search.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+    const words = normalizeSearch(search.value).trim().split(/\s+/).filter(Boolean);
     let visible = 0;
-    for (const card of cards) {
-      card.hidden = (topic !== '' && card.dataset.category !== topic) || !words.every(word => card.dataset.search.includes(word));
+    for (const {card, searchable} of cards) {
+      card.hidden = (topic !== '' && card.dataset.category !== topic) || !words.every(word => searchable.includes(word));
       if (!card.hidden) visible++;
     }
     for (const button of buttons) button.setAttribute('aria-pressed', String(button.dataset.topic === topic));

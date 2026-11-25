@@ -9,13 +9,13 @@ image: "images/blog/what-happens-if-someone-registers-a-domain-using-my-trademar
 imageAlt: "A tablet displaying venturebranding.com beside a magnifying glass."
 ---
 
-Suppose your business operates under the trademark "Summit Forge." One day, you discover that an unrelated party has registered the domain name SummitForgeShop.com.
+Suppose your business operates under the trademark “Summit Forge.” One day, you discover that an unrelated party has registered the domain name SummitForgeShop.com.
 
 The website might display advertisements for competing products, redirect visitors to another business, or remain entirely inactive.
 
 Can you recover the domain?
 
-Federal trademark law and certain domain-name dispute procedures provide remedies for businesses whose trademarks are improperly exploited through domain registrations. The availability of those remedies depends on the parties' rights and the circumstances surrounding the registration.
+Federal trademark law and certain domain-name dispute procedures provide remedies for businesses whose trademarks are improperly exploited through domain registrations. The availability of those remedies depends on the parties’ rights and the circumstances surrounding the registration.
 
 ## Does Owning a Trademark Give Me the Right to a Matching Domain?
 
@@ -23,13 +23,13 @@ Owning a trademark does not automatically entitle a business to every domain con
 
 Another party may have independently established trademark rights, operate a legitimate business under a similar name, or have registered the domain for a lawful noncommercial purpose.
 
-However, a domain registration may raise legal concerns when the registrant seeks to exploit another business's reputation, divert its customers, or create a misleading impression of affiliation.
+However, a domain registration may raise legal concerns when the registrant seeks to exploit another business’s reputation, divert its customers, or create a misleading impression of affiliation.
 
 For additional background, see [*Does Owning a Domain Name Give Me Trademark Rights?*](does-owning-a-domain-name-give-me-trademark-rights.html)
 
 ## What Is Cybersquatting?
 
-Cybersquatting generally involves registering, acquiring, or using domain names to improperly exploit another party's trademark rights.
+Cybersquatting generally involves registering, acquiring, or using domain names to improperly exploit another party’s trademark rights.
 
 The Anticybersquatting Consumer Protection Act (ACPA), codified at Section 43(d) of the Lanham Act, provides trademark owners with a federal cause of action against certain forms of cybersquatting.
 
@@ -39,21 +39,21 @@ Examples of conduct that may raise cybersquatting concerns include:
 
 - Registering a variation of an established trademark to divert customers.
 
-- Acquiring domains incorporating other businesses' trademarks for the purpose of selling them to the trademark owners.
+- Acquiring domains incorporating other businesses’ trademarks for the purpose of selling them to the trademark owners.
 
-- Registering a confusingly similar domain to exploit an established brand's reputation.
+- Registering a confusingly similar domain to exploit an established brand’s reputation.
 
 Unlike an ordinary trademark infringement claim, an ACPA claim does not depend on whether the parties offer related goods or services.
 
 ## How Is Bad Faith Evaluated?
 
-The ACPA identifies several factors courts may consider when determining whether a registrant acted with a bad-faith intent to profit from another party's trademark.
+The ACPA identifies several factors courts may consider when determining whether a registrant acted with a bad-faith intent to profit from another party’s trademark.
 
 Relevant considerations include:
 
-- The registrant's independent trademark or other intellectual property rights in the domain name.
+- The registrant’s independent trademark or other intellectual property rights in the domain name.
 
-- Whether the domain corresponds to the registrant's own name.
+- Whether the domain corresponds to the registrant’s own name.
 
 - Prior legitimate commercial use of the domain.
 
@@ -63,7 +63,7 @@ Relevant considerations include:
 
 - Offers to sell the domain under circumstances suggesting exploitation of the trademark owner.
 
-- A history of registering domains that target other businesses' trademarks.
+- A history of registering domains that target other businesses’ trademarks.
 
 Suppose the registrant of SummitForgeShop.com redirects visitors to competing fitness products and subsequently offers to sell the domain to Summit Forge for a substantial sum.
 
@@ -81,7 +81,7 @@ Suppose the registrant acquired SummitForgeShop.com several years before Summit 
 
 Under the Uniform Domain-Name Dispute-Resolution Policy (UDRP), establishing bad-faith registration in these circumstances would generally be difficult. Limited exceptions may apply, such as when a registrant deliberately targets an anticipated brand launch.
 
-The domain's original creation date may also differ from the date its current registrant acquired it. UDRP panels generally consider the circumstances existing when the current registrant acquired the domain, rather than relying exclusively on its original creation date.
+The domain’s original creation date may also differ from the date its current registrant acquired it. UDRP panels generally consider the circumstances existing when the current registrant acquired the domain, rather than relying exclusively on its original creation date.
 
 An earlier domain registration does not necessarily shield a registrant from liability arising from subsequent infringing commercial activities.
 
@@ -125,7 +125,7 @@ The ACPA also permits certain proceedings against the domain name itself, known 
 
 Separate trademark infringement or false-association claims may arise when a registrant uses a domain in a manner likely to confuse consumers about the source, sponsorship, or affiliation of goods or services.
 
-The appropriate legal claim depends on the registrant's conduct, the available evidence, and the trademark owner's objectives.
+The appropriate legal claim depends on the registrant’s conduct, the available evidence, and the trademark owner’s objectives.
 
 ## What If the Domain Is Not Being Used?
 
@@ -133,7 +133,7 @@ A disputed domain may lead to a blank website, a parking page, or no active webs
 
 Under the UDRP, the doctrine of **passive holding** recognizes that retaining an inactive domain can, in certain circumstances, support a finding of bad faith.
 
-Relevant considerations include the distinctiveness and reputation of the trademark, the registrant's conduct, and the plausibility of a legitimate use for the domain.
+Relevant considerations include the distinctiveness and reputation of the trademark, the registrant’s conduct, and the plausibility of a legitimate use for the domain.
 
 Similarly, the ACPA can reach certain bad-faith domain registrations even when the registrant has not launched an active website.
 
@@ -143,15 +143,15 @@ Inactivity alone, however, does not establish cybersquatting. A registrant may h
 
 An attorney evaluating a disputed domain may examine:
 
-- The trademark owner's registrations and evidence of commercial use.
+- The trademark owner’s registrations and evidence of commercial use.
 
-- The domain's registration and ownership history.
+- The domain’s registration and ownership history.
 
-- The timing of each party's relevant rights and activities.
+- The timing of each party’s relevant rights and activities.
 
 - Current and historical website content.
 
-- Communications and other evidence concerning the registrant's intent.
+- Communications and other evidence concerning the registrant’s intent.
 
 - Potential legitimate interests in the domain.
 
@@ -167,6 +167,6 @@ Trademark owners may have grounds to challenge domain registrations that imprope
 
 The ACPA and UDRP provide distinct mechanisms for addressing these disputes, with different legal requirements and remedies. Trademark ownership alone does not guarantee the right to recover a matching domain.
 
-The outcome depends on the parties' rights, the timing of registration, the registrant's conduct, and the legal requirements of the particular claim.
+The outcome depends on the parties’ rights, the timing of registration, the registrant’s conduct, and the legal requirements of the particular claim.
 
 *This article provides general educational information about U.S. trademark law. It does not constitute legal advice and does not create an attorney-client relationship.*

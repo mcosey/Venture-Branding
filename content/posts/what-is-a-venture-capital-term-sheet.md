@@ -3,7 +3,7 @@ title: "What Is a Venture Capital Term Sheet? Key Terms Founders Should Understa
 description: "Understand valuation, liquidation preferences, investor control rights, and binding provisions before signing a venture capital term sheet."
 date: "2026-10-16"
 author: "Venture Branding"
-category: "Venture Law"
+category: "Advanced Venture Law"
 status: "published"
 image: images/blog/what-is-a-venture-capital-term-sheet.jpg
 imageAlt: A document headed Term Sheet with a binder clip and a coral pencil.
@@ -11,7 +11,7 @@ imageAlt: A document headed Term Sheet with a binder clip and a coral pencil.
 
 Receiving a venture capital term sheet is an important milestone for a startup. It signals that an investor is interested in financing the company and is prepared to discuss the terms of an investment.
 
-The term sheet may identify the amount the investor proposes to contribute, the company's valuation, the preferred stock the investor will receive, and the rights the investor expects in exchange for its capital.
+The term sheet may identify the amount the investor proposes to contribute, the company’s valuation, the preferred stock the investor will receive, and the rights the investor expects in exchange for its capital.
 
 For founders, understanding these terms is essential. An attractive valuation may come with investor approval rights, changes to the board of directors, or economic preferences affecting how proceeds are distributed if the company is sold.
 
@@ -41,11 +41,11 @@ Signing a term sheet therefore does not ordinarily obligate the investor to cont
 
 However, certain provisions may be expressly binding when the term sheet is signed, particularly confidentiality, exclusivity, and expense provisions.
 
-The legal effect depends on the document's language and applicable law. Founders should understand which provisions create immediate obligations, even if the investment never closes.
+The legal effect depends on the document’s language and applicable law. Founders should understand which provisions create immediate obligations, even if the investment never closes.
 
 ## 2. Investment Amount, Valuation, and Ownership
 
-The economic terms of a venture financing usually begin with the investment amount and the company's valuation.
+The economic terms of a venture financing usually begin with the investment amount and the company’s valuation.
 
 Suppose a startup receives the following proposal:
 
@@ -56,9 +56,9 @@ Suppose a startup receives the following proposal:
 | Post-money valuation | $12,000,000 |
 | Investor ownership | 25% |
 
-The *pre-money valuation* represents the negotiated value of the company's equity before the investment. The *post-money valuation* generally equals the pre-money valuation plus the new capital invested.
+The *pre-money valuation* represents the negotiated value of the company’s equity before the investment. The *post-money valuation* generally equals the pre-money valuation plus the new capital invested.
 
-Under this simplified financing, the investor contributes $3 million and acquires 25% of the company's post-financing equity. Existing stockholders collectively retain 75%.
+Under this simplified financing, the investor contributes $3 million and acquires 25% of the company’s post-financing equity. Existing stockholders collectively retain 75%.
 
 The calculation assumes no outstanding convertible instruments, changes to the employee equity pool, or other capitalization adjustments.
 
@@ -86,7 +86,7 @@ Counsel can help prepare or review a pro forma capitalization table showing the 
 
 Venture capital investors commonly receive preferred stock rather than the common stock typically held by founders.
 
-Preferred stock may carry special economic and governance rights established in the company's certificate of incorporation.
+Preferred stock may carry special economic and governance rights established in the company’s certificate of incorporation.
 
 One of the most important economic rights is the *liquidation preference* .
 
@@ -104,9 +104,9 @@ Alternatively, the investor could convert into common stock and receive 25% of t
 
 Under these assumptions, taking the $3 million preference produces the better result.
 
-If the company instead has $20 million available for distribution, the investor's 25% as-converted interest would be worth $5 million, making conversion more attractive.
+If the company instead has $20 million available for distribution, the investor’s 25% as-converted interest would be worth $5 million, making conversion more attractive.
 
-Actual distributions depend on the company's capitalization, outstanding securities, and applicable governing provisions.
+Actual distributions depend on the company’s capitalization, outstanding securities, and applicable governing provisions.
 
 ### Participating vs. Nonparticipating Preferred Stock
 
@@ -118,7 +118,7 @@ The distinction can materially affect the proceeds available to founders.
 
 If a company has multiple preferred stock series, their relative priority also matters. A new series may rank senior to existing preferred stock or *pari passu* , meaning on equal footing for the relevant liquidation distributions.
 
-These rights are established in the company's governing documents.
+These rights are established in the company’s governing documents.
 
 ## 4. Anti-Dilution Protection and Other Preferred Stock Rights
 
@@ -126,7 +126,7 @@ Venture capital term sheets commonly address protections against certain future 
 
 ### Anti-Dilution Protection
 
-Price-based anti-dilution protection generally applies when a company issues additional shares below an existing preferred stock series' applicable conversion price. Suppose Series A investors purchase preferred stock at $2.00 per share. The company subsequently raises another round at $1.00 per share.
+Price-based anti-dilution protection generally applies when a company issues additional shares below an existing preferred stock series’ applicable conversion price. Suppose Series A investors purchase preferred stock at $2.00 per share. The company subsequently raises another round at $1.00 per share.
 
 Depending on the Series A terms, an anti-dilution provision may adjust the conversion price, increasing the number of common shares into which the preferred stock can convert.
 
@@ -146,7 +146,7 @@ Dividends may be cumulative or noncumulative, with different consequences for wh
 
 Conversion provisions determine when preferred shares may or must convert into common stock.
 
-Redemption provisions, where included, may provide rights relating to the company's repurchase of preferred shares under specified circumstances, subject to applicable corporate law.
+Redemption provisions, where included, may provide rights relating to the company’s repurchase of preferred shares under specified circumstances, subject to applicable corporate law.
 
 These rights should be considered alongside the liquidation preference and other economic terms.
 
@@ -162,9 +162,9 @@ Venture investors frequently negotiate the right to designate one or more direct
 
 Other arrangements may provide for a larger board or an independent director selected through an agreed process.
 
-Board composition matters because directors oversee the corporation's management and authorize actions requiring board approval.
+Board composition matters because directors oversee the corporation’s management and authorize actions requiring board approval.
 
-A founder's ownership percentage does not necessarily determine their control over the board.
+A founder’s ownership percentage does not necessarily determine their control over the board.
 
 Founders should understand the proposed board composition, how directors will be selected and replaced, and whether particular board decisions will require additional approvals.
 
@@ -186,7 +186,7 @@ For example, the company may be required to obtain approval from a specified per
 
 The scope of these rights depends on the negotiated provisions.
 
-A protective provision may allow investors to block a transaction even without owning a majority of the company's shares. These contractual or charter-based approval rights must also be distinguished from approvals required under corporate law.
+A protective provision may allow investors to block a transaction even without owning a majority of the company’s shares. These contractual or charter-based approval rights must also be distinguished from approvals required under corporate law.
 
 Founders should understand which decisions will require investor approval after closing, particularly those affecting future fundraising, governance, and a potential sale.
 
@@ -204,13 +204,13 @@ Investors may also negotiate rights to participate in future equity financings.
 
 A *pro rata right* generally gives an eligible investor the opportunity to purchase a portion of newly issued securities, potentially allowing it to maintain its ownership percentage.
 
-The right depends on the agreement's definitions, exceptions, and exercise procedures. It does not guarantee that the investor can maintain the same percentage in every future transaction.
+The right depends on the agreement’s definitions, exceptions, and exercise procedures. It does not guarantee that the investor can maintain the same percentage in every future transaction.
 
 ### Founder Vesting and Transfer Restrictions
 
 A term sheet may require founders to maintain or adopt vesting restrictions on their shares.
 
-For example, an investor might request that a founder's remaining unvested equity continue vesting over an agreed period following the financing.
+For example, an investor might request that a founder’s remaining unvested equity continue vesting over an agreed period following the financing.
 
 The parties may also negotiate changes to existing vesting schedules, repurchase rights, or acceleration provisions.
 
@@ -238,7 +238,7 @@ Investors may request exclusivity because they expect to incur expenses conducti
 
 For the company, however, exclusivity can restrict financing alternatives while the proposed investment remains uncertain.
 
-Founders should understand the provision's duration, scope, and termination conditions before signing.
+Founders should understand the provision’s duration, scope, and termination conditions before signing.
 
 ### Confidentiality
 
@@ -250,7 +250,7 @@ These provisions should accommodate appropriate communications with legal counse
 
 A term sheet may specify which party bears the legal expenses incurred in negotiating and closing the financing.
 
-For example, the company might agree to reimburse the lead investor's reasonable legal fees up to a negotiated amount.
+For example, the company might agree to reimburse the lead investor’s reasonable legal fees up to a negotiated amount.
 
 The provision should clarify whether reimbursement is payable only upon closing or may apply even if the financing is not completed.
 
@@ -263,8 +263,8 @@ For a conventional preferred stock financing, five documents commonly form the c
 | Document | Principal purpose |
 | --- | --- |
 | Stock Purchase Agreement | Governs the investment, representations and warranties, and closing |
-| Amended and Restated Certificate of Incorporation | Establishes the preferred stock's rights and preferences |
-| Investors' Rights Agreement | Addresses information, registration, and participation rights |
+| Amended and Restated Certificate of Incorporation | Establishes the preferred stock’s rights and preferences |
+| Investors’ Rights Agreement | Addresses information, registration, and participation rights |
 | Voting Agreement | Establishes specified voting commitments and governance arrangements |
 | Right of First Refusal and Co-Sale Agreement | Regulates certain stock transfers |
 
@@ -284,11 +284,11 @@ This uncertainty is particularly important when the company has agreed to exclus
 
 Founders should pay particular attention to the ownership dilution, liquidation preferences, board composition, protective provisions, and changes to existing founder equity arrangements.
 
-They should also understand the term sheet's capitalization assumptions and any immediately binding obligations.
+They should also understand the term sheet’s capitalization assumptions and any immediately binding obligations.
 
 Existing financing arrangements deserve attention. Outstanding SAFEs, convertible notes, preferred stock, or investor agreements may affect the proposed transaction and require additional consents or amendments.
 
-Counsel can help identify the provisions with the greatest legal and economic consequences, model potential ownership and exit outcomes, and evaluate the proposed terms against the company's existing obligations. Addressing significant issues at the term sheet stage can reduce disagreements and legal expenses when preparing the definitive documents.
+Counsel can help identify the provisions with the greatest legal and economic consequences, model potential ownership and exit outcomes, and evaluate the proposed terms against the company’s existing obligations. Addressing significant issues at the term sheet stage can reduce disagreements and legal expenses when preparing the definitive documents.
 
 ## Conclusion
 
@@ -296,6 +296,6 @@ A venture capital term sheet establishes the framework for a proposed investment
 
 Although most investment terms are initially nonbinding, they provide the foundation for the agreements that will ultimately govern the financing.
 
-Understanding those terms before signing helps founders evaluate the proposed investment's effects on ownership, financial rights, and corporate control.
+Understanding those terms before signing helps founders evaluate the proposed investment’s effects on ownership, financial rights, and corporate control.
 
 *This article is intended for general educational purposes and does not constitute legal advice.*

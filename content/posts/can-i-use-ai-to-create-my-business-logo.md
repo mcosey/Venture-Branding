@@ -13,7 +13,7 @@ Artificial intelligence has made logo design more accessible. Entrepreneurs can 
 
 But what happens when a business adopts an AI-generated design as its official logo?
 
-Can the business claim ownership of the artwork? Can the logo qualify for trademark protection? And what happens if the design resembles another company's logo?
+Can the business claim ownership of the artwork? Can the logo qualify for trademark protection? And what happens if the design resembles another company’s logo?
 
 These questions involve several distinct legal issues, particularly copyright protection, trademark rights, and the terms governing AI-generated content.
 
@@ -21,17 +21,17 @@ These questions involve several distinct legal issues, particularly copyright pr
 
 AI platforms commonly address ownership of generated content in their terms of service.
 
-For example, OpenAI's terms provide that, as between OpenAI and the user, the user owns the output to the extent permitted by applicable law. Anthropic's terms similarly provide for the assignment of its rights, if any, in generated outputs.
+For example, OpenAI’s terms provide that, as between OpenAI and the user, the user owns the output to the extent permitted by applicable law. Anthropic’s terms similarly provide for the assignment of its rights, if any, in generated outputs.
 
 These provisions establish contractual rights between the parties, but they have important limitations.
 
 An AI company can assign rights it possesses. Its terms cannot independently create intellectual property rights that do not exist under applicable law.
 
-Consequently, a platform's statement that a user owns an AI-generated logo does not necessarily establish that the artwork qualifies for copyright protection.
+Consequently, a platform’s statement that a user owns an AI-generated logo does not necessarily establish that the artwork qualifies for copyright protection.
 
 Nor does it establish that the design is unique or free from conflicts with existing intellectual property.
 
-Ownership under a platform's terms is therefore distinct from the legal protection that may be available for the resulting logo.
+Ownership under a platform’s terms is therefore distinct from the legal protection that may be available for the resulting logo.
 
 ## Can I Copyright an AI-Generated Logo?
 
@@ -93,7 +93,7 @@ The distinction follows from the different purposes of the two legal systems.
 
 A logo may lack the human authorship required for copyright protection while still serving as a recognizable identifier of commercial source.
 
-Trademark protection generally concerns the mark's source-identifying function and the rights arising from its commercial use.
+Trademark protection generally concerns the mark’s source-identifying function and the rights arising from its commercial use.
 
 Copyright protection concerns original artistic expression.
 
@@ -101,13 +101,13 @@ A business may therefore possess trademark rights in an AI-generated logo withou
 
 However, trademark rights do not provide unrestricted control over the underlying image. Their scope depends on the applicable principles governing trademark protection and infringement.
 
-## What If AI Generates a Logo Similar to Another Company's?
+## What If AI Generates a Logo Similar to Another Company’s?
 
 AI-generated designs are not necessarily unique. Different users may receive similar outputs, and generated artwork may resemble existing designs.
 
 Suppose Northvale adopts an AI-generated emblem and later discovers that another company uses a visually similar logo.
 
-The fact that Northvale obtained its design through AI does not resolve whether its use conflicts with the other company's intellectual property rights.
+The fact that Northvale obtained its design through AI does not resolve whether its use conflicts with the other company’s intellectual property rights.
 
 The analysis may involve both trademark and copyright law.
 
@@ -115,7 +115,7 @@ The analysis may involve both trademark and copyright law.
 
 Trademark infringement generally involves whether the use of a mark is likely to cause consumer confusion concerning the source, sponsorship, or affiliation of goods or services.
 
-An attorney evaluating potentially conflicting logos may examine their visual similarity, overall commercial impression, associated goods or services, and the parties' respective trademark rights.
+An attorney evaluating potentially conflicting logos may examine their visual similarity, overall commercial impression, associated goods or services, and the parties’ respective trademark rights.
 
 The designs do not necessarily have to be identical to raise a potential conflict.
 
@@ -129,19 +129,19 @@ However, similarity alone does not establish infringement. Relevant questions in
 
 These questions are separate from whether the AI-generated logo itself qualifies for copyright protection.
 
-A design may lack its own copyright protection while still raising questions about another party's existing rights.
+A design may lack its own copyright protection while still raising questions about another party’s existing rights.
 
 ## Do ChatGPT and Claude Guarantee That Their Logos Are Safe to Use?
 
 Contractual rights to AI-generated output do not establish that the output is legally available for use as a trademark.
 
-OpenAI's terms expressly acknowledge that generated outputs may not be unique and that other users may receive similar content.
+OpenAI’s terms expressly acknowledge that generated outputs may not be unique and that other users may receive similar content.
 
 Anthropic also places limitations on its contractual obligations concerning generated outputs.
 
 Both companies have commercial agreements addressing certain third-party intellectual property claims. However, the existence and scope of those protections depend on the applicable service and agreement.
 
-For example, OpenAI's API service terms and Anthropic's commercial terms contain exclusions for certain trademark claims arising from the use of generated output in trade or commerce.
+For example, OpenAI’s API service terms and Anthropic’s commercial terms contain exclusions for certain trademark claims arising from the use of generated output in trade or commerce.
 
 Those commercial indemnification provisions should not be confused with the ownership terms applicable to ordinary consumer accounts.
 
@@ -153,7 +153,7 @@ The relevant platform terms may therefore be important, but they do not substitu
 
 Evaluating an AI-generated logo involves many of the same considerations that apply to traditionally designed logos, together with questions about how the artwork was created.
 
-An attorney may examine the logo's distinctiveness, its proposed commercial use, and potentially conflicting trademarks.
+An attorney may examine the logo’s distinctiveness, its proposed commercial use, and potentially conflicting trademarks.
 
 Where copyright protection is relevant, the analysis may also involve the extent of human authorship, any preexisting artistic material incorporated into the design, and the applicable platform terms.
 

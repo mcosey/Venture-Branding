@@ -3,7 +3,7 @@ title: "Founder Equity: How to Divide Ownership and Structure Vesting"
 description: "Explore founder ownership splits, stock issuance, vesting schedules, and what happens to equity when a founder leaves."
 date: "2026-10-15"
 author: "Venture Branding"
-category: "Founders"
+category: "For Founders"
 status: "published"
 image: "images/blog/founder-equity-how-to-divide-ownership-and-structure-vesting.jpg"
 imageAlt: "Three people arrange rows of navy, coral, and natural wood tiles on a table."
@@ -11,7 +11,7 @@ imageAlt: "Three people arrange rows of navy, coral, and natural wood tiles on a
 
 One of the first major decisions startup founders face is how to divide ownership of their company. Some agree to split equity equally, while others negotiate different percentages based on their contributions, responsibilities, or expected involvement.
 
-The decision can have lasting consequences. Founder equity determines who participates in the company's future economic success and can influence voting power, fundraising, and what happens if someone leaves the business.
+The decision can have lasting consequences. Founder equity determines who participates in the company’s future economic success and can influence voting power, fundraising, and what happens if someone leaves the business.
 
 Choosing an ownership split is only the beginning. Founders must also understand how shares are issued, how vesting works, and what happens to their equity if their relationship with the company changes.
 
@@ -23,7 +23,7 @@ An equal split may be appropriate when founders anticipate making comparable lon
 
 Consider two individuals developing a software company. One created the initial product and spent a year developing its technology. The other joins to oversee operations, customer acquisition, and fundraising.
 
-The founders might agree to a 60/40 split to recognize the first founder's earlier contributions. Alternatively, they might choose 50/50 because they expect to contribute equally to the company's future development.
+The founders might agree to a 60/40 split to recognize the first founder’s earlier contributions. Alternatively, they might choose 50/50 because they expect to contribute equally to the company’s future development.
 
 Neither arrangement is inherently preferable.
 
@@ -45,7 +45,7 @@ Founders should also consider whether the proposed split will continue to suppor
 
 ### Ownership Is Not the Same as Control
 
-Ownership percentages do not necessarily determine who manages a company's operations.
+Ownership percentages do not necessarily determine who manages a company’s operations.
 
 Two founders who each own 50% of a corporation do not automatically have equal authority over every business decision. Corporate governance depends on the board of directors, officers, voting rights, and applicable governing documents.
 
@@ -67,17 +67,17 @@ Suppose a corporation authorizes 10 million shares of common stock and initially
 | Founder B | 4,000,000 | 50% |
 | Total outstanding | 8,000,000 | 100% |
 
-Each founder owns 50% of the company's outstanding shares.
+Each founder owns 50% of the company’s outstanding shares.
 
 For a Delaware corporation, issuing stock generally requires appropriate corporate authorization and compliance with the Delaware General Corporation Law. Founder shares are often issued under stock purchase agreements that specify the number of shares, consideration, vesting restrictions, and other terms.
 
-Founders frequently acquire shares when the business has relatively little value. However, the purchase price and potential tax consequences depend on the company's circumstances, including the value of the shares when issued.
+Founders frequently acquire shares when the business has relatively little value. However, the purchase price and potential tax consequences depend on the company’s circumstances, including the value of the shares when issued.
 
 An informal agreement that each founder will own half the business does not itself establish that the corporation has issued the corresponding shares.
 
 ## 3. What Is Founder Vesting?
 
-Vesting determines when a founder's equity becomes free from specified restrictions tied to continued service.
+Vesting determines when a founder’s equity becomes free from specified restrictions tied to continued service.
 
 Founder stock commonly uses a structure called *reverse vesting* . Under this arrangement, shares are issued upfront, but the company retains a contractual right to repurchase unvested shares if the founder leaves before completing the applicable vesting period.
 
@@ -87,7 +87,7 @@ Suppose two founders each receive 4 million shares without vesting restrictions.
 
 Without applicable repurchase or other restrictions, that founder may retain the entire 50% ownership interest.
 
-Under a reverse vesting arrangement, the company may instead have the right to repurchase the unvested portion of the departing founder's shares.
+Under a reverse vesting arrangement, the company may instead have the right to repurchase the unvested portion of the departing founder’s shares.
 
 Because the shares are issued upfront, the founder ordinarily becomes a stockholder immediately, potentially retaining voting and other stockholder rights even while the shares remain unvested. The particular rights and restrictions depend on the governing documents.
 
@@ -118,7 +118,7 @@ Not every founder uses a four-year schedule or one-year cliff. Some arrangements
 
 ## 5. What Happens If a Founder Leaves?
 
-A founder's departure raises two separate questions: what happens to the founder's role in the company, and what happens to their shares?
+A founder’s departure raises two separate questions: what happens to the founder’s role in the company, and what happens to their shares?
 
 Resigning as an officer or employee does not automatically terminate stock ownership. If the shares are subject to reverse vesting, the company may exercise its contractual right to repurchase unvested shares. Vested shares generally remain with the founder unless additional purchase rights or restrictions apply.
 
@@ -128,7 +128,7 @@ The company might repurchase the remaining 150,000 unvested shares under the app
 
 Vested shares may also be subject to transfer restrictions, rights of first refusal, or other negotiated provisions.
 
-Founders may wish to address departures resulting from resignation, termination, disability, or death. The consequences should be established in the applicable agreements rather than assumed from the founder's departure alone.
+Founders may wish to address departures resulting from resignation, termination, disability, or death. The consequences should be established in the applicable agreements rather than assumed from the founder’s departure alone.
 
 ## 6. What Is Accelerated Vesting?
 
@@ -136,9 +136,9 @@ Some founder equity agreements provide for *accelerated vesting* , allowing shar
 
 Acceleration provisions are particularly relevant to acquisitions.
 
-**Single-trigger acceleration** occurs upon one specified event, such as a sale of the company. For example, an agreement might provide that 50% of a founder's remaining unvested shares vest upon an acquisition.
+**Single-trigger acceleration** occurs upon one specified event, such as a sale of the company. For example, an agreement might provide that 50% of a founder’s remaining unvested shares vest upon an acquisition.
 
-**Double-trigger acceleration** requires two specified events. A common arrangement requires an acquisition followed by the founder's termination without cause or resignation for good reason within an agreed period.
+**Double-trigger acceleration** requires two specified events. A common arrangement requires an acquisition followed by the founder’s termination without cause or resignation for good reason within an agreed period.
 
 Double-trigger provisions can protect founders from losing unvested equity following an acquisition while preserving incentives for continued service.
 
@@ -148,7 +148,7 @@ Acceleration is negotiable. It does not arise automatically when a company is ac
 
 Founders receiving restricted stock subject to vesting should understand the potential tax consequences. Under Section 83(b) of the Internal Revenue Code, an eligible recipient of substantially nonvested property transferred in connection with services may elect to recognize the applicable compensation income when the property is transferred rather than when it subsequently vests.
 
-For founders acquiring stock when the company's value is relatively low, the election can have significant tax implications.
+For founders acquiring stock when the company’s value is relatively low, the election can have significant tax implications.
 
 **An eligible Section 83(b) election generally must be filed within 30 days after the property** **is transferred.** Whether an election is beneficial depends on the circumstances, and missing the deadline can have substantial consequences.
 
@@ -158,17 +158,17 @@ Founders receiving restricted equity should seek timely tax advice rather than a
 
 ## 8. Documenting Founder Equity
 
-Once founders agree on an ownership allocation, their arrangement must be reflected in the company's legal records.
+Once founders agree on an ownership allocation, their arrangement must be reflected in the company’s legal records.
 
 For a corporation, this commonly involves board approvals, stock purchase agreements, vesting and repurchase provisions, and accurate capitalization records.
 
-Founders should also consider intellectual property developed before the corporation was formed. Issuing stock does not automatically establish the company's ownership of software, inventions, or other assets created by a founder.
+Founders should also consider intellectual property developed before the corporation was formed. Issuing stock does not automatically establish the company’s ownership of software, inventions, or other assets created by a founder.
 
 Appropriate intellectual property assignment agreements may be necessary.
 
-Accurate documentation becomes particularly important during fundraising or an acquisition, when investors or buyers may review the validity of stock issuances, outstanding vesting restrictions, and the company's ownership of essential intellectual property.
+Accurate documentation becomes particularly important during fundraising or an acquisition, when investors or buyers may review the validity of stock issuances, outstanding vesting restrictions, and the company’s ownership of essential intellectual property.
 
-A founders' agreement may establish the parties' intentions, but those arrangements must be implemented through the appropriate corporate documents.
+A founders’ agreement may establish the parties’ intentions, but those arrangements must be implemented through the appropriate corporate documents.
 
 Establishing the ownership structure early can prevent disagreements and reduce complications as the company grows.
 
