@@ -5,8 +5,8 @@ date: "2026-10-15"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/what-happens-if-someone-opposes-my-trademark-application.jpg"
+imageAlt: "A navy folder and a coral folder sit apart on a meeting table with two empty chairs."
 ---
 
 After months of waiting, your trademark application has finally been approved by the United States Patent and Trademark Office (USPTO). The examining attorney has completed the review, and your mark is scheduled for publication.

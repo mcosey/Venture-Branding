@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-trademark-a-slogan-or-tagline.jpg"
+imageAlt: "A letterpress proof reading You focus on building, beside an ink roller."
 ---
 
 A memorable slogan can become an important part of a company's brand. It might appear beneath a logo, in advertisements, on product packaging, or throughout a website.

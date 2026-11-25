@@ -5,8 +5,8 @@ date: "2026-10-14"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/dont-overlook-common-law-and-state-trademarks.jpg"
+imageAlt: "A neighborhood pottery shop with a coral awning and a navy door."
 ---
 
 When researching trademarks, most business owners turn to the United States Patent and Trademark Office (USPTO). Its database allows users to search federal trademark applications and registrations, making it an important resource for businesses developing new brands.

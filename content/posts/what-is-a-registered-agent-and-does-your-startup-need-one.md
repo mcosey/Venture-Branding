@@ -5,6 +5,8 @@ date: "2026-10-24"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
+image: "images/blog/what-is-a-registered-agent-and-does-your-startup-need-one.jpg"
+imageAlt: "A courier handing a blank cream envelope to a receptionist."
 ---
 
 When forming a limited liability company (LLC) or corporation, founders typically must designate a registered agent. The requirement is straightforward, and appointing one is usually inexpensive.

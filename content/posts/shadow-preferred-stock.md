@@ -5,6 +5,8 @@ date: "2026-10-13"
 author: "Venture Branding"
 category: "Venture Law"
 status: "published"
+image: "images/blog/shadow-preferred-stock.jpg"
+imageAlt: "A sheet of translucent vellum overlaps navy cardstock and casts a shadow on a cream wall."
 ---
 
 When a startup completes a priced equity financing, outstanding SAFEs and convertible notes often convert into preferred stock. Because these instruments frequently provide valuation caps or discounts, their holders may acquire shares at a lower price than investors contributing new capital.

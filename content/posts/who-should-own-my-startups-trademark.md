@@ -5,8 +5,8 @@ date: "2026-10-16"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: images/blog/who-should-own-my-startups-trademark.jpg
+imageAlt: A blank hang tag rests on a document with a line labeled Owner.
 ---
 
 Many startups develop their brands before formally establishing their businesses. A founder might choose a company name, purchase a domain, commission a logo, and begin developing a product months before forming an LLC or corporation.

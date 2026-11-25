@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/how-long-does-a-trademark-last.jpg"
+imageAlt: "A faded garment label and a new one bearing the same embroidered coral emblem."
 ---
 
 When a business registers a trademark with the United States Patent and Trademark Office (USPTO), how long does that protection last?

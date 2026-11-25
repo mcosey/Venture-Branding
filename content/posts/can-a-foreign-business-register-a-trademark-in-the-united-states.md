@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-a-foreign-business-register-a-trademark-in-the-united-states.jpg"
+imageAlt: "A folder showing the outline of the contiguous United States beside a roll of packing tape."
 ---
 
 Suppose you own a business outside the United States and want to expand into the American market. You may already have a registered trademark in your home country, or perhaps you're preparing to introduce your products or services to U.S. customers for the first time.

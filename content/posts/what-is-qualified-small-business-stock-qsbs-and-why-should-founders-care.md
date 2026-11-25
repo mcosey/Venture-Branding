@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/what-is-qualified-small-business-stock-qsbs-and-why-should-founders-care.jpg"
+imageAlt: "A navy folder labeled QSBS in a wooden filing box."
 ---
 
 Imagine starting a company, spending years building it, and eventually selling your shares for $10 million. Ordinarily, much of that gain could be subject to federal capital gains taxes. But under certain circumstances, you might owe no federal income tax on the gain at all.

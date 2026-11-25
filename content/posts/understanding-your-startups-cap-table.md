@@ -5,8 +5,8 @@ date: "2026-10-14"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/understanding-your-startups-cap-table.jpg"
+imageAlt: "A laptop displays a spreadsheet titled Cap Table beside a coral notebook."
 ---
 
 When starting a business, founders often focus on how to divide ownership among themselves. But that ownership can change as the company hires employees, raises money, and issues additional equity.

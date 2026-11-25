@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: images/blog/what-happens-if-someone-starts-using-my-trademark.jpg
+imageAlt: An unmarked navy candle tin and a blank cream carton on a sunlit countertop.
 ---
 
 Imagine discovering that another business has started operating under the same name as yours. Perhaps you encounter its website, see its products advertised online, or hear from a customer who has confused the two businesses.

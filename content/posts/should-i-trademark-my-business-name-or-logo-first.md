@@ -5,6 +5,8 @@ date: "2026-10-13"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
+image: "images/blog/should-i-trademark-my-business-name-or-logo-first.jpg"
+imageAlt: "A card reading Venture Branding sits beside blank tracing paper, a pencil, and a ruler."
 ---
 
 You've chosen a name for your business, commissioned a logo, and started building your website. Now you're considering federal trademark registration.

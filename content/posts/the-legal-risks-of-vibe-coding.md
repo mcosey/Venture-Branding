@@ -5,6 +5,8 @@ date: "2026-10-24"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
+image: "images/blog/the-legal-risks-of-vibe-coding.jpg"
+imageAlt: "A founder reviewing a web prototype alongside an abstract code panel on a laptop."
 ---
 
 A founder can now build a functioning software application in a weekend using artificial intelligence. With tools that generate code from ordinary-language instructions, entrepreneurs can create websites, connect databases, process payments, and launch products without extensive programming experience.

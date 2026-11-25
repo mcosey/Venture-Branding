@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/whats-the-difference-between-tm-sm-and-r.jpg"
+imageAlt: "Three letterpress cards displaying TM, SM, and a circled R."
 ---
 
 You've probably noticed the small symbols appearing beside business names, logos, and product brands: ™, SM, and ®.

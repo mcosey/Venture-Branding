@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/liquidation-preferences-explained-who-gets-paid-when-your-startup-is-sold.jpg"
+imageAlt: "Three trays of ivory counters arranged on descending wooden risers."
 ---
 
 Selling a startup for $20 million does not necessarily mean its stockholders receive $20 million in proportion to their ownership percentages.

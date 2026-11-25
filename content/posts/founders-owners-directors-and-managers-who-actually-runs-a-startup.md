@@ -5,6 +5,8 @@ date: "2026-10-24"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
+image: "images/blog/founders-owners-directors-and-managers-who-actually-runs-a-startup.jpg"
+imageAlt: "Four startup colleagues discussing a decision around a meeting table."
 ---
 
 When someone starts a business, they often become its founder, owner, and chief executive all at once. In a small startup, these distinctions may seem unimportant because the same person makes nearly every decision.

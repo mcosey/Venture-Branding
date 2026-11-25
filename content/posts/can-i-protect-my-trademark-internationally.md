@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-protect-my-trademark-internationally.jpg"
+imageAlt: "A globe beside two shipping cartons, one with a coral brand tag."
 ---
 
 Suppose you've built a successful business in the United States and registered its name with the U.S. Patent and Trademark Office (USPTO). As your business grows, you begin attracting customers in other countries.

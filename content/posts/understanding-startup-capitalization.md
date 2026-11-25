@@ -5,6 +5,8 @@ date: "2026-10-13"
 author: "Venture Branding"
 category: "Venture Law"
 status: "published"
+image: "images/blog/understanding-startup-capitalization.jpg"
+imageAlt: "A divided drawer holds stacks of maple, coral, and navy counters, with one compartment empty."
 ---
 
 A corporation's capitalization describes its equity ownership structure, including outstanding shares and rights to acquire shares in the future. Understanding capitalization is essential to emerging companies and venture capital (ECVC) practice because it determines how ownership is allocated, how financing transactions affect existing stockholders, and whether a corporation has sufficient authorized shares to issue additional securities.

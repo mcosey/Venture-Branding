@@ -5,6 +5,8 @@ date: "2026-10-13"
 author: "Venture Branding"
 category: "Venture Law"
 status: "published"
+image: "images/blog/understanding-section-83b-elections.jpg"
+imageAlt: "A document headed 83(b) Election sits in an open envelope next to a desk clock."
 ---
 
 *An introduction to Section 83(b) elections for law students and attorneys entering emerging companies practice.*

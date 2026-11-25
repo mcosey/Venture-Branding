@@ -5,8 +5,8 @@ date: "2026-10-16"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: images/blog/can-two-businesses-have-the-same-name.jpg
+imageAlt: Two neighboring storefronts each display the name Corner.
 ---
 
 You've settled on a name for your business, purchased the domain, and started developing your brand. Then, while researching the name, you discover another company already using it.

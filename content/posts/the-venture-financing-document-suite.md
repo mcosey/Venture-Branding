@@ -5,8 +5,8 @@ date: "2026-10-15"
 author: "Venture Branding"
 category: "Venture Law"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/the-venture-financing-document-suite.jpg"
+imageAlt: "Five cream accordion folders sit in a navy desktop organizer."
 ---
 
 A priced venture financing involves more than a single investment agreement. When a startup raises capital by issuing preferred stock, the transaction is typically documented through several agreements addressing the investment, the rights attached to the shares, and the ongoing relationships among the company and its stockholders.

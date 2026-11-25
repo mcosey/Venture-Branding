@@ -5,8 +5,8 @@ date: "2026-10-16"
 author: "Venture Branding"
 category: "Venture Law"
 status: "published"
-image: ""
-imageAlt: ""
+image: images/blog/what-is-a-venture-capital-term-sheet.jpg
+imageAlt: A document headed Term Sheet with a binder clip and a coral pencil.
 ---
 
 Receiving a venture capital term sheet is an important milestone for a startup. It signals that an investor is interested in financing the company and is prepared to discuss the terms of an investment.

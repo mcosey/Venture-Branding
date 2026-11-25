@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Venture Law"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/down-rounds-recapitalizations-and-pay-to-play-provisions-in-venture-financing.jpg"
+imageAlt: "Four stacks of wooden counters decreasing in height beside a downward-sloping line."
 ---
 
 A venture-backed company that needs additional capital may find itself negotiating a financing at a lower valuation than its previous round. The company must account for the economic consequences of issuing new shares at a reduced price, the rights of existing preferred stockholders, and any proposed changes to its capital structure.

@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: images/blog/what-happens-if-i-rebrand-after-filing-a-trademark.jpg
+imageAlt: A hand peels a blank label off a navy box beside a label that reads Venture Branding.
 ---
 
 Businesses change their branding for many reasons. A startup might adopt a new name after discovering a potential trademark conflict, redesign its logo, or reposition its products as the company grows.

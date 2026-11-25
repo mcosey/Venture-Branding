@@ -5,8 +5,8 @@ date: "2026-10-16"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: images/blog/safes-vs-convertible-notes.jpg
+imageAlt: Two documents side by side with the headings SAFE and Convertible Note.
 ---
 
 Startups often need outside capital before they are ready to negotiate a formal company valuation. Rather than immediately selling stock at an agreed price, many raise their initial funding through SAFEs or convertible notes.

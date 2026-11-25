@@ -5,8 +5,8 @@ date: "2026-10-15"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/trademark-scams-who-they-target-and-how-to-spot-them.jpg"
+imageAlt: "A letter headed Payment Due sits in a blank envelope beside reading glasses."
 ---
 
 You file a trademark application with the United States Patent and Trademark Office (USPTO). A few days later, you receive an official-looking email informing you that an additional payment is required to complete your registration.

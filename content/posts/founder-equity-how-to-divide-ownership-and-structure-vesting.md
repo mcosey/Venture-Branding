@@ -5,8 +5,8 @@ date: "2026-10-15"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/founder-equity-how-to-divide-ownership-and-structure-vesting.jpg"
+imageAlt: "Three people arrange rows of navy, coral, and natural wood tiles on a table."
 ---
 
 One of the first major decisions startup founders face is how to divide ownership of their company. Some agree to split equity equally, while others negotiate different percentages based on their contributions, responsibilities, or expected involvement.

@@ -5,8 +5,8 @@ date: "2026-10-15"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/what-happens-if-the-uspto-refuses-my-trademark.jpg"
+imageAlt: "A document headed Office Action rests on a navy folder beside a coral pen."
 ---
 
 You filed a federal trademark application, waited for the United States Patent and Trademark Office (USPTO) to examine it, and received a notice stating that registration has been refused.

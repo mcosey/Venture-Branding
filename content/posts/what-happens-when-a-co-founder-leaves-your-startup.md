@@ -5,6 +5,8 @@ date: "2026-10-24"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
+image: "images/blog/what-happens-when-a-co-founder-leaves-your-startup.jpg"
+imageAlt: "A person carrying a box of belongings out of a shared office."
 ---
 
 Starting a company with someone often means sharing years of work, financial risks, and major business decisions. But not every founding relationship lasts as long as the business.

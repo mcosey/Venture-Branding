@@ -5,8 +5,8 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/how-much-control-do-founders-give-up-when-raising-venture-capital.jpg"
+imageAlt: "Overhead view of a boardroom table with four navy chairs and one coral chair."
 ---
 
 Raising venture capital changes more than a startup's ownership structure. Investors frequently negotiate rights that give them a voice in significant corporate decisions, even when they own a minority of the company.

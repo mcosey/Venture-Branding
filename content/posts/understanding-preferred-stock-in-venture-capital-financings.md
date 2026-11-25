@@ -5,6 +5,8 @@ date: "2026-10-13"
 author: "Venture Branding"
 category: "Venture Law"
 status: "published"
+image: "images/blog/understanding-preferred-stock-in-venture-capital-financings.jpg"
+imageAlt: "Two stacks of paper are labeled Preferred Stock and Common Stock."
 ---
 
 *The legal structure, economic rights, and conversion mechanics of venture preferred stock.*
