@@ -71,3 +71,17 @@ test('ordering is newest first and unknown status is rejected',t => {
   assert.deepEqual(readPosts(f.sourceDir).map(p=>p.slug),['newer','older']);
   f.post('typo','publish'); assert.throws(()=>readPosts(f.sourceDir),/invalid status/);
 });
+test('reading time counts article words and rounds up on cards and article pages',t => {
+  const f=fixture(t);
+  const shortBody='## Heading\n\n'+('word '.repeat(235))+'**founders**’ [guide](https://example.com/this-long-link-is-not-article-copy)';
+  f.post('short-post','published','2020-01-01',shortBody);
+  f.post('long-post','published','2021-01-01',shortBody+'\n\n| Table |\n| --- |\n| cell |');
+
+  assert.deepEqual(readPosts(f.sourceDir).map(post=>post.readingMinutes),[2,1]);
+  build(f);
+  const index=fs.readFileSync(path.join(f.outDir,'blog.html'),'utf8');
+  const article=fs.readFileSync(path.join(f.outDir,'blog/posts/long-post.html'),'utf8');
+  assert.deepEqual([...index.matchAll(/class="reading-time">(\d) min read/g)].map(match=>match[1]),['2','1']);
+  assert.match(article,/<div class="byline">.*class="reading-time">2 min read/);
+  assert.match(article,/<section class="shell related"[\s\S]*class="reading-time">1 min read/);
+});

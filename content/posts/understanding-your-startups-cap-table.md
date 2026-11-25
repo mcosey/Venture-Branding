@@ -1,12 +1,12 @@
 ---
-title: "Understanding Your Startup's Cap Table"
+title: "Understanding Your Startup’s Cap Table"
 description: "Understand ownership percentages, employee equity, dilution, and how fundraising changes your startup’s cap table."
 date: "2026-10-14"
 author: "Venture Branding"
-category: "Founders"
+category: "For Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/understanding-your-startups-cap-table.jpg"
+imageAlt: "A laptop displays a spreadsheet titled Cap Table beside a coral notebook."
 ---
 
 When starting a business, founders often focus on how to divide ownership among themselves. But that ownership can change as the company hires employees, raises money, and issues additional equity.
@@ -17,17 +17,17 @@ Understanding your cap table is particularly important before fundraising. A fou
 
 ## 1. What Is a Cap Table?
 
-A cap table summarizes a company's equity ownership. It typically identifies stockholders, the number and types of shares they hold, and their percentage ownership.
+A cap table summarizes a company’s equity ownership. It typically identifies stockholders, the number and types of shares they hold, and their percentage ownership.
 
 As a company grows, its cap table may also track stock options, warrants, convertible securities, and shares reserved for future employee equity awards.
 
 Founders use cap tables to evaluate ownership, understand the effects of proposed investments, and plan equity grants. Investors examine them to identify existing ownership interests and potential dilution.
 
-A cap table should be consistent with the company's legal records, including stock issuance agreements, equity award documentation, and its stock ledger. The cap table itself does not establish that shares were legally issued.
+A cap table should be consistent with the company’s legal records, including stock issuance agreements, equity award documentation, and its stock ledger. The cap table itself does not establish that shares were legally issued.
 
 ## 2. Understanding Shares and Ownership Percentages
 
-A share represents an ownership interest in a corporation. A stockholder's percentage ownership depends on the number of shares held relative to the total shares included in the calculation.
+A share represents an ownership interest in a corporation. A stockholder’s percentage ownership depends on the number of shares held relative to the total shares included in the calculation.
 
 The basic formula is:
 
@@ -41,15 +41,15 @@ Suppose two founders establish a corporation and each receives 4 million shares.
 | Founder B | 4,000,000 | 50% |
 | Total | 8,000,000 | 100% |
 
-Each founder owns half the company's outstanding stock.
+Each founder owns half the company’s outstanding stock.
 
 The absolute number of shares matters less than the percentage they represent. Owning 4 million shares out of 8 million produces the same ownership percentage as owning 400 shares out of 800.
 
 ### Authorized vs. Outstanding Shares
 
-A corporation's *authorized shares* are the shares it is permitted to issue under its certificate of incorporation. *Outstanding shares* are shares that have been issued and remain outstanding.
+A corporation’s *authorized shares* are the shares it is permitted to issue under its certificate of incorporation. *Outstanding shares* are shares that have been issued and remain outstanding.
 
-Suppose the founders' corporation authorized 10 million shares but issued only 8 million.
+Suppose the founders’ corporation authorized 10 million shares but issued only 8 million.
 
 The remaining 2 million shares are authorized but unissued. They do not belong to anyone and are not included when calculating ownership based solely on outstanding shares.
 
@@ -72,7 +72,7 @@ Consider the same two-founder company. It establishes an employee equity incenti
 | Employee equity reserve | 2,000,000 | 20% |
 | Total | 10,000,000 | 100% |
 
-Each founder still owns 50% of the company's 8 million outstanding shares. Under a fully diluted calculation that includes the employee reserve, however, each founder has 40%.
+Each founder still owns 50% of the company’s 8 million outstanding shares. Under a fully diluted calculation that includes the employee reserve, however, each founder has 40%.
 
 No employee has received those reserved shares. The difference comes from including potential future issuances in the calculation.
 
@@ -106,7 +106,7 @@ Suppose the hypothetical company raises $5 million at a $15 million pre-money va
 
 Its post-money valuation would be $20 million.
 
-Assume the financing uses the company's 10 million fully diluted pre-financing shares, including the employee equity reserve, to determine the purchase price. There are no outstanding convertible securities or additional option pool increases.
+Assume the financing uses the company’s 10 million fully diluted pre-financing shares, including the employee equity reserve, to determine the purchase price. There are no outstanding convertible securities or additional option pool increases.
 
 The price per share would be:
 
@@ -122,11 +122,11 @@ For their $5 million investment, the new investors would receive approximately 3
 | New investors | 0% | 25% |
 | Total | 100% | 100% |
 
-The new investors acquire approximately 25% of the company's post-financing fully diluted capitalization. Each founder's percentage decreases from 40% to 30%, even though neither founder sells any shares.
+The new investors acquire approximately 25% of the company’s post-financing fully diluted capitalization. Each founder’s percentage decreases from 40% to 30%, even though neither founder sells any shares.
 
 This is *dilution* : the founders retain the same number of shares, but those shares represent a smaller percentage of the expanded capitalization.
 
-Dilution is not necessarily unfavorable. The company has also received $5 million in new capital. A founder may own a smaller percentage of a more valuable business, although the value of that ownership ultimately depends on the company's performance and the rights attached to its securities.
+Dilution is not necessarily unfavorable. The company has also received $5 million in new capital. A founder may own a smaller percentage of a more valuable business, although the value of that ownership ultimately depends on the company’s performance and the rights attached to its securities.
 
 ## 6. How SAFEs and Convertible Notes Affect Ownership
 
@@ -140,11 +140,11 @@ Because these instruments ordinarily do not immediately issue shares, a cap tabl
 
 ### Why Conversion Matters
 
-Suppose the founders' company raises money through several SAFEs before completing its Series A financing.
+Suppose the founders’ company raises money through several SAFEs before completing its Series A financing.
 
-When those SAFEs convert, investors may receive preferred stock, increasing the company's outstanding shares and diluting existing stockholders.
+When those SAFEs convert, investors may receive preferred stock, increasing the company’s outstanding shares and diluting existing stockholders.
 
-The number of shares depends on the SAFEs' conversion provisions, including their valuation caps or discounts.
+The number of shares depends on the SAFEs’ conversion provisions, including their valuation caps or discounts.
 
 For example, a $500,000 investment under a standard post-money SAFE with a $5 million valuation cap generally corresponds to 10% of the relevant capitalization immediately before the new investment in a subsequent priced financing, assuming the cap-based conversion mechanics apply.
 
@@ -160,11 +160,11 @@ Investors sometimes require startups to expand their option pools before complet
 
 The timing of that expansion matters.
 
-In many venture financings, investors negotiate for the additional option pool shares to be included in the company's pre-money capitalization when determining the purchase price.
+In many venture financings, investors negotiate for the additional option pool shares to be included in the company’s pre-money capitalization when determining the purchase price.
 
 This is commonly called a *pre-money option pool increase* .
 
-Under that arrangement, the additional reserve generally reduces existing stockholders' fully diluted ownership without reducing the new investors' negotiated percentage.
+Under that arrangement, the additional reserve generally reduces existing stockholders’ fully diluted ownership without reducing the new investors’ negotiated percentage.
 
 For example, an investor might offer to invest at a $15 million pre-money valuation but require a larger employee equity reserve as part of the financing.
 
@@ -176,7 +176,7 @@ This is why the employee equity reserve deserves attention alongside valuation w
 
 ## 8. Why Your Cap Table Matters Beyond Fundraising
 
-An accurate cap table is useful throughout a company's development.
+An accurate cap table is useful throughout a company’s development.
 
 When adding a co-founder, it helps illustrate how a proposed equity allocation affects existing ownership. When recruiting employees, it helps the company understand how much equity remains available for future grants. Investors examine capitalization during due diligence to identify outstanding securities, existing owners, and contractual rights to acquire equity.
 
@@ -188,7 +188,7 @@ Venture capital investors frequently hold preferred stock with liquidation prefe
 
 A founder who owns 30% of a company should therefore not assume they will receive 30% of the proceeds from every acquisition.
 
-The outcome depends on the company's capitalization, the rights attached to its securities, and the terms of the transaction.
+The outcome depends on the company’s capitalization, the rights attached to its securities, and the terms of the transaction.
 
 ## 9. Common Cap Table Mistakes
 
@@ -202,11 +202,11 @@ Several misunderstandings can make capitalization records misleading.
 
 **Overlooking option pool increases.** The size and timing of a negotiated equity reserve can change the economics of a financing.
 
-**Assuming ownership percentages remain constant.** New financings, stock issuances, and equity awards may change a founder's percentage ownership.
+**Assuming ownership percentages remain constant.** New financings, stock issuances, and equity awards may change a founder’s percentage ownership.
 
 **Relying on the cap table instead of legal documentation.** Recording shares or options in a spreadsheet does not establish that they were properly authorized or issued.
 
-Founders should maintain accurate capitalization records that remain consistent with the company's legal documentation.
+Founders should maintain accurate capitalization records that remain consistent with the company’s legal documentation.
 
 A cap table provides a useful picture of ownership, but its value depends on understanding the share counts, potential future issuances, and assumptions underlying its percentages.
 

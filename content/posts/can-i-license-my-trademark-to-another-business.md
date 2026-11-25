@@ -5,15 +5,15 @@ date: "2026-11-08"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-license-my-trademark-to-another-business.jpg"
+imageAlt: "Two people comparing navy and cream fabric swatches bearing the same coral emblem."
 ---
 
-Suppose you've built a recognizable brand and another company wants to sell products under its name. Perhaps a manufacturer wants to produce branded merchandise, or a distributor wants to market products using your trademark.
+Suppose you’ve built a recognizable brand and another company wants to sell products under its name. Perhaps a manufacturer wants to produce branded merchandise, or a distributor wants to market products using your trademark.
 
 Can you authorize another company to use your trademark without giving up ownership?
 
-Generally, yes. Trademark owners can permit other businesses to use their marks through licensing arrangements. However, trademark licensing involves important legal considerations, particularly the owner's responsibility to maintain appropriate control over the goods or services associated with the mark.
+Generally, yes. Trademark owners can permit other businesses to use their marks through licensing arrangements. However, trademark licensing involves important legal considerations, particularly the owner’s responsibility to maintain appropriate control over the goods or services associated with the mark.
 
 ## What Is a Trademark License?
 
@@ -45,7 +45,7 @@ Trademarks help consumers identify the commercial source of goods or services. W
 
 Trademark law therefore generally requires owners to maintain appropriate control over the nature and quality of goods or services offered under their licensed marks.
 
-Section 5 of the Lanham Act recognizes that qualifying use by a related company can benefit the trademark owner. Under the statute, related-company status depends on the owner's control over the nature and quality of the goods or services associated with the mark.
+Section 5 of the Lanham Act recognizes that qualifying use by a related company can benefit the trademark owner. Under the statute, related-company status depends on the owner’s control over the nature and quality of the goods or services associated with the mark.
 
 Quality control may involve contractual standards, approval rights, inspections, product reviews, or other forms of oversight appropriate to the commercial relationship.
 
@@ -53,13 +53,13 @@ For example, a company licensing its trademark for apparel might establish requi
 
 The appropriate form of oversight depends on the circumstances. Trademark law does not necessarily require the owner to manufacture the products, provide the services, or personally inspect every item bearing the mark.
 
-However, inadequate quality control can threaten the owner's trademark rights.
+However, inadequate quality control can threaten the owner’s trademark rights.
 
 This issue is commonly described as **naked licensing**.
 
 Naked licensing occurs when a trademark owner permits another party to use its mark without maintaining sufficient control over the associated goods or services. In sufficiently serious circumstances, uncontrolled licensing can result in a finding that the trademark has been abandoned.
 
-A written licensing agreement does not, by itself, establish adequate quality control. Attorneys examine both the parties' contractual rights and how the relationship operates in practice.
+A written licensing agreement does not, by itself, establish adequate quality control. Attorneys examine both the parties’ contractual rights and how the relationship operates in practice.
 
 Not every deficiency in oversight results in abandonment. The legal consequences depend on the circumstances and applicable law.
 
@@ -75,11 +75,11 @@ Section 5 of the Lanham Act permits qualifying related-company use to benefit th
 
 However, common ownership does not necessarily resolve every trademark question. The relevant legal analysis includes which entity owns the mark and whether the owner exercises appropriate control over the nature and quality of the associated goods or services.
 
-Attorneys may therefore examine the companies' relationships, their respective commercial activities, and how trademark use is controlled.
+Attorneys may therefore examine the companies’ relationships, their respective commercial activities, and how trademark use is controlled.
 
 ## What Does a Trademark Licensing Agreement Typically Address?
 
-Trademark licensing agreements generally define the scope of the licensee's permission to use the mark and the parties' respective responsibilities.
+Trademark licensing agreements generally define the scope of the licensee’s permission to use the mark and the parties’ respective responsibilities.
 
 Common provisions address:
 
@@ -95,19 +95,19 @@ Common provisions address:
 
 - **Duration and termination:** How long the license lasts and when it may end.
 
-- **Ownership:** The parties' respective trademark rights and the treatment of authorized use.
+- **Ownership:** The parties’ respective trademark rights and the treatment of authorized use.
 
 Licenses may also establish compensation arrangements, including royalties.
 
-The appropriate terms depend on the commercial relationship and the rights involved. Importantly, the parties' conduct may be as significant as the written terms when evaluating whether the arrangement satisfies trademark law.
+The appropriate terms depend on the commercial relationship and the rights involved. Importantly, the parties’ conduct may be as significant as the written terms when evaluating whether the arrangement satisfies trademark law.
 
 ## Does Licensing My Trademark Affect My Ownership or Registration?
 
 Properly controlled licensing generally allows a trademark owner to retain its rights while authorizing another party to use the mark.
 
-Under Section 5 of the Lanham Act, qualifying use by a related company may *inure to the benefit* of the trademark owner. This means that the licensee's use can be legally attributed to the owner for relevant trademark purposes.
+Under Section 5 of the Lanham Act, qualifying use by a related company may *inure to the benefit* of the trademark owner. This means that the licensee’s use can be legally attributed to the owner for relevant trademark purposes.
 
-For example, qualifying commercial use by a controlled licensee may support an owner's claim of trademark use when establishing or maintaining federal registration rights.
+For example, qualifying commercial use by a controlled licensee may support an owner’s claim of trademark use when establishing or maintaining federal registration rights.
 
 The owner generally remains the proper party to maintain the registration. A licensee does not acquire ownership merely because it has permission to use the trademark.
 
@@ -115,7 +115,7 @@ Whether a particular arrangement preserves ownership or effectively transfers ri
 
 ## How Does a Trademark Attorney Evaluate a Proposed License?
 
-An attorney evaluating a proposed trademark license typically examines the owner's existing rights and the contemplated commercial relationship.
+An attorney evaluating a proposed trademark license typically examines the owner’s existing rights and the contemplated commercial relationship.
 
 The assessment may include identifying the proper trademark owner, reviewing the goods or services associated with the mark, and considering the proposed scope of authorized use.
 
@@ -123,7 +123,7 @@ Particular attention is given to how the trademark owner will maintain appropria
 
 Where affiliated companies are involved, the allocation of trademark ownership and operational control may require additional consideration.
 
-These factors help attorneys evaluate whether a proposed arrangement can accommodate the parties' commercial objectives while preserving the trademark's legal protections.
+These factors help attorneys evaluate whether a proposed arrangement can accommodate the parties’ commercial objectives while preserving the trademark’s legal protections.
 
 ## The Bottom Line
 

@@ -5,11 +5,11 @@ date: "2026-10-23"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-trademark-a-slogan-or-tagline.jpg"
+imageAlt: "A letterpress proof reading You focus on building, beside an ink roller."
 ---
 
-A memorable slogan can become an important part of a company's brand. It might appear beneath a logo, in advertisements, on product packaging, or throughout a website.
+A memorable slogan can become an important part of a company’s brand. It might appear beneath a logo, in advertisements, on product packaging, or throughout a website.
 
 But can a business obtain trademark protection for that slogan?
 
@@ -17,7 +17,7 @@ Potentially, yes.
 
 Under U.S. trademark law, slogans and taglines can qualify for protection. However, not every advertising phrase functions as a trademark, even if a business uses it consistently or considers it an important part of its identity.
 
-The distinction depends on how consumers perceive the phrase in connection with the business's goods or services.
+The distinction depends on how consumers perceive the phrase in connection with the business’s goods or services.
 
 ## What Makes a Slogan a Trademark?
 
@@ -25,15 +25,15 @@ A trademark identifies and distinguishes the commercial source of goods or servi
 
 Consider TempoGarden, a hypothetical productivity software company.
 
-The company adopts the tagline "MAKE ROOM TO GROW" and begins displaying it alongside its name in marketing materials.
+The company adopts the tagline “MAKE ROOM TO GROW” and begins displaying it alongside its name in marketing materials.
 
-The phrase might communicate the benefits of the software, reinforce the company's brand identity, or function as a separate trademark.
+The phrase might communicate the benefits of the software, reinforce the company’s brand identity, or function as a separate trademark.
 
 These possibilities are not mutually exclusive.
 
 The legal question is whether consumers would perceive the phrase as identifying the source of the software or merely as an advertising message.
 
-A slogan does not have to replace a company's primary brand name to function as a trademark. Businesses can use multiple trademarks in connection with the same goods or services.
+A slogan does not have to replace a company’s primary brand name to function as a trademark. Businesses can use multiple trademarks in connection with the same goods or services.
 
 However, choosing a memorable phrase and incorporating it into marketing materials does not independently establish trademark rights.
 
@@ -47,7 +47,7 @@ Several issues arise frequently with advertising phrases.
 
 Some slogans directly describe the characteristics, qualities, or benefits of a product or service.
 
-For example, a software company's tagline might describe its product as "Easy Online Project Management."
+For example, a software company’s tagline might describe its product as “Easy Online Project Management.”
 
 The USPTO may consider a phrase of this nature merely descriptive because it directly communicates information about the services rather than inherently identifying their commercial source.
 
@@ -65,7 +65,7 @@ A separate issue arises when a slogan communicates a familiar message rather tha
 
 The USPTO refers to this as a *failure to function as a trademark*.
 
-For example, the USPTO identifies phrases such as "Think Green" and "Drive Safely" as examples of common messages that consumers may perceive as ordinary sentiments rather than trademarks.
+For example, the USPTO identifies phrases such as “Think Green” and “Drive Safely” as examples of common messages that consumers may perceive as ordinary sentiments rather than trademarks.
 
 The fact that a business uses a familiar phrase in advertising or places it on merchandise does not necessarily change that perception.
 
@@ -73,7 +73,7 @@ This distinction matters because a failure-to-function refusal is not the same a
 
 Where a phrase is incapable of functioning as a trademark because it merely conveys a commonplace informational message, evidence of acquired distinctiveness or an application for the Supplemental Register will not ordinarily overcome the problem.
 
-An attorney evaluating this issue may consider the phrase's meaning, its use by others, and evidence of how consumers encounter it in the marketplace.
+An attorney evaluating this issue may consider the phrase’s meaning, its use by others, and evidence of how consumers encounter it in the marketplace.
 
 ### 3. The Slogan Is Used Only as Decoration
 
@@ -81,7 +81,7 @@ Slogans can also encounter problems when they appear on products primarily as de
 
 Consider a clothing company that prints a motivational phrase across the front of a T-shirt.
 
-Customers may perceive the phrase as part of the shirt's design rather than as a trademark identifying its commercial source.
+Customers may perceive the phrase as part of the shirt’s design rather than as a trademark identifying its commercial source.
 
 The USPTO refers to this as *ornamental use*.
 
@@ -101,7 +101,7 @@ The USPTO considers whether a proposed mark is sufficiently similar to an earlie
 
 This analysis is not limited to identical wording. Differences in phrasing do not necessarily eliminate potential conflicts, particularly when marks convey similar meanings or commercial impressions.
 
-An attorney evaluating a proposed slogan may therefore examine existing trademark rights alongside the slogan's distinctiveness and manner of use.
+An attorney evaluating a proposed slogan may therefore examine existing trademark rights alongside the slogan’s distinctiveness and manner of use.
 
 For more information, see *[How Do I Know If My Trademark Is Available?](how-do-i-know-if-my-trademark-is-available.html)*
 
@@ -111,11 +111,11 @@ It depends on how the slogan is used and the goods or services involved.
 
 Simply including a phrase in an advertisement does not necessarily establish trademark use.
 
-For example, TempoGarden might include "MAKE ROOM TO GROW" within a paragraph describing its productivity platform.
+For example, TempoGarden might include “MAKE ROOM TO GROW” within a paragraph describing its productivity platform.
 
 Consumers may understand the phrase as promotional language rather than as a separate brand identifier.
 
-The analysis may differ if the phrase is presented in a manner that consumers recognize as identifying the source of the company's offerings.
+The analysis may differ if the phrase is presented in a manner that consumers recognize as identifying the source of the company’s offerings.
 
 Federal trademark law also distinguishes between goods and services when evaluating use in commerce.
 
@@ -149,19 +149,19 @@ Yes. A business name and a slogan may function as separate trademarks, even when
 
 Suppose TempoGarden obtains a federal registration for its name.
 
-That registration does not automatically establish a separate federal registration for "MAKE ROOM TO GROW."
+That registration does not automatically establish a separate federal registration for “MAKE ROOM TO GROW.”
 
 Similarly, registering a combined mark containing both a company name and tagline is not necessarily equivalent to separately registering each element.
 
 The scope of protection depends on the registered mark, the relevant goods or services, and other applicable legal considerations.
 
-An attorney evaluating a company's branding may examine whether its tagline functions independently as a trademark, how it appears alongside the primary brand, and the scope of any existing registrations.
+An attorney evaluating a company’s branding may examine whether its tagline functions independently as a trademark, how it appears alongside the primary brand, and the scope of any existing registrations.
 
 ## How Does a Trademark Attorney Evaluate a Slogan?
 
 Evaluating a slogan involves more than determining whether its wording is original or memorable.
 
-An attorney may examine the phrase's meaning, its relationship to the relevant goods or services, and whether similar language is commonly used by other businesses or the public.
+An attorney may examine the phrase’s meaning, its relationship to the relevant goods or services, and whether similar language is commonly used by other businesses or the public.
 
 The analysis may also involve reviewing how the slogan appears in advertising, on products, and alongside other branding.
 
@@ -177,6 +177,6 @@ The USPTO may refuse registration when a slogan is merely descriptive, conveys a
 
 The central consideration is whether consumers perceive the phrase as identifying the commercial source of particular goods or services rather than simply communicating an advertising message.
 
-Trademark protection therefore depends on the slogan's legal characteristics and commercial use, not merely its creativity or marketing appeal.
+Trademark protection therefore depends on the slogan’s legal characteristics and commercial use, not merely its creativity or marketing appeal.
 
 *This article provides general educational information about U.S. trademark law. It does not constitute legal advice or establish an attorney-client relationship. Whether a particular slogan qualifies for trademark protection depends on the relevant facts and applicable law.*

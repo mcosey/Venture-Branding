@@ -5,19 +5,19 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-trademark-a-name-that-someone-else-has-abandoned.jpg"
+imageAlt: "A weathered storefront sign with traces of its former lettering."
 ---
 
-Suppose you've settled on a name for your business. While searching the U.S. Patent and Trademark Office (USPTO) database, you discover that another company previously registered the same name. However, the registration is now marked as "DEAD."
+Suppose you’ve settled on a name for your business. While searching the U.S. Patent and Trademark Office (USPTO) database, you discover that another company previously registered the same name. However, the registration is now marked as “DEAD.”
 
 Does that mean the name is available for your business to use and register?
 
 Possibly. A trademark that has genuinely been abandoned may become available for another business to adopt. However, an abandoned application or expired federal registration does not necessarily mean that the previous owner has lost its underlying trademark rights.
 
-## What Does It Mean When a Trademark Is Listed as "Dead"?
+## What Does It Mean When a Trademark Is Listed as “Dead”?
 
-When searching the USPTO database, you may encounter trademark records designated as either "LIVE" or "DEAD."
+When searching the USPTO database, you may encounter trademark records designated as either “LIVE” or “DEAD.”
 
 A dead record indicates that an application or registration is no longer active. This can occur for several reasons, including missed application deadlines, failure to submit required maintenance filings, or voluntary abandonment.
 
@@ -75,11 +75,11 @@ Trademark rights may have been transferred to another company through an acquisi
 
 A notable example involved the LEHMAN BROTHERS trademark.
 
-Following Lehman Brothers' bankruptcy in 2008, Barclays acquired certain businesses and assets, including the LEHMAN BROTHERS trademarks. Barclays subsequently allowed the acquired U.S. trademark registrations to expire.
+Following Lehman Brothers’ bankruptcy in 2008, Barclays acquired certain businesses and assets, including the LEHMAN BROTHERS trademarks. Barclays subsequently allowed the acquired U.S. trademark registrations to expire.
 
 When an unrelated company later sought to register LEHMAN BROTHERS for alcoholic beverages and restaurant services, a dispute arose over whether the earlier trademark had been abandoned.
 
-In *Tiger Lily Ventures Ltd. v. Barclays Capital Inc.* (2022), the U.S. Court of Appeals for the Federal Circuit upheld a finding that the trademark had not been abandoned. The evidence included continued licensed use of the mark in connection with financial activities undertaken while winding down a Lehman Brothers affiliate, as well as Barclays' own continued use.
+In *Tiger Lily Ventures Ltd. v. Barclays Capital Inc.* (2022), the U.S. Court of Appeals for the Federal Circuit upheld a finding that the trademark had not been abandoned. The evidence included continued licensed use of the mark in connection with financial activities undertaken while winding down a Lehman Brothers affiliate, as well as Barclays’ own continued use.
 
 The case illustrates why the disappearance of a business from its traditional marketplace does not necessarily extinguish its trademark rights.
 
@@ -89,11 +89,11 @@ Generally, yes. A genuinely abandoned trademark may become available for another
 
 However, other businesses may have independently established rights in identical or similar marks. The proposed trademark must also satisfy ordinary registration requirements, including those concerning distinctiveness and likelihood of confusion.
 
-A business adopting an abandoned trademark generally establishes new trademark rights rather than inheriting the former owner's historical rights or priority.
+A business adopting an abandoned trademark generally establishes new trademark rights rather than inheriting the former owner’s historical rights or priority.
 
-For example, a company adopting a previously abandoned brand name ordinarily cannot claim the original owner's decades of commercial use as its own.
+For example, a company adopting a previously abandoned brand name ordinarily cannot claim the original owner’s decades of commercial use as its own.
 
-The new owner's rights generally depend on its own qualifying use and applicable trademark priority rules.
+The new owner’s rights generally depend on its own qualifying use and applicable trademark priority rules.
 
 ## What If Consumers Still Recognize the Previous Brand?
 
@@ -101,7 +101,7 @@ Some discontinued brands remain recognizable long after their products or servic
 
 Consumers may remember the former brand or assume that newly introduced products bearing the name are connected with the original business.
 
-Continued public recognition does not, by itself, prevent legal abandonment. However, the circumstances surrounding a former brand's reputation may raise additional legal questions, particularly if a new business markets its products in a manner that falsely suggests a connection with the former owner.
+Continued public recognition does not, by itself, prevent legal abandonment. However, the circumstances surrounding a former brand’s reputation may raise additional legal questions, particularly if a new business markets its products in a manner that falsely suggests a connection with the former owner.
 
 These issues can be particularly relevant when a business seeks to revive a historically recognizable brand.
 
@@ -129,6 +129,6 @@ An abandoned trademark may become available for another business to use and regi
 
 Even three consecutive years of nonuse create a rebuttable presumption rather than conclusively establishing that trademark rights have been lost.
 
-Whether a previously used trademark is available depends on the circumstances surrounding its use, the former owner's rights, and other applicable trademark requirements.
+Whether a previously used trademark is available depends on the circumstances surrounding its use, the former owner’s rights, and other applicable trademark requirements.
 
 *This article provides general educational information about U.S. trademark law. It does not constitute legal advice and does not create an attorney-client relationship.*

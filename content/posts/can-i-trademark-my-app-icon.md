@@ -5,11 +5,11 @@ date: "2026-11-08"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-trademark-my-app-icon.jpg"
+imageAlt: "A smartphone displaying a coral app icon with three cream shapes beside two pencil sketches."
 ---
 
-Suppose you've developed a mobile application and created a distinctive icon for it. After launching on the Apple App Store or Google Play, users begin recognizing your application by its icon, sometimes without reading its name.
+Suppose you’ve developed a mobile application and created a distinctive icon for it. After launching on the Apple App Store or Google Play, users begin recognizing your application by its icon, sometimes without reading its name.
 
 Can you register that icon as a trademark?
 
@@ -21,7 +21,7 @@ However, not every app icon qualifies for registration. Its design, distinctiven
 
 Federal trademark law permits the registration of qualifying words, symbols, designs, and combinations of these elements.
 
-An app icon can serve as a visual identifier that helps consumers recognize a particular software product or service. An icon does not need to contain words to qualify for protection, and a distinctive graphical design may function as a trademark independently of the application's name.
+An app icon can serve as a visual identifier that helps consumers recognize a particular software product or service. An icon does not need to contain words to qualify for protection, and a distinctive graphical design may function as a trademark independently of the application’s name.
 
 Merely creating an icon or displaying it in an app store, however, does not guarantee registration. The icon must satisfy applicable trademark requirements, including functioning as an indicator of commercial source.
 
@@ -31,7 +31,7 @@ The USPTO evaluates several considerations when determining whether a design qua
 
 **Distinctiveness**
 
-A trademark must be capable of distinguishing one business's goods or services from those of others.
+A trademark must be capable of distinguishing one business’s goods or services from those of others.
 
 An unusual graphical design may qualify for protection because consumers perceive it as identifying a particular commercial source. Commonplace imagery or designs that merely describe the associated goods or services may face greater registration challenges.
 
@@ -53,15 +53,15 @@ The USPTO may refuse registration if an icon is likely to cause confusion with a
 
 Two designs need not be identical to create potential confusion. The analysis may consider their overall commercial impressions and the goods or services associated with them.
 
-An icon may therefore be distinctive yet encounter registration obstacles because of another party's existing rights.
+An icon may therefore be distinctive yet encounter registration obstacles because of another party’s existing rights.
 
-## Is Trademarking My App Icon Different From Trademarking My App's Name?
+## Is Trademarking My App Icon Different From Trademarking My App’s Name?
 
-Yes. An application's name and icon are separate branding elements, even when consumers associate both with the same product.
+Yes. An application’s name and icon are separate branding elements, even when consumers associate both with the same product.
 
 A mobile application may use a written name, a graphical icon, and a combined logo incorporating both.
 
-Registering an application's name in standard characters does not necessarily provide independent registration protection for its graphical icon. Likewise, registering an icon does not automatically protect the application's name apart from the registered design.
+Registering an application’s name in standard characters does not necessarily provide independent registration protection for its graphical icon. Likewise, registering an icon does not automatically protect the application’s name apart from the registered design.
 
 The USPTO generally requires a special-form drawing when an application seeks registration of a graphical design. A standard-character drawing, by contrast, identifies wording without limiting it to a particular font or stylization.
 
@@ -85,7 +85,7 @@ For additional discussion, see *[Can I Use AI to Create My Business Logo? The Le
 
 ## How Do I Establish Trademark Use for an App Icon?
 
-Federal trademark registration generally requires qualifying use of the mark in commerce, although the evidence required before registration depends on the application's filing basis.
+Federal trademark registration generally requires qualifying use of the mark in commerce, although the evidence required before registration depends on the application’s filing basis.
 
 For use-based applications, the USPTO generally requires a **specimen**, which shows how the trademark actually appears in connection with the identified goods or services.
 
@@ -99,7 +99,7 @@ For downloadable software, potentially acceptable specimens include:
 
 Whether a particular specimen is acceptable depends on how the icon appears and whether it demonstrates qualifying trademark use.
 
-For example, an app-store listing may show the icon alongside the application's name, description, and download option, establishing a connection between the design and the software offered to consumers.
+For example, an app-store listing may show the icon alongside the application’s name, description, and download option, establishing a connection between the design and the software offered to consumers.
 
 By contrast, an isolated image of an icon generally does not demonstrate actual trademark use in commerce. It identifies the proposed design without showing how consumers encounter it in connection with the relevant goods or services.
 
@@ -133,9 +133,9 @@ App icons frequently evolve as businesses update their branding.
 
 However, a federal trademark registration identifies a particular mark, and changes to that design may affect the registration.
 
-Minor modifications may preserve the original mark's essential commercial impression. More substantial changes may constitute a **material alteration**, potentially requiring a new application rather than an amendment to an existing registration.
+Minor modifications may preserve the original mark’s essential commercial impression. More substantial changes may constitute a **material alteration**, potentially requiring a new application rather than an amendment to an existing registration.
 
-For example, modest adjustments to an icon's appearance may present different legal considerations than replacing its central graphical design with an entirely different image.
+For example, modest adjustments to an icon’s appearance may present different legal considerations than replacing its central graphical design with an entirely different image.
 
 Material changes may also affect whether continued use of a redesigned icon supports maintenance of an existing registration.
 
@@ -151,14 +151,14 @@ The analysis also considers the goods or services associated with the icon, how 
 
 Ownership may warrant additional attention when a third-party designer or generative AI tools were involved in creating the artwork.
 
-These considerations help determine whether the icon qualifies for registration and how its protection relates to the application's broader branding.
+These considerations help determine whether the icon qualifies for registration and how its protection relates to the application’s broader branding.
 
 ## The Bottom Line
 
-App icons can qualify for federal trademark registration independently of an application's name.
+App icons can qualify for federal trademark registration independently of an application’s name.
 
-Eligibility depends on the icon's distinctiveness, its function as a source identifier, and compliance with applicable trademark requirements.
+Eligibility depends on the icon’s distinctiveness, its function as a source identifier, and compliance with applicable trademark requirements.
 
-Because app icons can serve both artistic and branding purposes, copyright and trademark considerations may overlap. Understanding those distinctions is important when evaluating protection for an application's visual identity.
+Because app icons can serve both artistic and branding purposes, copyright and trademark considerations may overlap. Understanding those distinctions is important when evaluating protection for an application’s visual identity.
 
 *This article provides general educational information about U.S. trademark law. It does not constitute legal advice and does not create an attorney-client relationship.*

@@ -5,9 +5,11 @@ date: "2026-10-13"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
+image: "images/blog/what-does-use-in-commerce-mean-for-a-trademark.jpg"
+imageAlt: "A shopkeeper hands a paper shopping bag to a customer across a counter."
 ---
 
-You've chosen a name for your business, registered a domain, and launched a website. You may even have a product ready for testing.
+You’ve chosen a name for your business, registered a domain, and launched a website. You may even have a product ready for testing.
 
 But have you actually begun using your trademark in commerce?
 
@@ -51,7 +53,7 @@ However, advertising services that the company has not yet begun providing gener
 
 The distinction is particularly relevant to software businesses. Downloadable applications are generally treated as goods, while software as a service (SaaS) is generally classified as a service.
 
-## Does Having a Website Mean You're Using Your Trademark?
+## Does Having a Website Mean You’re Using Your Trademark?
 
 Consider TempoGarden, a hypothetical startup developing productivity software.
 
@@ -77,7 +79,7 @@ For example, distributing downloadable software without charge can potentially e
 
 Similarly, offering a free online service or public beta may constitute qualifying use even before paid subscriptions become available.
 
-The USPTO recognizes that a functioning website labeled "beta" may demonstrate actual trademark use. The beta designation alone does not determine whether the use qualifies.
+The USPTO recognizes that a functioning website labeled “beta” may demonstrate actual trademark use. The beta designation alone does not determine whether the use qualifies.
 
 An attorney evaluating a beta launch may examine whether the product or service is genuinely available to outside users, whether services are actually being rendered, how the trademark identifies the offering, and whether the activity is consistent with ordinary commercial practices.
 
@@ -99,7 +101,7 @@ For example, a restaurant operating in one state may serve interstate travelers.
 
 Whether particular activities satisfy the federal commerce requirement depends on the circumstances.
 
-A trademark attorney therefore examines the business's actual commercial activity rather than assuming that having only one physical location determines eligibility.
+A trademark attorney therefore examines the business’s actual commercial activity rather than assuming that having only one physical location determines eligibility.
 
 ## How Does Use in Commerce Affect When You Can File?
 
@@ -157,7 +159,7 @@ Under the Lanham Act, three consecutive years of nonuse constitutes prima facie 
 
 A company that discontinues a product or service may therefore need to consider the implications for its trademark rights.
 
-We'll explore these obligations in *How Do I Maintain My Trademark Registration?*
+We’ll explore these obligations in *How Do I Maintain My Trademark Registration?*
 
 ## The Bottom Line
 

@@ -1,15 +1,15 @@
 ---
-title: "What's the Difference Between ™, SM, and ®?"
+title: "What’s the Difference Between ™, SM, and ®?"
 description: "Understand what ™, ℠, and ® communicate, when federal registration permits use of ®, and how trademark notice affects a business."
 date: "2026-10-23"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/whats-the-difference-between-tm-sm-and-r.jpg"
+imageAlt: "Three letterpress cards displaying TM, SM, and a circled R."
 ---
 
-You've probably noticed the small symbols appearing beside business names, logos, and product brands: ™, SM, and ®.
+You’ve probably noticed the small symbols appearing beside business names, logos, and product brands: ™, SM, and ®.
 
 They look similar, but they communicate different things about a trademark.
 
@@ -123,7 +123,7 @@ However, improper use does not automatically constitute fraud.
 
 The USPTO distinguishes mistakes or misunderstandings from deliberate misuse intended to deceive or mislead the public or the agency.
 
-The consequences depend on the circumstances, including the mark's registration status, the goods or services involved, and whether the improper use was intentional.
+The consequences depend on the circumstances, including the mark’s registration status, the goods or services involved, and whether the improper use was intentional.
 
 An attorney evaluating the issue may also consider whether the symbol appears in evidence submitted with a pending trademark application.
 

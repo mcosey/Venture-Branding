@@ -3,19 +3,19 @@ title: "Business Tax Documents: Entity Elections, Employment Taxes, and Equity C
 description: "Explore tax classification elections, employment tax forms, equity compensation documents, valuations, and filing extensions."
 date: "2026-11-21"
 author: "Venture Branding"
-category: "Founders"
+category: "For Founders"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/business-tax-documents-entity-elections-employment-taxes-and-equity-compensation.jpg"
+imageAlt: "Three folders labeled Elections, Payroll, and Equity."
 ---
 
 As a business grows, hiring employees, changing its tax classification, and issuing equity compensation can introduce tax documents that founders may not encounter during formation.
 
 Understanding these documents can help founders recognize the tax implications of certain business decisions and communicate more effectively with their attorneys, accountants, and payroll providers.
 
-## 1. Changing Your Company's Tax Classification
+## 1. Changing Your Company’s Tax Classification
 
-A company's legal structure does not necessarily determine its federal income tax classification.
+A company’s legal structure does not necessarily determine its federal income tax classification.
 
 A domestic single-member LLC is generally disregarded as separate from its owner for federal income tax purposes, while a domestic multi-member LLC is generally taxed as a partnership. Eligible entities may elect different tax treatment.
 
@@ -53,7 +53,7 @@ For example, S corporations generally cannot:
 
 These restrictions are particularly relevant to startups seeking institutional venture capital, where investors frequently invest through partnerships and receive preferred stock.
 
-Tax professionals evaluating an S corporation election typically consider the company's financial circumstances, ownership structure, and anticipated financing activities.
+Tax professionals evaluating an S corporation election typically consider the company’s financial circumstances, ownership structure, and anticipated financing activities.
 
 ## 2. Tax Documents Associated With Hiring Employees
 
@@ -64,7 +64,7 @@ Several federal tax documents are associated with these responsibilities.
 | **Document** | **Purpose** |
 | --- | --- |
 | **Form W-4** | Provides employee information used to determine federal income tax withholding. |
-| **Form W-2** | Reports an employee's annual wages, other reportable compensation, and applicable tax withholding. |
+| **Form W-2** | Reports an employee’s annual wages, other reportable compensation, and applicable tax withholding. |
 | **Form W-3** | Summarizes W-2 information submitted to the Social Security Administration. |
 | **Form 941** | Generally reports quarterly federal employment taxes, including federal income tax withholding and applicable Social Security and Medicare taxes. |
 | **Form 944** | Allows certain employers authorized by the IRS to report employment taxes annually instead of filing quarterly Forms 941. |
@@ -78,7 +78,7 @@ Payroll providers commonly assist businesses with these responsibilities. Employ
 
 ## 3. Paying Yourself as a Founder
 
-The way a founder receives compensation depends partly on the company's tax classification.
+The way a founder receives compensation depends partly on the company’s tax classification.
 
 An individual who owns a disregarded single-member LLC generally is not treated as an employee of that LLC for federal employment tax purposes. Similarly, members of an LLC taxed as a partnership generally are not employees of the partnership.
 
@@ -88,7 +88,7 @@ Special considerations arise for S corporation shareholder-employees. Where shar
 
 The IRS may recharacterize distributions as wages when those payments represent compensation for services, potentially resulting in additional employment tax obligations.
 
-Accountants and tax attorneys evaluate founder compensation based on the company's tax classification, the founder's responsibilities, and the nature of the payments.
+Accountants and tax attorneys evaluate founder compensation based on the company’s tax classification, the founder’s responsibilities, and the nature of the payments.
 
 ## 4. Tax Documents Associated With Equity Compensation
 
@@ -100,13 +100,13 @@ Section 83 of the Internal Revenue Code generally governs the taxation of proper
 
 When a founder receives stock subject to certain vesting or forfeiture restrictions, compensation income may ordinarily be recognized as those restrictions lapse.
 
-A Section 83(b) election allows the recipient to recognize applicable compensation income at the time of transfer instead. The amount generally equals the property's fair market value, determined under the applicable rules, less any amount paid for it.
+A Section 83(b) election allows the recipient to recognize applicable compensation income at the time of transfer instead. The amount generally equals the property’s fair market value, determined under the applicable rules, less any amount paid for it.
 
 The IRS provides Form 15620 for making this election, although a written statement satisfying the applicable requirements may also be used.
 
 The election generally must be filed within 30 days after the property is transferred.
 
-Its consequences depend on the property's value, the purchase price, the applicable restrictions, and subsequent events. For example, a recipient who makes the election and later forfeits the stock generally cannot recover the tax paid on the compensation income previously recognized.
+Its consequences depend on the property’s value, the purchase price, the applicable restrictions, and subsequent events. For example, a recipient who makes the election and later forfeits the stock generally cannot recover the tax paid on the compensation income previously recognized.
 
 Not every equity grant is eligible for an 83(b) election. Merely receiving an unexercised stock option generally does not create an opportunity to make the election.
 
@@ -132,15 +132,15 @@ Although less commonly encountered by early-stage startups, the form may become 
 
 A Section 409A valuation is not an IRS tax form. It is a valuation commonly obtained by privately held companies to establish the fair market value of their common stock for compensation purposes.
 
-Section 409A of the Internal Revenue Code regulates certain nonqualified deferred compensation arrangements. Stock options granted with exercise prices below the underlying stock's fair market value may become subject to its requirements.
+Section 409A of the Internal Revenue Code regulates certain nonqualified deferred compensation arrangements. Stock options granted with exercise prices below the underlying stock’s fair market value may become subject to its requirements.
 
 Startups frequently obtain independent valuations to support their stock option pricing. An independent appraisal satisfying applicable regulatory requirements may also provide a presumption that the valuation is reasonable.
 
-A company's 409A valuation may differ substantially from its most recent venture financing valuation.
+A company’s 409A valuation may differ substantially from its most recent venture financing valuation.
 
 For example, venture investors may purchase preferred stock carrying liquidation preferences and other economic rights that common stock does not possess. The price investors pay for preferred stock therefore does not necessarily establish the fair market value of common stock.
 
-Companies generally cannot rely on a valuation calculated more than 12 months earlier. Material developments affecting the company's value, such as a new financing, may make an existing valuation outdated sooner.
+Companies generally cannot rely on a valuation calculated more than 12 months earlier. Material developments affecting the company’s value, such as a new financing, may make an existing valuation outdated sooner.
 
 ## 6. Tax Filing Extensions
 
@@ -151,7 +151,7 @@ Two commonly encountered federal tax extension forms are:
 | **Form 7004** | Requests an automatic extension of time to file certain business income tax and information returns. |
 | **Form 4868** | Requests an automatic extension of time to file an individual federal income tax return. |
 
-A business's filing extension does not necessarily extend its owners' personal filing deadlines.
+A business’s filing extension does not necessarily extend its owners’ personal filing deadlines.
 
 For example, a partnership may obtain an extension for its Form 1065, while its individual partners may separately require extensions for their personal income tax returns.
 
@@ -165,12 +165,12 @@ Certain business activities may introduce more specialized tax documents.
 | --- | --- |
 | **Form 6765** | Calculates and reports the federal research credit for qualifying research activities. |
 | **Form 4562** | Reports certain depreciation and amortization deductions associated with business property. |
-| **Form W-8BEN** | Documents a foreign individual's status for applicable U.S. tax withholding and reporting purposes. |
-| **Form W-8BEN-E** | Documents a foreign entity's status for applicable U.S. tax withholding and reporting purposes. |
+| **Form W-8BEN** | Documents a foreign individual’s status for applicable U.S. tax withholding and reporting purposes. |
+| **Form W-8BEN-E** | Documents a foreign entity’s status for applicable U.S. tax withholding and reporting purposes. |
 
 For example, a company engaging foreign service providers may encounter W-8 forms, while a technology company conducting qualifying research may encounter Form 6765.
 
-The applicability of these documents depends on the nature of the company's activities, transactions, and tax obligations.
+The applicability of these documents depends on the nature of the company’s activities, transactions, and tax obligations.
 
 ## Conclusion
 

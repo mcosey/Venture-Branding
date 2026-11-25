@@ -5,11 +5,11 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-trademark-my-personal-name.jpg"
+imageAlt: "A stack of business cards with Your Name printed on the top card."
 ---
 
-Suppose you're launching a consulting practice, clothing brand, or other business under your personal name. Because the name is your own, you might assume that you can register it as a trademark and prevent others from using it commercially.
+Suppose you’re launching a consulting practice, clothing brand, or other business under your personal name. Because the name is your own, you might assume that you can register it as a trademark and prevent others from using it commercially.
 
 Personal names can qualify for trademark protection, but having a particular legal name does not automatically establish trademark rights. Federal trademark law also imposes certain additional requirements that may affect registration.
 
@@ -19,7 +19,7 @@ Yes. A personal name may function as a trademark when it identifies and distingu
 
 Potentially protectable designations include first names, surnames, full personal names, stage names, and professional pseudonyms.
 
-For example, a person's name appearing in a company biography may simply identify the individual. The same name prominently displayed as the brand of a clothing line may identify the commercial source of those products.
+For example, a person’s name appearing in a company biography may simply identify the individual. The same name prominently displayed as the brand of a clothing line may identify the commercial source of those products.
 
 Personal-name trademarks remain subject to ordinary trademark requirements, including those concerning distinctiveness and likelihood of confusion with existing marks.
 
@@ -43,7 +43,7 @@ When evaluating a proposed trademark, the U.S. Patent and Trademark Office (USPT
 
 - Whether distinctive lettering or design elements create a separate commercial impression.
 
-For example, "King" is both a surname and a commonly understood word with an independent meaning. Its status as a surname does not necessarily establish that consumers primarily perceive it as one.
+For example, “King” is both a surname and a commonly understood word with an independent meaning. Its status as a surname does not necessarily establish that consumers primarily perceive it as one.
 
 The USPTO evaluates the proposed trademark as a whole, considering its significance to the relevant purchasing public.
 
@@ -67,7 +67,7 @@ In appropriate circumstances, the USPTO may accept evidence of substantially exc
 
 Five years of use does not automatically establish acquired distinctiveness or guarantee registration. The USPTO may require additional evidence.
 
-A surname that has not yet acquired distinctiveness may qualify for registration on the Supplemental Register if it is already in lawful use in commerce, is capable of distinguishing the applicant's goods or services, and satisfies other applicable requirements.
+A surname that has not yet acquired distinctiveness may qualify for registration on the Supplemental Register if it is already in lawful use in commerce, is capable of distinguishing the applicant’s goods or services, and satisfies other applicable requirements.
 
 The Supplemental Register provides certain benefits of federal registration, although it does not offer all the protections associated with the Principal Register.
 
@@ -75,7 +75,7 @@ The Supplemental Register provides certain benefits of federal registration, alt
 
 A full personal name generally does not face a surname refusal merely because it contains a surname.
 
-For example, a proposed trademark consisting of "Eleanor Bennett" may be evaluated differently from one consisting solely of "Bennett."
+For example, a proposed trademark consisting of “Eleanor Bennett” may be evaluated differently from one consisting solely of “Bennett.”
 
 However, adding initials, professional titles, or descriptive business terms to a surname does not necessarily overcome a surname refusal.
 
@@ -83,15 +83,15 @@ Full personal names must also satisfy other registration requirements, including
 
 ## Do I Need to Consent to the Registration of My Own Name?
 
-Section 2(c) of the Lanham Act generally prohibits federal registration of a trademark containing a name, portrait, or signature identifying a particular living individual without that individual's written consent.
+Section 2(c) of the Lanham Act generally prohibits federal registration of a trademark containing a name, portrait, or signature identifying a particular living individual without that individual’s written consent.
 
-This requirement may extend beyond an individual's full legal name to include nicknames, stage names, pseudonyms, and other designations identifying that person.
+This requirement may extend beyond an individual’s full legal name to include nicknames, stage names, pseudonyms, and other designations identifying that person.
 
 The USPTO generally presumes consent when the individual identified in the trademark personally signs the application. This may apply even when a business entity is the applicant.
 
 For example, suppose Eleanor Bennett establishes a corporation that applies to register ELEANOR BENNETT as a trademark for clothing. If Eleanor personally signs the application as an authorized representative of the corporation, her consent may be presumed. If another authorized representative signs on her behalf, separate written consent may be required.
 
-Consent to commercial use of someone's name is distinct from consent to register that name as a trademark. Permission to use a name does not necessarily satisfy the registration requirement.
+Consent to commercial use of someone’s name is distinct from consent to register that name as a trademark. Permission to use a name does not necessarily satisfy the registration requirement.
 
 An applicable consent requirement cannot be overcome by establishing acquired distinctiveness or seeking registration on the Supplemental Register.
 
@@ -105,15 +105,15 @@ Different considerations arise when a business attempts to register a trademark 
 
 In addition to the consent requirement under Section 2(c), Section 2(a) of the Lanham Act prohibits registration of marks that falsely suggest a connection with another person.
 
-Unauthorized commercial use of someone's identity may also implicate federal false-endorsement principles or state right-of-publicity laws. These protections may apply even when the identified individual has not registered their name as a trademark.
+Unauthorized commercial use of someone’s identity may also implicate federal false-endorsement principles or state right-of-publicity laws. These protections may apply even when the identified individual has not registered their name as a trademark.
 
 ## Can a Trademark Prevent Me From Using My Own Name?
 
 Having a particular legal name does not provide an unrestricted right to use it as a commercial brand.
 
-For example, suppose two unrelated individuals with the surname Bennett operate businesses selling similar clothing products. If one business has established enforceable trademark rights in the name, the other's commercial use may raise likelihood-of-confusion concerns.
+For example, suppose two unrelated individuals with the surname Bennett operate businesses selling similar clothing products. If one business has established enforceable trademark rights in the name, the other’s commercial use may raise likelihood-of-confusion concerns.
 
-Section 33(b)(4) of the Lanham Act recognizes a defense for certain uses of an individual's own name in business when the name is used otherwise than as a trademark.
+Section 33(b)(4) of the Lanham Act recognizes a defense for certain uses of an individual’s own name in business when the name is used otherwise than as a trademark.
 
 The defense does not automatically protect someone who adopts their personal name as a competing brand.
 
@@ -123,17 +123,17 @@ How the name appears in advertising, on products, or in other commercial materia
 
 The individual identified by a trademark is not necessarily its owner.
 
-A business entity may own a trademark incorporating its founder's name. Alternatively, an individual may own the trademark and authorize a business to use it through a licensing arrangement.
+A business entity may own a trademark incorporating its founder’s name. Alternatively, an individual may own the trademark and authorize a business to use it through a licensing arrangement.
 
 These arrangements can have significant implications when a founder leaves the business or sells the company.
 
 A notable example involves fashion designer Joseph Abboud, who sold the trademark rights associated with his name. When he later developed another clothing line, a dispute arose over whether he could use his personal name to promote the new business.
 
-In *JA Apparel Corp. v. Abboud* (2009), the U.S. Court of Appeals for the Second Circuit concluded that the sale agreement did not unambiguously transfer all of Abboud's rights to use his name commercially and returned the case to the lower court for further proceedings.
+In *JA Apparel Corp. v. Abboud* (2009), the U.S. Court of Appeals for the Second Circuit concluded that the sale agreement did not unambiguously transfer all of Abboud’s rights to use his name commercially and returned the case to the lower court for further proceedings.
 
-The dispute illustrates why the scope of a trademark transfer and the individual's retained rights can be important when selling a business built around a personal name.
+The dispute illustrates why the scope of a trademark transfer and the individual’s retained rights can be important when selling a business built around a personal name.
 
-Attorneys evaluating these arrangements may consider trademark ownership, licensing and quality control, consent to registration, and contractual provisions governing future commercial use of the individual's name.
+Attorneys evaluating these arrangements may consider trademark ownership, licensing and quality control, consent to registration, and contractual provisions governing future commercial use of the individual’s name.
 
 ## How Does a Trademark Attorney Evaluate a Personal-Name Trademark?
 
@@ -151,7 +151,7 @@ An attorney evaluating a proposed personal-name trademark may consider:
 
 - Ownership and licensing arrangements.
 
-Where a business is built around a founder's personal identity, the attorney may also consider how these arrangements could affect the founder's ability to use their name following a departure or sale.
+Where a business is built around a founder’s personal identity, the attorney may also consider how these arrangements could affect the founder’s ability to use their name following a departure or sale.
 
 ## The Bottom Line
 
@@ -159,6 +159,6 @@ Personal names can qualify for trademark protection when used to identify the co
 
 Surnames may require evidence of acquired distinctiveness for registration on the Principal Register, while trademarks identifying particular living individuals are subject to applicable consent requirements.
 
-For businesses built around personal names, trademark ownership can also affect the individual's future commercial use of their name, particularly following an ownership transfer.
+For businesses built around personal names, trademark ownership can also affect the individual’s future commercial use of their name, particularly following an ownership transfer.
 
 *This article provides general educational information about U.S. trademark law. It does not constitute legal advice and does not create an attorney-client relationship.*

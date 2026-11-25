@@ -5,6 +5,8 @@ date: "2026-10-13"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
+image: "images/blog/what-is-a-trademark-specimen.jpg"
+imageAlt: "A cream label reading Venture Branding is stitched inside the neck of a navy shirt."
 ---
 
 When applying for federal trademark registration, you may be required to submit a *trademark specimen*.
@@ -57,7 +59,7 @@ A service mark specimen may consist of advertising, a website, promotional mater
 
 The specimen must demonstrate a *direct association* between the mark and the identified services.
 
-For example, a consulting firm's website might display its trademark alongside a description of the consulting services it provides.
+For example, a consulting firm’s website might display its trademark alongside a description of the consulting services it provides.
 
 A trademark appearing on an unrelated webpage, without an adequate connection to the services identified in the application, may not satisfy the requirement.
 
@@ -103,7 +105,7 @@ The distinction is between a genuine photograph or screenshot documenting market
 
 ### Do Website Specimens Need a URL and Date?
 
-Yes. The USPTO requires webpage specimens to include the page's URL and the date it was accessed or printed.
+Yes. The USPTO requires webpage specimens to include the page’s URL and the date it was accessed or printed.
 
 That information can appear on the specimen itself or be supplied in the appropriate fields or verified response materials, as applicable.
 
@@ -111,7 +113,7 @@ Because websites can change, these requirements help document the source and tim
 
 ## When Must a Trademark Specimen Be Submitted?
 
-The timing depends on the application's filing basis.
+The timing depends on the application’s filing basis.
 
 ### Use-Based Applications
 
@@ -123,11 +125,11 @@ The specimen must reflect qualifying use that existed by the application filing 
 
 Applicants filing under Section 1(b) generally submit specimens later, after establishing qualifying use.
 
-Depending on the application's stage, this occurs through an Amendment to Allege Use or a Statement of Use.
+Depending on the application’s stage, this occurs through an Amendment to Allege Use or a Statement of Use.
 
 The USPTO generally requires at least one acceptable specimen per class, although a single specimen may sometimes support multiple classes.
 
-Submitting one specimen per class does not eliminate the requirement that the applicant's use allegations be supportable for the goods or services claimed in that class.
+Submitting one specimen per class does not eliminate the requirement that the applicant’s use allegations be supportable for the goods or services claimed in that class.
 
 For more information about filing before launch, see *[Can I Trademark My Business Name Before Launching?](can-i-trademark-my-business-name-before-launching.html)*
 
@@ -161,7 +163,7 @@ The relevant date depends on whether the specimen supports an initial use-based 
 
 If qualifying use did not exist when required, creating new promotional materials after receiving a refusal generally will not cure the earlier deficiency.
 
-Some specimen refusals can be resolved, while others reveal more fundamental problems with the application's claimed use.
+Some specimen refusals can be resolved, while others reveal more fundamental problems with the application’s claimed use.
 
 ## The Bottom Line
 
@@ -171,6 +173,6 @@ Acceptable evidence varies by offering. A product label may support an applicati
 
 For software businesses, the distinction between downloadable applications and SaaS can be particularly important.
 
-Because the USPTO evaluates the evidence's authenticity, the mark's function, its relationship to the identified goods or services, and the timing of use, specimen review is an important part of trademark prosecution.
+Because the USPTO evaluates the evidence’s authenticity, the mark’s function, its relationship to the identified goods or services, and the timing of use, specimen review is an important part of trademark prosecution.
 
 *This article provides general educational information about U.S. trademark law. It does not constitute legal advice or establish an attorney-client relationship. The acceptability of any particular trademark specimen depends on the applicable law and circumstances.*

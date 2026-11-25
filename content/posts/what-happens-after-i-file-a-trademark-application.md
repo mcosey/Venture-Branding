@@ -5,21 +5,23 @@ date: "2026-10-13"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
+image: "images/blog/what-happens-after-i-file-a-trademark-application.jpg"
+imageAlt: "A document headed Application Received rests in a navy tray in front of a desk calendar."
 ---
 
-You've selected a name for your business, completed a trademark clearance review, and filed an application with the United States Patent and Trademark Office (USPTO).
+You’ve selected a name for your business, completed a trademark clearance review, and filed an application with the United States Patent and Trademark Office (USPTO).
 
 What happens next?
 
 Filing begins a process that can take months and may involve additional legal work. Before registration, the USPTO must examine your application, resolve any outstanding issues, and provide an opportunity for third parties to oppose registration.
 
-Here's what that process generally looks like.
+Here’s what that process generally looks like.
 
 ## What Happens Immediately After Filing?
 
-Once an application meets the USPTO's minimum filing requirements, it receives a serial number that identifies the application throughout the registration process.
+Once an application meets the USPTO’s minimum filing requirements, it receives a serial number that identifies the application throughout the registration process.
 
-The application also becomes part of the USPTO's public records.
+The application also becomes part of the USPTO’s public records.
 
 Its progress can be monitored through the Trademark Status and Document Retrieval (TSDR) system, which provides access to application status, official correspondence, and other documents.
 
@@ -55,7 +57,7 @@ The examination may address:
 
 For example, suppose a startup applies to register TempoGarden for a productivity app.
 
-The examining attorney may evaluate whether a similar mark is already registered or pending for related goods or services. The attorney may also examine whether the proposed mark is merely descriptive or whether the application's description of the software requires clarification.
+The examining attorney may evaluate whether a similar mark is already registered or pending for related goods or services. The attorney may also examine whether the proposed mark is merely descriptive or whether the application’s description of the software requires clarification.
 
 If the application meets the relevant requirements, it proceeds toward publication. Otherwise, the USPTO may issue an *office action*.
 
@@ -69,7 +71,7 @@ An office action does not necessarily mean the application will ultimately be re
 
 Depending on the issues raised, an attorney may respond with legal arguments, supporting evidence, or permissible amendments. Certain refusals may require more extensive analysis.
 
-For most domestic applications, the deadline to respond to an examining attorney's office action is **three months from issuance**. A three-month extension may be available for an additional fee. Different deadlines apply to certain international applications.
+For most domestic applications, the deadline to respond to an examining attorney’s office action is **three months from issuance**. A three-month extension may be available for an additional fee. Different deadlines apply to certain international applications.
 
 Failure to respond within the applicable deadline can result in abandonment.
 
@@ -77,7 +79,7 @@ If the USPTO maintains a final refusal, further proceedings may be available, in
 
 ## What Happens After the Application Is Approved?
 
-Once the examining attorney approves the application, the proposed mark is published in the USPTO's *Trademark Official Gazette*.
+Once the examining attorney approves the application, the proposed mark is published in the USPTO’s *Trademark Official Gazette*.
 
 Publication allows third parties who believe they would be damaged by registration to challenge the application.
 
@@ -121,7 +123,7 @@ Much of the prosecution process involves waiting for USPTO action. However, deve
 
 For example, a startup may change its product, expand into new services, or revise its branding before registration.
 
-These developments can raise questions about whether the pending application still reflects the company's intended trademark use.
+These developments can raise questions about whether the pending application still reflects the company’s intended trademark use.
 
 The USPTO generally does not permit applicants to broaden the identified goods or services after filing. Material changes to the mark itself can also require a new application.
 

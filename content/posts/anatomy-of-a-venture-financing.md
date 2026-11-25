@@ -3,21 +3,23 @@ title: "Anatomy of a Venture Financing: From Fundraising to Closing"
 description: "An introduction to venture capital transactions for law students and junior attorneys."
 date: "2026-10-13"
 author: "Venture Branding"
-category: "Venture Law"
+category: "Advanced Venture Law"
 status: "published"
+image: "images/blog/anatomy-of-a-venture-financing.jpg"
+imageAlt: "A term sheet tucked into a navy folder with a coral divider."
 ---
 
 *An introduction to venture capital transactions for law students and junior attorneys.*
 
 Imagine two founders who have spent the past year developing a software company. Their product has launched, customers are beginning to sign up, and the founders believe they have an opportunity to grow significantly.
 
-To do so, they'll need capital.
+To do so, they’ll need capital.
 
 The company wants to hire engineers, improve its product, and expand its customer acquisition efforts. After reviewing their financial projections, the founders decide to raise $3 million from outside investors.
 
 What happens next?
 
-For attorneys beginning to work in emerging companies and venture capital (ECVC), understanding this process provides context for the documents they'll eventually draft and negotiate.
+For attorneys beginning to work in emerging companies and venture capital (ECVC), understanding this process provides context for the documents they’ll eventually draft and negotiate.
 
 A venture financing involves several related steps, from negotiating investment terms and conducting due diligence to obtaining corporate approvals and closing the transaction.
 
@@ -58,17 +60,17 @@ The labels themselves are conventions rather than legally prescribed financing s
 
 For attorneys, understanding the structure of the particular financing is more important than the label assigned to it.
 
-## 2. Determining the Company's Capital Needs
+## 2. Determining the Company’s Capital Needs
 
-Before approaching investors, TempoGarden's founders evaluate how much capital the company needs and what they hope to accomplish with it.
+Before approaching investors, TempoGarden’s founders evaluate how much capital the company needs and what they hope to accomplish with it.
 
 They determine that $3 million should provide approximately 18 months of operating runway, allowing the company to hire employees, develop its product, and pursue additional customers.
 
 The founders must also consider how the financing will affect ownership.
 
-That requires examining the company's *capitalization table*, commonly called a *cap table*.
+That requires examining the company’s *capitalization table*, commonly called a *cap table*.
 
-The cap table records the company's equity ownership and other securities that may affect its capital structure. It may include founder shares, employee stock options, outstanding preferred stock, and convertible instruments issued in earlier financings.
+The cap table records the company’s equity ownership and other securities that may affect its capital structure. It may include founder shares, employee stock options, outstanding preferred stock, and convertible instruments issued in earlier financings.
 
 Suppose TempoGarden previously raised $500,000 through SAFEs. Depending on their terms, those instruments may convert into equity during the Series A financing.
 
@@ -94,7 +96,7 @@ For now, assume TempoGarden decides to raise its $3 million through a priced Ser
 
 ## 4. Finding Investors and Negotiating a Term Sheet
 
-TempoGarden's founders begin meeting with venture capital funds and other prospective investors.
+TempoGarden’s founders begin meeting with venture capital funds and other prospective investors.
 
 Eventually, Alpha Ventures expresses interest in leading the financing and proposes investing $1.5 million.
 
@@ -106,7 +108,7 @@ In a priced equity financing, the term sheet commonly addresses:
 
 - The amount of capital being raised.
 
-- The company's pre-money valuation.
+- The company’s pre-money valuation.
 
 - The type of securities being issued.
 
@@ -122,7 +124,7 @@ Term sheets are generally nonbinding concerning the obligation to complete the i
 
 Not every investor necessarily negotiates or signs a separate term sheet.
 
-In a typical venture financing, the company and lead investor negotiate the principal terms of the round. Other investors agree to participate on those terms, often executing the same definitive Stock Purchase Agreement, which identifies each investor's investment amount and share allocation.
+In a typical venture financing, the company and lead investor negotiate the principal terms of the round. Other investors agree to participate on those terms, often executing the same definitive Stock Purchase Agreement, which identifies each investor’s investment amount and share allocation.
 
 Investors purchasing the same series generally receive the same fundamental stock rights and pay the same price per share. However, larger investors may negotiate additional contractual rights, including information rights, board designation rights, or other arrangements.
 
@@ -130,7 +132,7 @@ The term sheet establishes the framework for the financing, while the definitive
 
 ## 5. Understanding Valuation and Dilution
 
-One of the principal economic terms in a priced financing is the company's valuation.
+One of the principal economic terms in a priced financing is the company’s valuation.
 
 Suppose TempoGarden and its investors agree to the following:
 
@@ -178,13 +180,13 @@ The mechanics will be examined in *How Convertible Instruments Convert in a Pric
 
 After the parties agree on the principal terms, the transaction moves into due diligence and definitive documentation.
 
-Investor counsel typically investigates the company's legal and business affairs to identify issues that might affect the investment.
+Investor counsel typically investigates the company’s legal and business affairs to identify issues that might affect the investment.
 
 The review may include corporate records, capitalization, intellectual property ownership, employment arrangements, material contracts, outstanding liabilities, and litigation exposure.
 
 For TempoGarden, investors may want to confirm that the company owns the intellectual property underlying its software and that its outstanding shares and convertible securities were properly issued.
 
-Due diligence findings can affect the transaction documents, closing conditions, or even the parties' willingness to proceed.
+Due diligence findings can affect the transaction documents, closing conditions, or even the parties’ willingness to proceed.
 
 The scope and mechanics of this process will be addressed in *Due Diligence in Venture Capital Financings*.
 
@@ -196,13 +198,13 @@ In a typical Delaware preferred stock financing, five principal documents common
 
 **Amended and Restated Certificate of Incorporation**
 
-The company's charter establishes its capital structure and the rights and preferences of its preferred stock, including liquidation preferences, conversion provisions, and certain investor approval rights.
+The company’s charter establishes its capital structure and the rights and preferences of its preferred stock, including liquidation preferences, conversion provisions, and certain investor approval rights.
 
 **Stock Purchase Agreement**
 
 This agreement governs the purchase and sale of the new shares. It identifies the participating investors, purchase price, representations and warranties, closing conditions, and other transaction obligations.
 
-**Investors' Rights Agreement**
+**Investors’ Rights Agreement**
 
 This agreement commonly addresses investor information rights, registration rights, participation rights in future financings, and other contractual protections.
 
@@ -216,9 +218,9 @@ This agreement generally regulates specified transfers of stock by founders and 
 
 The [National Venture Capital Association](https://nvca.org/model-legal-documents/) publishes model versions of these documents, which serve as widely used starting points for U.S. venture financings.
 
-Although the documents address different matters, they operate together. Their provisions must reflect the negotiated terms and remain consistent with the company's governing documents and existing contractual obligations.
+Although the documents address different matters, they operate together. Their provisions must reflect the negotiated terms and remain consistent with the company’s governing documents and existing contractual obligations.
 
-We'll examine the function and principal provisions of each in *Understanding the Five Principal Venture Financing Documents*.
+We’ll examine the function and principal provisions of each in *Understanding the Five Principal Venture Financing Documents*.
 
 ## 9. Why Do Prior Financing Documents Matter?
 
@@ -228,7 +230,7 @@ Suppose TempoGarden previously issued Series Seed Preferred Stock before pursuin
 
 The Series Seed investors may have negotiated rights to approve certain corporate actions, participate in future financings, or receive specified information.
 
-Those rights may appear in the company's certificate of incorporation, investors' rights agreement, or other existing documents.
+Those rights may appear in the company’s certificate of incorporation, investors’ rights agreement, or other existing documents.
 
 Company counsel must review those instruments to determine whether the Series A requires additional approvals, notices, amendments, or waivers.
 
@@ -272,7 +274,7 @@ At a typical closing:
 
 1. The company issues the shares and records any required conversions of outstanding instruments.
 
-1. Counsel confirms completion of the closing requirements and the company's capitalization records are updated.
+1. Counsel confirms completion of the closing requirements and the company’s capitalization records are updated.
 
 The precise order and timing depend on the documents and closing arrangements. For example, signatures and funds may be collected in advance and held pending satisfaction of the closing conditions.
 
@@ -290,7 +292,7 @@ For this purpose, the first sale generally occurs when the first investor become
 
 ## 12. What Happens After Closing?
 
-The financing becomes part of TempoGarden's ongoing corporate structure.
+The financing becomes part of TempoGarden’s ongoing corporate structure.
 
 Investors may now possess contractual rights to financial information, board representation, participation in later financings, or approval of specified corporate actions.
 
@@ -330,7 +332,7 @@ These issues will be explored in *Understanding Down Rounds and Anti-Dilution Pr
 
 A venture financing is easier to understand when viewed as a coordinated transaction rather than a collection of unfamiliar legal documents.
 
-The founders identify a capital need and seek investments sufficient to meet it. The company and its investors negotiate the economics and governance arrangements. Counsel investigates the company's existing obligations, prepares the transaction documents, and obtains the necessary approvals.
+The founders identify a capital need and seek investments sufficient to meet it. The company and its investors negotiate the economics and governance arrangements. Counsel investigates the company’s existing obligations, prepares the transaction documents, and obtains the necessary approvals.
 
 At closing, the company receives capital and the investors acquire securities with negotiated rights.
 

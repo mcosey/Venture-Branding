@@ -41,7 +41,7 @@ export const ipMilestone={
   ['What Happens If Someone Starts Using My Trademark?','what-happens-if-someone-starts-using-my-trademark'],
   ['What Does “Use in Commerce” Mean for a Trademark?','what-does-use-in-commerce-mean-for-a-trademark'],
   ['What Is a Trademark Specimen?','what-is-a-trademark-specimen'],
-  ["Don't Overlook Common-Law and State Trademarks",'dont-overlook-common-law-and-state-trademarks']
+  ["Don’t Overlook Common-Law and State Trademarks",'dont-overlook-common-law-and-state-trademarks']
  ]
 };
 export const businessMilestone={

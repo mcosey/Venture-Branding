@@ -1,25 +1,27 @@
 ---
-title: "Founders' Agreements: What Co-Founders Should Agree on Before Starting a Business"
+title: "Founders’ Agreements: What Co-Founders Should Agree on Before Starting a Business"
 description: "What co-founders should agree on early, including ownership, responsibilities, decision-making, and what happens when someone leaves."
 date: "2026-10-13"
 author: "Venture Branding"
-category: "Founders"
+category: "For Founders"
 status: "published"
+image: "images/blog/founders-agreements.jpg"
+imageAlt: "Two co-founders reviewing a founders’ agreement together."
 ---
 
 Starting a business with someone often begins with a shared idea and an understanding of how each person will contribute. But as the business develops, disagreements may emerge over responsibilities, ownership, financial contributions, or major decisions.
 
-A founders' agreement helps establish expectations early, before those disagreements become more difficult to resolve. It can address how ownership will be divided, what each founder is expected to contribute, how decisions will be made, and what happens if someone leaves the business.
+A founders’ agreement helps establish expectations early, before those disagreements become more difficult to resolve. It can address how ownership will be divided, what each founder is expected to contribute, how decisions will be made, and what happens if someone leaves the business.
 
-## 1. What Is a Founders' Agreement?
+## 1. What Is a Founders’ Agreement?
 
-A founders' agreement is an agreement among the individuals establishing a business that defines important aspects of their relationship, including their respective rights and responsibilities.
+A founders’ agreement is an agreement among the individuals establishing a business that defines important aspects of their relationship, including their respective rights and responsibilities.
 
 There is no universally prescribed form. Founders may enter into an agreement before forming the company, documenting their intentions concerning ownership, contributions, and management.
 
 Once the company is formed, those arrangements may be implemented through more formal documents. For a corporation, these may include stock purchase agreements, vesting provisions, intellectual property assignments, bylaws, and stockholder agreements. For a limited liability company (LLC), many of these matters may instead be addressed in its operating agreement.
 
-A standalone founders' agreement is not required for every business. What matters is that the founders' arrangements are clearly documented and properly implemented through the appropriate legal agreements.
+A standalone founders’ agreement is not required for every business. What matters is that the founders’ arrangements are clearly documented and properly implemented through the appropriate legal agreements.
 
 ## 2. Ownership and Equity Allocation
 
@@ -55,13 +57,13 @@ Vesting is particularly important when founders receive substantial ownership in
 
 Founders should establish what each person is expected to contribute beyond capital.
 
-An agreement may address responsibility for product development, operations, marketing, finances, hiring, and fundraising. It may also identify each founder's expected time commitment.
+An agreement may address responsibility for product development, operations, marketing, finances, hiring, and fundraising. It may also identify each founder’s expected time commitment.
 
 For example, one founder may work full-time while another contributes part-time until the company obtains financing. That arrangement can work, provided both understand when, or whether, the second founder is expected to transition to full-time involvement.
 
 Founders may also address outside employment, involvement in other businesses, and potential conflicts of interest.
 
-Defining responsibilities early helps establish a common understanding of each founder's role, particularly as the business grows and those roles evolve.
+Defining responsibilities early helps establish a common understanding of each founder’s role, particularly as the business grows and those roles evolve.
 
 ## 5. Decision-Making and Disagreements
 
@@ -71,11 +73,11 @@ An agreement might identify who is responsible for ordinary operational decision
 
 For example, one founder might oversee product development while significant expenditures, additional fundraising, or major changes in business strategy require broader agreement.
 
-Decision-making arrangements must also reflect the company's legal structure. In a corporation, management authority generally rests with the board of directors, subject to applicable law and governing documents. A founders' agreement should be coordinated with that structure.
+Decision-making arrangements must also reflect the company’s legal structure. In a corporation, management authority generally rests with the board of directors, subject to applicable law and governing documents. A founders’ agreement should be coordinated with that structure.
 
 **Deadlock deserves particular attention when two founders share equal ownership or decision-making authority.**
 
-If neither founder can approve a major decision without the other's consent, a persistent disagreement may prevent the company from moving forward.
+If neither founder can approve a major decision without the other’s consent, a persistent disagreement may prevent the company from moving forward.
 
 Founders may consider defined areas of responsibility, mediation, or other negotiated procedures for resolving disagreements. The appropriate mechanism depends on the business and must be structured consistently with its governing documents.
 
@@ -87,7 +89,7 @@ Suppose one founder develops the initial software before the company is formed. 
 
 Under U.S. copyright law, transfers of copyright ownership generally require a written instrument signed by the rights owner or an authorized representative, subject to certain exceptions.
 
-Founders should therefore address whether intellectual property developed before the company's formation will be assigned or licensed to the business, along with ownership of work created afterward.
+Founders should therefore address whether intellectual property developed before the company’s formation will be assigned or licensed to the business, along with ownership of work created afterward.
 
 Formal intellectual property assignment agreements are commonly used to establish those rights.
 
@@ -105,11 +107,11 @@ For example, if a founder contributes $25,000 to fund development, the parties s
 
 Compensation expectations may also differ. Some founders initially work without salaries, while others require compensation to participate full-time.
 
-Any arrangements concerning salary, reimbursement, or future compensation should be coordinated with the company's formal approvals and applicable tax and employment laws.
+Any arrangements concerning salary, reimbursement, or future compensation should be coordinated with the company’s formal approvals and applicable tax and employment laws.
 
 ## 8. What Happens If a Founder Leaves?
 
-A founders' agreement should address how a departure affects the founder's ownership and relationship with the business.
+A founders’ agreement should address how a departure affects the founder’s ownership and relationship with the business.
 
 The consequences may differ depending on whether the founder resigns, is removed from a management position, becomes unable to participate, or dies.
 
@@ -131,7 +133,7 @@ Transfer restrictions, rights of first refusal, and repurchase provisions can he
 
 ## 9. Confidentiality and Dispute Resolution
 
-Founders often have access to sensitive information concerning the company's technology, finances, customers, and business plans.
+Founders often have access to sensitive information concerning the company’s technology, finances, customers, and business plans.
 
 Confidentiality provisions can establish obligations regarding the use and disclosure of that information, including after a founder leaves.
 
@@ -149,6 +151,6 @@ Early discussions can establish the intended ownership allocation, responsibilit
 
 For venture-backed corporations, founder arrangements are often implemented through several agreements addressing stock ownership, vesting, intellectual property, and governance.
 
-The important objective is ensuring that those documents accurately reflect the founders' understandings and operate consistently with one another.
+The important objective is ensuring that those documents accurately reflect the founders’ understandings and operate consistently with one another.
 
 *This article is intended for general educational purposes and does not constitute legal advice.*

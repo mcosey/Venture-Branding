@@ -1,12 +1,12 @@
 ---
-title: "Don't Overlook Common-Law and State Trademarks"
+title: "Don’t Overlook Common-Law and State Trademarks"
 description: "Understand how common-law rights and state trademark registrations affect brand protection and trademark clearance."
 date: "2026-10-14"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/dont-overlook-common-law-and-state-trademarks.jpg"
+imageAlt: "A neighborhood pottery shop with a coral awning and a navy door."
 ---
 
 When researching trademarks, most business owners turn to the United States Patent and Trademark Office (USPTO). Its database allows users to search federal trademark applications and registrations, making it an important resource for businesses developing new brands.
@@ -15,7 +15,7 @@ But the federal database does not tell the whole story.
 
 A business can possess enforceable trademark rights without ever registering its mark with the USPTO. Those rights may arise through common-law trademark use or exist alongside a state trademark registration.
 
-For founders, understanding these forms of protection matters for two reasons: they can affect whether a proposed brand conflicts with someone else's rights, and they may provide legal protection for a business's own brand.
+For founders, understanding these forms of protection matters for two reasons: they can affect whether a proposed brand conflicts with someone else’s rights, and they may provide legal protection for a business’s own brand.
 
 ## What Are Common-Law Trademarks?
 
@@ -33,7 +33,7 @@ Those rights could become relevant if another bakery begins using a confusingly 
 
 Common-law protection does, however, have limitations. Unlike the nationwide priority generally associated with federal registration, common-law rights are typically tied to the geographic markets in which a business has established legally sufficient use or recognition.
 
-The geographic scope of those rights can be complicated. A business's physical location, customer base, market penetration, and other circumstances may affect the analysis.
+The geographic scope of those rights can be complicated. A business’s physical location, customer base, market penetration, and other circumstances may affect the analysis.
 
 Operating a website or maintaining a social media presence does not automatically establish nationwide common-law rights.
 
@@ -43,19 +43,19 @@ Federal registration is not the only form of government trademark registration a
 
 States maintain their own trademark registration systems, generally administered through the Secretary of State or another designated agency.
 
-A business may therefore have a trademark registered with a state even if that mark does not appear in the USPTO's federal database.
+A business may therefore have a trademark registered with a state even if that mark does not appear in the USPTO’s federal database.
 
-State registration can provide legal benefits under the applicable state's trademark laws. However, its requirements and effects vary by jurisdiction.
+State registration can provide legal benefits under the applicable state’s trademark laws. However, its requirements and effects vary by jurisdiction.
 
 Unlike federal registration, a state registration does not confer nationwide protection.
 
-State registration also does not automatically establish that a business has superior rights to everyone else using the same or a similar mark within the state. Earlier trademark rights and other legal considerations may affect the registrant's position.
+State registration also does not automatically establish that a business has superior rights to everyone else using the same or a similar mark within the state. Earlier trademark rights and other legal considerations may affect the registrant’s position.
 
 A related misconception concerns business formation.
 
 Registering an LLC or corporation name with a Secretary of State is not the same as registering a state trademark. Similarly, filing a DBA or assumed-name certificate generally does not establish trademark registration.
 
-These filings serve different legal purposes. A name may be available for business-entity registration even when its commercial use could conflict with another party's trademark rights.
+These filings serve different legal purposes. A name may be available for business-entity registration even when its commercial use could conflict with another party’s trademark rights.
 
 ## Why Do Common-Law and State Trademarks Matter?
 
@@ -67,15 +67,15 @@ But what if an existing bakery has used that name for several years without fede
 
 Or what if another business has registered a similar trademark with a state?
 
-Neither mark would necessarily appear in the USPTO's federal trademark database.
+Neither mark would necessarily appear in the USPTO’s federal trademark database.
 
-Depending on the circumstances, the earlier business may have rights that could restrict the founder's proposed use, support a legal challenge, or affect the availability of federal registration.
+Depending on the circumstances, the earlier business may have rights that could restrict the founder’s proposed use, support a legal challenge, or affect the availability of federal registration.
 
 The existence of a similar name does not automatically establish infringement. An attorney must evaluate factors including the nature of the marks, the relationship between the goods or services, priority, geographic scope, and the likelihood of consumer confusion.
 
 Nevertheless, overlooking state and common-law rights can leave important questions unanswered.
 
-This is also why the USPTO's examination of a federal application should not be confused with a comprehensive trademark clearance investigation.
+This is also why the USPTO’s examination of a federal application should not be confused with a comprehensive trademark clearance investigation.
 
 USPTO examining attorneys generally search federal trademark records for conflicting marks. Their examination does not substitute for an investigation of potential common-law rights or state registrations.
 
@@ -98,9 +98,9 @@ Federal registration offers significant advantages.
 
 For marks registered on the Principal Register, these include important legal presumptions concerning ownership and the right to use the mark for the identified goods or services. Federal registration can also establish nationwide priority rights, subject to statutory exceptions and earlier rights.
 
-However, obtaining a federal registration does not necessarily eliminate another business's preexisting common-law rights.
+However, obtaining a federal registration does not necessarily eliminate another business’s preexisting common-law rights.
 
-For example, an earlier local user may retain legally protected rights in an established geographic market even after another business obtains a federal registration. The precise outcome depends on the parties' respective rights, relevant dates, geographic activity, and other circumstances.
+For example, an earlier local user may retain legally protected rights in an established geographic market even after another business obtains a federal registration. The precise outcome depends on the parties’ respective rights, relevant dates, geographic activity, and other circumstances.
 
 Federal registration is therefore an important source of trademark protection, but it does not exist independently of earlier trademark use.
 
@@ -116,7 +116,7 @@ Its commercial activities may have established common-law trademark rights. If t
 
 Their existence and scope, however, require legal analysis.
 
-An attorney may examine the business's history of trademark use, the distinctiveness of the mark, available evidence of commercial activity, applicable state law, and potential third-party rights.
+An attorney may examine the business’s history of trademark use, the distinctiveness of the mark, available evidence of commercial activity, applicable state law, and potential third-party rights.
 
 Recognizing existing rights does not mean common-law protection or state registration offers the same advantages as federal registration. Each form of protection has different legal consequences.
 

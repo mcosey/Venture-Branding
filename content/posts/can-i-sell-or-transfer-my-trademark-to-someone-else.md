@@ -5,11 +5,11 @@ date: "2026-11-21"
 author: "Venture Branding"
 category: "Trademarks"
 status: "published"
-image: ""
-imageAlt: ""
+image: "images/blog/can-i-sell-or-transfer-my-trademark-to-someone-else.jpg"
+imageAlt: "Two people passing a blank cream envelope across a table."
 ---
 
-Suppose you've developed a successful brand and another company offers to purchase it. You're interested in selling the brand but intend to continue operating the rest of your business.
+Suppose you’ve developed a successful brand and another company offers to purchase it. You’re interested in selling the brand but intend to continue operating the rest of your business.
 
 Can you transfer ownership of the trademark without selling your entire company?
 
@@ -109,17 +109,17 @@ A trademark assignment agreement will generally identify:
 
 For trademarks subject to pending federal applications or existing federal registrations, the assignment should generally be recorded with the U.S. Patent and Trademark Office (USPTO) through its Assignment Center.
 
-Recordation provides a public record of the transfer and helps document the trademark's chain of title, which is its ownership history.
+Recordation provides a public record of the transfer and helps document the trademark’s chain of title, which is its ownership history.
 
 Under Section 10, an assignment is void against a subsequent purchaser for value without notice of the earlier transfer unless the assignment is recorded within three months of the assignment date or before the subsequent purchase.
 
-USPTO recordation does not establish that an assignment is legally valid. Additionally, recordation does not always automatically update the ownership information displayed in the USPTO's trademark database.
+USPTO recordation does not establish that an assignment is legally valid. Additionally, recordation does not always automatically update the ownership information displayed in the USPTO’s trademark database.
 
 Following recordation, the parties should verify that the ownership information displayed in the Trademark Status and Document Retrieval (TSDR) system accurately reflects the transfer.
 
-## Does the New Owner Inherit the Trademark's Existing Rights?
+## Does the New Owner Inherit the Trademark’s Existing Rights?
 
-A valid assignment generally allows the new owner to succeed to the trademark rights conveyed through the transaction, including the previous owner's established priority.
+A valid assignment generally allows the new owner to succeed to the trademark rights conveyed through the transaction, including the previous owner’s established priority.
 
 For example, if a business has established trademark rights through ten years of continuous commercial use, a valid assignment may allow the new owner to rely on that earlier use when establishing priority against another business.
 
@@ -149,6 +149,6 @@ A trademark can be sold or transferred without selling the entire business that 
 
 Intent-to-use applications are subject to additional assignment restrictions, making the timing and structure of certain ownership transfers particularly important.
 
-Proper documentation and timely USPTO recordation can help protect the new owner's interests, but neither substitutes for a legally valid transfer of the underlying trademark rights.
+Proper documentation and timely USPTO recordation can help protect the new owner’s interests, but neither substitutes for a legally valid transfer of the underlying trademark rights.
 
 *This article provides general educational information about U.S. trademark law. It does not constitute legal advice and does not create an attorney-client relationship.*
