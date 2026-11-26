@@ -70,7 +70,7 @@ test('the library paginates filtered and unfiltered results nine at a time', () 
 
   pageNumbers.children.at(-1).events.click();
   assert.deepEqual(visible(),[54,55,56,57,58,59]);
-  assert.match(count.textContent,/Showing 55–60/);
+  assert.equal(count.textContent,'60 articles');
   assert.equal(next.disabled,true);
   prev.events.click();
   assert.equal(visible()[0],45);

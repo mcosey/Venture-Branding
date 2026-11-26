@@ -51,11 +51,10 @@ if (search) {
     const pageCount = Math.max(1, Math.ceil(total / pageSize));
     page = Math.min(Math.max(1, requestedPage), pageCount);
     const start = (page - 1) * pageSize;
-    const end = Math.min(start + pageSize, total);
-    const visible = new Set(matches.slice(start, end));
+    const visible = new Set(matches.slice(start, start + pageSize));
     for (const entry of cards) entry.card.hidden = !visible.has(entry);
     for (const button of buttons) button.setAttribute('aria-pressed', String(button.dataset.topic === topic));
-    count.textContent = `${total} ${total === 1 ? 'article' : 'articles'}${topic ? ' in ' + topic : ''}${words.length ? ' found' : ''}${pageCount > 1 ? ` · Showing ${start + 1}–${end}` : ''}`;
+    count.textContent = `${total} ${total === 1 ? 'article' : 'articles'}${topic ? ' in ' + topic : ''}${words.length ? ' found' : ''}`;
     empty.hidden = total !== 0;
 
     pagination.hidden = pageCount === 1;
