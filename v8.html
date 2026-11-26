@@ -24,7 +24,6 @@
     --muted:#5c6672;
     --muted-light:#9aa6b4;
     --line:rgba(255,255,255,.10);
-    --coral-grad:linear-gradient(120deg,var(--coral-deep),var(--coral),var(--coral-bright));
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -62,13 +61,12 @@
   .service-card{padding:clamp(24px,3vw,36px);border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,var(--navy-3),var(--navy-2))}
   .service-card h3{font-size:clamp(1.4rem,2.4vw,1.8rem);margin:0 0 16px}
   .service-number{display:block;color:var(--coral-text);font-size:12px;letter-spacing:.14em;margin-bottom:22px}
-  .service-card:last-child{grid-column:1 / -1}
   .service-scope{padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .service-scope h3{font-size:1.4rem;margin-bottom:14px}
   .service-scope p{max-width:82ch;font-size:15px}
   .services-action{margin-top:32px;display:flex;align-items:center;flex-wrap:wrap;gap:20px}
   .services-action p{margin:0}
-  @media(max-width:600px){.services-grid{grid-template-columns:1fr}.service-card:last-child{grid-column:auto}}
+  @media(max-width:600px){.services-grid{grid-template-columns:1fr}}
   :focus-visible{outline:2.5px solid var(--coral-bright);outline-offset:3px;border-radius:4px}
 
   /* ---- HERO ---- */
@@ -103,17 +101,6 @@
     padding-inline-end:.12em;margin-inline-end:-.12em;
   }
   .hero__actions{margin-top:38px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-  .btn{
-    display:inline-flex;align-items:center;gap:10px;text-decoration:none;
-    font-weight:600;font-size:16px;padding:15px 28px;border-radius:999px;
-    background:var(--coral-grad);color:#fff;transition:transform .2s,box-shadow .2s,filter .2s;
-    box-shadow:0 12px 30px -12px rgba(201,77,91,.7);
-  }
-  .btn:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 18px 40px -14px rgba(201,77,91,.85)}
-  .btn svg{transition:transform .2s}
-  .btn:hover svg{transform:translateX(4px)}
-  .btn--ghost{background:transparent;border:1px solid rgba(255,255,255,.22);box-shadow:none;color:#e8ecf1}
-  .btn--ghost:hover{background:rgba(255,255,255,.06);filter:none}
 
   .scrollcue{
     position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;
@@ -137,15 +124,14 @@
   /* ---- HORIZONTAL SCROLL SECTION ---- */
   .horizon{position:relative;background:var(--navy)}
   .horizon__sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
-  .horizon__head{position:absolute;top:0;left:0;right:0;padding:26px clamp(20px,5vw,48px) 0;z-index:5;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;pointer-events:none}
-  .horizon__label{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--coral-text)}
-  .horizon__label span{display:block;font-family:'Fraunces',serif;text-transform:none;letter-spacing:-.01em;font-size:clamp(1.3rem,3vw,2rem);color:#fff;margin-top:8px;font-weight:600}
+  .horizon__head{position:absolute;top:0;left:0;right:0;padding:72px clamp(20px,5vw,48px) 0;z-index:5;pointer-events:none}
+  .horizon__title{font-size:clamp(1.3rem,3vw,2rem);color:var(--coral-text)}
   .htrack{display:flex;gap:clamp(20px,3vw,40px);padding:0 clamp(20px,5vw,48px);will-change:transform}
   .hpanel{
     flex:0 0 auto;width:min(78vw,420px);
     background:linear-gradient(160deg,var(--navy-3),var(--navy-2));
     border:1px solid var(--line);border-radius:22px;padding:36px 34px;
-    display:flex;flex-direction:column;justify-content:space-between;min-height:min(58vh,420px);
+    display:flex;flex-direction:column;min-height:min(58vh,420px);
     position:relative;overflow:hidden;
   }
   .hpanel::before{content:"";position:absolute;inset:0;background:var(--coral-grad);opacity:0;transition:opacity .4s;z-index:0}
@@ -154,8 +140,6 @@
   .hpanel__num{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:600;background:var(--coral-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
   .hpanel h3{font-size:clamp(1.4rem,2.4vw,1.85rem);margin:20px 0 12px}
   .hpanel p{color:#aeb9c6;margin:0;font-size:1rem}
-  .hpanel__tag{margin-top:auto;padding-top:24px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-light);display:flex;align-items:center;gap:8px}
-  .hpanel__tag::before{content:"";width:22px;height:1px;background:var(--coral)}
   .hprogress{position:absolute;bottom:34px;left:clamp(20px,5vw,48px);right:clamp(20px,5vw,48px);z-index:5}
   .hprogress__hint{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-light);display:flex;align-items:center;gap:10px;margin-bottom:12px}
   .hprogress__hint svg{color:var(--coral-bright)}
@@ -166,8 +150,6 @@
   .about{position:relative;background:var(--paper);color:var(--ink);padding:clamp(80px,11vw,150px) 0;border-radius:34px 34px 0 0;margin-top:-24px;z-index:3}
   .about .wrap{position:relative}
   .eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--coral-deep)}
-  .eyebrow--dot{display:inline-flex;align-items:center;gap:10px}
-  .eyebrow--dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--coral-grad)}
   .about__head{margin:16px 0 0}
   .about h2{font-size:clamp(2rem,4.6vw,3.3rem);color:var(--ink)}
   .about__grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:clamp(36px,5vw,72px);margin-top:clamp(44px,6vw,72px);align-items:start}
@@ -204,13 +186,15 @@
   .blog p{color:#b9c3ce;max-width:52ch;margin-bottom:30px}
   .blog__side{display:flex;justify-content:center}
   .blog__card{
-    width:100%;max-width:340px;background:linear-gradient(160deg,var(--navy-3),var(--navy-2));
-    border:1px solid var(--line);border-radius:22px;padding:34px;position:relative;overflow:hidden;
+    display:block;width:100%;max-width:340px;background:linear-gradient(160deg,var(--navy-3),var(--navy-2));
+    border:1px solid var(--line);border-radius:22px;overflow:hidden;text-decoration:none;transition:border-color .2s;
   }
-  .blog__card::after{content:"";position:absolute;top:-40%;right:-30%;width:70%;height:70%;background:var(--coral-grad);opacity:.14;filter:blur(30px);border-radius:50%}
-  .blog__card img{width:48px;margin-bottom:22px}
+  .blog__card:hover,.blog__card:focus-visible{border-color:var(--coral-text);border-radius:22px}
+  .blog__card img{width:100%;height:auto}
+  .blog__card-copy{padding:22px 26px 24px}
   .blog__card h3{font-size:1.35rem;margin-bottom:10px}
   .blog__card p{font-size:.95rem;color:#aeb9c6;margin-bottom:0}
+  .blog__card-action{display:inline-block;margin-top:12px;color:var(--coral-text);font-size:.9rem;font-weight:600}
 
   /* ---- FOOTER ---- */
   footer{background:var(--navy);color:#9aa6b4;padding:56px 0 40px;border-top:1px solid var(--line)}
@@ -253,6 +237,7 @@
   }
 </style>
 <link rel="stylesheet" href="shared/site-header.css">
+<link rel="stylesheet" href="shared/marketing.css">
 <script src="shared/site-header.js" defer></script>
 <script type="module" src="shared/control-spacing.js?v=20261010"></script><link rel="stylesheet" href="shared/site-footer.css"></head>
 <body>
@@ -266,7 +251,7 @@
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
   <nav class="top" id="primary-nav" aria-label="Primary">
     <a href="#about">About</a>
-    <a href="#services">Services</a>
+    <a href="pricing.html">Services</a>
     <a href="blog.html">Blog</a>
     <a href="#contact">Contact</a>
     <a href="login.html">Login</a>
@@ -306,36 +291,31 @@
       <div class="services-grid">
         <article class="service-card">
           <span class="service-number" aria-hidden="true">01</span>
-          <h3>Flat Fees. No Surprises.</h3>
-          <p>I believe in pricing transparency. Its as simple as that. You get the best out of me, no matter how long it takes.</p>
-        </article>
-        <article class="service-card">
-          <span class="service-number" aria-hidden="true">02</span>
           <h3>Trademark Application &amp; Filing</h3>
           <p>Move forward with a carefully prepared application. We help identify the appropriate goods and services, prepare and submit your filing, and guide you through the examination process.</p>
         </article>
         <article class="service-card">
-          <span class="service-number" aria-hidden="true">03</span>
+          <span class="service-number" aria-hidden="true">02</span>
           <h3>Office Action Responses</h3>
           <p>Understand the USPTO’s concerns and your options for responding. We address procedural requirements and review substantive refusals to determine whether we can assist. Complex responses are separately scoped and priced.</p>
         </article>
         <article class="service-card">
-          <span class="service-number" aria-hidden="true">04</span>
+          <span class="service-number" aria-hidden="true">03</span>
           <h3>Statements of Use &amp; Extensions</h3>
           <p>Keep your intent-to-use application moving forward. We help prepare evidence of trademark use and submit statements of use or extension requests, as appropriate.</p>
         </article>
         <article class="service-card">
-          <span class="service-number" aria-hidden="true">05</span>
+          <span class="service-number" aria-hidden="true">04</span>
           <h3>Trademark Maintenance &amp; Renewals</h3>
           <p>Support your registration over time. We help prepare required maintenance and renewal filings, including reviewing evidence that your mark remains in use.</p>
         </article>
         <article class="service-card">
-          <span class="service-number" aria-hidden="true">06</span>
+          <span class="service-number" aria-hidden="true">05</span>
           <h3>Trademark Monitoring</h3>
           <p>Stay informed about potentially conflicting trademarks. We monitor for relevant developments and report findings so you can make informed decisions about your brand.</p>
         </article>
         <article class="service-card">
-          <span class="service-number" aria-hidden="true">07</span>
+          <span class="service-number" aria-hidden="true">06</span>
           <h3>Access to the VB Portal</h3>
           <p>Manage your trademark portfolio, explore your Brand Map, and follow updates in one workspace. VB’s proprietary AI workflow is in development to research brand changes and surface findings for review.</p>
         </article>
@@ -350,30 +330,24 @@
   <section class="horizon" id="how" aria-labelledby="how-title" data-horizon>
     <div class="horizon__sticky">
       <div class="horizon__head">
-        <div class="horizon__label">The VB Portal
-          <span id="how-title">Your Own Work Space</span>
-        </div>
+        <h2 class="horizon__title" id="how-title">The VB Portal</h2>
       </div>
       <div class="htrack" id="htrack">
         <article class="hpanel">
           <div class="hpanel__num">01</div>
           <div><h3>Brand Map</h3><p>See your trademark records together in one workspace. Explore your portfolio, select a mark, and open its details without losing the bigger picture.</p></div>
-          <div class="hpanel__tag">Your brand, connected</div>
         </article>
         <article class="hpanel">
           <div class="hpanel__num">02</div>
           <div><h3>Portfolio</h3><p>Keep your trademark records, statuses, and maintenance information organized. Find the details you need and understand the next step for each mark.</p></div>
-          <div class="hpanel__tag">Clarity at a glance</div>
         </article>
         <article class="hpanel">
           <div class="hpanel__num">03</div>
           <div><h3>Brand Change Monitor</h3><p>In development: VB’s proprietary workflow uses AI to research changes in your public brand presence and surface potential new names, products, and branding for review.</p></div>
-          <div class="hpanel__tag">Proprietary AI workflow · In development</div>
         </article>
         <article class="hpanel">
           <div class="hpanel__num">04</div>
           <div><h3>AI Enhanced Monitoring and Updates</h3><p>Follow trademark activity and receive organized updates through your VB Digest. In development: VB’s proprietary AI workflow will help surface relevant brand changes for review alongside those updates.</p></div>
-          <div class="hpanel__tag">Stay informed</div>
         </article>
       </div>
       <div class="hprogress" aria-hidden="true">
@@ -453,20 +427,27 @@
         </a>
       </div>
       <div class="blog__side reveal d1">
-        <div class="blog__card">
-          <img src="images/09.png" alt="" aria-hidden="true">
-          <h3>Written for founders</h3>
-          <p>Explore articles on trademarks, venture capital law, and general startup advice from an attorney and fellow founder.</p>
-
-        </div>
+        <a class="blog__card" href="blog/posts/what-is-a-trademark.html" aria-labelledby="blog-feature-title">
+          <img src="images/blog/what-is-a-trademark.jpg" alt="Venture Branding’s monogram printed on a navy product box and a cream hang tag." width="1440" height="810" loading="lazy">
+          <div class="blog__card-copy">
+            <h3 id="blog-feature-title">What Is a Trademark?</h3>
+            <p>Understanding trademarks before you launch can help you make more informed decisions about the identity you’re building.</p>
+            <span class="blog__card-action" aria-hidden="true">Read the article →</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <section class="preparation" id="contact" aria-labelledby="contact-title">
-    <div class="wrap">
-      <h2 id="contact-title">Let’s talk about your company’s brand.</h2>
-      <div class="services-action"><a class="btn" href="https://calendly.com/venturebrandinglaw/30min" target="_blank" rel="noopener noreferrer">Book a consultation</a></div>
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="contact__panel">
+      <span class="eyebrow eyebrow--dot">Trademark Support</span>
+      <h2 id="contact-title">Ready to get started with your trademark journey?</h2>
+      <p>Get professional legal guidance to support you through the trademarking process.</p>
+      <div class="contact__actions">
+        <a class="btn btn--ghost" href="pricing.html">View Services</a>
+        <a class="btn" href="https://calendly.com/venturebrandinglaw/30min" target="_blank" rel="noopener noreferrer">Book a Consultation</a>
+      </div>
     </div>
   </section>
 
