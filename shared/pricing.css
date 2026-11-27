@@ -1,0 +1,72 @@
+.pricing-page { padding-top: 70px; }
+.pricing-page .skip { position: fixed; z-index: 160; }
+.pricing-page #main { scroll-margin-top: 80px; }
+.pricing-hero { padding-block: clamp(54px, 8vw, 102px) clamp(48px, 6vw, 78px); }
+.pricing-hero .shell { position: relative; }
+.pricing-hero .eyebrow { margin: 0; color: var(--coral-text); }
+.pricing-hero h1 { margin: 16px 0 0; }
+
+.pricing-section,
+.pricing-portal,
+.pricing-fees { margin-bottom: clamp(48px, 7vw, 88px); }
+.pricing-section > h2,
+.pricing-portal h2 {
+  margin: 0 0 22px;
+  font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+  text-wrap: balance;
+}
+.pricing-fees,
+.pricing-portal {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(22px, 4vw, 54px);
+  padding: clamp(20px, 3vw, 36px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--navy-2);
+}
+.pricing-fees h2 { margin: 0 0 12px; font-size: clamp(1.35rem, 2.4vw, 1.8rem); }
+.pricing-fees p,
+.pricing-portal p { margin: 0 0 12px; color: #b9c3ce; font-size: 15px; }
+.pricing-fees a { color: var(--coral-text); text-underline-offset: .18em; }
+.pricing-fees__intro > a { font-size: 14px; }
+.pricing-fees__amount { padding-top: 12px; border-top: 1px solid var(--line); }
+.pricing-fees__amount strong { color: var(--coral-text); font-size: 1.3rem; }
+.pricing-fees details { border-bottom: 1px solid var(--line); }
+.pricing-fees summary { padding: 12px 0; font-size: 15px; font-weight: 600; cursor: pointer; }
+.pricing-fees summary::marker { color: var(--coral-text); }
+.pricing-fees summary:hover { color: var(--coral-text); }
+.pricing-fees .pricing-fees__guide { margin: 14px 0 0; font-size: 14px; }
+
+.pricing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.pricing-grid .card { min-width: 0; }
+.pricing-grid .card-copy { padding: clamp(20px, 3vw, 34px); }
+.pricing-grid .card h3 { margin: 0 0 12px; font-size: clamp(1.4rem, 2.5vw, 1.95rem); }
+.pricing-grid .card p { margin: 0; }
+.pricing-package--monitoring { border-color: #87505e; }
+.pricing-package ul { margin: 0 0 22px; padding-left: 1.2em; font-size: 15px; }
+.pricing-package li + li { margin-top: 7px; }
+.pricing-package li::marker { color: var(--coral-text); }
+.pricing-price {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+}
+.pricing-price strong { color: var(--coral-text); font-size: 1.6rem; }
+.pricing-scope,
+.pricing-grid .card .pricing-scope { margin: 14px 0 0; color: #aeb9c6; font-size: 14px; }
+
+.pricing-portal__intro { display: flex; flex-direction: column; }
+.pricing-portal dl,
+.pricing-portal dd { margin: 0; }
+.pricing-portal dl > div + div { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.pricing-portal dt { font-size: 15px; font-weight: 600; }
+.pricing-portal dd { color: #b9c3ce; font-size: 14px; }
+
+@media (max-width: 960px) {
+  .pricing-page { padding-top: 78px; }
+}
+@media (max-width: 700px) {
+  .pricing-fees, .pricing-grid, .pricing-portal { grid-template-columns: minmax(0, 1fr); }
+}

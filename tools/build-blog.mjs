@@ -148,7 +148,7 @@ export function build({preview=false,outDir=preview ? path.join(root,'work/blog-
       fs.mkdirSync(path.dirname(path.join(outDir,post.image)),{recursive:true});
       fs.copyFileSync(path.join(root,post.image),path.join(outDir,post.image));
     }
-    for (const filename of ['pricing.html','terms.html','privacy.html','auth/auth.css','shared/site-header.css','shared/site-header.js','shared/site-footer.css','shared/legal.css','shared/marketing.css']) {
+    for (const filename of ['pricing.html','terms.html','privacy.html','auth/auth.css','shared/site-header.css','shared/site-header.js','shared/site-footer.css','shared/legal.css','shared/marketing.css','shared/pricing.css']) {
       fs.mkdirSync(path.dirname(path.join(outDir,filename)),{recursive:true});
       fs.copyFileSync(path.join(root,filename),path.join(outDir,filename));
     }
