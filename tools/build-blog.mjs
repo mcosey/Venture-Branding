@@ -143,7 +143,7 @@ export function build({preview=false,outDir=preview ? path.join(root,'work/blog-
     fs.mkdirSync(path.join(outDir,'blog/assets'),{recursive:true});
     for (const filename of ['blog.css','blog.js']) fs.copyFileSync(path.join(root,'blog/assets',filename),path.join(outDir,'blog/assets',filename));
     fs.mkdirSync(path.join(outDir,'images'),{recursive:true});
-    for (const filename of ['02.png','09.png','Cosey_Marion__1994x1058-2.jpg']) fs.copyFileSync(path.join(root,'images',filename),path.join(outDir,'images',filename));
+    for (const filename of ['02.png','09.png','Cosey_Marion__1994x1058-2.jpg','llk-roadmap-preview.jpg','llk-initial-steps-preview.jpg']) fs.copyFileSync(path.join(root,'images',filename),path.join(outDir,'images',filename));
     for (const post of posts.filter(post => post.image)) {
       fs.mkdirSync(path.dirname(path.join(outDir,post.image)),{recursive:true});
       fs.copyFileSync(path.join(root,post.image),path.join(outDir,post.image));

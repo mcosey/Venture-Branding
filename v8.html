@@ -52,21 +52,17 @@
   .foot .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
   .foot .brand img{height:34px;width:auto}
   section[id]{scroll-margin-top:90px}
-  .preparation{padding:clamp(72px,9vw,120px) 0;background:var(--navy-2);border-top:1px solid var(--line)}
-  .preparation .eyebrow{color:var(--coral-text)}
-  .preparation h2{font-size:clamp(2rem,4.4vw,3.2rem);max-width:22ch;margin:16px 0 22px}
-  .preparation p{max-width:58ch;color:#b9c3ce}
-  .preparation p:last-child{margin-bottom:0}
-  .services-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:42px 0}
-  .service-card{padding:clamp(24px,3vw,36px);border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,var(--navy-3),var(--navy-2))}
-  .service-card h3{font-size:clamp(1.4rem,2.4vw,1.8rem);margin:0 0 16px}
-  .service-number{display:block;color:var(--coral-text);font-size:12px;letter-spacing:.14em;margin-bottom:22px}
-  .service-scope{padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .service-scope h3{font-size:1.4rem;margin-bottom:14px}
-  .service-scope p{max-width:82ch;font-size:15px}
-  .services-action{margin-top:32px;display:flex;align-items:center;flex-wrap:wrap;gap:20px}
-  .services-action p{margin:0}
-  @media(max-width:600px){.services-grid{grid-template-columns:1fr}}
+  .llk-preview{padding:clamp(64px,8vw,110px) 0;background:var(--navy-2);border-top:1px solid var(--line)}
+  .llk-preview__intro{max-width:720px;margin:0 auto 34px;text-align:center}
+  .llk-preview h2{font-size:clamp(2.2rem,4.4vw,3.5rem);text-wrap:balance;margin-bottom:16px}
+  .llk-preview__intro p{color:#b9c3ce;text-wrap:balance;margin:0 0 12px}
+  .llk-preview__intro .llk-preview__question{color:var(--coral-text);font-size:15px;font-weight:600}
+  .llk-preview__screens{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);justify-items:center;gap:clamp(16px,2.5vw,28px)}
+  .llk-preview figure{width:min(100%,828px);margin:0}
+  .llk-preview img{width:100%;height:auto;border:1px solid var(--line);border-radius:20px;background:#020912}
+  .llk-preview figcaption{text-align:center;color:#b9c3ce;font-size:14px;margin-top:10px;text-wrap:balance}
+  .llk-preview__actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:30px}
+  @media(max-width:700px){.llk-preview__screens{grid-template-columns:minmax(0,1fr)}}
   :focus-visible{outline:2.5px solid var(--coral-bright);outline-offset:3px;border-radius:4px}
 
   /* ---- HERO ---- */
@@ -124,21 +120,22 @@
   /* ---- HORIZONTAL SCROLL SECTION ---- */
   .horizon{position:relative;background:var(--navy)}
   .horizon__sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
-  .horizon__head{position:absolute;top:0;left:0;right:0;padding:72px clamp(20px,5vw,48px) 0;z-index:5;pointer-events:none}
+  .horizon__head{position:absolute;top:0;left:0;right:0;padding:72px clamp(20px,5vw,48px) 0;z-index:5;pointer-events:none;display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px}
   .horizon__title{font-size:clamp(1.3rem,3vw,2rem);color:var(--coral-text)}
+  .horizon__head .btn{pointer-events:auto;font-size:14px;padding:10px 18px}
+  #how{display:block;scroll-margin-top:90px}
   .htrack{display:flex;gap:clamp(20px,3vw,40px);padding:0 clamp(20px,5vw,48px);will-change:transform}
   .hpanel{
     flex:0 0 auto;width:min(78vw,420px);
     background:linear-gradient(160deg,var(--navy-3),var(--navy-2));
     border:1px solid var(--line);border-radius:22px;padding:36px 34px;
-    display:flex;flex-direction:column;min-height:min(58vh,420px);
+    display:flex;flex-direction:column;justify-content:center;min-height:min(50vh,380px);
     position:relative;overflow:hidden;
   }
   .hpanel::before{content:"";position:absolute;inset:0;background:var(--coral-grad);opacity:0;transition:opacity .4s;z-index:0}
   .hpanel:hover::before{opacity:.06}
   .hpanel > *{position:relative;z-index:1}
-  .hpanel__num{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:600;background:var(--coral-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
-  .hpanel h3{font-size:clamp(1.4rem,2.4vw,1.85rem);margin:20px 0 12px}
+  .hpanel h3{font-size:clamp(1.4rem,2.4vw,1.85rem);margin:0 0 12px}
   .hpanel p{color:#aeb9c6;margin:0;font-size:1rem}
   .hprogress{position:absolute;bottom:34px;left:clamp(20px,5vw,48px);right:clamp(20px,5vw,48px);z-index:5}
   .hprogress__hint{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-light);display:flex;align-items:center;gap:10px;margin-bottom:12px}
@@ -227,9 +224,11 @@
     .reveal{opacity:1 !important;transform:none !important}
     .progress,.scrollcue{display:none}
     .hero__glow,.hero__mono{transform:none !important}
-    /* horizontal section becomes a normal vertical stack */
+  }
+  /* Give the services cards room on small screens and with reduced motion. */
+  @media (max-width:700px),(max-height:540px),(prefers-reduced-motion:reduce){
     .horizon__sticky{position:static;height:auto;overflow:visible;padding:60px 0}
-    .horizon{min-height:0 !important}
+    .horizon{height:auto !important}
     .horizon__head{position:static;padding:0 clamp(20px,5vw,48px) 24px;pointer-events:auto}
     .htrack{flex-wrap:wrap;transform:none !important}
     .hpanel{width:100%;max-width:none;min-height:0}
@@ -284,70 +283,30 @@
     </div>
   </section>
 
-  <section class="preparation" id="services" aria-labelledby="services-title">
-    <div class="wrap">
-      <span class="eyebrow">Services</span>
-      <h2 id="services-title">AI Enhanced Protection</h2>
-      <div class="services-grid">
-        <article class="service-card">
-          <span class="service-number" aria-hidden="true">01</span>
-          <h3>Trademark Application &amp; Filing</h3>
-          <p>Move forward with a carefully prepared application. We help identify the appropriate goods and services, prepare and submit your filing, and guide you through the examination process.</p>
-        </article>
-        <article class="service-card">
-          <span class="service-number" aria-hidden="true">02</span>
-          <h3>Office Action Responses</h3>
-          <p>Understand the USPTO’s concerns and your options for responding. We address procedural requirements and review substantive refusals to determine whether we can assist. Complex responses are separately scoped and priced.</p>
-        </article>
-        <article class="service-card">
-          <span class="service-number" aria-hidden="true">03</span>
-          <h3>Statements of Use &amp; Extensions</h3>
-          <p>Keep your intent-to-use application moving forward. We help prepare evidence of trademark use and submit statements of use or extension requests, as appropriate.</p>
-        </article>
-        <article class="service-card">
-          <span class="service-number" aria-hidden="true">04</span>
-          <h3>Trademark Maintenance &amp; Renewals</h3>
-          <p>Support your registration over time. We help prepare required maintenance and renewal filings, including reviewing evidence that your mark remains in use.</p>
-        </article>
-        <article class="service-card">
-          <span class="service-number" aria-hidden="true">05</span>
-          <h3>Trademark Monitoring</h3>
-          <p>Stay informed about potentially conflicting trademarks. We monitor for relevant developments and report findings so you can make informed decisions about your brand.</p>
-        </article>
-        <article class="service-card">
-          <span class="service-number" aria-hidden="true">06</span>
-          <h3>Access to the VB Portal</h3>
-          <p>Manage your trademark portfolio, explore your Brand Map, and follow updates in one workspace. VB’s proprietary AI workflow is in development to research brand changes and surface findings for review.</p>
-        </article>
-      </div>
-      <div class="services-action">
-        <a class="btn" href="pricing.html">Explore Pricing &amp; Packages</a>
-      </div>
-    </div>
-  </section>
-
   <!-- HORIZONTAL SCROLL -->
-  <section class="horizon" id="how" aria-labelledby="how-title" data-horizon>
+  <section class="horizon" id="services" aria-labelledby="services-title" data-horizon>
+    <span id="how" aria-hidden="true"></span>
     <div class="horizon__sticky">
       <div class="horizon__head">
-        <h2 class="horizon__title" id="how-title">The VB Portal</h2>
+        <h2 class="horizon__title" id="services-title">Services</h2>
+        <a class="btn" href="pricing.html">Explore Pricing &amp; Packages</a>
       </div>
       <div class="htrack" id="htrack">
         <article class="hpanel">
-          <div class="hpanel__num">01</div>
-          <div><h3>Brand Map</h3><p>See your trademark records together in one workspace. Explore your portfolio, select a mark, and open its details without losing the bigger picture.</p></div>
+          <h3>Trademark Filing</h3>
+          <p>I review your proposed mark for potential conflicts, help identify the goods or services to cover, and prepare and file your federal trademark application.</p>
         </article>
         <article class="hpanel">
-          <div class="hpanel__num">02</div>
-          <div><h3>Portfolio</h3><p>Keep your trademark records, statuses, and maintenance information organized. Find the details you need and understand the next step for each mark.</p></div>
+          <h3>Monitoring</h3>
+          <p>I review new U.S. trademark filings and agreed marketplace sources, then report potentially conflicting activity and explain findings that may warrant follow-up.</p>
         </article>
         <article class="hpanel">
-          <div class="hpanel__num">03</div>
-          <div><h3>Brand Change Monitor</h3><p>In development: VB’s proprietary workflow uses AI to research changes in your public brand presence and surface potential new names, products, and branding for review.</p></div>
+          <h3>Office Actions</h3>
+          <p>I help respond to procedural requirements and substantive refusals during USPTO examination. I review the notice and quote the response based on the issues raised.</p>
         </article>
         <article class="hpanel">
-          <div class="hpanel__num">04</div>
-          <div><h3>AI Enhanced Monitoring and Updates</h3><p>Follow trademark activity and receive organized updates through your VB Digest. In development: VB’s proprietary AI workflow will help surface relevant brand changes for review alongside those updates.</p></div>
+          <h3>The VB Portal</h3>
+          <p>See your trademark portfolio and Brand Map in one workspace, message me, and review Watch findings when you enroll in Monitoring Services. Portal access is available as a standalone offering.</p>
         </article>
       </div>
       <div class="hprogress" aria-hidden="true">
@@ -356,6 +315,30 @@
           Keep scrolling to move sideways
         </div>
         <div class="hprogress__track"><div class="hprogress__fill" id="hfill"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="llk-preview" id="legal-launch-kit" aria-labelledby="llk-title">
+    <div class="wrap">
+      <div class="llk-preview__intro">
+        <p class="llk-preview__question">Are you a founder getting ready to launch, or have you recently launched?</p>
+        <h2 id="llk-title">Introducing the Legal Launch Kit</h2>
+        <p>A free, interactive roadmap for founders preparing to launch or taking their first steps after launch.</p>
+      </div>
+      <div class="llk-preview__screens">
+        <figure>
+          <img src="images/llk-roadmap-preview.jpg" width="828" height="666" loading="lazy" alt="Legal Launch Kit roadmap with Your Startup’s Name at the center and Initial Steps highlighted under Formation and structure.">
+          <figcaption>Start with the roadmap and choose a milestone to explore.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/llk-initial-steps-preview.jpg" width="1067" height="925" loading="lazy" alt="Initial Steps checklist with the registered-agent item expanded and a progress box showing zero of five tasks checked.">
+          <figcaption>Open a checklist item for a short explanation and find related resources alongside the checklist.</figcaption>
+        </figure>
+      </div>
+      <div class="llk-preview__actions">
+        <a class="btn" href="/free/legal-launch-kit.html">Use the Legal Launch Kit for Free</a>
+        <a class="btn btn--ghost" href="/login.html">Create a Free VB Account</a>
       </div>
     </div>
   </section>
