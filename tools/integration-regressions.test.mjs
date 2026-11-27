@@ -18,7 +18,7 @@ test('separate legal clients survive page changes, reloads and Account Settings'
  assert.throws(()=>selectedClientId([{id:'company'}],'individual',''),/not available/);
  const detail=new URL(clientDestination('trademark.html?mark=x%26y#details','individual','https://vb.example/portal.html'),'https://vb.example');
  assert.equal(detail.searchParams.get('mark'),'x&y');assert.equal(detail.hash,'#details');
- for(const href of ['https://other.example/portfolio.html','login.html','v8.html','free/legal-launch-kit.html'])assert.equal(clientDestination(href,'individual','https://vb.example/portal.html'),null);
+ for(const href of ['https://other.example/portfolio.html','login.html','index.html','free/legal-launch-kit.html'])assert.equal(clientDestination(href,'individual','https://vb.example/portal.html'),null);
 });
 
 test('navigation updates existing and late links and records a changed selection in the URL',()=>{

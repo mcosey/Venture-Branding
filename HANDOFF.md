@@ -1,6 +1,6 @@
 # Venture Branding — development handoff
 
-> Current correction (October 18, 2026): this project is **not on Cloudflare**. The active homepage source is `v8.html`; `index.html` is the historical design chooser. Hosting statements below are historical and superseded by [CURRENT-ENVIRONMENTS.md](CURRENT-ENVIRONMENTS.md). Do not configure or deploy a host from this older record.
+> See [CURRENT-ENVIRONMENTS.md](CURRENT-ENVIRONMENTS.md) for the current homepage and preview. The hosting and homepage references below reflect earlier work.
 
 
 Updated October 3, 2026. Read this first; it summarizes the decisions already made. This file is project context, not authorization to implement everything described below. The user's next request determines the work.

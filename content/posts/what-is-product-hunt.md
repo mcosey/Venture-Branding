@@ -161,7 +161,7 @@ Launching a product involves more than preparing its features and marketing mate
 
 Venture Branding Law’s free [*Legal Launch Kit*](../../free/legal-launch-kit.html) introduces founders to common legal considerations and helps them prepare more informed conversations with their attorneys.
 
-Founders developing a new product name or brand can also explore Venture Branding’s [trademark registration services](../../v8.html#services), including intent-to-use applications for qualifying marks not yet used in commerce. For additional background, see [*Can I Trademark My Business Name Before Launching?*](can-i-trademark-my-business-name-before-launching.html)
+Founders developing a new product name or brand can also explore Venture Branding’s [trademark registration services](../../index.html#services), including intent-to-use applications for qualifying marks not yet used in commerce. For additional background, see [*Can I Trademark My Business Name Before Launching?*](can-i-trademark-my-business-name-before-launching.html)
 
 ## Conclusion
 

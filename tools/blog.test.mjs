@@ -32,11 +32,11 @@ test('blog listing and posts share the homepage navigation with working relative
   const f=fixture(t);
   f.post('approved');
   build(f);
-  const home=fs.readFileSync(path.join(f.outDir,'v8.html'),'utf8');
+  const home=fs.readFileSync(path.join(f.outDir,'index.html'),'utf8');
   const index=fs.readFileSync(path.join(f.outDir,'blog.html'),'utf8');
   const post=fs.readFileSync(path.join(f.outDir,'blog/posts/approved.html'),'utf8');
   const nav = page => page.match(/<nav class="top"[^>]*>([\s\S]*?)<\/nav>/)[1];
-  const navigateToBlog = html => html.replaceAll('href="#','href="v8.html#');
+  const navigateToBlog = html => html.replaceAll('href="#','href="index.html#');
   assert.equal(nav(index).replace(' aria-current="page"',''),navigateToBlog(nav(home)));
   assert.equal(nav(post).replaceAll('href="../../','href="'),navigateToBlog(nav(home)));
   for (const page of [home,index,post]) {

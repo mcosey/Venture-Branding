@@ -31,7 +31,7 @@ An article can include short sections, emphasis, and lists to make a topic easie
 
 ### Connected to the rest of Venture Branding
 
-Readers can [explore our services](../../v8.html#services) or return to the blog without losing their place in the wider site.
+Readers can [explore our services](../../index.html#services) or return to the blog without losing their place in the wider site.
 
 ## What comes next
 

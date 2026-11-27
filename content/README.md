@@ -20,7 +20,7 @@ as a tie-breaker (higher first).
 
 Cover images are optional. Store them in `images/blog/`, use a repository-relative
 path such as `images/blog/name.jpg`, and supply `imageAlt`. Article-body links
-are relative to `blog/posts/`; use `../../v8.html#services` for the Services section.
+are relative to `blog/posts/`; use `../../index.html#services` for the Services section.
 
 ## Build and preview
 
@@ -36,9 +36,9 @@ node --test tools/blog.test.mjs
 
 The first command generates `blog.html` and published article pages under
 `blog/posts/`. The second creates an isolated copy under `work/blog-preview/`
-including drafts/samples and a copy of V8. With the existing local server running,
+including drafts/samples and a copy of the homepage. With the existing local server running,
 open `/work/blog-preview/blog.html`. All preview blog pages are labeled and marked
-noindex. Rebuild the preview after changing V8 or article content.
+noindex. Rebuild the preview after changing the homepage or article content.
 
 Generated files should be changed via the generator, article files, or
 `blog/assets/`, not edited directly. The builder removes only obsolete generated

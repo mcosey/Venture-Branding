@@ -65,7 +65,7 @@ function blogHeader(homeHeader, prefix, preview) {
   return homeHeader.replace(/\b(href|src)="([^"]+)"/g, (attribute, name, target) => {
     if (/^(?:[a-z][a-z\d+.-]*:|\/)/i.test(target)) return attribute;
     if (preview && target === 'login.html') return 'href="/login.html"';
-    const destination = target.startsWith('#') ? `v8.html${target}` : target;
+    const destination = target.startsWith('#') ? `index.html${target}` : target;
     const current = target === 'blog.html' && !prefix ? ' aria-current="page"' : '';
     return `${name}="${prefix}${destination}"${current}`;
   });
@@ -79,7 +79,7 @@ function shell(title, description, body, prefix, preview, homeHeader) {
 <a class="skip" href="#main">Skip to content</a>
 ${blogHeader(homeHeader,prefix,preview)}
 ${preview ? '<div class="preview-note"><strong>Local review preview.</strong> Samples and drafts shown here are excluded from the normal blog build.</div>' : ''}
-<main id="main">${body}</main><footer class="site-footer"><div class="shell footer-inner"><p>© Venture Branding Law All rights Reserved</p><nav class="footer-links" aria-label="Footer"><a href="${prefix}v8.html">Home</a><a href="${prefix}blog.html">Blog</a><a href="${prefix}v8.html#contact">Contact</a><a href="${prefix}terms.html">Terms &amp; Conditions</a><a href="${prefix}privacy.html">Privacy Policy</a></nav></div></footer></body></html>\n`;
+<main id="main">${body}</main><footer class="site-footer"><div class="shell footer-inner"><p>© Venture Branding Law All rights Reserved</p><nav class="footer-links" aria-label="Footer"><a href="${prefix}index.html">Home</a><a href="${prefix}blog.html">Blog</a><a href="${prefix}index.html#contact">Contact</a><a href="${prefix}terms.html">Terms &amp; Conditions</a><a href="${prefix}privacy.html">Privacy Policy</a></nav></div></footer></body></html>\n`;
 }
 function card(post, prefix) {
   const href = `${prefix}blog/posts/${post.slug}.html`;
@@ -97,7 +97,7 @@ function listing(posts, preview, homeHeader, contactPanel) {
   const categories = [...new Set(posts.map(post => post.category))];
   const startingSlugs = ['what-is-a-trademark','anatomy-of-a-venture-financing','founders-agreements'];
   const [lead, ...secondary] = startingSlugs.map(slug => posts.find(post => post.slug === slug)).filter(Boolean);
-  const body = `<section class="hero archive-hero"><div class="shell"><h1>The Venture Branding Blog.</h1><div class="hero-actions"><a class="button" href="#articles-title">Explore Articles <span aria-hidden="true">↓</span></a><a class="button" href="v8.html#services">Explore Services <span aria-hidden="true">↗</span></a></div></div></section>
+  const body = `<section class="hero archive-hero"><div class="shell"><h1>The Venture Branding Blog.</h1><div class="hero-actions"><a class="button" href="#articles-title">Explore Articles <span aria-hidden="true">↓</span></a><a class="button" href="index.html#services">Explore Services <span aria-hidden="true">↗</span></a></div></div></section>
 <section class="shell archive-discovery" aria-label="Explore the blog">${posts.length ? '<div class="search" hidden><input id="blog-search" type="search" aria-label="Search articles" placeholder="Search articles" aria-controls="article-list"></div>' : ''}<div class="browse-top"><div class="browse-heading"><span class="eyebrow">Browse by topic</span><span class="category-count">${categories.length} categories</span></div>${posts.length ? `<div class="topic-filters" hidden role="group" aria-label="Filter articles by topic"><button type="button" data-topic="" aria-pressed="true">All articles <span>${posts.length}</span></button>${categories.map(category => `<button type="button" data-topic="${escape(category)}" aria-pressed="false">${escape(category)} <span>${posts.filter(post => post.category === category).length}</span></button>`).join('')}</div>` : ''}</div></section>
 <div class="shell archive-layout"><div class="archive-main">
 ${lead ? `<section class="featured-section" aria-labelledby="featured-title"><div class="section-intro"><h2 id="featured-title">Foundations for founders.</h2><p>Start with the essentials, then explore the questions that matter to your business.</p></div><div class="featured-grid">${archiveCard(lead,true)}${secondary.length ? `<div class="featured-grid__secondary">${secondary.map(post => archiveCard(post,true)).join('')}</div>` : ''}</div></section>` : ''}
@@ -117,17 +117,17 @@ function article(post, posts, preview, homeHeader) {
   const prefix = '../../';
   const related = posts.filter(item => item.slug !== post.slug).sort((a,b) => Number(b.category===post.category)-Number(a.category===post.category)).slice(0,3);
   const body = `<article><header class="shell article-top"><a class="back" href="../../blog.html">← Back to the blog</a><p class="eyebrow">${escape(post.category)}</p>${label(post) ? `<span class="badge">${label(post)}</span>` : ''}<h1>${escape(post.title)}</h1><p class="description">${escape(post.description)}</p><div class="byline"><span>By ${escape(post.author)}</span>${readingTime(post)}</div></header>
-<div class="article-paper"><div class="article-body">${post.status === 'sample' ? '<p class="reading-note"><strong>Layout sample.</strong> This article is for reviewing the blog design. It is not published content or legal guidance.</p>' : ''}${post.image ? `<img class="article-cover" src="${prefix}${escape(post.image)}" alt="${escape(post.imageAlt)}">` : ''}${post.html}<div class="article-end"><a href="../../blog.html">← All articles</a><a href="../../v8.html#services">Explore Services →</a></div></div></div></article>
+<div class="article-paper"><div class="article-body">${post.status === 'sample' ? '<p class="reading-note"><strong>Layout sample.</strong> This article is for reviewing the blog design. It is not published content or legal guidance.</p>' : ''}${post.image ? `<img class="article-cover" src="${prefix}${escape(post.image)}" alt="${escape(post.imageAlt)}">` : ''}${post.html}<div class="article-end"><a href="../../blog.html">← All articles</a><a href="../../index.html#services">Explore Services →</a></div></div></div></article>
 ${related.length ? `<section class="shell related" aria-labelledby="related-title"><h2 id="related-title">Related reading</h2><div class="cards">${related.map(item => card(item,prefix)).join('')}</div></section>` : ''}`;
   return shell(post.title,post.description,body,prefix,preview,homeHeader);
 }
 export function build({preview=false,outDir=preview ? path.join(root,'work/blog-preview') : root,sourceDir=path.join(root,'content/posts')}={}) {
   const posts = readPosts(sourceDir,preview);
-  const home = fs.readFileSync(path.join(root,'v8.html'),'utf8');
+  const home = fs.readFileSync(path.join(root,'index.html'),'utf8');
   const homeHeader = home.match(/<header id="header" class="vb-site-header">[\s\S]*?<\/header>/)?.[0];
-  if (!homeHeader) throw new Error('Missing the shared site header in v8.html.');
+  if (!homeHeader) throw new Error('Missing the shared site header in index.html.');
   const contactPanel = home.match(/<section class="contact" id="contact"[^>]*>[\s\S]*?<\/section>/)?.[0];
-  if (!contactPanel) throw new Error('Missing the shared trademark support panel in v8.html.');
+  if (!contactPanel) throw new Error('Missing the shared trademark support panel in index.html.');
   // Validate and render before touching the previous build.
   const index = listing(posts,preview,homeHeader,contactPanel);
   const pages = posts.map(post => [post.slug,article(post,posts,preview,homeHeader)]);
@@ -153,7 +153,7 @@ export function build({preview=false,outDir=preview ? path.join(root,'work/blog-
       fs.copyFileSync(path.join(root,filename),path.join(outDir,filename));
     }
     const previewHome = preview ? home.replace('<head>','<head>\n<meta name="robots" content="noindex,nofollow">') : home;
-    fs.writeFileSync(path.join(outDir,'v8.html'),previewHome);
+    fs.writeFileSync(path.join(outDir,'index.html'),previewHome);
   }
   fs.writeFileSync(path.join(outDir,'blog.html'),index);
   for (const [slug,html] of pages) fs.writeFileSync(path.join(articleDir,`${slug}.html`),html);

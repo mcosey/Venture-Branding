@@ -5,9 +5,9 @@ October 22 main setup: the owner subsequently approved connecting the prepared M
 Updated October 21, 2026. This record supersedes historical host/homepage instructions in older handoffs.
 
 - Venture Branding is a SaaS, not a CRM or practice-management system. Clio/QuickBooks remain separate.
-- The current public homepage source is `v8.html`. `index.html` is an older design chooser, not the current homepage. No redirect/deletion is included in this change.
+- The public homepage is `index.html` and opens directly at `/`. The old design chooser and numbered design pages are retained in Git history.
 - Public hosting and DNS are outside the current review at the owner’s explicit instruction. Do not inspect, configure or deploy a host based on historical configuration, installed GitHub apps or future release plans. The current work is local code/security cleanup; release hosting will be handled only when the owner brings it back into scope.
-- Local consolidated preview: `http://127.0.0.1:8893/v8.html`, served from this checkout by `tools/portal-consolidation-server.py --port 8893`. The default `/` remains a technical Test entrance. No new root route is assumed.
+- The main local homepage is `http://127.0.0.1:8895/`. The separate Test preview at `http://127.0.0.1:8893/` opens the Test tools, with the homepage at `http://127.0.0.1:8893/index.html`.
 - The preview keeps exact BCM Test project configuration, Member accounts, loopback-only binding, paid research off, evidence/digest controls off and the existing Watch feature flag. Removing its visible development banner does not alter those safeguards or rename fictional saved clients. A small stylesheet compatibility rule also hides the retired banner in an already running preview, so a restart is not required for this visual correction.
 - Committed `auth/config.js` targets the existing Production configuration. The local server substitutes Test configuration in responses; never replace the committed configuration with Test settings as a preview shortcut.
 - Test: `imvkhicfmidzbzsbhkzs`. Production: `omvkwiosonatswocbdgx`. These identifiers and browser publishable keys are not administrative credentials. Server/provider keys remain outside the frontend and Git.

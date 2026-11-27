@@ -1,5 +1,7 @@
 # Venture Branding SaaS consolidation review
 
+> This records the October consolidation. See [CURRENT-ENVIRONMENTS.md](CURRENT-ENVIRONMENTS.md) for the current homepage and preview.
+
 Prepared October 17, 2026 on `codex/portal-consolidation` in the sibling `portal-consolidation` checkout. Owner initially authorized assembling and testing a combined review branch. Later approval specifically covered the focused Watch rehearsal and conditional BCM Test database application, now applied and verified. Default-branch merge, push and Production rollout remain unapproved. VB is a SaaS product; Clio, QuickBooks and other systems handle practice management. This consolidation adds no matter-management or CRM feature and no Calendly work. A later database audit/refactoring decision is separate.
 
 ## Inputs and destination
